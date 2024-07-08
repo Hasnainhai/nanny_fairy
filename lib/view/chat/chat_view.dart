@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:nanny_fairy/utils/routes/routes_name.dart';
 import 'package:nanny_fairy/view/chat/widgets/chatting_widget.dart';
 import '../../res/components/colors.dart';
 
@@ -87,16 +88,22 @@ class ChatView extends StatelessWidget {
                 ),
               ],
             ),
-            Container(
-              height: 26,
-              width: 82,
-              color: AppColor.whiteColor,
-              child: const Center(child: Text('Write Review',style: TextStyle(
-                fontSize: 10,
-                color: AppColor.primaryColor,
-                fontWeight: FontWeight.w500,
-              ),
-              ),
+            InkWell(
+              onTap: (){
+                Navigator.pushNamed(context, RoutesName.addRating);
+
+              },
+              child: Container(
+                height: 26,
+                width: 82,
+                color: AppColor.whiteColor,
+                child: const Center(child: Text('Write Review',style: TextStyle(
+                  fontSize: 10,
+                  color: AppColor.primaryColor,
+                  fontWeight: FontWeight.w500,
+                ),
+                ),
+                ),
               ),
             ),
           ],
