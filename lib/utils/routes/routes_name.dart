@@ -14,4 +14,11 @@ class RoutesName {
   static const String profileView = '/profile_view';
   static const String dashboard = '/dashboard_view';
   static const String uploadCommunityPost = '/upload_community_post';
+  static const String myProfile = '/my_profile';
+  static const String editProfile = '/edit_profile';
+  static const String notificationsView = '/notifications_view';
+  static const String settingsView = '/settings_view';
+  static const String paymentView = '/payment_view';
+  static const String totalRating = '/total_rating';
+  static const String addRating = '/add_rating';
 }

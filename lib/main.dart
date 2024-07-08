@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:nanny_fairy/res/components/colors.dart';
 import 'package:nanny_fairy/utils/routes/routes.dart';
 import 'package:nanny_fairy/utils/routes/routes_name.dart';
-import 'package:nanny_fairy/view/auth/signup/upload_image.dart';
 import 'package:nanny_fairy/view/onboarding/splash_view.dart';
 
 void main() {
@@ -16,16 +15,15 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      initialRoute: RoutesName.uploadImg,
+      initialRoute: RoutesName.splash,
       onGenerateRoute: Routes.generateRoute,
       debugShowCheckedModeBanner: false,
-      title: 'Flutter Demo',
       theme: ThemeData(
         scaffoldBackgroundColor: AppColor.whiteColor,
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+        colorScheme: ColorScheme.fromSeed(seedColor: AppColor.primaryColor),
         useMaterial3: true,
       ),
-      home: const UploadImage(),
+      home: const SplashScreen(),
     );
   }
 }

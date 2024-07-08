@@ -13,8 +13,15 @@ import 'package:nanny_fairy/view/community/upload_comunity_post.dart';
 import 'package:nanny_fairy/view/home/dashboard/dashboard.dart';
 import 'package:nanny_fairy/view/home/home_view.dart';
 import 'package:nanny_fairy/view/job/job_view.dart';
+import 'package:nanny_fairy/view/notifications/notifications_view.dart';
 import 'package:nanny_fairy/view/onboarding/splash_view.dart';
+import 'package:nanny_fairy/view/payment/payment.dart';
+import 'package:nanny_fairy/view/profile/edit_profile.dart';
+import 'package:nanny_fairy/view/profile/my_profile.dart';
 import 'package:nanny_fairy/view/profile/profile_view.dart';
+import 'package:nanny_fairy/view/rating/add_rating.dart';
+import 'package:nanny_fairy/view/rating/rating.dart';
+import 'package:nanny_fairy/view/settings/settings_view.dart';
 
 class Routes {
   static Route<dynamic> generateRoute(RouteSettings settings) {
@@ -67,6 +74,27 @@ class Routes {
       case RoutesName.uploadCommunityPost:
         return MaterialPageRoute(
             builder: (BuildContext context) => const UploadComunityPost());
+      case RoutesName.myProfile:
+        return MaterialPageRoute(
+            builder: (BuildContext context) => const MyProfile());
+      case RoutesName.editProfile:
+        return MaterialPageRoute(
+            builder: (BuildContext context) => const EditProfile());
+      case RoutesName.notificationsView:
+        return MaterialPageRoute(
+            builder: (BuildContext context) => const NotificationsView());
+      case RoutesName.settingsView:
+        return MaterialPageRoute(
+            builder: (BuildContext context) => const SettingsView());
+      case RoutesName.paymentView:
+        return MaterialPageRoute(
+            builder: (BuildContext context) => const PaymentView());
+      case RoutesName.totalRating:
+        return MaterialPageRoute(
+            builder: (BuildContext context) => const TotalRatingScreen());
+      case RoutesName.addRating:
+        return MaterialPageRoute(
+            builder: (BuildContext context) => const Rating());
 
       default:
         return MaterialPageRoute(builder: (_) {

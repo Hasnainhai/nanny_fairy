@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:nanny_fairy/res/components/rounded_button.dart';
+import 'package:nanny_fairy/res/components/widgets/vertical_spacing.dart';
+import 'package:nanny_fairy/utils/routes/routes_name.dart';
 import '../../../res/components/colors.dart';
 
 class BookingCartWidget extends StatefulWidget {
@@ -13,24 +15,44 @@ class BookingCartWidget extends StatefulWidget {
 class _BookingCartWidgetState extends State<BookingCartWidget> {
 
   // popUp
-  void showSignupDialog(BuildContext context) {
+  void showSubscribtionDialog(BuildContext context) {
     showDialog(
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
           backgroundColor: AppColor.whiteColor,
           shape: const RoundedRectangleBorder(),
-          icon: const ImageIcon(
-            AssetImage('images/popImg.png'), size: 120,),
-          title:  Text('Agree to Subscription of\n€2/month',style: GoogleFonts.getFont(
-            "Poppins",
-            textStyle: const TextStyle(
-              fontSize: 18,
-              fontWeight: FontWeight.w500,
-              color: AppColor.blackColor,
-            ),
-          ), ),
-          content: RoundedButton(title: 'subscribe and chat',onpress: (){},)
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Image.asset(
+                'images/popImg.png',
+                width: 150,
+                height: 150,
+              ),
+              const VerticalSpeacing(16),
+              Text(
+                'Agree to Subscription of\n€2/month',
+                textAlign: TextAlign.center,
+                style: GoogleFonts.getFont(
+                  "Poppins",
+                  textStyle: const TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.w500,
+                    color: AppColor.blackColor,
+                  ),
+                ),
+              ),
+              const VerticalSpeacing(30),
+              RoundedButton(
+                title: 'Subscribe and Chat',
+                onpress: () {
+                  Navigator.pushNamed(context, RoutesName.paymentView);
+                },
+              ),
+              const VerticalSpeacing(16),
+            ],
+          ),
         );
       },
     );
@@ -98,7 +120,7 @@ class _BookingCartWidgetState extends State<BookingCartWidget> {
                 ),
                 InkWell(
                   onTap: (){
-                    showSignupDialog(context);
+                    showSubscribtionDialog(context);
                   },
                   child: Container(
                     height: 25,
