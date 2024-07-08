@@ -3,16 +3,16 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:nanny_fairy/res/components/rounded_button.dart';
 import 'package:nanny_fairy/res/components/widgets/vertical_spacing.dart';
 import 'package:nanny_fairy/utils/routes/routes_name.dart';
-import '../../../res/components/colors.dart';
+import '../../../../res/components/colors.dart';
 
-class BookingCartWidget extends StatefulWidget {
-  const BookingCartWidget({super.key});
+class FindJobsWidget extends StatefulWidget {
+  const FindJobsWidget({super.key});
 
   @override
-  State<BookingCartWidget> createState() => _BookingCartWidgetState();
+  State<FindJobsWidget> createState() => _FindJobsWidgetState();
 }
 
-class _BookingCartWidgetState extends State<BookingCartWidget> {
+class _FindJobsWidgetState extends State<FindJobsWidget> {
   // popUp
   void showSubscribtionDialog(BuildContext context) {
     showDialog(
@@ -104,22 +104,27 @@ class _BookingCartWidgetState extends State<BookingCartWidget> {
                 ),
               ),
             ),
-            trailing: Container(
-              height: 30,
-              width: 80,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(12),
-                color: AppColor.primaryColor,
-              ),
-              child: Center(
-                child: Text(
-                  'Completed',
-                  style: GoogleFonts.getFont(
-                    "Poppins",
-                    textStyle: const TextStyle(
-                      fontSize: 10,
-                      fontWeight: FontWeight.w400,
-                      color: AppColor.whiteColor,
+            trailing: InkWell(
+              onTap: () {
+                showSubscribtionDialog(context);
+              },
+              child: Container(
+                height: 30,
+                width: 80,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(12),
+                  color: AppColor.primaryColor,
+                ),
+                child: Center(
+                  child: Text(
+                    'View',
+                    style: GoogleFonts.getFont(
+                      "Poppins",
+                      textStyle: const TextStyle(
+                        fontSize: 10,
+                        fontWeight: FontWeight.w400,
+                        color: AppColor.whiteColor,
+                      ),
                     ),
                   ),
                 ),
