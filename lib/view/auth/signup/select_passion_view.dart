@@ -8,7 +8,8 @@ import 'package:nanny_fairy/utils/routes/routes_name.dart';
 import '../../../res/components/ToggleButtonSelectPassion.dart';
 
 class SelectPassionView extends StatefulWidget {
-  const SelectPassionView({super.key});
+  const SelectPassionView({super.key,});
+
 
   @override
   State<SelectPassionView> createState() => _SelectPassionViewState();
@@ -33,7 +34,7 @@ class _SelectPassionViewState extends State<SelectPassionView> {
           backgroundColor: Colors.transparent,
           elevation: 0.0,
         leading: IconButton(icon: const Icon(Icons.west,color: AppColor.whiteColor,),onPressed: (){ Navigator.pop(context);},),
-          title:  Text('Welcome to  new user',
+          title:  Text('Welcome',
             style: GoogleFonts.getFont(
               "Poppins",
               textStyle: const TextStyle(
@@ -43,6 +44,7 @@ class _SelectPassionViewState extends State<SelectPassionView> {
               ),
             ),
           ),
+          centerTitle: true,
         ),
       ),
       body: Container(
@@ -60,7 +62,7 @@ class _SelectPassionViewState extends State<SelectPassionView> {
 
           children: [
             const VerticalSpeacing(26),
-            Text('Wat wil je doen?',
+            Text('register as a provider',
               style: GoogleFonts.getFont(
                 "Poppins",
                 textStyle: const TextStyle(

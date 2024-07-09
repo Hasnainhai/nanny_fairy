@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:nanny_fairy/res/components/widgets/vertical_spacing.dart';
+import 'package:nanny_fairy/utils/routes/routes_name.dart';
 import 'package:nanny_fairy/view/job/widgets/job_cart_widget.dart';
 
 import '../../res/components/colors.dart';
@@ -40,37 +41,47 @@ class JobView extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Row(
-                children: [
-                 const  Icon(Icons.filter_alt_outlined,color: AppColor.primaryColor,),
-                 const  SizedBox(width: 5.0),
-                  Text('Filters',
-                    style: GoogleFonts.getFont(
-                      "Poppins",
-                      textStyle: const TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.w600,
-                        color: AppColor.primaryColor,
+              InkWell(
+                onTap: (){
+                  Navigator.pushNamed(context, RoutesName.filterPopup);
+                },
+                child: Row(
+                  children: [
+                   const  Icon(Icons.filter_alt_outlined,color: AppColor.primaryColor,),
+                   const  SizedBox(width: 5.0),
+                    Text('Filters',
+                      style: GoogleFonts.getFont(
+                        "Poppins",
+                        textStyle: const TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.w600,
+                          color: AppColor.primaryColor,
+                        ),
                       ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
-              Row(
-                children: [
-                  const  Icon(Icons.filter_list,color: AppColor.primaryColor,),
-                  const  SizedBox(width: 5.0),
-                  Text('Start Booking Jobs',
-                    style: GoogleFonts.getFont(
-                      "Poppins",
-                      textStyle: const TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.w600,
-                        color: AppColor.primaryColor,
+              InkWell(
+                onTap: (){
+                  Navigator.pushNamed(context, RoutesName.findJobView);
+                },
+                child: Row(
+                  children: [
+                    const  Icon(Icons.filter_list,color: AppColor.primaryColor,),
+                    const  SizedBox(width: 5.0),
+                    Text('Start Booking Jobs',
+                      style: GoogleFonts.getFont(
+                        "Poppins",
+                        textStyle: const TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.w600,
+                          color: AppColor.primaryColor,
+                        ),
                       ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ],
           ),

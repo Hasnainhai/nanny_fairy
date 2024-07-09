@@ -9,6 +9,7 @@ import '../../../res/components/colors.dart';
 class SelectPreference extends StatefulWidget {
   const SelectPreference({super.key});
 
+
   @override
   State<SelectPreference> createState() => _SelectPreferenceState();
 }
