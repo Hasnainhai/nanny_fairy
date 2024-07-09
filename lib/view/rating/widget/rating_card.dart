@@ -113,40 +113,7 @@ class _ReviewCardState extends State<ReviewCard> {
               ),
             ),
             const VerticalSpeacing(14),
-            const Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Icon(
-                  Icons.favorite,
-                  color: AppColor.primaryColor,
-                ),
-                Text(
-                  "24 Like",
-                  style: TextStyle(
-                    fontFamily: 'CenturyGothic',
-                    fontSize: 16,
-                    fontWeight: FontWeight.w400,
-                    color: AppColor.grayColor,
-                  ),
-                ),
-                SizedBox(
-                  width: 20,
-                ),
-                Icon(
-                  Icons.reply_outlined,
-                  color: AppColor.grayColor,
-                ),
-                Text(
-                  "Reply",
-                  style: TextStyle(
-                    fontFamily: 'CenturyGothic',
-                    fontSize: 16,
-                    fontWeight: FontWeight.w400,
-                    color: AppColor.grayColor,
-                  ),
-                ),
-              ],
-            )
+
           ],
         ),
       ),

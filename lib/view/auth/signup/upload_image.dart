@@ -5,12 +5,10 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:nanny_fairy/res/components/rounded_button.dart';
 import 'package:nanny_fairy/res/components/widgets/vertical_spacing.dart';
 import 'package:nanny_fairy/utils/routes/routes_name.dart';
-
 import '../../../res/components/colors.dart';
 
 class UploadImage extends StatelessWidget {
   const UploadImage({super.key});
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -19,7 +17,7 @@ class UploadImage extends StatelessWidget {
         backgroundColor: Colors.transparent,
         elevation: 0.0,
         leading: IconButton(icon: const Icon(Icons.west,color: AppColor.blackColor,),onPressed: (){ Navigator.pop(context);},),
-        title:  Text('Upload Image',
+        title:  Text('Upload Profile',
           style: GoogleFonts.getFont(
             "Poppins",
             textStyle: const TextStyle(
@@ -135,12 +133,11 @@ body: Padding(padding: const EdgeInsets.only(left: 16.0,right: 16.0),child: Sing
               ),
             ),
           ),
-
         ],
       ),
       const VerticalSpeacing(46.0),
       RoundedButton(title: 'Continue', onpress: (){
-        Navigator.pushNamed(context, RoutesName.selectPreference);
+        Navigator.pushNamed(context, RoutesName.uploadId);
       }),
       const VerticalSpeacing(30.0),
 

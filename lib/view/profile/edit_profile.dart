@@ -64,6 +64,11 @@ class EditProfile extends StatelessWidget {
                 const VerticalSpeacing(16.0),
                 const TextFieldCustom(
                     maxLines: 1,
+                    text: 'Hourly',
+                    hintText: 'Enter hourly rate...'),
+                const VerticalSpeacing(16.0),
+                const TextFieldCustom(
+                    maxLines: 1,
                     text: 'Telephone Number',
                     hintText: '+923129739152'),
                 const VerticalSpeacing(16.0),

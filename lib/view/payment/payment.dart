@@ -3,9 +3,11 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:nanny_fairy/res/components/rounded_button.dart';
 import 'package:nanny_fairy/res/components/toggle_widget.dart';
 import 'package:nanny_fairy/res/components/widgets/custom_text_field.dart';
+import 'package:nanny_fairy/utils/routes/routes_name.dart';
 import '../../res/components/colors.dart';
 import '../../res/components/widgets/vertical_spacing.dart';
 
@@ -22,6 +24,45 @@ class _PaymentViewState extends State<PaymentView> {
   bool firstButton = true;
   bool secondButton = false;
   bool thirdButton = false;
+  void paymentDonePopup(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          backgroundColor: AppColor.whiteColor,
+          shape: const RoundedRectangleBorder(),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Icon(Icons.check_circle_outline,
+                  color: AppColor.primaryColor, size: 150),
+              const VerticalSpeacing(16),
+              Text(
+                'Payment Done Congratulations You\n are subscribed now',
+                textAlign: TextAlign.center,
+                style: GoogleFonts.getFont(
+                  "Poppins",
+                  textStyle: const TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.w500,
+                    color: AppColor.blackColor,
+                  ),
+                ),
+              ),
+              const VerticalSpeacing(30),
+              RoundedButton(
+                title: 'Continue to Chat',
+                onpress: () {
+                  Navigator.pushNamed(context, RoutesName.chatView);
+                },
+              ),
+              const VerticalSpeacing(16),
+            ],
+          ),
+        );
+      },
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -266,9 +307,11 @@ class _PaymentViewState extends State<PaymentView> {
                 const VerticalSpeacing(16.0),
                 const ToggleWidget(title: 'Remeber My Card Details'),
                 const VerticalSpeacing(46.0),
-                RoundedButton(title: 'Pay', onpress: () {
-                  Navigator.pop(context);
-                }),
+                RoundedButton(
+                    title: 'Pay',
+                    onpress: () {
+                      paymentDonePopup(context);
+                    }),
               ],
             ),
           ),

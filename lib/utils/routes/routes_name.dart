@@ -21,4 +21,17 @@ class RoutesName {
   static const String paymentView = '/payment_view';
   static const String totalRating = '/total_rating';
   static const String addRating = '/add_rating';
+  static const String filterPopup = '/filter_popup';
+  static const String loginView = '/login_view';
+  static const String forgetPass = '/forget_pass';
+  static const String uploadId = '/upload_id';
+  static const String selectPassionFamily = '/select_passion_family';
+  static const String registerFamily = '/register_family';
+  static const String uploadImgFamily = '/upload_img_family';
+  static const String uploadIdFamily = '/upload_id_family';
+  static const String paymentFamily = '/payment_family';
+  static const String dashboardFamily = '/dashboard_family';
+  static const String communityDetailView = '/community_detail_view';
+  static const String findJobView = '/find_job_view';
+  static const String providerDetails = '/provider_details';
 }

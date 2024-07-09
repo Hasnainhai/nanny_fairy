@@ -1,15 +1,28 @@
 import 'package:flutter/material.dart';
+import 'package:nanny_fairy/Family_View/findJobFamily/provider_details.dart';
+import 'package:nanny_fairy/Family_View/homeFamily/dashboard_family/dashboard_family.dart';
+import 'package:nanny_fairy/Family_View/payment_family/payment_family.dart';
+import 'package:nanny_fairy/Family_View/signup/register_details_family.dart';
+import 'package:nanny_fairy/Family_View/signup/select_passion_family.dart';
+import 'package:nanny_fairy/Family_View/signup/upload_id_family.dart';
+import 'package:nanny_fairy/Family_View/signup/upload_img_family.dart';
 import 'package:nanny_fairy/utils/routes/routes_name.dart';
+import 'package:nanny_fairy/view/auth/forgetPass/forget_pass.dart';
+import 'package:nanny_fairy/view/auth/login/login_view.dart';
 import 'package:nanny_fairy/view/auth/login_or_signup_view.dart';
 import 'package:nanny_fairy/view/auth/signup/fill_prefrences_view.dart';
 import 'package:nanny_fairy/view/auth/signup/register_details.dart';
 import 'package:nanny_fairy/view/auth/signup/select_passion_view.dart';
 import 'package:nanny_fairy/view/auth/signup/select_preference.dart';
 import 'package:nanny_fairy/view/auth/signup/upload_image.dart';
+import 'package:nanny_fairy/view/auth/uploadId/upload_id.dart';
 import 'package:nanny_fairy/view/booked/booked_view.dart';
+import 'package:nanny_fairy/view/job/find_job_view.dart';
 import 'package:nanny_fairy/view/chat/chat_view.dart';
 import 'package:nanny_fairy/view/community/community_view.dart';
 import 'package:nanny_fairy/view/community/upload_comunity_post.dart';
+import 'package:nanny_fairy/view/community/widgets/community_detail_view.dart';
+import 'package:nanny_fairy/view/filter/filter_popup.dart';
 import 'package:nanny_fairy/view/home/dashboard/dashboard.dart';
 import 'package:nanny_fairy/view/home/home_view.dart';
 import 'package:nanny_fairy/view/job/job_view.dart';
@@ -95,6 +108,45 @@ class Routes {
       case RoutesName.addRating:
         return MaterialPageRoute(
             builder: (BuildContext context) => const Rating());
+      case RoutesName.filterPopup:
+        return MaterialPageRoute(
+            builder: (BuildContext context) => const FilterPopUp());
+      case RoutesName.loginView:
+        return MaterialPageRoute(
+            builder: (BuildContext context) => const LoginView());
+      case RoutesName.forgetPass:
+        return MaterialPageRoute(
+            builder: (BuildContext context) => const ForgetPass());
+      case RoutesName.uploadId:
+        return MaterialPageRoute(
+            builder: (BuildContext context) => const UploadId());
+      case RoutesName.selectPassionFamily:
+        return MaterialPageRoute(
+            builder: (BuildContext context) => const SelectPassionFamilyView());
+      case RoutesName.registerFamily:
+        return MaterialPageRoute(
+            builder: (BuildContext context) => const RegisterDetailsFamily());
+      case RoutesName.uploadImgFamily:
+        return MaterialPageRoute(
+            builder: (BuildContext context) => const UploadImageFamily());
+      case RoutesName.uploadIdFamily:
+        return MaterialPageRoute(
+            builder: (BuildContext context) => const UploadIdFamily());
+      case RoutesName.paymentFamily:
+        return MaterialPageRoute(
+            builder: (BuildContext context) => const PaymentFamilyView());
+      case RoutesName.dashboardFamily:
+        return MaterialPageRoute(
+            builder: (BuildContext context) => const DashBoardFamilyScreen());
+      case RoutesName.communityDetailView:
+        return MaterialPageRoute(
+            builder: (BuildContext context) => const CommunityDetailView());
+      case RoutesName.findJobView:
+        return MaterialPageRoute(
+            builder: (BuildContext context) => const FindJobView());
+      case RoutesName.providerDetails:
+        return MaterialPageRoute(
+            builder: (BuildContext context) => const ProviderDetails());
 
       default:
         return MaterialPageRoute(builder: (_) {

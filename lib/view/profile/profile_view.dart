@@ -13,7 +13,7 @@ class ProfileView extends StatefulWidget {
 }
 
 class _ProfileViewState extends State<ProfileView> {
-  final double tHeight = 200.0;
+  final double tHeight = 150.0;
   final double top = 130.0;
   String defaultProfile =
       'https://t4.ftcdn.net/jpg/03/64/21/11/360_F_364211147_1qgLVxv1Tcq0Ohz3FawUfrtONzz8nq3e.jpg';
@@ -50,7 +50,7 @@ class _ProfileViewState extends State<ProfileView> {
                 _buildCoverBar(),
                 Container(
                   padding:
-                      const EdgeInsets.only(top: 0, left: 24.0, right: 24.0),
+                      const EdgeInsets.only(top: 10, left: 24.0, right: 24.0),
                   child: _buildProfile(),
                 ),
               ],
@@ -101,17 +101,6 @@ class _ProfileViewState extends State<ProfileView> {
               ),
             ),
           ],
-        ),
-        // Sign Up button
-        const VerticalSpeacing(8),
-        const Text(
-          'ID: 1540580',
-          style: TextStyle(
-            fontFamily: 'CenturyGothic',
-            fontSize: 18,
-            fontWeight: FontWeight.w600,
-            color: AppColor.whiteColor,
-          ),
         ),
       ],
     );
@@ -172,8 +161,8 @@ class _ProfileViewState extends State<ProfileView> {
                 const Divider(),
                 ProfileWidgets(
                   ontap: () {
-                    Navigator.push(context, MaterialPageRoute(builder: (c)=>TotalRatingScreen()));
-
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (c) => TotalRatingScreen()));
                   },
                   tColor: AppColor.primaryColor,
                   bColor: AppColor.primaryColor,
@@ -183,7 +172,9 @@ class _ProfileViewState extends State<ProfileView> {
                 ),
                 const Divider(),
                 ProfileWidgets(
-                  ontap: () {},
+                  ontap: () {
+                    Navigator.pushNamed(context, RoutesName.loginView);
+                  },
                   tColor: AppColor.primaryColor,
                   bColor: AppColor.primaryColor,
                   icon: Icons.logout_outlined,

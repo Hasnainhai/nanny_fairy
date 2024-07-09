@@ -3,6 +3,8 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:nanny_fairy/res/components/rounded_button.dart';
 import 'package:nanny_fairy/res/components/widgets/vertical_spacing.dart';
 import 'package:nanny_fairy/utils/routes/routes_name.dart';
+import 'package:nanny_fairy/view/auth/signup/select_passion_view.dart';
+import 'package:nanny_fairy/view/auth/signup/select_preference.dart';
 import '../../res/components/colors.dart';
 
 class LoginOrSignupView extends StatelessWidget {
@@ -53,12 +55,18 @@ class LoginOrSignupView extends StatelessWidget {
           ]
         ),
         const VerticalSpeacing(60.0),
-        RoundedButton(title: 'Login met E-mail', onpress: (){}),
+        RoundedButton(title: 'Login with Email', onpress: (){
+          Navigator.pushNamed(context, RoutesName.loginView);
+        }),
         const VerticalSpeacing(20.0),
-        RoundedButton(title: 'registreer als zorgbehoevende', onpress: (){}),
+        RoundedButton(title: 'register as a family', onpress: (){
+          Navigator.pushNamed(context, RoutesName.selectPassionFamily);
+
+        }),
         const VerticalSpeacing(20.0),
-        RoundedButton(title: 'registreer als hulpverlener', onpress: (){
+        RoundedButton(title: 'register as a provider', onpress: (){
           Navigator.pushNamed(context, RoutesName.selectPassion);
+
 
         }),
         const VerticalSpeacing(20.0),

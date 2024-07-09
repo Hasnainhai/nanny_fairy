@@ -114,6 +114,33 @@ class MyProfile extends StatelessWidget {
                   const VerticalSpeacing(16.0),
                   Text.rich(
                     TextSpan(
+                      text: 'Hourly Rate\n\n',
+                      style: GoogleFonts.getFont(
+                        "Poppins",
+                        textStyle: const TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.w600,
+                          color: AppColor.blackColor,
+                        ),
+                      ),
+                      children: [
+                        TextSpan(
+                          text: '\$50',
+                          style: GoogleFonts.getFont(
+                            "Poppins",
+                            textStyle: const TextStyle(
+                              fontSize: 14,
+                              fontWeight: FontWeight.w400,
+                              color: AppColor.blackColor,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  const VerticalSpeacing(16.0),
+                  Text.rich(
+                    TextSpan(
                       text: 'TelePhone Number\n\n',
                       style: GoogleFonts.getFont(
                         "Poppins",

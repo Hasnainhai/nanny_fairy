@@ -9,6 +9,7 @@ import 'package:nanny_fairy/view/profile/profile_view.dart';
 
 import '../../../res/components/colors.dart';
 import '../../../utils/routes/routes_name.dart';
+import '../../chat/chat_list.dart';
 
 class DashBoardScreen extends StatefulWidget {
   const DashBoardScreen({super.key});
@@ -102,21 +103,21 @@ class _DashBoardScreenState extends State<DashBoardScreen>
         controller: tabController,
         children: const [
           JobView(),
-          ChatView(),
+          ChatList(),
           BookedView(),
           CommunityView(),
           ProfileView(),
         ],
       ),
       bottomNavigationBar: BottomNavigationBar(
-        items: [
-          const BottomNavigationBarItem(
+        items: const [
+          BottomNavigationBarItem(
             icon: Icon(
               Icons.receipt,
             ),
             label: ('job'),
           ),
-          const BottomNavigationBarItem(
+          BottomNavigationBarItem(
             icon: Icon(
               Icons.chat,
             ),

@@ -50,7 +50,6 @@ class _RegisterDetailsState extends State<RegisterDetails> {
               ),
             ),
           ),
-          actions: [IconButton(onPressed: (){}, icon: const Icon(Icons.border_color_outlined,color: AppColor.whiteColor,))],
         ),
       ),
       body: Container(
@@ -73,7 +72,6 @@ class _RegisterDetailsState extends State<RegisterDetails> {
               const TextFieldCustom(maxLines: 1, text: 'Name',hintText: 'Raees Khan'),
               const VerticalSpeacing(16),
               const TextFieldCustom(maxLines: 1, text: 'Address',hintText: 'E-11 Islamad'),
-
               const VerticalSpeacing(16),
               const Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
