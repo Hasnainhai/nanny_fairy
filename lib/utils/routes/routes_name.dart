@@ -34,4 +34,5 @@ class RoutesName {
   static const String communityDetailView = '/community_detail_view';
   static const String findJobView = '/find_job_view';
   static const String providerDetails = '/provider_details';
+  static const String createAccount = '/create_account';
 }
