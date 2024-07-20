@@ -91,7 +91,7 @@ class _SelectPassionViewState extends State<SelectPassionView> {
             ),
            const VerticalSpeacing(30.0),
             RoundedButton(title:'Register' ,onpress: (){
-              Navigator.pushNamed(context, RoutesName.registerDetails);
+              Navigator.pushNamed(context, RoutesName.availabilityView);
             },),
 
 
