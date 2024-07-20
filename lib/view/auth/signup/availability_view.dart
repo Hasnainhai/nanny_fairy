@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:nanny_fairy/res/components/rounded_button.dart';
 import 'package:nanny_fairy/res/components/widgets/vertical_spacing.dart';
+import 'package:nanny_fairy/utils/routes/routes_name.dart';
 
 import '../../../res/components/colors.dart';
 
@@ -143,7 +144,9 @@ class AvailabilityView extends StatelessWidget {
               const Divider(),
 
               const VerticalSpeacing(46.0),
-              RoundedButton(title: 'Register', onpress: () {}),
+              RoundedButton(title: 'Register', onpress: () {
+                Navigator.pushNamed(context, RoutesName.educationHorlyView);
+              }),
 
               const SizedBox(height: 16),
             ],

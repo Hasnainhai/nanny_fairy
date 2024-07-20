@@ -6,7 +6,7 @@ class RoutesName {
   static const String registerDetails = '/Register_details';
   static const String uploadImg = '/upload_img';
   static const String selectPreference = '/select_pref';
-  static const String fillpreferenceView = '/fill_pref_view';
+  static const String refrenceView = '/refrence_view';
   static const String jobView = '/job_view';
   static const String chatView = '/chat_view';
   static const String bookedView = '/booked_view';
@@ -36,4 +36,5 @@ class RoutesName {
   static const String providerDetails = '/provider_details';
   static const String createAccount = '/create_account';
   static const String availabilityView = '/availability_view';
+  static const String educationHorlyView = '/education_horly_view';
 }

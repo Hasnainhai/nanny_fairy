@@ -9,7 +9,6 @@ import '../../../res/components/colors.dart';
 class SelectPreference extends StatefulWidget {
   const SelectPreference({super.key});
 
-
   @override
   State<SelectPreference> createState() => _SelectPreferenceState();
 }
@@ -27,35 +26,32 @@ class _SelectPreferenceState extends State<SelectPreference> {
   final List<DropdownMenuItem<String>> _dropDownMenuItems = menuItems
       .map(
         (String value) => DropdownMenuItem<String>(
-      value: value,
-      child: Text(value,style: const TextStyle(color: AppColor.blackColor),),
-    ),
-  )
+          value: value,
+          child: Text(
+            value,
+            style: const TextStyle(color: AppColor.blackColor),
+          ),
+        ),
+      )
       .toList();
-  String _btnSelectedVal1 = "Family";
-  static const menuItems1 = <String>[
-    'Family',
-    'Friends',
-    'Relative',
-  ];
-  final List<DropdownMenuItem<String>> _dropDownMenuItems1 = menuItems1
-      .map(
-        (String value) => DropdownMenuItem<String>(
-      value: value,
-      child: Text(value,style: const TextStyle(color: AppColor.whiteColor),),
-    ),
-  )
-      .toList();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar:   AppBar(
+      appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0.0,
-        leading: IconButton(icon: const Icon(Icons.west,color: AppColor.blackColor,),onPressed: (){
-          Navigator.pop(context);
-        },),
-        title:  Text('Preference',
+        leading: IconButton(
+          icon: const Icon(
+            Icons.west,
+            color: AppColor.blackColor,
+          ),
+          onPressed: () {
+            Navigator.pop(context);
+          },
+        ),
+        title: Text(
+          'Reference',
           style: GoogleFonts.getFont(
             "Poppins",
             textStyle: const TextStyle(
@@ -67,119 +63,96 @@ class _SelectPreferenceState extends State<SelectPreference> {
         ),
         centerTitle: true,
       ),
-      body: Padding(padding: const EdgeInsets.only(left: 16.0,right: 16.0),child: Column(
-        children: [
-          const VerticalSpeacing(30.0),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text('Experience',
-                style: GoogleFonts.getFont(
-                  "Poppins",
-                  textStyle: const TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.w400,
-                    color: AppColor.blackColor,
-                  ),
+      body: Padding(
+        padding: const EdgeInsets.only(left: 16.0, right: 16.0),
+        child: Column(
+          children: [
+            const VerticalSpeacing(30.0),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                TextFieldCustom(
+                  prefixIcon: Icon(Icons.school_outlined),
+                  maxLines: 1,
+                  hintText: 'Enter your experience',
                 ),
-              ),
-        const VerticalSpeacing(10),
-        Container(
-          color: AppColor.boxFillColor,
-          child: Padding(
-            padding: const EdgeInsets.only(left: 8,right: 8.0),
-            child: DropdownButton(
-              dropdownColor: AppColor.whiteColor,
-              isExpanded: true,
-              icon: const Icon(Icons.expand_more),
-              underline: const SizedBox(),
-              value: _btn2SelectedVal,
-              onChanged: (String? newValue) {
-                if (newValue != null) {
-                  setState(() {
-                    _btn2SelectedVal = newValue;
-
-                  });
-                }
-              },
-              items: _dropDownMenuItems,
-            ),
-          ),
-        ),
-              const VerticalSpeacing(16.0),
-              Text('Referance',
-                style: GoogleFonts.getFont(
-                  "Poppins",
-                  textStyle: const TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.w400,
-                    color: AppColor.blackColor,
-                  ),
-                ),
-              ),
-              const VerticalSpeacing(16.0),
-              const TextFieldCustom(maxLines: 1,hintText: 'Animal care',),
-              const Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Expanded(child: TextFieldCustom(maxLines: 1,hintText: 'Pk',)),
-                  SizedBox(width: 10.0),
-                  Expanded(child: TextFieldCustom(maxLines: 1,hintText: '+923129739152',)),
-
-                ],
-              ),
-              const VerticalSpeacing(30.0),
-              Row(
-                children: [
-                  Expanded(child:   Text('Enter family you care',
-                    style: GoogleFonts.getFont(
-                      "Poppins",
-                      textStyle: const TextStyle(
-                        fontSize: 14,
-                        fontWeight: FontWeight.w400,
-                        color: AppColor.blackColor,
-                      ),
+                const VerticalSpeacing(16.0),
+                Text(
+                  'Referance',
+                  style: GoogleFonts.getFont(
+                    "Poppins",
+                    textStyle: const TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.w400,
+                      color: AppColor.blackColor,
                     ),
-                  ),),
-                  Expanded(child: Container(height: 50,
-                  width: 100,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(25),
-                    color: AppColor.primaryColor
                   ),
-                    child: Padding(padding: const EdgeInsets.all(15.0),child: DropdownButton(
-                      dropdownColor: AppColor.primaryColor,
+                ),
+                const VerticalSpeacing(16.0),
+                const TextFieldCustom(
+                  maxLines: 1,
+                  hintText: 'Animal care',
+                ),
+                Text(
+                  'Experience',
+                  style: GoogleFonts.getFont(
+                    "Poppins",
+                    textStyle: const TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.w400,
+                      color: AppColor.blackColor,
+                    ),
+                  ),
+                ),
+                const VerticalSpeacing(10),
+                Container(
+                  color: AppColor.boxFillColor.withOpacity(0.3),
+                  child: Padding(
+                    padding: const EdgeInsets.only(left: 8, right: 8.0),
+                    child: DropdownButton(
+                      dropdownColor: AppColor.whiteColor,
                       isExpanded: true,
-                      underline: const SizedBox(),
-                      value: _btnSelectedVal1,
                       icon: const Icon(Icons.expand_more),
-                      iconEnabledColor: Colors.white, // Change this to your desired color
-                      iconDisabledColor: Colors.white,
+                      underline: const SizedBox(),
+                      value: _btn2SelectedVal,
                       onChanged: (String? newValue) {
                         if (newValue != null) {
                           setState(() {
-                            _btnSelectedVal1 = newValue;
-
+                            _btn2SelectedVal = newValue;
                           });
                         }
                       },
-                      items: _dropDownMenuItems1,
-                    ),),
-
+                      items: _dropDownMenuItems,
+                    ),
                   ),
-
-                  ),
-                ],
-              ),
-
-            ],
-          ),
-          const VerticalSpeacing(60.0),
-          RoundedButton(title: 'Continue', onpress: (){
-            Navigator.pushNamed(context, RoutesName.fillpreferenceView);
-          }),
-        ],
-      ),
+                ),
+                const VerticalSpeacing(16),
+                const Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Expanded(
+                        child: TextFieldCustom(
+                      maxLines: 1,
+                      hintText: 'Land',
+                    )),
+                    SizedBox(width: 10.0),
+                    Expanded(
+                        child: TextFieldCustom(
+                      maxLines: 1,
+                      hintText: 'Mobile Number',
+                    )),
+                  ],
+                ),
+                const VerticalSpeacing(60.0),
+                RoundedButton(
+                    title: 'Continue',
+                    onpress: () {
+                      Navigator.pushNamed(context, RoutesName.uploadId);
+                    }),
+              ],
+            ),
+          ],
+        ),
       ),
     );
   }

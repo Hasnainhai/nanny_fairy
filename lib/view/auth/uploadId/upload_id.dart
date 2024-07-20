@@ -112,7 +112,7 @@ VerticalSpeacing(20.0),
             ),
             const VerticalSpeacing(46.0),
             RoundedButton(title: 'Continue', onpress: (){
-              Navigator.pushNamed(context, RoutesName.selectPreference);
+              Navigator.pushNamed(context, RoutesName.uploadImg);
             }),
 
           ],
