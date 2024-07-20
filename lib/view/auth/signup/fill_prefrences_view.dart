@@ -5,14 +5,14 @@ import 'package:nanny_fairy/res/components/rounded_button.dart';
 import 'package:nanny_fairy/res/components/widgets/vertical_spacing.dart';
 import 'package:nanny_fairy/utils/routes/routes_name.dart';
 
-class FillPreferenceView extends StatefulWidget {
-  const FillPreferenceView({super.key});
+class RefrenceView extends StatefulWidget {
+  const RefrenceView({super.key});
 
   @override
-  State<FillPreferenceView> createState() => _FillPreferenceViewState();
+  State<RefrenceView> createState() => _RefrenceViewState();
 }
 
-class _FillPreferenceViewState extends State<FillPreferenceView> {
+class _RefrenceViewState extends State<RefrenceView> {
   bool isOn = false;
 
   void _toggleButton() {

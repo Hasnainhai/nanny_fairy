@@ -12,6 +12,7 @@ import 'package:nanny_fairy/view/auth/login/login_view.dart';
 import 'package:nanny_fairy/view/auth/login_or_signup_view.dart';
 import 'package:nanny_fairy/view/auth/signup/availability_view.dart';
 import 'package:nanny_fairy/view/auth/signup/create_account.dart';
+import 'package:nanny_fairy/view/auth/signup/education_horly_view.dart';
 import 'package:nanny_fairy/view/auth/signup/fill_prefrences_view.dart';
 import 'package:nanny_fairy/view/auth/signup/register_details.dart';
 import 'package:nanny_fairy/view/auth/signup/select_passion_view.dart';
@@ -62,12 +63,10 @@ class Routes {
       case RoutesName.selectPreference:
         return MaterialPageRoute(
             builder: (BuildContext context) => const SelectPreference());
-      case RoutesName.fillpreferenceView:
+
+      case RoutesName.refrenceView:
         return MaterialPageRoute(
-            builder: (BuildContext context) => const FillPreferenceView());
-      case RoutesName.fillpreferenceView:
-        return MaterialPageRoute(
-            builder: (BuildContext context) => const FillPreferenceView());
+            builder: (BuildContext context) => const RefrenceView());
       case RoutesName.jobView:
         return MaterialPageRoute(
             builder: (BuildContext context) => const JobView());
@@ -155,6 +154,9 @@ class Routes {
       case RoutesName.availabilityView:
         return MaterialPageRoute(
             builder: (BuildContext context) => const AvailabilityView());
+      case RoutesName.educationHorlyView:
+        return MaterialPageRoute(
+            builder: (BuildContext context) => const EducationHorlyView());
 
       default:
         return MaterialPageRoute(builder: (_) {
