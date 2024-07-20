@@ -61,10 +61,9 @@ class LoginView extends StatelessWidget {
               const VerticalSpeacing(30.0),
               const TextFieldCustom(
                   maxLines: 1,
-                  text: 'Email Address',
                   hintText: 'hasnainDev@gmail.com'),
               const TextFieldCustom(
-                  maxLines: 1, text: 'Password', hintText: '*********'),
+                  maxLines: 1, hintText: '*********'),
               Row(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [

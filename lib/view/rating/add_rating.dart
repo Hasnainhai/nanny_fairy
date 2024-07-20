@@ -115,7 +115,6 @@ class _RatingState extends State<Rating> {
                       controller: commentController,
                       maxLines: 6,
                       hintText: "Additional comments...",
-                      text: 'Leave a your valuable comments',
                     ),
                     const VerticalSpeacing(30),
                     RoundedButton(

@@ -278,13 +278,11 @@ class _PaymentViewState extends State<PaymentView> {
                 const VerticalSpeacing(30),
                 const TextFieldCustom(
                   maxLines: 1,
-                  text: 'Card Name',
-                  hintText: 'Hasnain haider',
+                  hintText: 'Card Name',
                 ),
                 const TextFieldCustom(
                   maxLines: 1,
-                  text: 'Card Number',
-                  hintText: '71501 05** ****',
+                  hintText: ' Enter Card Number',
                 ),
                 const Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -292,15 +290,13 @@ class _PaymentViewState extends State<PaymentView> {
                     Expanded(
                         child: TextFieldCustom(
                       maxLines: 1,
-                      text: 'Expiration Date',
-                      hintText: '01/02/2050',
+                      hintText: 'Expiration Date',
                     )),
                     SizedBox(width: 10.0),
                     Expanded(
                         child: TextFieldCustom(
                       maxLines: 1,
-                      text: 'CVV',
-                      hintText: '0343',
+                      hintText: 'CVV',
                     )),
                   ],
                 ),

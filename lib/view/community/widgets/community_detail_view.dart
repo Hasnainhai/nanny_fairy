@@ -85,7 +85,7 @@ class CommunityDetailView extends StatelessWidget {
                 ),
               ),
               const TextFieldCustom(
-                  maxLines: 1, text: 'Comment', hintText: 'type comment'),
+                  maxLines: 1, hintText: 'type comment'),
               const VerticalSpeacing(16),
               RoundedButton(
                   title: 'Post',

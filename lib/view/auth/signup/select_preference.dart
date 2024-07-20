@@ -118,13 +118,13 @@ class _SelectPreferenceState extends State<SelectPreference> {
                 ),
               ),
               const VerticalSpeacing(16.0),
-              const TextFieldCustom(maxLines: 1, text: 'Name',hintText: 'Animal care',),
+              const TextFieldCustom(maxLines: 1,hintText: 'Animal care',),
               const Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Expanded(child: TextFieldCustom(maxLines: 1, text: 'Land',hintText: 'Pk',)),
+                  Expanded(child: TextFieldCustom(maxLines: 1,hintText: 'Pk',)),
                   SizedBox(width: 10.0),
-                  Expanded(child: TextFieldCustom(maxLines: 1, text: 'Mobile Number',hintText: '+923129739152',)),
+                  Expanded(child: TextFieldCustom(maxLines: 1,hintText: '+923129739152',)),
 
                 ],
               ),
