@@ -10,6 +10,7 @@ import 'package:nanny_fairy/utils/routes/routes_name.dart';
 import 'package:nanny_fairy/view/auth/forgetPass/forget_pass.dart';
 import 'package:nanny_fairy/view/auth/login/login_view.dart';
 import 'package:nanny_fairy/view/auth/login_or_signup_view.dart';
+import 'package:nanny_fairy/view/auth/signup/create_account.dart';
 import 'package:nanny_fairy/view/auth/signup/fill_prefrences_view.dart';
 import 'package:nanny_fairy/view/auth/signup/register_details.dart';
 import 'package:nanny_fairy/view/auth/signup/select_passion_view.dart';
@@ -147,6 +148,9 @@ class Routes {
       case RoutesName.providerDetails:
         return MaterialPageRoute(
             builder: (BuildContext context) => const ProviderDetails());
+      case RoutesName.createAccount:
+        return MaterialPageRoute(
+            builder: (BuildContext context) => const CreateAccount());
 
       default:
         return MaterialPageRoute(builder: (_) {
