@@ -34,7 +34,7 @@ class _SelectPassionViewState extends State<SelectPassionView> {
           backgroundColor: Colors.transparent,
           elevation: 0.0,
         leading: IconButton(icon: const Icon(Icons.west,color: AppColor.whiteColor,),onPressed: (){ Navigator.pop(context);},),
-          title:  Text('Welcome',
+          title:  Text('Select your preference',
             style: GoogleFonts.getFont(
               "Poppins",
               textStyle: const TextStyle(
