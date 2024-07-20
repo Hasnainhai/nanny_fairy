@@ -1,5 +1,3 @@
-
-
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:nanny_fairy/res/components/rounded_button.dart';
@@ -9,141 +7,175 @@ import '../../../res/components/colors.dart';
 
 class UploadImage extends StatelessWidget {
   const UploadImage({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColor.secondaryBgColor,
-    appBar:   AppBar(
-        backgroundColor: Colors.transparent,
-        elevation: 0.0,
-        leading: IconButton(icon: const Icon(Icons.west,color: AppColor.blackColor,),onPressed: (){ Navigator.pop(context);},),
-        title:  Text('Upload Profile',
-          style: GoogleFonts.getFont(
-            "Poppins",
-            textStyle: const TextStyle(
-              fontSize: 20,
-              fontWeight: FontWeight.w400,
-              color: AppColor.blackColor,
-            ),
-          ),
-        ),
-      centerTitle: true,
-      ),
-body: Padding(padding: const EdgeInsets.only(left: 16.0,right: 16.0),child: SingleChildScrollView(
-  scrollDirection: Axis.vertical,
-  child: Column(
-    crossAxisAlignment: CrossAxisAlignment.start,
-    children: [
-
-    const VerticalSpeacing(30.0),
-    Container(
-      height: 382,
-      width: double.infinity,
-      color: AppColor.whiteColor,
-      child: Padding(padding: const EdgeInsets.all(20.0),child: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      backgroundColor: AppColor.primaryColor,
+      body: Stack(
         children: [
-          Text('Aliqua officia duis occaecat consectetur fugiat nostrud anim dolor commodo',
-            textAlign: TextAlign.center,
-
-            style: GoogleFonts.getFont(
-              "Poppins",
-              textStyle: const TextStyle(
-                fontSize: 13,
-                fontWeight: FontWeight.w400,
-                color: AppColor.blackColor,
-              ),
-            ),
-          ),
           Container(
-            height:120,
-            width: 111.46,
+            height: MediaQuery.of(context).size.height,
+            width: double.infinity,
             decoration: const BoxDecoration(
-              image: DecorationImage(image: AssetImage('images/profile.png'),fit: BoxFit.contain),
+              color: AppColor.whiteColor,
+              borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(30.0),
+              ),
             ),
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Container(
-                height: 56,
-                width: 56,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(28),
-                  color: AppColor.primaryColor
+            child:  SingleChildScrollView(
+              child: Padding(
+                padding: EdgeInsets.only(left: 16.0, right: 16.0),
+                child: Column(
 
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    VerticalSpeacing(MediaQuery.of(context).size.height*0.5),
+                    Text(
+                      'Write an introduction to yourself',
+                      textAlign: TextAlign.center,
+                      style: GoogleFonts.getFont(
+                        "Poppins",
+                        textStyle: const TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.w400,
+                          color: AppColor.blackColor,
+                        ),
+                      ),
+                    ),
+                    const VerticalSpeacing(10),
+                    Container(
+                      height: 200,
+                      width: double.infinity,
+                      color: AppColor.boxFillColor,
+                      child: const Padding(
+                        padding: EdgeInsets.only(left: 10.0),
+                        child: TextField(
+                          decoration: InputDecoration(
+                            hintText: 'Type...',
+                            border: InputBorder.none,
+                          ),
+                        ),
+                      ),
+                    ),
+                    const VerticalSpeacing(40),
+                    RoundedButton(title: 'Continue', onpress: (){
+                      Navigator.pushNamed(context, RoutesName.dashboard);
+                    }),
+
+                  ],
                 ),
-                child: Center(child: IconButton(onPressed: (){}, icon: const Icon(Icons.camera_alt_outlined,color: AppColor.whiteColor,),),
-              ),),
-              const SizedBox(width: 16.0),
-              Container(
-                height: 56,
-                width: 56,
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(28),
-                    color: AppColor.primaryColor
-
-                ),
-                child: Center(child: IconButton(onPressed: (){}, icon: const Icon(Icons.save_as_outlined,color: AppColor.whiteColor,),),
-                ),),
-            ],
-          ),
-
-        ],
-      ),),
-
-    ),
-    const VerticalSpeacing(30.0),
-    Text('Awrite introduction to your self',
-      textAlign: TextAlign.center,
-
-      style: GoogleFonts.getFont(
-        "Poppins",
-        textStyle: const TextStyle(
-          fontSize: 16,
-          fontWeight: FontWeight.w400,
-          color: AppColor.blackColor,
-        ),
-      ),
-    ),
-  const VerticalSpeacing(10.0),
-      Container(height: 200,
-      width: double.infinity,
-      color: AppColor.boxFillColor,
-        child: const Padding(
-          padding: EdgeInsets.only(left: 10.0),
-          child: TextField(decoration: InputDecoration(hintText: 'Type...', border: InputBorder.none,),
-          ),
-        ),
-      ),
-      const VerticalSpeacing(8.0),
-      Row(
-        mainAxisAlignment: MainAxisAlignment.end,
-        children: [
-          Text('100 Words',
-            textAlign: TextAlign.center,
-
-            style: GoogleFonts.getFont(
-              "Poppins",
-              textStyle: const TextStyle(
-                fontSize: 16,
-                fontWeight: FontWeight.w400,
-                color: AppColor.blackColor,
               ),
             ),
           ),
+          // Top container that acts as AppBar
+          Container(
+            color: AppColor.primaryColor,
+            height: 250, // Adjust the height to accommodate the avatar overlap
+            child: Column(
+              children: [
+                const SizedBox(height: 50), // Adjust to add padding at the top
+                Row(
+                  children: [
+                    IconButton(
+                      icon: const Icon(
+                        Icons.west,
+                        color: AppColor.whiteColor,
+                      ),
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
+                    ),
+                    SizedBox(width: 50),
+                    Text(
+                      'Upload Image',
+                      style: GoogleFonts.getFont(
+                        "Poppins",
+                        textStyle: const TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.w400,
+                          color: AppColor.whiteColor,
+                        ),
+                      ),
+                    ),
+                    const Spacer(),
+                  ],
+                ),
+              ],
+            ),
+          ),
+          // Positioned CircleAvatar on top of all
+          Positioned(
+            top: 190, // Half of the avatar height to position it correctly
+            left:
+            MediaQuery.of(context).size.width / 2 - 60, // Center the avatar
+            child: Container(
+              height: 120,
+              width: 120,
+              decoration: BoxDecoration(
+                  color: AppColor.avatarColor,
+                  borderRadius: BorderRadius.circular(60),
+                  border: Border.all(width: 4, color: AppColor.whiteColor)),
+              child: Center(
+                child: Padding(
+                  padding: const EdgeInsets.all(12.0),
+                  child: Image.asset(
+                    'images/profile.png',
+                    fit: BoxFit.cover,
+                    color: AppColor.whiteColor,
+                  ),
+                ),
+              ),
+            ),
+          ),
+          Positioned(
+            top: 280,
+            left: MediaQuery.of(context).size.width / 2 - 35,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Container(
+                  height: 32,
+                  width: 32,
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(16),
+                      color: AppColor.primaryColor),
+                  child: Center(
+                    child: IconButton(
+                      onPressed: () {},
+                      icon: const Icon(
+                        Icons.camera_alt_outlined,
+                        size: 18,
+                        color: AppColor.whiteColor,
+                      ),
+                    ),
+                  ),
+                ),
+                const SizedBox(width: 5.0),
+                Container(
+                  height: 32,
+                  width: 32,
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(16),
+                      color: AppColor.primaryColor),
+                  child: Center(
+                    child: IconButton(
+                      onPressed: () {},
+                      icon: const Icon(
+                        Icons.save_as_outlined,
+                        size: 18,
+                        color: AppColor.whiteColor,
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+
         ],
       ),
-      const VerticalSpeacing(46.0),
-      RoundedButton(title: 'Continue', onpress: (){
-        Navigator.pushNamed(context, RoutesName.uploadId);
-      }),
-      const VerticalSpeacing(30.0),
-
-  ],),
-),),
-
     );
   }
 }
+

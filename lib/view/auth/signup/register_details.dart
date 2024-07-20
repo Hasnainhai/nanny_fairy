@@ -144,7 +144,7 @@ class _RegisterDetailsState extends State<RegisterDetails> {
               ),
               const VerticalSpeacing(24.0),
               RoundedButton(title: 'Register', onpress: (){
-                Navigator.pushNamed(context, RoutesName.uploadImg);
+                Navigator.pushNamed(context, RoutesName.createAccount);
               }),
               const VerticalSpeacing(30.0),
             ],
