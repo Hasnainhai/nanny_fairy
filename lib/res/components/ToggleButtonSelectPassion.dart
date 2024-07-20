@@ -1,5 +1,3 @@
-
-
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -28,11 +26,11 @@ class _ToggleRadioButtonState extends State<ToggleRadioButton> {
     return Container(
       height: 50,
       width: double.infinity,
-      color: AppColor.boxFillColor,
+      color: isSelected ? AppColor.primaryColor : AppColor.boxFillColor,
       child: GestureDetector(
         onTap: _handleTap,
         child: Padding(
-          padding: const EdgeInsets.only(left: 16.0),
+          padding: const EdgeInsets.only(left: 16.0, right: 16.0),
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -41,24 +39,16 @@ class _ToggleRadioButtonState extends State<ToggleRadioButton> {
                 widget.label,
                 style: GoogleFonts.getFont(
                   "Poppins",
-                  textStyle: const TextStyle(
+                  textStyle: TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.w400,
-                    color: Colors.black,
+                    color: isSelected ? Colors.white : Colors.black,
                   ),
                 ),
               ),
-              Transform.scale(
-                scale: 1,
-                child: Radio<bool>(
-                  value: isSelected,
-                  groupValue: true,
-                  onChanged: (value) {
-                    _handleTap();
-                  },
-                  activeColor: AppColor.primaryColor,
-
-                ),
+              Icon(
+                isSelected ? Icons.check : Icons.add,
+                color: isSelected ? Colors.white : AppColor.blackColor,
               ),
             ],
           ),
