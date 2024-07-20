@@ -76,7 +76,6 @@ class ForgetPass extends StatelessWidget {
                   const VerticalSpeacing(20.0),
                   const TextFieldCustom(
                       maxLines: 1,
-                      text: 'Phone Number',
                       hintText: 'hasnainDev@gmail.com'),
                   const VerticalSpeacing(16.0),
                   RoundedButton(title: 'Send Me Link', onpress: () {

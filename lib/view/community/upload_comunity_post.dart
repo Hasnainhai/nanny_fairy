@@ -108,11 +108,9 @@ class _UploadComunityPostState extends State<UploadComunityPost> {
                       const VerticalSpeacing(16.0),
                       const TextFieldCustom(
                           maxLines: 1,
-                          text: 'Title',
                           hintText: 'Your title...'),
                       const TextFieldCustom(
                           maxLines: 1,
-                          text: 'Content',
                           hintText: 'Your content...'),
                       const VerticalSpeacing(30.0),
                       RoundedButton(

@@ -7,55 +7,61 @@ class TextFieldCustom extends StatefulWidget {
     super.key,
     this.hintText,
     required int maxLines,
-    required this.text,
     this.controller,
     this.keyboardType,
     this.obscureText = false,
     this.validator,
+    this.prefixIcon,
   });
 
-  final String text;
   final TextEditingController? controller;
   final TextInputType? keyboardType;
   final bool obscureText;
   final String? hintText;
   final String? Function(String?)? validator;
+  final Widget? prefixIcon;
   @override
   State<TextFieldCustom> createState() => _TextFieldCustomState();
 }
 
 class _TextFieldCustomState extends State<TextFieldCustom> {
   bool hidden = true;
+
   @override
   Widget build(BuildContext context) {
     return Container(
+      height: 50,
       margin: const EdgeInsets.symmetric(vertical: 10),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            widget.text,
-            style: const TextStyle(
-              fontFamily: 'CenturyGothic',
-              fontSize: 14,
-              fontWeight: FontWeight.w400,
-              color: AppColor.blackColor,
-            ),
+      decoration: BoxDecoration(
+        color:  AppColor.whiteColor,
+        border: Border.all(
+          strokeAlign: BorderSide.strokeAlignCenter,
+          color: const Color(0xff1B81BC)
+              .withOpacity(0.10), // Stroke color with 10% opacity
+          width: 1,
+        ),
+        boxShadow: [
+          BoxShadow(
+            color: const Color(0xff1B81BC)
+                .withOpacity(0.1), // Drop shadow color with 4% opacity
+            blurRadius: 2,
+            offset: const Offset(1, 2),
+            spreadRadius: 1,
           ),
-          const SizedBox(height: 8),
-          Container(
-            color: const Color(0xffEEEEEE),
-            child: TextFormField(
-              keyboardType: widget.keyboardType,
-              obscureText: (widget.obscureText && hidden),
-              style: const TextStyle(fontSize: 15),
-              controller: widget.controller,
-              decoration: InputDecoration(
-                // prefixText:  widget.hintText,
-                hintText: widget.hintText,
-                filled: true,
-                suffixIcon: widget.obscureText
-                    ? GestureDetector(
+        ],
+      ),
+      child: TextFormField(
+        keyboardType: widget.keyboardType,
+        obscureText: (widget.obscureText && hidden),
+        style: const TextStyle(fontSize: 15),
+        controller: widget.controller,
+        decoration: InputDecoration(
+          prefixIcon: widget.prefixIcon,
+          prefixIconColor: AppColor.primaryColor,
+          hintText: widget.hintText,
+          filled: false,
+          suffixIcon: widget.obscureText
+              ? GestureDetector(
                   onTap: () {
                     setState(() => hidden = !hidden);
                   },
@@ -65,21 +71,18 @@ class _TextFieldCustomState extends State<TextFieldCustom> {
                     size: 30,
                   ),
                 )
-                    : null,
-                fillColor: const Color(0xffEEEEEE),
-                enabledBorder: const OutlineInputBorder(
-                  borderSide: BorderSide(color: Color(0xfff1f1f1)),
-                  borderRadius: BorderRadius.zero,
-                ),
-                focusedBorder: const OutlineInputBorder(
-                  borderSide: BorderSide(color: Color(0xfff1f1f1)),
-                  borderRadius: BorderRadius.zero,
-                ),
-              ),
-              validator: widget.validator,
-            ),
+              : null,
+          fillColor: const Color(0xffEEEEEE),
+          enabledBorder: const OutlineInputBorder(
+            borderSide: BorderSide(color: Color(0xfff1f1f1)),
+            borderRadius: BorderRadius.zero,
           ),
-        ],
+          focusedBorder: const OutlineInputBorder(
+            borderSide: BorderSide(color: Color(0xfff1f1f1)),
+            borderRadius: BorderRadius.zero,
+          ),
+        ),
+        validator: widget.validator,
       ),
     );
   }

@@ -57,41 +57,36 @@ class EditProfile extends StatelessWidget {
             child: Column(
               children: [
                 const TextFieldCustom(
-                    maxLines: 1, text: 'Name', hintText: 'hassnain'),
+                    maxLines: 1, hintText: 'Name'),
                 const VerticalSpeacing(16.0),
                 const TextFieldCustom(
-                    maxLines: 1, text: 'Address', hintText: 'E-11 Islamabad'),
+                    maxLines: 1, hintText: 'Address'),
                 const VerticalSpeacing(16.0),
                 const TextFieldCustom(
                     maxLines: 1,
-                    text: 'Hourly',
                     hintText: 'Enter hourly rate...'),
                 const VerticalSpeacing(16.0),
                 const TextFieldCustom(
                     maxLines: 1,
-                    text: 'Telephone Number',
-                    hintText: '+923129739152'),
+                    hintText: 'Telephone Number'),
                 const VerticalSpeacing(16.0),
                 const TextFieldCustom(
-                    maxLines: 1, text: 'Date of Birth', hintText: '1/02/2003'),
-                const VerticalSpeacing(16.0),
-                const TextFieldCustom(
-                    maxLines: 1,
-                    text: 'Email Address',
-                    hintText: 'hassnain@gmail.com'),
-                const VerticalSpeacing(16.0),
-                const TextFieldCustom(
-                    maxLines: 1, text: 'Password', hintText: '********'),
+                    maxLines: 1, hintText: 'Date of Birth'),
                 const VerticalSpeacing(16.0),
                 const TextFieldCustom(
                     maxLines: 1,
-                    text: 'Confirm Password',
-                    hintText: '*********'),
+                    hintText: 'Email Address'),
+                const VerticalSpeacing(16.0),
+                const TextFieldCustom(
+                    maxLines: 1, hintText: 'Password'),
                 const VerticalSpeacing(16.0),
                 const TextFieldCustom(
                     maxLines: 1,
-                    text: 'Description',
-                    hintText: 'I am hasnain a sofware engineer'),
+                    hintText: 'Confirm Password'),
+                const VerticalSpeacing(16.0),
+                const TextFieldCustom(
+                    maxLines: 1,
+                    hintText: 'Description'),
                 const VerticalSpeacing(16.0),
                 RoundedButton(
                     title: 'Update Profile',
