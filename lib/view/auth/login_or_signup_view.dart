@@ -65,7 +65,7 @@ class LoginOrSignupView extends StatelessWidget {
         }),
         const VerticalSpeacing(20.0),
         RoundedButton(title: 'register as a provider', onpress: (){
-          Navigator.pushNamed(context, RoutesName.createAccount);
+          Navigator.pushNamed(context, RoutesName.registerDetails);
 
 
         }),

@@ -91,7 +91,7 @@ class _SelectPreferenceState extends State<SelectPreference> {
                 const VerticalSpeacing(16.0),
                 const TextFieldCustom(
                   maxLines: 1,
-                  hintText: 'Animal care',
+                  hintText: 'Job',
                 ),
                 Text(
                   'Experience',
