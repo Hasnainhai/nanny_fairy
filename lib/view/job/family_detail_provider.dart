@@ -20,42 +20,62 @@ class _FamilyDetailProviderState extends State<FamilyDetailProvider> {
       builder: (BuildContext context) {
         return AlertDialog(
           backgroundColor: AppColor.whiteColor,
-          shape: const RoundedRectangleBorder(),
-          content: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Image.asset(
-                'images/popImg.png',
-                width: 150,
-                height: 150,
-              ),
-              const VerticalSpeacing(16),
-              Text(
-                'Agree to Subscription of\n€2/month',
-                textAlign: TextAlign.center,
-                style: GoogleFonts.getFont(
-                  "Poppins",
-                  textStyle: const TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.w500,
-                    color: AppColor.blackColor,
+          contentPadding: EdgeInsets.zero, // Remove default padding
+          content: Container(
+            width: MediaQuery.of(context).size.width * 0.8, // Set width to 80% of screen width
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Container(
+                  height: 150,
+                  width: double.infinity, // Fill the width of the parent container
+                  decoration: const BoxDecoration(
+                    borderRadius: BorderRadius.only(
+                      bottomRight: Radius.circular(12),
+                      bottomLeft: Radius.circular(12),
+                    ),
+                    color: AppColor.primaryColor,
+                  ),
+                  child: Center(
+                    child: Image.asset(
+                      'images/popImg.png',
+                      width: 150,
+                      height: 150,
+                    ),
                   ),
                 ),
-              ),
-              const VerticalSpeacing(30),
-              RoundedButton(
-                title: 'Subscribe and Chat',
-                onpress: () {
-                  Navigator.pushNamed(context, RoutesName.paymentView);
-                },
-              ),
-              const VerticalSpeacing(16),
-            ],
+                const VerticalSpeacing(16),
+                Text(
+                  'Agree to Subscription of\n€2/month',
+                  textAlign: TextAlign.center,
+                  style: GoogleFonts.getFont(
+                    "Poppins",
+                    textStyle: const TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.w500,
+                      color: AppColor.blackColor,
+                    ),
+                  ),
+                ),
+                const VerticalSpeacing(30),
+                Padding(
+                  padding: const EdgeInsets.only(left: 16.0,right: 16.0),
+                  child: RoundedButton(
+                    title: 'Subscribe and Chat',
+                    onpress: () {
+                      Navigator.pushNamed(context, RoutesName.paymentView);
+                    },
+                  ),
+                ),
+                const VerticalSpeacing(16),
+              ],
+            ),
           ),
         );
       },
     );
   }
+
 
   @override
   Widget build(BuildContext context) {
@@ -261,18 +281,12 @@ class _FamilyDetailProviderState extends State<FamilyDetailProvider> {
                                   ),
                                 ],
                               ),
-                              const SizedBox(height: 16),
-                              // Moved RoundedButton out of Positioned
-                              RoundedButton(
-                                title: 'Chat With Family',
-                                onpress: () {
-                                  print("Chat With Family button pressed");
-                                  Navigator.pushNamed(context, RoutesName.home);
-                                },
-                              ),
+                              VerticalSpeacing(100),
+
                             ],
                           ),
                         ),
+
                       ],
                     ),
                   ),
@@ -288,6 +302,17 @@ class _FamilyDetailProviderState extends State<FamilyDetailProvider> {
                   ),
                 ),
               ],
+            ),
+            VerticalSpeacing(MediaQuery.of(context).size.height*0.6),
+            Padding(
+              padding: const EdgeInsets.only(left: 16.0,right: 16.0),
+              child: RoundedButton(
+                title: 'Chat With Family',
+                onpress: () {
+                  showSubscribtionDialog(context);
+
+                },
+              ),
             ),
           ],
         ),
