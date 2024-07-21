@@ -20,7 +20,7 @@ import 'package:nanny_fairy/view/auth/signup/select_preference.dart';
 import 'package:nanny_fairy/view/auth/signup/upload_image.dart';
 import 'package:nanny_fairy/view/auth/uploadId/upload_id.dart';
 import 'package:nanny_fairy/view/booked/booked_view.dart';
-import 'package:nanny_fairy/view/job/find_job_view.dart';
+import 'package:nanny_fairy/view/job/family_detail_provider.dart';
 import 'package:nanny_fairy/view/chat/chat_view.dart';
 import 'package:nanny_fairy/view/community/community_view.dart';
 import 'package:nanny_fairy/view/community/upload_comunity_post.dart';
@@ -144,7 +144,7 @@ class Routes {
             builder: (BuildContext context) => const CommunityDetailView());
       case RoutesName.findJobView:
         return MaterialPageRoute(
-            builder: (BuildContext context) => const FindJobView());
+            builder: (BuildContext context) => const FamilyDetailProvider());
       case RoutesName.providerDetails:
         return MaterialPageRoute(
             builder: (BuildContext context) => const ProviderDetails());
