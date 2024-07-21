@@ -12,181 +12,187 @@ class HomeView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
-        children: [
-          Stack(
-            clipBehavior: Clip.none,
-            children: [
-              Container(
-                height: 179,
-                width: double.infinity,
-                decoration: const BoxDecoration(
-                  color: AppColor.primaryColor,
-                  borderRadius: BorderRadius.only(
-                    bottomLeft: Radius.circular(20),
-                    bottomRight: Radius.circular(20),
-                  ),
-                ),
-                child: Center(
-                  child: ListTile(
-                    leading: const CircleAvatar(
-                      radius: 40,
-                      backgroundImage: NetworkImage(
-                          'https://play-lh.googleusercontent.com/jInS55DYPnTZq8GpylyLmK2L2cDmUoahVacfN_Js_TsOkBEoizKmAl5-p8iFeLiNjtE=w526-h296-rw'),
-                    ),
-                    title: Text(
-                      'WellCome',
-                      style: GoogleFonts.getFont(
-                        "Poppins",
-                        textStyle: const TextStyle(
-                          fontSize: 12,
-                          fontWeight: FontWeight.w500,
-                          color: AppColor.whiteColor,
-                        ),
-                      ),
-                    ),
-                    subtitle: Text(
-                      'Aliza Zehra',
-                      style: GoogleFonts.getFont(
-                        "Poppins",
-                        textStyle: const TextStyle(
-                          fontSize: 14,
-                          fontWeight: FontWeight.w500,
-                          color: AppColor.whiteColor,
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-              Positioned(
-                top: 159, // Adjust this value as needed
-                left: (MediaQuery.of(context).size.width - 320) /
-                    2, // Center horizontally
-                child: const SearchBar(),
-              ),
-            ],
-          ),
-          const VerticalSpeacing(50.0),
-          Padding(
-            padding: const EdgeInsets.only(left: 16.0, right: 16.0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      resizeToAvoidBottomInset: false,
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            Stack(
+              clipBehavior: Clip.none,
               children: [
-                Text(
-                  'This month',
-                  style: GoogleFonts.getFont(
-                    "Poppins",
-                    textStyle: const TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.w600,
-                      color: AppColor.blackColor,
+                Container(
+                  height: 179,
+                  width: double.infinity,
+                  decoration: const BoxDecoration(
+                    color: AppColor.primaryColor,
+                    borderRadius: BorderRadius.only(
+                      bottomLeft: Radius.circular(20),
+                      bottomRight: Radius.circular(20),
+                    ),
+                  ),
+                  child: Center(
+                    child: ListTile(
+                      leading: const CircleAvatar(
+                        radius: 40,
+                        backgroundImage: NetworkImage(
+                            'https://play-lh.googleusercontent.com/jInS55DYPnTZq8GpylyLmK2L2cDmUoahVacfN_Js_TsOkBEoizKmAl5-p8iFeLiNjtE=w526-h296-rw'),
+                      ),
+                      title: Text(
+                        'WellCome',
+                        style: GoogleFonts.getFont(
+                          "Poppins",
+                          textStyle: const TextStyle(
+                            fontSize: 12,
+                            fontWeight: FontWeight.w500,
+                            color: AppColor.whiteColor,
+                          ),
+                        ),
+                      ),
+                      subtitle: Text(
+                        'Aliza Zehra',
+                        style: GoogleFonts.getFont(
+                          "Poppins",
+                          textStyle: const TextStyle(
+                            fontSize: 14,
+                            fontWeight: FontWeight.w500,
+                            color: AppColor.whiteColor,
+                          ),
+                        ),
+                      ),
                     ),
                   ),
                 ),
-                Text(
-                  'All reports',
-                  style: GoogleFonts.getFont(
-                    "Poppins",
-                    textStyle: const TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.w600,
-                      color: AppColor.primaryColor,
-                    ),
-                  ),
+                Positioned(
+                  top: 159, // Adjust this value as needed
+                  left: (MediaQuery.of(context).size.width - 320) /
+                      2, // Center horizontally
+                  child: const SearchBar(),
                 ),
               ],
             ),
-          ),
-          const VerticalSpeacing(10),
-          const SizedBox(
-            height: 150,
-            child: SingleChildScrollView(
-              scrollDirection: Axis.horizontal,
+            const VerticalSpeacing(50.0),
+            Padding(
+              padding: const EdgeInsets.only(left: 16.0, right: 16.0),
               child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  SizedBox(width: 16),
-                  HomeFeatureContainer(
-                    img: 'images/families.png',
-                    title: '100k',
-                    subTitle: 'Total Families',
+                  Text(
+                    'This month',
+                    style: GoogleFonts.getFont(
+                      "Poppins",
+                      textStyle: const TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w600,
+                        color: AppColor.blackColor,
+                      ),
+                    ),
                   ),
-                  SizedBox(width: 16),
-                  HomeFeatureContainer(
-                    img: 'images/chats.png',
-                    title: '10',
-                    subTitle: 'Total Chats',
-                  ),
-                  SizedBox(width: 16),
-                  HomeFeatureContainer(
-                    img: 'images/families.png',
-                    title: '100k',
-                    subTitle: 'Total Families',
+                  Text(
+                    'All reports',
+                    style: GoogleFonts.getFont(
+                      "Poppins",
+                      textStyle: const TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w600,
+                        color: AppColor.primaryColor,
+                      ),
+                    ),
                   ),
                 ],
               ),
             ),
-          ),
-          const VerticalSpeacing(16.0),
-          Padding(
-            padding: const EdgeInsets.only(left: 16.0, right: 16.0),
-            child: Column(
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            const VerticalSpeacing(10),
+            const SizedBox(
+              height: 150,
+              child: SingleChildScrollView(
+                scrollDirection: Axis.horizontal,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
-                    Text(
-                      'popular jobs',
-                      style: GoogleFonts.getFont(
-                        "Poppins",
-                        textStyle: const TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.w600,
-                          color: AppColor.blackColor,
-                        ),
-                      ),
+                    SizedBox(width: 16),
+                    HomeFeatureContainer(
+                      img: 'images/families.png',
+                      title: '100k',
+                      subTitle: 'Total Families',
                     ),
-                    Text(
-                      'see all',
-                      style: GoogleFonts.getFont(
-                        "Poppins",
-                        textStyle: const TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.w600,
-                          color: AppColor.primaryColor,
-                        ),
-                      ),
+                    SizedBox(width: 16),
+                    HomeFeatureContainer(
+                      img: 'images/chats.png',
+                      title: '10',
+                      subTitle: 'Total Chats',
+                    ),
+                    SizedBox(width: 16),
+                    HomeFeatureContainer(
+                      img: 'images/families.png',
+                      title: '100k',
+                      subTitle: 'Total Families',
                     ),
                   ],
                 ),
-                const VerticalSpeacing(16.0),
-                SizedBox(
-                  height: MediaQuery.of(context).size.height * 0.3,
-                  child: const SingleChildScrollView(
-                    scrollDirection: Axis.vertical,
-                    child: Column(
-                      children: [
-                        BookingCartWidget(
-                          primaryButtonTxt: 'View',
+              ),
+            ),
+            const VerticalSpeacing(16.0),
+            Padding(
+              padding: const EdgeInsets.only(left: 16.0, right: 16.0),
+              child: Column(
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        'popular jobs',
+                        style: GoogleFonts.getFont(
+                          "Poppins",
+                          textStyle: const TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.w600,
+                            color: AppColor.blackColor,
+                          ),
                         ),
-                        BookingCartWidget(
-                          primaryButtonTxt: 'View',
+                      ),
+                      Text(
+                        'see all',
+                        style: GoogleFonts.getFont(
+                          "Poppins",
+                          textStyle: const TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.w600,
+                            color: AppColor.primaryColor,
+                          ),
                         ),
-                        BookingCartWidget(
-                          primaryButtonTxt: 'View',
-                        ),
-                        BookingCartWidget(
-                          primaryButtonTxt: 'View',
-                        ),
-                      ],
+                      ),
+                    ],
+                  ),
+                  const VerticalSpeacing(16.0),
+                  SizedBox(
+                    height: MediaQuery.of(context).size.height * 0.3,
+                    child:  SingleChildScrollView(
+                      scrollDirection: Axis.vertical,
+                      child: Column(
+                        children: [
+                          BookingCartWidget(
+                            primaryButtonTxt: 'View', ontapView: () {  },
+                          ),
+                          BookingCartWidget(
+                            ontapView: () {  },
+                            primaryButtonTxt: 'View',
+                          ),
+                          BookingCartWidget(
+                            ontapView: () {  },
+                            primaryButtonTxt: 'View',
+                          ),
+                          BookingCartWidget(
+                            ontapView: () {  },
+                            primaryButtonTxt: 'View',
+                          ),
+                        ],
+                      ),
                     ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
@@ -226,6 +232,7 @@ class SearchBar extends StatelessWidget {
             width: 250,
             height: 50,
             child: TextFormField(
+
               decoration: const InputDecoration(
                   border: InputBorder.none,
                   hintText: 'Search',
@@ -238,7 +245,12 @@ class SearchBar extends StatelessWidget {
           Container(
             height: 50,
             width: 56,
-            color: AppColor.boxFillColor,
+            decoration: const BoxDecoration(
+              color: AppColor.boxFillColor,
+              borderRadius: BorderRadius.only(
+                  topRight: Radius.circular(12),
+                  bottomRight: Radius.circular(12)),
+            ),
             child: Center(
               child: IconButton(
                 onPressed: () {},
@@ -254,4 +266,3 @@ class SearchBar extends StatelessWidget {
     );
   }
 }
-

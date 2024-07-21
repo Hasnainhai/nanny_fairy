@@ -36,18 +36,18 @@ class BookedView extends StatelessWidget {
       body: Padding(
         padding: const EdgeInsets.only(left: 16.0, right: 16.0),
         child: ListView(
-          children: const [
+          children:  [
             Column(
               children: [
-                VerticalSpeacing(20.0),
-                BookingCartWidget(primaryButtonTxt: 'Completed',),
-                BookingCartWidget(primaryButtonTxt: 'Completed',),
-                BookingCartWidget(primaryButtonTxt: 'Completed',),
-                BookingCartWidget(primaryButtonTxt: 'Completed',),
-                BookingCartWidget(primaryButtonTxt: 'Completed',),
-                BookingCartWidget(primaryButtonTxt: 'Completed',),
-                BookingCartWidget(primaryButtonTxt: 'Completed',),
-                BookingCartWidget(primaryButtonTxt: 'Completed',),
+                const VerticalSpeacing(20.0),
+                BookingCartWidget(ontapView: () {  },primaryButtonTxt: 'Completed',),
+                BookingCartWidget(ontapView: () {  },primaryButtonTxt: 'Completed',),
+                BookingCartWidget(ontapView: () {  },primaryButtonTxt: 'Completed',),
+                BookingCartWidget(ontapView: () {  },primaryButtonTxt: 'Completed',),
+                BookingCartWidget(ontapView: () {  },primaryButtonTxt: 'Completed',),
+                BookingCartWidget(ontapView: () {  },primaryButtonTxt: 'Completed',),
+                BookingCartWidget(ontapView: () {  },primaryButtonTxt: 'Completed',),
+                BookingCartWidget(ontapView: () {  },primaryButtonTxt: 'Completed',),
               ],
             ),
           ],

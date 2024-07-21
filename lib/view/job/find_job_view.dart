@@ -11,45 +11,48 @@ class FindJobView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColor.secondaryBgColor,
-      appBar: PreferredSize(
-        preferredSize: const Size.square(70),
-        child: AppBar(
-          backgroundColor: AppColor.primaryColor,
-          automaticallyImplyLeading: false,
-          title: Text(
-            'Find Jobs',
-            style: GoogleFonts.getFont(
-              "Poppins",
-              textStyle: const TextStyle(
-                fontSize: 20,
-                fontWeight: FontWeight.w400,
-                color: AppColor.whiteColor,
-              ),
-            ),
-          ),
-          centerTitle: true,
-        ),
-      ),
-      body: Padding(
-        padding: const EdgeInsets.only(left: 16.0, right: 16.0),
-        child: ListView(
-          children: const [
-            Column(
-              children: [
-                VerticalSpeacing(20.0),
-                FindJobsWidget(),
-                FindJobsWidget(),
-                FindJobsWidget(),
-                FindJobsWidget(),
-                FindJobsWidget(),
-                FindJobsWidget(),
-                FindJobsWidget(),
-                FindJobsWidget(),
-              ],
-            ),
-          ],
-        ),
-      ),
+     body: Column(
+       children: [
+         Stack(
+           clipBehavior: Clip.none,
+           children: [
+             Container(
+                 height: 150,
+                 width: double.infinity,
+                 decoration: const BoxDecoration(
+                   color: AppColor.primaryColor,
+                   borderRadius: BorderRadius.only(
+                     bottomLeft: Radius.circular(20),
+                     bottomRight: Radius.circular(20),
+                   ),
+                 ),
+                 child: Center(
+                     child: Row(
+                       mainAxisAlignment: MainAxisAlignment.center,
+                       children: [
+                         Text(
+                           'Family Profile Detail',
+                           style: GoogleFonts.getFont(
+                             "Poppins",
+                             textStyle: const TextStyle(
+                               fontSize: 20,
+                               fontWeight: FontWeight.w400,
+                               color: AppColor.whiteColor,
+                             ),
+                           ),
+                         ),
+                       ],
+                     ))),
+             Positioned(
+               top: 125, // Adjust this value as needed
+               left: (MediaQuery.of(context).size.width - 320) /
+                   2, // Center horizontally
+               child: const SearchBar(),
+             ),
+           ],
+         ),
+       ],
+     ),
     );
   }
 }

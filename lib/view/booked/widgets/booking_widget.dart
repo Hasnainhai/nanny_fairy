@@ -7,7 +7,8 @@ import '../../../res/components/colors.dart';
 import '../../../res/components/widgets/card_button.dart';
 
 class BookingCartWidget extends StatefulWidget {
-  const BookingCartWidget({super.key, required this.primaryButtonTxt});
+  const BookingCartWidget({super.key, required this.primaryButtonTxt, required this.ontapView});
+  final Function() ontapView;
   final String primaryButtonTxt;
 
   @override
@@ -125,7 +126,9 @@ class _BookingCartWidgetState extends State<BookingCartWidget> {
               trailing: CardButton(
                 title: widget.primaryButtonTxt,
                 color: AppColor.primaryColor,
-                onTap: () {},
+                onTap: () {
+                  widget.ontapView();
+                },
               ),
             ),
             Row(
