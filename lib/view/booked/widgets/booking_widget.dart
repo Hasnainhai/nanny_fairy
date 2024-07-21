@@ -4,6 +4,7 @@ import 'package:nanny_fairy/res/components/rounded_button.dart';
 import 'package:nanny_fairy/res/components/widgets/vertical_spacing.dart';
 import 'package:nanny_fairy/utils/routes/routes_name.dart';
 import '../../../res/components/colors.dart';
+import '../../../res/components/widgets/card_button.dart';
 
 class BookingCartWidget extends StatefulWidget {
   const BookingCartWidget({super.key});
@@ -62,70 +63,77 @@ class _BookingCartWidgetState extends State<BookingCartWidget> {
     return Padding(
       padding: const EdgeInsets.only(bottom: 16.0),
       child: Container(
-        height: 88,
+        height: 112,
         width: double.infinity,
         decoration: BoxDecoration(
-          color: AppColor.boxFillColor,
+          color: AppColor.whiteColor,
           borderRadius: BorderRadius.circular(10.0),
         ),
-        child: Center(
-          child: ListTile(
-            leading: Container(
-              height: 56,
-              width: 56,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(12.0),
-                image: const DecorationImage(
-                  image: NetworkImage(
-                      'https://www.shutterstock.com/image-photo/family-selfie-portrait-grandparents-children-260nw-2352440117.jpg'),
-                  fit: BoxFit.fill,
-                ),
-              ),
-            ),
-            title: Text(
-              'Hassnain',
-              style: GoogleFonts.getFont(
-                "Poppins",
-                textStyle: const TextStyle(
-                  fontSize: 14,
-                  fontWeight: FontWeight.w500,
-                  color: AppColor.blackColor,
-                ),
-              ),
-            ),
-            subtitle: Text(
-              'Family\n⭐ 4.8 (456 Reviews)',
-              style: GoogleFonts.getFont(
-                "Poppins",
-                textStyle: const TextStyle(
-                  fontSize: 12,
-                  fontWeight: FontWeight.w400,
-                  color: AppColor.grayColor,
-                ),
-              ),
-            ),
-            trailing: Container(
-              height: 30,
-              width: 80,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(12),
-                color: AppColor.primaryColor,
-              ),
-              child: Center(
-                child: Text(
-                  'Completed',
-                  style: GoogleFonts.getFont(
-                    "Poppins",
-                    textStyle: const TextStyle(
-                      fontSize: 10,
-                      fontWeight: FontWeight.w400,
-                      color: AppColor.whiteColor,
-                    ),
+        child: Column(
+          children: [
+            ListTile(
+              leading: Container(
+                height: 56,
+                width: 56,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(12.0),
+                  image: const DecorationImage(
+                    image: NetworkImage(
+                        'https://www.shutterstock.com/image-photo/family-selfie-portrait-grandparents-children-260nw-2352440117.jpg'),
+                    fit: BoxFit.fill,
                   ),
                 ),
               ),
+              title: Text(
+                'Hassnain\nFamily',
+                style: GoogleFonts.getFont(
+                  "Poppins",
+                  textStyle: const TextStyle(
+                    fontSize: 12,
+                    fontWeight: FontWeight.w500,
+                    color: AppColor.blackColor,
+                  ),
+                ),
+              ),
+              subtitle: Text(
+                '⭐4.8(45 Reviews)',
+                style: GoogleFonts.getFont(
+                  "Poppins",
+                  textStyle: const TextStyle(
+                    fontSize: 12,
+                    fontWeight: FontWeight.w500,
+                    color: AppColor.blackColor,
+                  ),
+                ),
+              ),
+              trailing: CardButton(
+                title: 'Completed',
+                color: AppColor.primaryColor,
+                onTap: () {},
+              ),
             ),
-          ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                CardButton(
+                  title: 'Clenining',
+                  color: AppColor.avatarColor,
+                  onTap: () {},
+                ),
+                CardButton(
+                  title: 'Care',
+                  color: AppColor.avatarColor,
+                  onTap: () {},
+                ),
+                CardButton(
+                  title: 'Home sitter',
+                  color: AppColor.avatarColor,
+                  onTap: () {},
+                ),
+              ],
+            ),
+            const VerticalSpeacing(10.0),
+          ],
         ),
       ),
     );

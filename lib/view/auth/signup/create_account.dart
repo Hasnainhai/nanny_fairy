@@ -1,11 +1,9 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:nanny_fairy/res/components/rounded_button.dart';
 import 'package:nanny_fairy/res/components/widgets/custom_text_field.dart';
 import 'package:nanny_fairy/res/components/widgets/vertical_spacing.dart';
 import 'package:nanny_fairy/utils/routes/routes_name.dart';
-
 import '../../../res/components/colors.dart';
 
 class CreateAccount extends StatelessWidget {
@@ -105,9 +103,12 @@ class CreateAccount extends StatelessWidget {
                             maxLines: 1,
                             hintText: 'Confirm Password'),
                         const VerticalSpeacing(30),
-                        RoundedButton(title: 'Confirm', onpress: () {
-                          Navigator.pushNamed(context, RoutesName.selectPassion);
-                        }),
+                        RoundedButton(
+                            title: 'Confirm',
+                            onpress: () {
+                              Navigator.pushNamed(
+                                  context, RoutesName.selectPassion);
+                            }),
                       ],
                     ),
                   ),
