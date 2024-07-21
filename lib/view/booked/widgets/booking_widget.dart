@@ -7,7 +7,8 @@ import '../../../res/components/colors.dart';
 import '../../../res/components/widgets/card_button.dart';
 
 class BookingCartWidget extends StatefulWidget {
-  const BookingCartWidget({super.key});
+  const BookingCartWidget({super.key, required this.primaryButtonTxt});
+  final String primaryButtonTxt;
 
   @override
   State<BookingCartWidget> createState() => _BookingCartWidgetState();
@@ -68,6 +69,21 @@ class _BookingCartWidgetState extends State<BookingCartWidget> {
         decoration: BoxDecoration(
           color: AppColor.whiteColor,
           borderRadius: BorderRadius.circular(10.0),
+          border: Border.all(
+            strokeAlign: BorderSide.strokeAlignCenter,
+            color: const Color(0xff1B81BC)
+                .withOpacity(0.10), // Stroke color with 10% opacity
+            width: 1,
+          ),
+          boxShadow: [
+            BoxShadow(
+              color: const Color(0xff1B81BC)
+                  .withOpacity(0.1), // Drop shadow color with 4% opacity
+              blurRadius: 2,
+              offset: const Offset(1, 2),
+              spreadRadius: 1,
+            ),
+          ],
         ),
         child: Column(
           children: [
@@ -107,7 +123,7 @@ class _BookingCartWidgetState extends State<BookingCartWidget> {
                 ),
               ),
               trailing: CardButton(
-                title: 'Completed',
+                title: widget.primaryButtonTxt,
                 color: AppColor.primaryColor,
                 onTap: () {},
               ),

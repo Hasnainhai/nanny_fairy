@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:nanny_fairy/view/booked/booked_view.dart';
 import 'package:nanny_fairy/view/chat/chat_view.dart';
 import 'package:nanny_fairy/view/community/community_view.dart';
+import 'package:nanny_fairy/view/home/home_view.dart';
 import 'package:nanny_fairy/view/job/job_view.dart';
 import 'package:nanny_fairy/view/profile/profile_view.dart';
 
@@ -35,7 +36,7 @@ class _DashBoardScreenState extends State<DashBoardScreen>
   void initState() {
     super.initState();
 
-    tabController = TabController(length: 5, vsync: this);
+    tabController = TabController(length: 6, vsync: this);
   }
 
   // popUp
@@ -102,15 +103,23 @@ class _DashBoardScreenState extends State<DashBoardScreen>
         physics: const NeverScrollableScrollPhysics(),
         controller: tabController,
         children: const [
+          HomeView(),
           JobView(),
           ChatList(),
           BookedView(),
           CommunityView(),
           ProfileView(),
+
         ],
       ),
       bottomNavigationBar: BottomNavigationBar(
         items: const [
+          BottomNavigationBarItem(
+            icon: Icon(
+              Icons.home_outlined,
+            ),
+            label: ('Home'),
+          ),
           BottomNavigationBarItem(
             icon: Icon(
               Icons.receipt,
