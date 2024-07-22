@@ -152,7 +152,7 @@ class _PaymentViewState extends State<PaymentView> {
                                     ),
                                     const VerticalSpeacing(5),
                                     Text(
-                                      "Master Card",
+                                      "IDLE",
                                       style: TextStyle(
                                           fontFamily: 'CenturyGothic',
                                           fontSize: 14,
@@ -160,58 +160,6 @@ class _PaymentViewState extends State<PaymentView> {
                                           color: firstButton
                                               ? AppColor.whiteColor
                                               : AppColor.blackColor),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ),
-                          ),
-                          const SizedBox(width: 20.0),
-                          InkWell(
-                            onTap: () {
-                              setState(() {
-                                firstButton = false;
-                                secondButton = !secondButton;
-                                thirdButton = false;
-                              });
-                            },
-                            child: Center(
-                              child: Container(
-                                height: 66,
-                                width: 135,
-                                decoration: BoxDecoration(
-                                  color: secondButton
-                                      ? AppColor.primaryColor
-                                      : Colors.transparent,
-                                  border: Border.all(
-                                      width: 1,
-                                      color: secondButton
-                                          ? AppColor.primaryColor
-                                          : AppColor.grayColor),
-                                ),
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Container(
-                                      height: 30.0,
-                                      width: 30.0,
-                                      decoration: const BoxDecoration(
-                                          image: DecorationImage(
-                                              image:
-                                                  AssetImage('images/cash.png'),
-                                              fit: BoxFit.contain)),
-                                    ),
-                                    const VerticalSpeacing(5),
-                                    Text(
-                                      "Cash On Delivery",
-                                      style: TextStyle(
-                                        fontFamily: 'CenturyGothic',
-                                        fontSize: 14,
-                                        fontWeight: FontWeight.w600,
-                                        color: secondButton
-                                            ? AppColor.whiteColor
-                                            : AppColor.blackColor,
-                                      ),
                                     ),
                                   ],
                                 ),
@@ -294,10 +242,11 @@ class _PaymentViewState extends State<PaymentView> {
                     )),
                     SizedBox(width: 10.0),
                     Expanded(
-                        child: TextFieldCustom(
-                      maxLines: 1,
-                      hintText: 'CVV',
-                    )),
+                      child: TextFieldCustom(
+                        maxLines: 1,
+                        hintText: 'CVV',
+                      ),
+                    ),
                   ],
                 ),
                 const VerticalSpeacing(16.0),

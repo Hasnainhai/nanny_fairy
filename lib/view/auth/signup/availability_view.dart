@@ -44,112 +44,169 @@ class AvailabilityView extends StatelessWidget {
       body: Container(
         height: MediaQuery.of(context).size.height,
         width: double.infinity,
-        decoration: const BoxDecoration(
+        decoration:  BoxDecoration(
           color: AppColor.whiteColor,
-          borderRadius: BorderRadius.only(
-            topLeft: Radius.circular(30.0),
-          ),
+          borderRadius: BorderRadius.only(topLeft: Radius.circular(20)),
+
         ),
         child: Padding(
           padding: const EdgeInsets.all(16.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const SizedBox(height: 16), // Added spacing from the top
-              Text(
-                'Availability',
-                style: GoogleFonts.getFont(
-                  "Poppins",
-                  textStyle: const TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.w400,
-                    color: AppColor.blackColor,
+          child: SingleChildScrollView(
+            child: Column(
+              children: [
+                Container(
+                  decoration: BoxDecoration(
+                    color: AppColor.whiteColor,
+                    borderRadius: BorderRadius.circular(12),
+                    border: Border.all(
+                      strokeAlign: BorderSide.strokeAlignCenter,
+                      color: const Color(0xff1B81BC)
+                          .withOpacity(0.10), // Stroke color with 10% opacity
+                      width: 1,
+                    ),
+                    boxShadow: [
+                      BoxShadow(
+                        color: const Color(0xff1B81BC)
+                            .withOpacity(0.1), // Drop shadow color with 4% opacity
+                        blurRadius: 2,
+                        offset: const Offset(1, 2),
+                        spreadRadius: 1,
+                      ),
+                    ],
+                  ),
+
+                  child: Padding(
+                    padding: const EdgeInsets.all(12.0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const SizedBox(height: 16), // Added spacing from the top
+                        Text(
+                          'Availability',
+                          style: GoogleFonts.getFont(
+                            "Poppins",
+                            textStyle: const TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.w400,
+                              color: AppColor.blackColor,
+                            ),
+                          ),
+                        ),
+                        const SizedBox(height: 8),
+                        const Text(
+                          'Officia irure irure an',
+                          style: TextStyle(
+                            fontSize: 16,
+                            color: AppColor.grayColor,
+                          ),
+                        ),
+                        const SizedBox(height: 16),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            DayButton(
+                              day: 'M',
+                              isSelected: true,
+                              onTap: (bool isSelected) {},
+                            ),
+                            DayButton(
+                              day: 'T',
+                              isSelected: false,
+                              onTap: (bool isSelected) {},
+                            ),
+                            DayButton(
+                              day: 'W',
+                              isSelected: true,
+                              onTap: (bool isSelected) {},
+                            ),
+                            DayButton(
+                              day: 'T',
+                              isSelected: false,
+                              onTap: (bool isSelected) {},
+                            ),
+                            DayButton(
+                              day: 'F',
+                              isSelected: true,
+                              onTap: (bool isSelected) {},
+                            ),
+                            DayButton(
+                              day: 'S',
+                              isSelected: false,
+                              onTap: (bool isSelected) {},
+                            ),
+                          ],
+                        ),
+                        const SizedBox(height: 16),
+                        const AvailabilityRow(label: 'Morning', availability: [
+                          true,
+                          true,
+                          false,
+                          false,
+                          false,
+                          false,
+                          false
+                        ]),
+                        const Divider(),
+                        const AvailabilityRow(label: 'Evening', availability: [
+                          false,
+                          false,
+                          false,
+                          true,
+                          false,
+                          false,
+                          false
+                        ]),
+                        const Divider(),
+                        const AvailabilityRow(label: 'Afternoon', availability: [
+                          false,
+                          false,
+                          false,
+                          false,
+                          false,
+                          true,
+                          false
+                        ]),
+
+
+
+
+                        const SizedBox(height: 16),
+
+                      ],
+                    ),
                   ),
                 ),
-              ),
-              const SizedBox(height: 8),
-              const Text(
-                'Officia irure irure an',
-                style: TextStyle(
-                  fontSize: 16,
-                  color: AppColor.grayColor,
+                VerticalSpeacing(30.0),
+                Container(
+                  height: 216,
+                  width: double.infinity,
+                  decoration: BoxDecoration(
+                    color: AppColor.whiteColor,
+                    borderRadius: BorderRadius.only(topLeft: Radius.circular(20)),
+                    border: Border.all(
+                      strokeAlign: BorderSide.strokeAlignCenter,
+                      color: const Color(0xff1B81BC)
+                          .withOpacity(0.10), // Stroke color with 10% opacity
+                      width: 1,
+                    ),
+                    boxShadow: [
+                      BoxShadow(
+                        color: const Color(0xff1B81BC)
+                            .withOpacity(0.1), // Drop shadow color with 4% opacity
+                        blurRadius: 2,
+                        offset: const Offset(1, 2),
+                        spreadRadius: 1,
+                      ),
+                    ],
+
+                  ),
                 ),
-              ),
-              const SizedBox(height: 16),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  DayButton(
-                    day: 'M',
-                    isSelected: true,
-                    onTap: (bool isSelected) {},
-                  ),
-                  DayButton(
-                    day: 'T',
-                    isSelected: false,
-                    onTap: (bool isSelected) {},
-                  ),
-                  DayButton(
-                    day: 'W',
-                    isSelected: true,
-                    onTap: (bool isSelected) {},
-                  ),
-                  DayButton(
-                    day: 'T',
-                    isSelected: false,
-                    onTap: (bool isSelected) {},
-                  ),
-                  DayButton(
-                    day: 'F',
-                    isSelected: true,
-                    onTap: (bool isSelected) {},
-                  ),
-                  DayButton(
-                    day: 'S',
-                    isSelected: false,
-                    onTap: (bool isSelected) {},
-                  ),
-                ],
-              ),
-              const SizedBox(height: 16),
-              const AvailabilityRow(label: 'Morning', availability: [
-                true,
-                true,
-                false,
-                false,
-                false,
-                false,
-                false
-              ]),
-              const Divider(),
-              const AvailabilityRow(label: 'Evening', availability: [
-                false,
-                false,
-                false,
-                true,
-                false,
-                false,
-                false
-              ]),
-              const Divider(),
-              const AvailabilityRow(label: 'Afternoon', availability: [
-                false,
-                false,
-                false,
-                false,
-                false,
-                true,
-                false
-              ]),
-              const Divider(),
-
-              const VerticalSpeacing(46.0),
-              RoundedButton(title: 'Register', onpress: () {
-                Navigator.pushNamed(context, RoutesName.educationHorlyView);
-              }),
-
-              const SizedBox(height: 16),
-            ],
+                const VerticalSpeacing(46.0),
+                RoundedButton(title: 'Register', onpress: () {
+                  Navigator.pushNamed(context, RoutesName.educationHorlyView);
+                }),
+              ],
+            ),
           ),
         ),
       ),

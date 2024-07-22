@@ -54,7 +54,7 @@ class JobView extends StatelessWidget {
                 ),
               ],
             ),
-            VerticalSpeacing(50),
+            const VerticalSpeacing(50),
             SizedBox(
               height: MediaQuery.of(context).size.height * 0.65,
               child: SingleChildScrollView(
@@ -70,13 +70,25 @@ class JobView extends StatelessWidget {
                           },
                           primaryButtonTxt: 'View'),
                       BookingCartWidget(
-                          ontapView: () {}, primaryButtonTxt: 'View'),
+                          ontapView: () {
+                            Navigator.pushNamed(
+                                context, RoutesName.findJobView);
+                          }, primaryButtonTxt: 'View'),
                       BookingCartWidget(
-                          ontapView: () {}, primaryButtonTxt: 'View'),
+                          ontapView: () {
+                            Navigator.pushNamed(
+                                context, RoutesName.findJobView);
+                          }, primaryButtonTxt: 'View'),
                       BookingCartWidget(
-                          ontapView: () {}, primaryButtonTxt: 'View'),
+                          ontapView: () {
+                            Navigator.pushNamed(
+                                context, RoutesName.findJobView);
+                          }, primaryButtonTxt: 'View'),
                       BookingCartWidget(
-                          ontapView: () {}, primaryButtonTxt: 'View'),
+                          ontapView: () {
+                            Navigator.pushNamed(
+                                context, RoutesName.findJobView);
+                          }, primaryButtonTxt: 'View'),
                     ],
                   ),
                 ),

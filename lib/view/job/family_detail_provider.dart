@@ -29,10 +29,10 @@ class _FamilyDetailProviderState extends State<FamilyDetailProvider> {
                 Container(
                   height: 150,
                   width: double.infinity, // Fill the width of the parent container
-                  decoration: const BoxDecoration(
-                    borderRadius: BorderRadius.only(
-                      bottomRight: Radius.circular(12),
-                      bottomLeft: Radius.circular(12),
+                  decoration:  BoxDecoration(
+                    borderRadius: BorderRadius.circular(
+                      12,
+
                     ),
                     color: AppColor.primaryColor,
                   ),
