@@ -19,6 +19,9 @@ class _FilterPopUpState extends State<FilterPopUp> {
   bool button5 = true;
   bool button6 = false;
   bool button7 = false;
+  bool button8 = true;
+  bool button9 = false;
+  bool button10 = false;
 
 
   @override
@@ -36,8 +39,6 @@ class _FilterPopUpState extends State<FilterPopUp> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-
-
                 const Center(
                   child: Text(
                     "Filters",
@@ -50,9 +51,8 @@ class _FilterPopUpState extends State<FilterPopUp> {
                   ),
                 ),
                 const VerticalSpeacing(60),
-                const PriceRangeSlider(),
                 const Text(
-                  "Categories",
+                  " provider Categories",
                   style: TextStyle(
                     fontFamily: 'CenturyGothic',
                     fontSize: 18,
@@ -60,9 +60,7 @@ class _FilterPopUpState extends State<FilterPopUp> {
                     color: AppColor.blackColor,
                   ),
                 ),
-                const VerticalSpeacing(
-                  20
-                ),
+                const VerticalSpeacing(20),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -199,7 +197,6 @@ class _FilterPopUpState extends State<FilterPopUp> {
                         setState(() {
                           button5 = !button5;
                         });
-
                       },
                       child: Container(
                         height: 45,
@@ -230,7 +227,6 @@ class _FilterPopUpState extends State<FilterPopUp> {
                         setState(() {
                           button6 = !button6;
                         });
-
                       },
                       child: Container(
                         height: 45,
@@ -270,7 +266,7 @@ class _FilterPopUpState extends State<FilterPopUp> {
                     width: 100,
                     decoration: BoxDecoration(
                       color:
-                      button7 ? AppColor.primaryColor : Colors.transparent,
+                          button7 ? AppColor.primaryColor : Colors.transparent,
                       border: Border.all(color: AppColor.primaryColor),
                     ),
                     child: Center(
@@ -288,9 +284,116 @@ class _FilterPopUpState extends State<FilterPopUp> {
                     ),
                   ),
                 ),
+                const VerticalSpeacing(16),
+                const Text(
+                  "Select Radius",
+                  style: TextStyle(
+                    fontFamily: 'CenturyGothic',
+                    fontSize: 18,
+                    fontWeight: FontWeight.w400,
+                    color: AppColor.blackColor,
+                  ),
+                ),
+                const VerticalSpeacing(20),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    InkWell(
+                      onTap: () {
+                        setState(() {
+                          button10 = !button10;
+                        });
+                      },
+                      child: Container(
+                        height: 45,
+                        width: 100,
+                        decoration: BoxDecoration(
+                          color: button10
+                              ? AppColor.primaryColor
+                              : Colors.transparent,
+                          border: Border.all(color: AppColor.primaryColor),
+                        ),
+                        child: Center(
+                          child: Text(
+                            "2KM",
+                            style: TextStyle(
+                              fontFamily: 'CenturyGothic',
+                              fontSize: 12,
+                              fontWeight: FontWeight.w400,
+                              color: button10
+                                  ? AppColor.whiteColor
+                                  : AppColor.blackColor,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                    InkWell(
+                      onTap: () {
+                        setState(() {
+                          button8 = !button8;
+                        });
+                      },
+                      child: Container(
+                        height: 45,
+                        width: 100,
+                        decoration: BoxDecoration(
+                          color: button8
+                              ? AppColor.primaryColor
+                              : Colors.transparent,
+                          border: Border.all(color: AppColor.primaryColor),
+                        ),
+                        child: Center(
+                          child: Text(
+                            "4KM",
+                            style: TextStyle(
+                              fontFamily: 'CenturyGothic',
+                              fontSize: 14,
+                              fontWeight: FontWeight.w400,
+                              color: button8
+                                  ? AppColor.whiteColor
+                                  : AppColor.blackColor,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                    InkWell(
+                      onTap: () {
+                        setState(() {
+                          button9 = !button9;
+                        });
+                      },
+                      child: Container(
+                        height: 45,
+                        width: 100,
+                        decoration: BoxDecoration(
+                          color: button9
+                              ? AppColor.primaryColor
+                              : Colors.transparent,
+                          border: Border.all(color: AppColor.primaryColor),
+                        ),
+                        child: Center(
+                          child: Text(
+                            "8KM",
+                            style: TextStyle(
+                              fontFamily: 'CenturyGothic',
+                              fontSize: 14,
+                              fontWeight: FontWeight.w400,
+                              color: button9
+                                  ? AppColor.whiteColor
+                                  : AppColor.blackColor,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
                 const VerticalSpeacing(
                   30,
                 ),
+
                 const Text(
                   "Rating Star",
                   style: TextStyle(
@@ -311,9 +414,9 @@ class _FilterPopUpState extends State<FilterPopUp> {
                     itemCount: 5,
                     itemSize: 30,
                     itemBuilder: (context, _) => const Icon(
-                      Icons.star_rate_rounded,
-                      color: Colors.amber,
-                    ),
+                          Icons.star_rate_rounded,
+                          color: Colors.amber,
+                        ),
                     onRatingUpdate: (rating) {}),
                 const VerticalSpeacing(
                   50,
@@ -348,7 +451,6 @@ class _FilterPopUpState extends State<FilterPopUp> {
                     InkWell(
                       onTap: () {
                         Navigator.pop(context);
-
                       },
                       child: Container(
                         height: 56,
@@ -372,6 +474,7 @@ class _FilterPopUpState extends State<FilterPopUp> {
                     ),
                   ],
                 ),
+
                 const SizedBox(height: 40.0),
               ],
             ),
