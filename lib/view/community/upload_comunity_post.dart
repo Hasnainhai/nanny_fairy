@@ -23,22 +23,29 @@ class _UploadComunityPostState extends State<UploadComunityPost> {
         return AlertDialog(
             backgroundColor: AppColor.whiteColor,
             shape: const RoundedRectangleBorder(),
-            icon: Icon(Icons.check_circle_outlined,color: AppColor.primaryColor,size: 120),
-            title:  Text('Congratulation you\nupload your product',style: GoogleFonts.getFont(
-              "Poppins",
-              textStyle: const TextStyle(
-                fontSize: 18,
-                fontWeight: FontWeight.w500,
-                color: AppColor.blackColor,
+            icon: const Icon(Icons.check_circle_outlined,
+                color: AppColor.primaryColor, size: 120),
+            title: Text(
+              'Congratulation you\nupload your product',
+              style: GoogleFonts.getFont(
+                "Poppins",
+                textStyle: const TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.w500,
+                  color: AppColor.blackColor,
+                ),
               ),
-            ), ),
-            content: RoundedButton(title: 'continue to comunitry',onpress: (){
-              Navigator.pushNamed(context, RoutesName.communityView);
-            },)
-        );
+            ),
+            content: RoundedButton(
+              title: 'Go to home',
+              onpress: () {
+                Navigator.pushNamed(context, RoutesName.dashboard);
+              },
+            ));
       },
     );
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -107,11 +114,9 @@ class _UploadComunityPostState extends State<UploadComunityPost> {
                       ),
                       const VerticalSpeacing(16.0),
                       const TextFieldCustom(
-                          maxLines: 1,
-                          hintText: 'Your title...'),
+                          maxLines: 1, hintText: 'Your title...'),
                       const TextFieldCustom(
-                          maxLines: 1,
-                          hintText: 'Your content...'),
+                          maxLines: 1, hintText: 'Your content...'),
                       const VerticalSpeacing(30.0),
                       RoundedButton(
                         title: 'Continue',

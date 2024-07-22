@@ -42,7 +42,7 @@ class EditProfile extends StatelessWidget {
         ),
       ),
       body: Container(
-        height: double.infinity,
+        height: MediaQuery.of(context).size.height,
         width: double.infinity,
         decoration: const BoxDecoration(
           color: AppColor.whiteColor,
@@ -57,36 +57,43 @@ class EditProfile extends StatelessWidget {
             child: Column(
               children: [
                 const TextFieldCustom(
+                  prefixIcon: Icon(Icons.person_outline),
                     maxLines: 1, hintText: 'Name'),
                 const VerticalSpeacing(16.0),
                 const TextFieldCustom(
+                    prefixIcon: Icon(Icons.location_on_outlined),
                     maxLines: 1, hintText: 'Address'),
                 const VerticalSpeacing(16.0),
                 const TextFieldCustom(
+                    prefixIcon: Icon(Icons.access_time_outlined),
                     maxLines: 1,
                     hintText: 'Enter hourly rate...'),
                 const VerticalSpeacing(16.0),
                 const TextFieldCustom(
+                    prefixIcon: Icon(Icons.phone),
                     maxLines: 1,
                     hintText: 'Telephone Number'),
                 const VerticalSpeacing(16.0),
                 const TextFieldCustom(
+                    prefixIcon: Icon(Icons.calendar_month_outlined),
                     maxLines: 1, hintText: 'Date of Birth'),
                 const VerticalSpeacing(16.0),
                 const TextFieldCustom(
+                    prefixIcon: Icon(Icons.mail_outline),
                     maxLines: 1,
                     hintText: 'Email Address'),
                 const VerticalSpeacing(16.0),
                 const TextFieldCustom(
-                    maxLines: 1, hintText: 'Password'),
-                const VerticalSpeacing(16.0),
-                const TextFieldCustom(
-                    maxLines: 1,
-                    hintText: 'Confirm Password'),
-                const VerticalSpeacing(16.0),
-                const TextFieldCustom(
+                    prefixIcon: Icon(Icons.border_color_outlined),
                     maxLines: 1,
                     hintText: 'Description'),
+                const VerticalSpeacing(16.0),
+
+
+                const TextFieldCustom(
+                    prefixIcon: Icon(Icons.inventory_outlined),
+                    maxLines: 1,
+                    hintText: 'Skills...'),
                 const VerticalSpeacing(16.0),
                 RoundedButton(
                     title: 'Update Profile',
