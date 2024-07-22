@@ -31,12 +31,11 @@ class _DashBoardScreenState extends State<DashBoardScreen>
   }
   // for profile
 
-
   @override
   void initState() {
     super.initState();
 
-    tabController = TabController(length: 6, vsync: this);
+    tabController = TabController(length: 5, vsync: this);
   }
 
   // popUp
@@ -104,12 +103,10 @@ class _DashBoardScreenState extends State<DashBoardScreen>
         controller: tabController,
         children: const [
           HomeView(),
-          JobView(),
           ChatList(),
           BookedView(),
           CommunityView(),
           ProfileView(),
-
         ],
       ),
       bottomNavigationBar: BottomNavigationBar(
@@ -122,17 +119,11 @@ class _DashBoardScreenState extends State<DashBoardScreen>
           ),
           BottomNavigationBarItem(
             icon: Icon(
-              Icons.receipt,
-            ),
-            label: ('job'),
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(
               Icons.chat,
             ),
             label: ('chat'),
           ),
-           BottomNavigationBarItem(
+          BottomNavigationBarItem(
             icon: Icon(
               Icons.book_online_outlined,
             ),
@@ -146,7 +137,6 @@ class _DashBoardScreenState extends State<DashBoardScreen>
             icon: Icon(Icons.person_outline),
             label: ('profile'),
           ),
-
         ],
         unselectedItemColor: AppColor.grayColor,
         selectedItemColor: AppColor.primaryColor,
@@ -156,7 +146,6 @@ class _DashBoardScreenState extends State<DashBoardScreen>
         currentIndex: selectIndex,
         onTap: onItemClick,
       ),
-
     );
   }
 }
