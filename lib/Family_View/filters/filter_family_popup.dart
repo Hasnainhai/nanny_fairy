@@ -1,16 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:nanny_fairy/Family_View/filters/widgets/slider_widget.dart';
 import '../../res/components/colors.dart';
 import '../../res/components/widgets/vertical_spacing.dart';
 
-class FilterPopUp extends StatefulWidget {
-  const FilterPopUp({super.key});
+class FilterPopUpFamily extends StatefulWidget {
+  const FilterPopUpFamily({super.key});
 
   @override
-  State<FilterPopUp> createState() => _FilterPopUpState();
+  State<FilterPopUpFamily> createState() => _FilterPopUpFamilyState();
 }
 
-class _FilterPopUpState extends State<FilterPopUp> {
+class _FilterPopUpFamilyState extends State<FilterPopUpFamily> {
   bool button1 = false;
   bool button2 = false;
   bool button3 = false;
@@ -21,7 +22,12 @@ class _FilterPopUpState extends State<FilterPopUp> {
   bool button8 = true;
   bool button9 = false;
   bool button10 = false;
-
+  bool button11 = true;
+  bool button12 = false;
+  bool button13 = false;
+  bool button14 = true;
+  bool button15 = false;
+  bool button16 = false;
 
   @override
   Widget build(BuildContext context) {
@@ -50,6 +56,8 @@ class _FilterPopUpState extends State<FilterPopUp> {
                   ),
                 ),
                 const VerticalSpeacing(60),
+                const PriceRangeSlider(),
+                const VerticalSpeacing(16),
                 const Text(
                   " provider Categories",
                   style: TextStyle(
@@ -392,7 +400,115 @@ class _FilterPopUpState extends State<FilterPopUp> {
                 const VerticalSpeacing(
                   30,
                 ),
-
+                const VerticalSpeacing(16),
+                const Text(
+                  "Availability",
+                  style: TextStyle(
+                    fontFamily: 'CenturyGothic',
+                    fontSize: 18,
+                    fontWeight: FontWeight.w400,
+                    color: AppColor.blackColor,
+                  ),
+                ),
+                const VerticalSpeacing(20),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    InkWell(
+                      onTap: () {
+                        setState(() {
+                          button11 = !button11;
+                        });
+                      },
+                      child: Container(
+                        height: 45,
+                        width: 100,
+                        decoration: BoxDecoration(
+                          color: button11
+                              ? AppColor.primaryColor
+                              : Colors.transparent,
+                          border: Border.all(color: AppColor.primaryColor),
+                        ),
+                        child: Center(
+                          child: Text(
+                            "W",
+                            style: TextStyle(
+                              fontFamily: 'CenturyGothic',
+                              fontSize: 12,
+                              fontWeight: FontWeight.w400,
+                              color: button11
+                                  ? AppColor.whiteColor
+                                  : AppColor.blackColor,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                    InkWell(
+                      onTap: () {
+                        setState(() {
+                          button12 = !button12;
+                        });
+                      },
+                      child: Container(
+                        height: 45,
+                        width: 100,
+                        decoration: BoxDecoration(
+                          color: button12
+                              ? AppColor.primaryColor
+                              : Colors.transparent,
+                          border: Border.all(color: AppColor.primaryColor),
+                        ),
+                        child: Center(
+                          child: Text(
+                            "M",
+                            style: TextStyle(
+                              fontFamily: 'CenturyGothic',
+                              fontSize: 14,
+                              fontWeight: FontWeight.w400,
+                              color: button12
+                                  ? AppColor.whiteColor
+                                  : AppColor.blackColor,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                    InkWell(
+                      onTap: () {
+                        setState(() {
+                          button13 = !button13;
+                        });
+                      },
+                      child: Container(
+                        height: 45,
+                        width: 100,
+                        decoration: BoxDecoration(
+                          color: button13
+                              ? AppColor.primaryColor
+                              : Colors.transparent,
+                          border: Border.all(color: AppColor.primaryColor),
+                        ),
+                        child: Center(
+                          child: Text(
+                            "T",
+                            style: TextStyle(
+                              fontFamily: 'CenturyGothic',
+                              fontSize: 14,
+                              fontWeight: FontWeight.w400,
+                              color: button13
+                                  ? AppColor.whiteColor
+                                  : AppColor.blackColor,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                const VerticalSpeacing(
+                  30,
+                ),
                 const Text(
                   "Rating Star",
                   style: TextStyle(
@@ -473,7 +589,6 @@ class _FilterPopUpState extends State<FilterPopUp> {
                     ),
                   ],
                 ),
-
                 const SizedBox(height: 40.0),
               ],
             ),

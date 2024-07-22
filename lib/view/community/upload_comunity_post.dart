@@ -21,27 +21,28 @@ class _UploadComunityPostState extends State<UploadComunityPost> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-            backgroundColor: AppColor.whiteColor,
-            shape: const RoundedRectangleBorder(),
-            icon: const Icon(Icons.check_circle_outlined,
-                color: AppColor.primaryColor, size: 120),
-            title: Text(
-              'Congratulation you\nupload your product',
-              style: GoogleFonts.getFont(
-                "Poppins",
-                textStyle: const TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.w500,
-                  color: AppColor.blackColor,
-                ),
+          backgroundColor: AppColor.whiteColor,
+          shape: const RoundedRectangleBorder(),
+          icon: const Icon(Icons.check_circle_outlined,
+              color: AppColor.primaryColor, size: 120),
+          title: Text(
+            'Congratulation you\nupload your product',
+            style: GoogleFonts.getFont(
+              "Poppins",
+              textStyle: const TextStyle(
+                fontSize: 18,
+                fontWeight: FontWeight.w500,
+                color: AppColor.blackColor,
               ),
             ),
-            content: RoundedButton(
-              title: 'Go to home',
-              onpress: () {
-                Navigator.pushNamed(context, RoutesName.dashboard);
-              },
-            ));
+          ),
+          content: RoundedButton(
+            title: 'Continue',
+            onpress: () {
+              Navigator.pop(context);
+            },
+          ),
+        );
       },
     );
   }

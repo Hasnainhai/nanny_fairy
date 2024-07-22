@@ -40,5 +40,5 @@ class RoutesName {
   static const String createAccountFamily = '/create_account_family';
   static const String homeViewFamily = '/home_view_family';
   static const String providerDetails = '/providerDetails';
-
+  static const String filterPopUpFamily = '/filter_popup_family';
 }
