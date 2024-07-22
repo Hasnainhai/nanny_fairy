@@ -1,14 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:nanny_fairy/res/components/rounded_button.dart';
+import 'package:nanny_fairy/res/components/widgets/custom_text_field.dart';
 import 'package:nanny_fairy/res/components/widgets/vertical_spacing.dart';
 import 'package:nanny_fairy/utils/routes/routes_name.dart';
 
 import '../../../res/components/colors.dart';
 
-class AvailabilityView extends StatelessWidget {
+class AvailabilityView extends StatefulWidget {
   const AvailabilityView({super.key});
 
+  @override
+  State<AvailabilityView> createState() => _AvailabilityViewState();
+}
+
+class _AvailabilityViewState extends State<AvailabilityView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -44,10 +50,9 @@ class AvailabilityView extends StatelessWidget {
       body: Container(
         height: MediaQuery.of(context).size.height,
         width: double.infinity,
-        decoration:  BoxDecoration(
+        decoration: const BoxDecoration(
           color: AppColor.whiteColor,
           borderRadius: BorderRadius.only(topLeft: Radius.circular(20)),
-
         ),
         child: Padding(
           padding: const EdgeInsets.all(16.0),
@@ -66,21 +71,21 @@ class AvailabilityView extends StatelessWidget {
                     ),
                     boxShadow: [
                       BoxShadow(
-                        color: const Color(0xff1B81BC)
-                            .withOpacity(0.1), // Drop shadow color with 4% opacity
+                        color: const Color(0xff1B81BC).withOpacity(
+                            0.1), // Drop shadow color with 4% opacity
                         blurRadius: 2,
                         offset: const Offset(1, 2),
                         spreadRadius: 1,
                       ),
                     ],
                   ),
-
                   child: Padding(
                     padding: const EdgeInsets.all(12.0),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        const SizedBox(height: 16), // Added spacing from the top
+                        const SizedBox(
+                            height: 16), // Added spacing from the top
                         Text(
                           'Availability',
                           style: GoogleFonts.getFont(
@@ -157,32 +162,29 @@ class AvailabilityView extends StatelessWidget {
                           false
                         ]),
                         const Divider(),
-                        const AvailabilityRow(label: 'Afternoon', availability: [
-                          false,
-                          false,
-                          false,
-                          false,
-                          false,
-                          true,
-                          false
-                        ]),
-
-
-
-
-                        const SizedBox(height: 16),
-
+                        const AvailabilityRow(
+                            label: 'Afternoon',
+                            availability: [
+                              false,
+                              false,
+                              false,
+                              false,
+                              false,
+                              true,
+                              false
+                            ]),
+                        const VerticalSpeacing(10),
                       ],
                     ),
                   ),
                 ),
-                VerticalSpeacing(30.0),
+                const VerticalSpeacing(20.0),
                 Container(
                   height: 216,
                   width: double.infinity,
                   decoration: BoxDecoration(
                     color: AppColor.whiteColor,
-                    borderRadius: BorderRadius.only(topLeft: Radius.circular(20)),
+                    borderRadius: BorderRadius.circular(12.0),
                     border: Border.all(
                       strokeAlign: BorderSide.strokeAlignCenter,
                       color: const Color(0xff1B81BC)
@@ -191,21 +193,250 @@ class AvailabilityView extends StatelessWidget {
                     ),
                     boxShadow: [
                       BoxShadow(
-                        color: const Color(0xff1B81BC)
-                            .withOpacity(0.1), // Drop shadow color with 4% opacity
+                        color: const Color(0xff1B81BC).withOpacity(
+                            0.1), // Drop shadow color with 4% opacity
                         blurRadius: 2,
                         offset: const Offset(1, 2),
                         spreadRadius: 1,
                       ),
                     ],
-
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.all(12.0),
+                    child: Column(
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              'Timing',
+                              style: GoogleFonts.getFont(
+                                "Poppins",
+                                textStyle: const TextStyle(
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.w400,
+                                  color: AppColor.blackColor,
+                                ),
+                              ),
+                            ),
+                            Row(
+                              children: [
+                                Text(
+                                  'Sunday',
+                                  style: GoogleFonts.getFont(
+                                    "Poppins",
+                                    textStyle: const TextStyle(
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.w400,
+                                      color: AppColor.primaryColor,
+                                    ),
+                                  ),
+                                ),
+                                const Icon(
+                                  Icons.expand_more_outlined,
+                                  color: AppColor.primaryColor,
+                                )
+                              ],
+                            ),
+                          ],
+                        ),
+                        const VerticalSpeacing(20.0),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              'Morning',
+                              style: GoogleFonts.getFont(
+                                "Poppins",
+                                textStyle: const TextStyle(
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w400,
+                                  color: AppColor.blackColor,
+                                ),
+                              ),
+                            ),
+                            const SizedBox(width: 20),
+                            Row(
+                              children: [
+                                Text(
+                                  'From',
+                                  style: GoogleFonts.getFont(
+                                    "Poppins",
+                                    textStyle: const TextStyle(
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.w400,
+                                      color: AppColor.blackColor,
+                                    ),
+                                  ),
+                                ),
+                                const SizedBox(width: 5),
+                                const TimingContainer(time: '9:00Am'),
+                                const SizedBox(width: 5),
+                                Text(
+                                  'To',
+                                  style: GoogleFonts.getFont(
+                                    "Poppins",
+                                    textStyle: const TextStyle(
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.w400,
+                                      color: AppColor.blackColor,
+                                    ),
+                                  ),
+                                ),
+                                const SizedBox(width: 5),
+                                const TimingContainer(
+                                  time: '12:00Am',
+                                )
+                              ],
+                            ),
+                          ],
+                        ),
+                        Divider(),
+                        VerticalSpeacing(16),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              'Evening',
+                              style: GoogleFonts.getFont(
+                                "Poppins",
+                                textStyle: const TextStyle(
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w400,
+                                  color: AppColor.blackColor,
+                                ),
+                              ),
+                            ),
+                            const SizedBox(width: 20),
+                            Row(
+                              children: [
+                                Text(
+                                  'From',
+                                  style: GoogleFonts.getFont(
+                                    "Poppins",
+                                    textStyle: const TextStyle(
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.w400,
+                                      color: AppColor.blackColor,
+                                    ),
+                                  ),
+                                ),
+                                const SizedBox(width: 5),
+                                const TimingContainer(time: '2:00Am'),
+                                const SizedBox(width: 5),
+                                Text(
+                                  'To',
+                                  style: GoogleFonts.getFont(
+                                    "Poppins",
+                                    textStyle: const TextStyle(
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.w400,
+                                      color: AppColor.blackColor,
+                                    ),
+                                  ),
+                                ),
+                                const SizedBox(width: 5),
+                                const TimingContainer(
+                                  time: '6:00Am',
+                                )
+                              ],
+                            ),
+                          ],
+                        ),
+                        Divider(),
+                        VerticalSpeacing(16),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              'Night',
+                              style: GoogleFonts.getFont(
+                                "Poppins",
+                                textStyle: const TextStyle(
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w400,
+                                  color: AppColor.blackColor,
+                                ),
+                              ),
+                            ),
+                            const SizedBox(width: 20),
+                            Row(
+                              children: [
+                                Text(
+                                  'From',
+                                  style: GoogleFonts.getFont(
+                                    "Poppins",
+                                    textStyle: const TextStyle(
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.w400,
+                                      color: AppColor.blackColor,
+                                    ),
+                                  ),
+                                ),
+                                const SizedBox(width: 5),
+                                const TimingContainer(time: '7:00Am'),
+                                const SizedBox(width: 5),
+                                Text(
+                                  'To',
+                                  style: GoogleFonts.getFont(
+                                    "Poppins",
+                                    textStyle: const TextStyle(
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.w400,
+                                      color: AppColor.blackColor,
+                                    ),
+                                  ),
+                                ),
+                                const SizedBox(width: 5),
+                                const TimingContainer(
+                                  time: '12:00Am',
+                                )
+                              ],
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
                   ),
                 ),
                 const VerticalSpeacing(46.0),
-                RoundedButton(title: 'Register', onpress: () {
-                  Navigator.pushNamed(context, RoutesName.educationHorlyView);
-                }),
+                RoundedButton(
+                    title: 'Register',
+                    onpress: () {
+                      Navigator.pushNamed(
+                          context, RoutesName.educationHorlyView);
+                    }),
               ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class TimingContainer extends StatelessWidget {
+  const TimingContainer({super.key, required this.time});
+  final String time;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: 20,
+      width: 67,
+      decoration: BoxDecoration(
+        border: Border.all(width: 0.5, color: AppColor.blackColor),
+        borderRadius: BorderRadius.circular(8),
+      ),
+      child: Center(
+        child: Text(
+          time,
+          style: GoogleFonts.getFont(
+            "Poppins",
+            textStyle: const TextStyle(
+              fontSize: 10,
+              fontWeight: FontWeight.w400,
+              color: AppColor.blackColor,
             ),
           ),
         ),
