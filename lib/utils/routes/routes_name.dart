@@ -32,11 +32,13 @@ class RoutesName {
   static const String paymentFamily = '/payment_family';
   static const String dashboardFamily = '/dashboard_family';
   static const String communityDetailView = '/community_detail_view';
-  static const String findJobView = '/find_job_view';
-  static const String providerDetails = '/provider_details';
+  static const String familyDetail = '/family_detail';
+  static const String jobViewFamily = '/job_view_family';
   static const String createAccount = '/create_account';
   static const String availabilityView = '/availability_view';
   static const String educationHorlyView = '/education_horly_view';
   static const String createAccountFamily = '/create_account_family';
   static const String homeViewFamily = '/home_view_family';
+  static const String providerDetails = '/providerDetails';
+
 }

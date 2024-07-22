@@ -184,27 +184,27 @@ class HomeView extends StatelessWidget {
                             primaryButtonTxt: 'View',
                             ontapView: () {
                               Navigator.pushNamed(
-                                  context, RoutesName.findJobView);
+                                  context, RoutesName.familyDetail);
                             },
                           ),
                           BookingCartWidget(
                             ontapView: () {
                               Navigator.pushNamed(
-                                  context, RoutesName.findJobView);
-                            },
-                            primaryButtonTxt: 'View',
-                          ),
-                          BookingCartWidget(
-                            ontapView: () {
-                              Navigator.pushNamed(
-                                  context, RoutesName.findJobView);
+                                  context, RoutesName.familyDetail);
                             },
                             primaryButtonTxt: 'View',
                           ),
                           BookingCartWidget(
                             ontapView: () {
                               Navigator.pushNamed(
-                                  context, RoutesName.findJobView);
+                                  context, RoutesName.familyDetail);
+                            },
+                            primaryButtonTxt: 'View',
+                          ),
+                          BookingCartWidget(
+                            ontapView: () {
+                              Navigator.pushNamed(
+                                  context, RoutesName.familyDetail);
                             },
                             primaryButtonTxt: 'View',
                           ),

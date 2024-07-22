@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:nanny_fairy/Family_View/bookFamily/widgets/book_cart_widget_family.dart';
 import 'package:nanny_fairy/res/components/widgets/vertical_spacing.dart';
 import 'package:nanny_fairy/utils/routes/routes_name.dart';
-import 'package:nanny_fairy/view/booked/widgets/booking_widget.dart';
 import '../../res/components/colors.dart';
 
-class JobView extends StatelessWidget {
-  const JobView({super.key});
+class JobViewFamily extends StatelessWidget {
+  const JobViewFamily({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -31,21 +31,21 @@ class JobView extends StatelessWidget {
                     ),
                     child: Center(
                         child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(
-                          'Jobs',
-                          style: GoogleFonts.getFont(
-                            "Poppins",
-                            textStyle: const TextStyle(
-                              fontSize: 20,
-                              fontWeight: FontWeight.w400,
-                              color: AppColor.whiteColor,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              'Providers',
+                              style: GoogleFonts.getFont(
+                                "Poppins",
+                                textStyle: const TextStyle(
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.w400,
+                                  color: AppColor.whiteColor,
+                                ),
+                              ),
                             ),
-                          ),
-                        ),
-                      ],
-                    ))),
+                          ],
+                        ))),
                 Positioned(
                   top: 125, // Adjust this value as needed
                   left: (MediaQuery.of(context).size.width - 320) /
@@ -56,35 +56,35 @@ class JobView extends StatelessWidget {
             ),
             const VerticalSpeacing(50),
             SizedBox(
-              height: MediaQuery.of(context).size.height,
+            height:   MediaQuery.of(context).size.height,
               child: SingleChildScrollView(
                 scrollDirection: Axis.vertical,
                 child: Padding(
                   padding: const EdgeInsets.only(left: 16.0, right: 16.0),
                   child: Column(
                     children: [
-                      BookingCartWidget(
+                      BookingCartWidgetFamily(
                           ontapView: () {
                             Navigator.pushNamed(
                                 context, RoutesName.familyDetail);
                           },
                           primaryButtonTxt: 'View'),
-                      BookingCartWidget(
+                      BookingCartWidgetFamily(
                           ontapView: () {
                             Navigator.pushNamed(
                                 context, RoutesName.familyDetail);
                           }, primaryButtonTxt: 'View'),
-                      BookingCartWidget(
+                      BookingCartWidgetFamily(
                           ontapView: () {
                             Navigator.pushNamed(
                                 context, RoutesName.familyDetail);
                           }, primaryButtonTxt: 'View'),
-                      BookingCartWidget(
+                      BookingCartWidgetFamily(
                           ontapView: () {
                             Navigator.pushNamed(
                                 context, RoutesName.familyDetail);
                           }, primaryButtonTxt: 'View'),
-                      BookingCartWidget(
+                      BookingCartWidgetFamily(
                           ontapView: () {
                             Navigator.pushNamed(
                                 context, RoutesName.familyDetail);
