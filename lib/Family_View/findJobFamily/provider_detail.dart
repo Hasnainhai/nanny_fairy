@@ -5,14 +5,14 @@ import 'package:nanny_fairy/res/components/widgets/vertical_spacing.dart';
 import '../../res/components/colors.dart';
 import '../../utils/routes/routes_name.dart';
 
-class FamilyDetailProvider extends StatefulWidget {
-  const FamilyDetailProvider({super.key});
+class ProviderDetails extends StatefulWidget {
+  const ProviderDetails({super.key});
 
   @override
-  State<FamilyDetailProvider> createState() => _FamilyDetailProviderState();
+  State<ProviderDetails> createState() => _ProviderDetailsState();
 }
 
-class _FamilyDetailProviderState extends State<FamilyDetailProvider> {
+class _ProviderDetailsState extends State<ProviderDetails> {
   // popUp
   void showSubscribtionDialog(BuildContext context) {
     showDialog(
@@ -93,7 +93,7 @@ class _FamilyDetailProviderState extends State<FamilyDetailProvider> {
           },
         ),
         title: Text(
-          'Family Profile Detail',
+          'Provider Profile Detail',
           style: GoogleFonts.getFont(
             "Poppins",
             textStyle: const TextStyle(
@@ -138,7 +138,7 @@ class _FamilyDetailProviderState extends State<FamilyDetailProvider> {
                           spreadRadius: 5,
                           blurRadius: 7,
                           offset:
-                              const Offset(0, 3), // changes position of shadow
+                          const Offset(0, 3), // changes position of shadow
                         ),
                       ],
                     ),
@@ -146,7 +146,7 @@ class _FamilyDetailProviderState extends State<FamilyDetailProvider> {
                       children: [
                         const SizedBox(
                             height:
-                                40), // Adjust this value to create space for the CircleAvatar
+                            40), // Adjust this value to create space for the CircleAvatar
                         Text(
                           'Rayees khan(34)',
                           style: GoogleFonts.getFont(
@@ -197,7 +197,7 @@ class _FamilyDetailProviderState extends State<FamilyDetailProvider> {
                             children: [
                               Row(
                                 mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
+                                MainAxisAlignment.spaceBetween,
                                 children: [
                                   Text(
                                     'Officia irure ir',
@@ -226,7 +226,7 @@ class _FamilyDetailProviderState extends State<FamilyDetailProvider> {
                               const SizedBox(height: 8),
                               Row(
                                 mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
+                                MainAxisAlignment.spaceBetween,
                                 children: [
                                   Text(
                                     'Language spoken',
@@ -255,7 +255,7 @@ class _FamilyDetailProviderState extends State<FamilyDetailProvider> {
                               const SizedBox(height: 8),
                               Row(
                                 mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
+                                MainAxisAlignment.spaceBetween,
                                 children: [
                                   Text(
                                     'Officia irure ir',

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:nanny_fairy/Family_View/findJobFamily/home_view_family.dart';
-import 'package:nanny_fairy/Family_View/findJobFamily/provider_details.dart';
+import 'package:nanny_fairy/Family_View/findJobFamily/provider_detail.dart';
+import 'package:nanny_fairy/Family_View/homeFamily/home_view_family.dart';
+import 'package:nanny_fairy/Family_View/findJobFamily/job_view_family.dart';
 import 'package:nanny_fairy/Family_View/homeFamily/dashboard_family/dashboard_family.dart';
 import 'package:nanny_fairy/Family_View/payment_family/payment_family.dart';
 import 'package:nanny_fairy/Family_View/signup/create_account_family.dart';
@@ -144,12 +145,12 @@ class Routes {
       case RoutesName.communityDetailView:
         return MaterialPageRoute(
             builder: (BuildContext context) => const CommunityDetailView());
-      case RoutesName.findJobView:
+      case RoutesName.familyDetail:
         return MaterialPageRoute(
             builder: (BuildContext context) => const FamilyDetailProvider());
-      case RoutesName.providerDetails:
+      case RoutesName.jobViewFamily:
         return MaterialPageRoute(
-            builder: (BuildContext context) => const ProviderDetails());
+            builder: (BuildContext context) => const JobViewFamily());
       case RoutesName.createAccount:
         return MaterialPageRoute(
             builder: (BuildContext context) => const CreateAccount());
@@ -165,6 +166,9 @@ class Routes {
       case RoutesName.homeViewFamily:
         return MaterialPageRoute(
             builder: (BuildContext context) => const HomeViewFamily());
+      case RoutesName.providerDetails:
+        return MaterialPageRoute(
+            builder: (BuildContext context) => const ProviderDetails());
 
       default:
         return MaterialPageRoute(builder: (_) {

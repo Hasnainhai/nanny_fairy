@@ -2,10 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:nanny_fairy/res/components/colors.dart';
 import 'package:nanny_fairy/res/components/widgets/vertical_spacing.dart';
-import 'package:nanny_fairy/utils/routes/routes_name.dart';
-import 'package:nanny_fairy/view/home/widgets/home_feature_widget.dart';
 
+import '../../utils/routes/routes_name.dart';
 import '../../view/booked/widgets/booking_widget.dart';
+import '../../view/home/widgets/home_feature_widget.dart';
+import '../bookFamily/widgets/book_cart_widget_family.dart';
 
 class HomeViewFamily extends StatelessWidget {
   const HomeViewFamily({super.key});
@@ -135,7 +136,7 @@ class HomeViewFamily extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        'popular jobs',
+                        'What are you looking for',
                         style: GoogleFonts.getFont(
                           "Poppins",
                           textStyle: const TextStyle(
@@ -147,7 +148,7 @@ class HomeViewFamily extends StatelessWidget {
                       ),
                       InkWell(
                         onTap: () {
-                          Navigator.pushNamed(context, RoutesName.jobView);
+                          Navigator.pushNamed(context, RoutesName.jobViewFamily);
                         },
                         child: Text(
                           'see all',
@@ -170,31 +171,31 @@ class HomeViewFamily extends StatelessWidget {
                       scrollDirection: Axis.vertical,
                       child: Column(
                         children: [
-                          BookingCartWidget(
+                          BookingCartWidgetFamily(
                             primaryButtonTxt: 'View',
                             ontapView: () {
                               Navigator.pushNamed(
-                                  context, RoutesName.findJobView);
+                                  context, RoutesName.providerDetails);
                             },
                           ),
-                          BookingCartWidget(
+                          BookingCartWidgetFamily(
                             ontapView: () {
                               Navigator.pushNamed(
-                                  context, RoutesName.findJobView);
-                            },
-                            primaryButtonTxt: 'View',
-                          ),
-                          BookingCartWidget(
-                            ontapView: () {
-                              Navigator.pushNamed(
-                                  context, RoutesName.findJobView);
+                                  context, RoutesName.providerDetails);
                             },
                             primaryButtonTxt: 'View',
                           ),
-                          BookingCartWidget(
+                          BookingCartWidgetFamily(
                             ontapView: () {
                               Navigator.pushNamed(
-                                  context, RoutesName.findJobView);
+                                  context, RoutesName.providerDetails);
+                            },
+                            primaryButtonTxt: 'View',
+                          ),
+                          BookingCartWidgetFamily(
+                            ontapView: () {
+                              Navigator.pushNamed(
+                                  context, RoutesName.providerDetails);
                             },
                             primaryButtonTxt: 'View',
                           ),
