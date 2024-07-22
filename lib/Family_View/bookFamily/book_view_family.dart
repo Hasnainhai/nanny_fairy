@@ -38,35 +38,44 @@ class BookedViewFamily extends StatelessWidget {
               children: [
                 const VerticalSpeacing(20.0),
                 BookingCartWidgetFamily(
+                  primaryButtonColor: AppColor.avatarColor,
                   ontapView: () {},
                   primaryButtonTxt: 'Completed',
                 ),
                 BookingCartWidgetFamily(
+                  primaryButtonColor: AppColor.avatarColor,
                   ontapView: () {},
                   primaryButtonTxt: 'Completed',
                 ),
                 BookingCartWidgetFamily(
+                  primaryButtonColor: AppColor.avatarColor,
                   ontapView: () {},
                   primaryButtonTxt: 'Completed',
                 ),
                 BookingCartWidgetFamily(
+                  primaryButtonColor: AppColor.avatarColor,
                   ontapView: () {},
                   primaryButtonTxt: 'Completed',
                 ),
                 BookingCartWidgetFamily(
+                  primaryButtonColor: AppColor.avatarColor,
                   ontapView: () {},
                   primaryButtonTxt: 'Completed',
                 ),
                 BookingCartWidgetFamily(
+                  primaryButtonColor: AppColor.avatarColor,
                   ontapView: () {},
                   primaryButtonTxt: 'Completed',
                 ),
                 BookingCartWidgetFamily(
+                  primaryButtonColor: AppColor.avatarColor,
                   ontapView: () {},
                   primaryButtonTxt: 'Completed',
                 ),
                 BookingCartWidgetFamily(
+                  primaryButtonColor: AppColor.avatarColor,
                   ontapView: () {},
+
                   primaryButtonTxt: 'Completed',
                 ),
               ],

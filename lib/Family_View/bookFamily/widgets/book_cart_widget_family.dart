@@ -9,9 +9,13 @@ import '../../../res/components/widgets/card_button.dart';
 
 class BookingCartWidgetFamily extends StatefulWidget {
   const BookingCartWidgetFamily(
-      {super.key, required this.primaryButtonTxt, required this.ontapView});
+      {super.key,
+      required this.primaryButtonTxt,
+      required this.ontapView,
+      required this.primaryButtonColor});
   final Function() ontapView;
   final String primaryButtonTxt;
+  final Color primaryButtonColor;
 
   @override
   State<BookingCartWidgetFamily> createState() =>
@@ -119,7 +123,7 @@ class _BookingCartWidgetFamilyState extends State<BookingCartWidgetFamily> {
                 children: [
                   Column(
                     children: [
-                      Icon(Icons.school_outlined,color: AppColor.blackColor),
+                      Icon(Icons.school_outlined, color: AppColor.blackColor),
                       Text(
                         'MBBS',
                         style: GoogleFonts.getFont(
@@ -136,7 +140,7 @@ class _BookingCartWidgetFamilyState extends State<BookingCartWidgetFamily> {
                   SizedBox(width: 5),
                   Column(
                     children: [
-                      Icon(Icons.plus_one_outlined,color: AppColor.blackColor),
+                      Icon(Icons.plus_one_outlined, color: AppColor.blackColor),
                       Text(
                         'Skill',
                         style: GoogleFonts.getFont(
@@ -150,7 +154,6 @@ class _BookingCartWidgetFamilyState extends State<BookingCartWidgetFamily> {
                       ),
                     ],
                   ),
-
                   Column(
                     children: [
                       Row(
@@ -166,12 +169,13 @@ class _BookingCartWidgetFamilyState extends State<BookingCartWidgetFamily> {
                               ),
                             ),
                           ),
-                          Icon(Icons.euro_outlined,color: AppColor.blackColor,size: 16,),
+                          Icon(
+                            Icons.euro_outlined,
+                            color: AppColor.blackColor,
+                            size: 16,
+                          ),
                         ],
                       ),
-
-
-
                       Text(
                         'Hourse Rate',
                         style: GoogleFonts.getFont(
@@ -185,12 +189,11 @@ class _BookingCartWidgetFamilyState extends State<BookingCartWidgetFamily> {
                       ),
                     ],
                   ),
-
                 ],
               ),
               trailing: CardButton(
                 title: widget.primaryButtonTxt,
-                color: AppColor.primaryColor,
+                color: widget.primaryButtonColor,
                 onTap: () {
                   widget.ontapView();
                 },
@@ -199,7 +202,6 @@ class _BookingCartWidgetFamilyState extends State<BookingCartWidgetFamily> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-
                 Text(
                   'Online: Today',
                   style: GoogleFonts.getFont(
@@ -254,12 +256,8 @@ class _BookingCartWidgetFamilyState extends State<BookingCartWidgetFamily> {
                       isSelected: false,
                       onTap: (bool isSelected) {},
                     ),
-
-
                   ],
                 ),
-
-
               ],
             ),
             const VerticalSpeacing(10.0),
@@ -269,8 +267,6 @@ class _BookingCartWidgetFamilyState extends State<BookingCartWidgetFamily> {
     );
   }
 }
-
-
 
 class DayButtonFamily extends StatefulWidget {
   final String day;
@@ -310,10 +306,9 @@ class _DayButtonFamilyState extends State<DayButtonFamily> {
       child: Container(
         decoration: BoxDecoration(
           color: _isSelected ? Colors.blue : Colors.transparent,
-
           border: Border.all(color: _isSelected ? Colors.blue : Colors.grey),
         ),
-        padding: const EdgeInsets.only(left: 4,right: 4,top: 2,bottom: 2),
+        padding: const EdgeInsets.only(left: 4, right: 4, top: 2, bottom: 2),
         child: Text(
           widget.day,
           style: TextStyle(
@@ -325,5 +320,3 @@ class _DayButtonFamilyState extends State<DayButtonFamily> {
     );
   }
 }
-
-

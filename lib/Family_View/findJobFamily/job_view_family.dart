@@ -64,27 +64,32 @@ class JobViewFamily extends StatelessWidget {
                   child: Column(
                     children: [
                       BookingCartWidgetFamily(
+                          primaryButtonColor: AppColor.primaryColor,
                           ontapView: () {
                             Navigator.pushNamed(
                                 context, RoutesName.familyDetail);
                           },
                           primaryButtonTxt: 'View'),
                       BookingCartWidgetFamily(
+                          primaryButtonColor: AppColor.primaryColor,
                           ontapView: () {
                             Navigator.pushNamed(
                                 context, RoutesName.familyDetail);
                           }, primaryButtonTxt: 'View'),
                       BookingCartWidgetFamily(
+                          primaryButtonColor: AppColor.primaryColor,
                           ontapView: () {
                             Navigator.pushNamed(
                                 context, RoutesName.familyDetail);
                           }, primaryButtonTxt: 'View'),
                       BookingCartWidgetFamily(
+                          primaryButtonColor: AppColor.primaryColor,
                           ontapView: () {
                             Navigator.pushNamed(
                                 context, RoutesName.familyDetail);
                           }, primaryButtonTxt: 'View'),
                       BookingCartWidgetFamily(
+                          primaryButtonColor: AppColor.primaryColor,
                           ontapView: () {
                             Navigator.pushNamed(
                                 context, RoutesName.familyDetail);
