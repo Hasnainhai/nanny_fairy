@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:nanny_fairy/Family_View/findJobFamily/home_view_family.dart';
 import 'package:nanny_fairy/Family_View/findJobFamily/provider_details.dart';
 import 'package:nanny_fairy/Family_View/homeFamily/dashboard_family/dashboard_family.dart';
 import 'package:nanny_fairy/Family_View/payment_family/payment_family.dart';
+import 'package:nanny_fairy/Family_View/signup/create_account_family.dart';
 import 'package:nanny_fairy/Family_View/signup/register_details_family.dart';
 import 'package:nanny_fairy/Family_View/signup/select_passion_family.dart';
 import 'package:nanny_fairy/Family_View/signup/upload_id_family.dart';
@@ -157,6 +159,12 @@ class Routes {
       case RoutesName.educationHorlyView:
         return MaterialPageRoute(
             builder: (BuildContext context) => const EducationHorlyView());
+      case RoutesName.createAccountFamily:
+        return MaterialPageRoute(
+            builder: (BuildContext context) => const CreateAccountFamily());
+      case RoutesName.homeViewFamily:
+        return MaterialPageRoute(
+            builder: (BuildContext context) => const HomeViewFamily());
 
       default:
         return MaterialPageRoute(builder: (_) {

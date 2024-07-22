@@ -1,0 +1,122 @@
+import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:nanny_fairy/res/components/rounded_button.dart';
+import 'package:nanny_fairy/res/components/widgets/custom_text_field.dart';
+import 'package:nanny_fairy/res/components/widgets/vertical_spacing.dart';
+import 'package:nanny_fairy/utils/routes/routes_name.dart';
+import '../../../res/components/colors.dart';
+
+class CreateAccountFamily extends StatelessWidget {
+  const CreateAccountFamily({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+        backgroundColor: AppColor.primaryColor,
+        body: SafeArea(
+          child: SingleChildScrollView(
+            scrollDirection: Axis.vertical,
+            child: Column(
+              children: [
+                SizedBox(
+                  height: 250,
+                  width: double.infinity,
+                  child: Column(
+                    children: [
+                      Row(
+                        children: [
+                          IconButton(
+                            icon: const Icon(Icons.west,
+                                color: AppColor.whiteColor),
+                            onPressed: () {
+                              Navigator.pop(context);
+                            },
+                          ),
+                          const SizedBox(width: 60),
+                          Text(
+                            'Create Account',
+                            style: GoogleFonts.getFont(
+                              "Poppins",
+                              textStyle: const TextStyle(
+                                fontSize: 20,
+                                fontWeight: FontWeight.w400,
+                                color: AppColor.whiteColor,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                      const VerticalSpeacing(30),
+                      Container(
+                        height: 94,
+                        width: 94,
+                        decoration: BoxDecoration(
+                            color: AppColor.avatarColor,
+                            borderRadius: BorderRadius.circular(47),
+                            border: Border.all(
+                                width: 4, color: AppColor.whiteColor)),
+                        child: const Center(
+                          child: Icon(
+                            Icons.lock_outline,
+                            size: 40,
+                            color: AppColor.whiteColor,
+                          ),
+                        ),
+                      ),
+                      const VerticalSpeacing(10),
+                      Text(
+                        'Create Account of\n Your App',
+                        textAlign: TextAlign.center,
+                        style: GoogleFonts.getFont(
+                          "Poppins",
+                          textStyle: const TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.w400,
+                            color: AppColor.whiteColor,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                const VerticalSpeacing(16.0),
+                Container(
+                  height: MediaQuery.of(context).size.height,
+                  width: double.infinity,
+                  decoration: const BoxDecoration(
+                    color: AppColor.whiteColor,
+                    borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(30.0),
+                    ),
+                  ),
+                  child: Padding(
+                    padding:
+                    const EdgeInsets.only(left: 16.0, right: 16.0, top: 50),
+                    child: Column(
+                      children: [
+                        const TextFieldCustom(
+                            prefixIcon: Icon(Icons.lock_outline),
+                            maxLines: 1,
+                            hintText: 'Set A Password'),
+                        const TextFieldCustom(
+                            prefixIcon: Icon(Icons.lock_outline),
+                            maxLines: 1,
+                            hintText: 'Confirm Password'),
+                        const VerticalSpeacing(30),
+                        RoundedButton(
+                            title: 'Confirm',
+                            onpress: () {
+                              Navigator.pushNamed(
+                                  context, RoutesName.selectPassionFamily);
+                            },
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ));
+  }
+}

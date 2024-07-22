@@ -91,7 +91,7 @@ class _SelectPassionFamilyViewState extends State<SelectPassionFamilyView> {
             ),
             const VerticalSpeacing(30.0),
             RoundedButton(title:'Register' ,onpress: (){
-              Navigator.pushNamed(context, RoutesName.registerFamily);
+              Navigator.pushNamed(context, RoutesName.uploadIdFamily);
             },),
 
 
