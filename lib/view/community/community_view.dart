@@ -16,7 +16,7 @@ class _CommunityViewState extends State<CommunityView> {
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
-      length: 3,
+      length: 2,
       child: Scaffold(
         backgroundColor: AppColor.secondaryBgColor,
         appBar: AppBar(
@@ -70,8 +70,7 @@ class _CommunityViewState extends State<CommunityView> {
             unselectedLabelColor: AppColor.blackColor,
             tabs: [
               Tab(text: 'Topics'),
-              Tab(text: 'Tips & Tricks'),
-              Tab(text: 'Blog'),
+              Tab(text: 'My Posts'),
             ],
           ),
         ),
@@ -116,21 +115,7 @@ class _CommunityViewState extends State<CommunityView> {
                 ),
               ),
             ),
-            //Tips & Tricks View
-            const Padding(
-              padding: EdgeInsets.only(top: 10, left: 16.0, right: 16.0),
-              child: SingleChildScrollView(
-                scrollDirection: Axis.vertical,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    CommunituCartWidget(),
-                    CommunituCartWidget(),
-                    CommunituCartWidget(),
-                  ],
-                ),
-              ),
-            ),
+
             //Blog View
             const Padding(
               padding: EdgeInsets.only(top: 10, left: 16.0, right: 16.0),

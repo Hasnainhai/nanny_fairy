@@ -23,14 +23,13 @@ class UploadImage extends StatelessWidget {
                 topLeft: Radius.circular(30.0),
               ),
             ),
-            child:  SingleChildScrollView(
+            child: SingleChildScrollView(
               child: Padding(
                 padding: EdgeInsets.only(left: 16.0, right: 16.0),
                 child: Column(
-
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    VerticalSpeacing(MediaQuery.of(context).size.height*0.5),
+                    VerticalSpeacing(MediaQuery.of(context).size.height * 0.5),
                     Text(
                       'Write an introduction to yourself',
                       textAlign: TextAlign.center,
@@ -47,7 +46,25 @@ class UploadImage extends StatelessWidget {
                     Container(
                       height: 200,
                       width: double.infinity,
-                      color: AppColor.boxFillColor,
+                      decoration: BoxDecoration(
+                        color: AppColor.whiteColor,
+                        borderRadius: BorderRadius.circular(12),
+                        border: Border.all(
+                          strokeAlign: BorderSide.strokeAlignCenter,
+                          color: const Color(0xff1B81BC).withOpacity(
+                              0.10), // Stroke color with 10% opacity
+                          width: 1,
+                        ),
+                        boxShadow: [
+                          BoxShadow(
+                            color: const Color(0xff1B81BC).withOpacity(
+                                0.1), // Drop shadow color with 4% opacity
+                            blurRadius: 2,
+                            offset: const Offset(1, 2),
+                            spreadRadius: 1,
+                          ),
+                        ],
+                      ),
                       child: const Padding(
                         padding: EdgeInsets.only(left: 10.0),
                         child: TextField(
@@ -59,10 +76,11 @@ class UploadImage extends StatelessWidget {
                       ),
                     ),
                     const VerticalSpeacing(40),
-                    RoundedButton(title: 'Continue', onpress: (){
-                      Navigator.pushNamed(context, RoutesName.dashboard);
-                    }),
-
+                    RoundedButton(
+                        title: 'Continue',
+                        onpress: () {
+                          Navigator.pushNamed(context, RoutesName.dashboard);
+                        }),
                   ],
                 ),
               ),
@@ -108,7 +126,7 @@ class UploadImage extends StatelessWidget {
           Positioned(
             top: 190, // Half of the avatar height to position it correctly
             left:
-            MediaQuery.of(context).size.width / 2 - 60, // Center the avatar
+                MediaQuery.of(context).size.width / 2 - 60, // Center the avatar
             child: Container(
               height: 120,
               width: 120,
@@ -172,10 +190,8 @@ class UploadImage extends StatelessWidget {
               ],
             ),
           ),
-
         ],
       ),
     );
   }
 }
-

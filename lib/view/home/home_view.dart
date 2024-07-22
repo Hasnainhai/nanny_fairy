@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:nanny_fairy/res/components/colors.dart';
 import 'package:nanny_fairy/res/components/widgets/vertical_spacing.dart';
+import 'package:nanny_fairy/utils/routes/routes_name.dart';
 import 'package:nanny_fairy/view/home/widgets/home_feature_widget.dart';
 
 import '../booked/widgets/booking_widget.dart';
@@ -149,14 +150,19 @@ class HomeView extends StatelessWidget {
                           ),
                         ),
                       ),
-                      Text(
-                        'see all',
-                        style: GoogleFonts.getFont(
-                          "Poppins",
-                          textStyle: const TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.w600,
-                            color: AppColor.primaryColor,
+                      InkWell(
+                        onTap: () {
+                          Navigator.pushNamed(context, RoutesName.jobView);
+                        },
+                        child: Text(
+                          'see all',
+                          style: GoogleFonts.getFont(
+                            "Poppins",
+                            textStyle: const TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.w600,
+                              color: AppColor.primaryColor,
+                            ),
                           ),
                         ),
                       ),
@@ -165,23 +171,36 @@ class HomeView extends StatelessWidget {
                   const VerticalSpeacing(16.0),
                   SizedBox(
                     height: MediaQuery.of(context).size.height * 0.3,
-                    child:  SingleChildScrollView(
+                    child: SingleChildScrollView(
                       scrollDirection: Axis.vertical,
                       child: Column(
                         children: [
                           BookingCartWidget(
-                            primaryButtonTxt: 'View', ontapView: () {  },
+                            primaryButtonTxt: 'View',
+                            ontapView: () {
+                              Navigator.pushNamed(
+                                  context, RoutesName.findJobView);
+                            },
                           ),
                           BookingCartWidget(
-                            ontapView: () {  },
+                            ontapView: () {
+                              Navigator.pushNamed(
+                                  context, RoutesName.findJobView);
+                            },
                             primaryButtonTxt: 'View',
                           ),
                           BookingCartWidget(
-                            ontapView: () {  },
+                            ontapView: () {
+                              Navigator.pushNamed(
+                                  context, RoutesName.findJobView);
+                            },
                             primaryButtonTxt: 'View',
                           ),
                           BookingCartWidget(
-                            ontapView: () {  },
+                            ontapView: () {
+                              Navigator.pushNamed(
+                                  context, RoutesName.findJobView);
+                            },
                             primaryButtonTxt: 'View',
                           ),
                         ],
@@ -232,7 +251,6 @@ class SearchBar extends StatelessWidget {
             width: 250,
             height: 50,
             child: TextFormField(
-
               decoration: const InputDecoration(
                   border: InputBorder.none,
                   hintText: 'Search',
