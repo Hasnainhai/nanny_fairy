@@ -60,7 +60,7 @@ class LoginOrSignupView extends StatelessWidget {
         }),
         const VerticalSpeacing(20.0),
         RoundedButton(title: 'register as a family', onpress: (){
-          Navigator.pushNamed(context, RoutesName.selectPassionFamily);
+          Navigator.pushNamed(context, RoutesName.registerFamily);
 
         }),
         const VerticalSpeacing(20.0),

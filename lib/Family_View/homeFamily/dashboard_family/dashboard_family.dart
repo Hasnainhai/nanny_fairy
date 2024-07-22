@@ -2,7 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:nanny_fairy/Family_View/familyChat/family_chat_list.dart';
-import 'package:nanny_fairy/Family_View/findJobFamily/find_job_family.dart';
+import 'package:nanny_fairy/Family_View/findJobFamily/home_view_family.dart';
 import 'package:nanny_fairy/view/booked/booked_view.dart';
 import 'package:nanny_fairy/view/chat/chat_view.dart';
 import 'package:nanny_fairy/view/community/community_view.dart';
@@ -103,7 +103,7 @@ class _DashBoardFamilyScreenState extends State<DashBoardFamilyScreen>
         physics: const NeverScrollableScrollPhysics(),
         controller: tabController,
         children: const [
-          FindJobFamilyView(),
+          HomeViewFamily(),
           FamilyChatList(),
           BookedView(),
           CommunityView(),

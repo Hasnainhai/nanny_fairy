@@ -69,28 +69,31 @@ class _RegisterDetailsFamilyState extends State<RegisterDetailsFamily> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 const VerticalSpeacing(30.0),
-                const TextFieldCustom(maxLines: 1, hintText: 'Name'),
+                const Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Expanded(child: TextFieldCustom( prefixIcon: Icon(Icons.person_outline), maxLines: 1,hintText: 'Enter Name')),
+                    SizedBox(width: 12),
+                    Expanded(child: TextFieldCustom(prefixIcon: Icon(Icons.person_outline),maxLines: 1,hintText: 'Enter last')),
+                  ],
+                ),
                 const VerticalSpeacing(16),
-                const TextFieldCustom(maxLines: 1, hintText: 'Address'),
+                const TextFieldCustom(prefixIcon: Icon(Icons.location_on_outlined),maxLines: 1, hintText: 'Enter Address'),
                 const VerticalSpeacing(16),
                 const Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Expanded(child: TextFieldCustom(maxLines: 1,hintText: 'house number')),
+                    Expanded(child: TextFieldCustom(prefixIcon: Icon(Icons.home_outlined),maxLines: 1, hintText: 'House Number')),
                     SizedBox(width: 12),
-                    Expanded(child: TextFieldCustom(maxLines: 1,hintText: 'post code')),
+                    Expanded(child: TextFieldCustom(prefixIcon: Icon(Icons.lock_outline),maxLines: 1,hintText: 'Post Code')),
                   ],
                 ),
                 const VerticalSpeacing(16),
-                const TextFieldCustom(maxLines: 1, hintText: '+Telephone number'),
+                const TextFieldCustom(prefixIcon: Icon(Icons.phone),maxLines: 1, hintText: 'Enter telephone number'),
                 const VerticalSpeacing(16),
-                const TextFieldCustom(maxLines: 1,hintText: 'Date of birth'),
+                const TextFieldCustom(prefixIcon: Icon(Icons.calendar_month_outlined),maxLines: 1,hintText: 'Date of birth'),
                 const VerticalSpeacing(16),
-                const TextFieldCustom(maxLines: 1, hintText: 'Email address'),
-                const VerticalSpeacing(16),
-                const TextFieldCustom(maxLines: 1,hintText: 'password'),
-                const VerticalSpeacing(16),
-                const TextFieldCustom(maxLines: 1, hintText: 'hours rate'),
+                const TextFieldCustom(prefixIcon: Icon(Icons.mail_outline),maxLines: 1,hintText: 'Enter Email'),
                 const VerticalSpeacing(16),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.start,
@@ -141,7 +144,7 @@ class _RegisterDetailsFamilyState extends State<RegisterDetailsFamily> {
                 ),
                 const VerticalSpeacing(24.0),
                 RoundedButton(title: 'Register', onpress: (){
-                  Navigator.pushNamed(context, RoutesName.uploadImgFamily);
+                  Navigator.pushNamed(context, RoutesName.createAccountFamily);
                 }),
                 const VerticalSpeacing(30.0),
               ],

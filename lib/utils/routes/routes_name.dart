@@ -37,4 +37,6 @@ class RoutesName {
   static const String createAccount = '/create_account';
   static const String availabilityView = '/availability_view';
   static const String educationHorlyView = '/education_horly_view';
+  static const String createAccountFamily = '/create_account_family';
+  static const String homeViewFamily = '/home_view_family';
 }

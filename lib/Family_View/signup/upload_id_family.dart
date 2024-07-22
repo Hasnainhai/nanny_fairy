@@ -111,8 +111,8 @@ class UploadIdFamily extends StatelessWidget {
               ),
             ),
             const VerticalSpeacing(46.0),
-            RoundedButton(title: 'Continue and Pay', onpress: (){
-              Navigator.pushNamed(context, RoutesName.paymentFamily);
+            RoundedButton(title: 'Continue', onpress: (){
+              Navigator.pushNamed(context, RoutesName.uploadImgFamily);
               // Navigator.pushNamed(context, RoutesName.selectPreference);
             }),
 

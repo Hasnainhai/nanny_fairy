@@ -5,10 +5,10 @@ import 'package:nanny_fairy/res/components/widgets/vertical_spacing.dart';
 import 'package:nanny_fairy/utils/routes/routes_name.dart';
 import 'package:nanny_fairy/view/home/widgets/home_feature_widget.dart';
 
-import '../booked/widgets/booking_widget.dart';
+import '../../view/booked/widgets/booking_widget.dart';
 
-class HomeView extends StatelessWidget {
-  const HomeView({super.key});
+class HomeViewFamily extends StatelessWidget {
+  const HomeViewFamily({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -77,24 +77,13 @@ class HomeView extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    'This month',
+                    'What are you looking for',
                     style: GoogleFonts.getFont(
                       "Poppins",
                       textStyle: const TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.w600,
                         color: AppColor.blackColor,
-                      ),
-                    ),
-                  ),
-                  Text(
-                    'All reports',
-                    style: GoogleFonts.getFont(
-                      "Poppins",
-                      textStyle: const TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.w600,
-                        color: AppColor.primaryColor,
                       ),
                     ),
                   ),
@@ -111,26 +100,27 @@ class HomeView extends StatelessWidget {
                   children: [
                     SizedBox(width: 16),
                     HomeFeatureContainer(
-                      txColor: AppColor.blackColor,
-                      img: 'images/families.png',
-                      title: '100k',
-                      subTitle: 'Total Families', bgColor: AppColor.whiteColor,
+                      bgColor: Color(0xff51A1BA),
+                      img: 'images/cleaning.png',
+                      title: '',
+                      subTitle: 'Cleaning',
+                      txColor: AppColor.whiteColor,
                     ),
                     SizedBox(width: 16),
                     HomeFeatureContainer(
-                      txColor: AppColor.blackColor,
-                      bgColor: AppColor.whiteColor,
-                      img: 'images/chats.png',
-                      title: '10',
-                      subTitle: 'Total Chats',
+                      txColor: AppColor.whiteColor,
+                      bgColor: Color(0xffFEAA48),
+                      img: 'images/homeSitter.png',
+                      title: '',
+                      subTitle: 'Home Sitter',
                     ),
                     SizedBox(width: 16),
                     HomeFeatureContainer(
-                      txColor: AppColor.blackColor,
-                      bgColor: AppColor.whiteColor,
-                      img: 'images/families.png',
-                      title: '100k',
-                      subTitle: 'Total Families',
+                      txColor: AppColor.whiteColor,
+                      bgColor: Color(0xffDDC912),
+                      img: 'images/cleaning.png',
+                      title: '',
+                      subTitle: 'Eiderly',
                     ),
                   ],
                 ),
