@@ -271,7 +271,9 @@ class SearchBar extends StatelessWidget {
             ),
             child: Center(
               child: IconButton(
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.pushNamed(context, RoutesName.filterPopup);
+                },
                 icon: const Icon(
                   Icons.filter_alt_outlined,
                   color: AppColor.primaryColor,
