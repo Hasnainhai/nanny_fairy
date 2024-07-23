@@ -91,9 +91,13 @@ class CreateAccountFamily extends StatelessWidget {
                   ),
                   child: Padding(
                     padding:
-                    const EdgeInsets.only(left: 16.0, right: 16.0, top: 50),
+                        const EdgeInsets.only(left: 16.0, right: 16.0, top: 50),
                     child: Column(
                       children: [
+                        const TextFieldCustom(
+                            prefixIcon: Icon(Icons.mail_outline),
+                            maxLines: 1,
+                            hintText: 'Enter Email'),
                         const TextFieldCustom(
                             prefixIcon: Icon(Icons.lock_outline),
                             maxLines: 1,
@@ -104,11 +108,11 @@ class CreateAccountFamily extends StatelessWidget {
                             hintText: 'Confirm Password'),
                         const VerticalSpeacing(30),
                         RoundedButton(
-                            title: 'Confirm',
-                            onpress: () {
-                              Navigator.pushNamed(
-                                  context, RoutesName.selectPassionFamily);
-                            },
+                          title: 'Confirm',
+                          onpress: () {
+                            Navigator.pushNamed(
+                                context, RoutesName.registerFamily);
+                          },
                         ),
                       ],
                     ),

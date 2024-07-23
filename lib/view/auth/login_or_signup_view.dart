@@ -60,12 +60,12 @@ class LoginOrSignupView extends StatelessWidget {
         }),
         const VerticalSpeacing(20.0),
         RoundedButton(title: 'register as a family', onpress: (){
-          Navigator.pushNamed(context, RoutesName.registerFamily);
+          Navigator.pushNamed(context, RoutesName.createAccountFamily);
 
         }),
         const VerticalSpeacing(20.0),
         RoundedButton(title: 'register as a provider', onpress: (){
-          Navigator.pushNamed(context, RoutesName.registerDetails);
+          Navigator.pushNamed(context, RoutesName.createAccount);
 
 
         }),

@@ -22,7 +22,7 @@ class _TotalRatingScreenState extends State<TotalRatingScreen> {
       backgroundColor: AppColor.secondaryBgColor,
 
       appBar: AppBar(
-        backgroundColor: Colors.transparent,
+        backgroundColor: AppColor.primaryColor,
         elevation: 0,
         centerTitle: true,
         leading: IconButton(
@@ -31,7 +31,7 @@ class _TotalRatingScreenState extends State<TotalRatingScreen> {
             },
             icon: const Icon(
               Icons.arrow_back,
-              color: AppColor.blackColor,
+              color: AppColor.whiteColor,
             )),
         title: const Text(
           "Reviews",
@@ -39,7 +39,7 @@ class _TotalRatingScreenState extends State<TotalRatingScreen> {
             fontFamily: 'CenturyGothic',
             fontSize: 18,
             fontWeight: FontWeight.w400,
-            color: AppColor.blackColor,
+            color: AppColor.whiteColor,
           ),
         ),
       ),
