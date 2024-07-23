@@ -78,6 +78,14 @@ class _ProviderDetailsState extends State<ProviderDetails> {
     );
   }
 
+  bool _isExpanded = false;
+
+  void _toggleViewMore() {
+    setState(() {
+      _isExpanded = !_isExpanded;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -110,24 +118,16 @@ class _ProviderDetailsState extends State<ProviderDetails> {
       body: Stack(
         clipBehavior: Clip.none,
         children: [
-          // Container(
-          //   height: 150,
-          //   width: double.infinity,
-          //   decoration: const BoxDecoration(
-          //     color: AppColor.primaryColor,
-          //     borderRadius: BorderRadius.only(
-          //       bottomLeft: Radius.circular(20),
-          //       bottomRight: Radius.circular(20),
-          //     ),
-          //   ),
-          // ),
+
           Padding(
             padding: const EdgeInsets.only(top: 90),
             child: Container(
               height: MediaQuery.of(context).size.height,
               decoration: BoxDecoration(
                 color: Colors.white,
-                borderRadius: BorderRadius.only(topLeft: Radius.circular(30),topRight: Radius.circular(30)),
+                borderRadius: const BorderRadius.only(
+                    topLeft: Radius.circular(30),
+                    topRight: Radius.circular(30)),
                 boxShadow: [
                   BoxShadow(
                     color: Colors.grey.withOpacity(0.5),
@@ -137,11 +137,10 @@ class _ProviderDetailsState extends State<ProviderDetails> {
                   ),
                 ],
               ),
-
               child: ListView(
                 children: [
                   Padding(
-                    padding: const EdgeInsets.only(left: 16,right: 16),
+                    padding: const EdgeInsets.only(left: 16, right: 16),
                     child: Column(
                       children: [
                         const SizedBox(height: 40),
@@ -150,26 +149,25 @@ class _ProviderDetailsState extends State<ProviderDetails> {
                           style: GoogleFonts.getFont(
                             "Poppins",
                             textStyle: const TextStyle(
-                              fontSize: 14,
-                              fontWeight: FontWeight.w600,
-                              color:AppColor.blackColor
-                            ),
+                                fontSize: 14,
+                                fontWeight: FontWeight.w600,
+                                color: AppColor.blackColor),
                           ),
                         ),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            const Icon(Icons.star, color: Colors.amber, size: 20),
+                            const Icon(Icons.star,
+                                color: Colors.amber, size: 20),
                             const SizedBox(width: 4),
                             Text(
                               '4.8 (456 Reviews)',
                               style: GoogleFonts.getFont(
                                 "Poppins",
                                 textStyle: const TextStyle(
-                                  fontSize: 11,
-                                  fontWeight: FontWeight.w400,
-                                  color: AppColor.blackColor
-                                ),
+                                    fontSize: 11,
+                                    fontWeight: FontWeight.w400,
+                                    color: AppColor.blackColor),
                               ),
                             ),
                           ],
@@ -193,17 +191,17 @@ class _ProviderDetailsState extends State<ProviderDetails> {
                           child: Column(
                             children: [
                               Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
                                 children: [
                                   Text(
                                     'Officia irure ir',
                                     style: GoogleFonts.getFont(
                                       "Poppins",
                                       textStyle: const TextStyle(
-                                        fontSize: 14,
-                                        fontWeight: FontWeight.w400,
-                                        color: AppColor.blackColor
-                                      ),
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.w400,
+                                          color: AppColor.blackColor),
                                     ),
                                   ),
                                   Text(
@@ -211,27 +209,26 @@ class _ProviderDetailsState extends State<ProviderDetails> {
                                     style: GoogleFonts.getFont(
                                       "Poppins",
                                       textStyle: const TextStyle(
-                                        fontSize: 14,
-                                        fontWeight: FontWeight.w600,
-                                        color:AppColor.blackColor
-                                      ),
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.w600,
+                                          color: AppColor.blackColor),
                                     ),
                                   ),
                                 ],
                               ),
                               const SizedBox(height: 8),
                               Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
                                 children: [
                                   Text(
                                     'Language spoken',
                                     style: GoogleFonts.getFont(
                                       "Poppins",
                                       textStyle: const TextStyle(
-                                        fontSize: 14,
-                                        fontWeight: FontWeight.w400,
-                                        color:AppColor.blackColor
-                                      ),
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.w400,
+                                          color: AppColor.blackColor),
                                     ),
                                   ),
                                   Text(
@@ -239,27 +236,26 @@ class _ProviderDetailsState extends State<ProviderDetails> {
                                     style: GoogleFonts.getFont(
                                       "Poppins",
                                       textStyle: const TextStyle(
-                                        fontSize: 14,
-                                        fontWeight: FontWeight.w600,
-                                        color:AppColor.blackColor
-                                      ),
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.w600,
+                                          color: AppColor.blackColor),
                                     ),
                                   ),
                                 ],
                               ),
                               const SizedBox(height: 8),
                               Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
                                 children: [
                                   Text(
                                     'Officia irure ir',
                                     style: GoogleFonts.getFont(
                                       "Poppins",
                                       textStyle: const TextStyle(
-                                        fontSize: 14,
-                                        fontWeight: FontWeight.w400,
-                                        color:AppColor.blackColor
-                                      ),
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.w400,
+                                          color: AppColor.blackColor),
                                     ),
                                   ),
                                   Text(
@@ -267,10 +263,9 @@ class _ProviderDetailsState extends State<ProviderDetails> {
                                     style: GoogleFonts.getFont(
                                       "Poppins",
                                       textStyle: const TextStyle(
-                                        fontSize: 14,
-                                        fontWeight: FontWeight.w600,
-                                        color:AppColor.blackColor
-                                      ),
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.w600,
+                                          color: AppColor.blackColor),
                                     ),
                                   ),
                                 ],
@@ -289,10 +284,9 @@ class _ProviderDetailsState extends State<ProviderDetails> {
                               style: GoogleFonts.getFont(
                                 "Poppins",
                                 textStyle: const TextStyle(
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.w600,
-                                  color: AppColor.blackColor
-                                ),
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.w600,
+                                    color: AppColor.blackColor),
                               ),
                             ),
                             const VerticalSpeacing(10),
@@ -442,6 +436,140 @@ class _ProviderDetailsState extends State<ProviderDetails> {
                                 const VerticalSpeacing(10),
                               ],
                             ),
+                            const VerticalSpeacing(10),
+
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.end,
+                              children: [
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.end,
+                                  children: [
+                                    GestureDetector(
+                                      onTap: _toggleViewMore,
+                                      child: Text(
+                                        'View More',
+                                        style: GoogleFonts.getFont(
+                                          "Poppins",
+                                          textStyle: const TextStyle(
+                                            fontSize: 14,
+                                            fontWeight: FontWeight.w400,
+                                            color: Colors.black,
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            ),
+
+                            if (_isExpanded)
+                              Container(
+                                height: 216,
+                                width: double.infinity,
+                                decoration: const BoxDecoration(
+                                  color: AppColor.whiteColor,
+                                ),
+                                child: Padding(
+                                  padding: const EdgeInsets.all(10.0),
+                                  child: Column(
+                                    children: [
+                                      const SizedBox(height: 16),
+                                      const VerticalSpeacing(16),
+                                      Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Text(
+                                            'Morning',
+                                            style: GoogleFonts.getFont(
+                                              "Poppins",
+                                              textStyle: const TextStyle(
+                                                fontSize: 16,
+                                                fontWeight: FontWeight.w400,
+                                                color: AppColor.blackColor,
+                                              ),
+                                            ),
+                                          ),
+                                          Text(
+                                            '6:am to 7:am',
+                                            style: GoogleFonts.getFont(
+                                              "Poppins",
+                                              textStyle: const TextStyle(
+                                                fontSize: 12,
+                                                fontWeight: FontWeight.w400,
+                                                color: AppColor.primaryColor,
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                      const Divider(),
+                                      const VerticalSpeacing(16),
+                                      Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Text(
+                                            'Afternoon',
+                                            style: GoogleFonts.getFont(
+                                              "Poppins",
+                                              textStyle: const TextStyle(
+                                                fontSize: 16,
+                                                fontWeight: FontWeight.w400,
+                                                color: AppColor.blackColor,
+                                              ),
+                                            ),
+                                          ),
+                                          Text(
+                                            '10:pm to 11:pm',
+                                            style: GoogleFonts.getFont(
+                                              "Poppins",
+                                              textStyle: const TextStyle(
+                                                fontSize: 12,
+                                                fontWeight: FontWeight.w400,
+                                                color: AppColor.primaryColor,
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                      const Divider(),
+                                      const VerticalSpeacing(16),
+                                      Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Text(
+                                            'Evening',
+                                            style: GoogleFonts.getFont(
+                                              "Poppins",
+                                              textStyle: const TextStyle(
+                                                fontSize: 16,
+                                                fontWeight: FontWeight.w400,
+                                                color: AppColor.blackColor,
+                                              ),
+                                            ),
+                                          ),
+                                          Text(
+                                            '1:pm to 2:am',
+                                            style: GoogleFonts.getFont(
+                                              "Poppins",
+                                              textStyle: const TextStyle(
+                                                fontSize: 12,
+                                                fontWeight: FontWeight.w400,
+                                                color: AppColor.primaryColor,
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            const Divider(),
+                            const VerticalSpeacing(16),
                             //Family rating Portion
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -486,11 +614,11 @@ class _ProviderDetailsState extends State<ProviderDetails> {
                                         borderRadius: BorderRadius.circular(20),
                                         boxShadow: [
                                           BoxShadow(
-                                            color: AppColor.primaryColor.withOpacity(0.1),
-                                            spreadRadius: 2,
-                                            blurRadius: 2,
+                                            color: Colors.grey.withOpacity(0.1),
+                                            spreadRadius: 5,
+                                            blurRadius: 7,
                                             offset: const Offset(0,
-                                                2),
+                                                3), // changes position of shadow
                                           ),
                                         ],
                                       ),
@@ -522,8 +650,10 @@ class _ProviderDetailsState extends State<ProviderDetails> {
                                                     "Poppins",
                                                     textStyle: const TextStyle(
                                                       fontSize: 14,
-                                                      fontWeight: FontWeight.w400,
-                                                      color: AppColor.blackColor,
+                                                      fontWeight:
+                                                          FontWeight.w400,
+                                                      color:
+                                                          AppColor.blackColor,
                                                     ),
                                                   ),
                                                 ),
@@ -533,7 +663,8 @@ class _ProviderDetailsState extends State<ProviderDetails> {
                                                     "Poppins",
                                                     textStyle: const TextStyle(
                                                       fontSize: 10,
-                                                      fontWeight: FontWeight.w400,
+                                                      fontWeight:
+                                                          FontWeight.w400,
                                                       color: AppColor.grayColor,
                                                     ),
                                                   ),
@@ -573,11 +704,11 @@ class _ProviderDetailsState extends State<ProviderDetails> {
                                         borderRadius: BorderRadius.circular(20),
                                         boxShadow: [
                                           BoxShadow(
-                                            color: AppColor.primaryColor.withOpacity(0.1),
-                                            spreadRadius: 2,
-                                            blurRadius: 2,
+                                            color: Colors.grey.withOpacity(0.1),
+                                            spreadRadius: 5,
+                                            blurRadius: 7,
                                             offset: const Offset(0,
-                                                2),
+                                                3), // changes position of shadow
                                           ),
                                         ],
                                       ),
@@ -592,7 +723,7 @@ class _ProviderDetailsState extends State<ProviderDetails> {
                                               width: 50,
                                               decoration: BoxDecoration(
                                                 borderRadius:
-                                                BorderRadius.circular(12),
+                                                    BorderRadius.circular(12),
                                                 image: const DecorationImage(
                                                     image: NetworkImage(
                                                         'https://newprofilepic.photo-cdn.net//assets/images/article/profile.jpg?90af0c8')),
@@ -601,7 +732,7 @@ class _ProviderDetailsState extends State<ProviderDetails> {
                                             const SizedBox(width: 10),
                                             Column(
                                               crossAxisAlignment:
-                                              CrossAxisAlignment.start,
+                                                  CrossAxisAlignment.start,
                                               children: [
                                                 Text(
                                                   'Aliza shah',
@@ -609,8 +740,10 @@ class _ProviderDetailsState extends State<ProviderDetails> {
                                                     "Poppins",
                                                     textStyle: const TextStyle(
                                                       fontSize: 14,
-                                                      fontWeight: FontWeight.w400,
-                                                      color: AppColor.blackColor,
+                                                      fontWeight:
+                                                          FontWeight.w400,
+                                                      color:
+                                                          AppColor.blackColor,
                                                     ),
                                                   ),
                                                 ),
@@ -620,7 +753,8 @@ class _ProviderDetailsState extends State<ProviderDetails> {
                                                     "Poppins",
                                                     textStyle: const TextStyle(
                                                       fontSize: 10,
-                                                      fontWeight: FontWeight.w400,
+                                                      fontWeight:
+                                                          FontWeight.w400,
                                                       color: AppColor.grayColor,
                                                     ),
                                                   ),

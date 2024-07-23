@@ -50,9 +50,9 @@ class _UploadComunityPostState extends State<UploadComunityPost> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColor.secondaryBgColor,
+      backgroundColor: AppColor.primaryColor,
       appBar: AppBar(
-        backgroundColor: AppColor.whiteColor,
+        backgroundColor: Colors.transparent,
         elevation: 0.0,
         title: Text(
           'Upload Your Post',
@@ -61,7 +61,7 @@ class _UploadComunityPostState extends State<UploadComunityPost> {
             textStyle: const TextStyle(
               fontSize: 18,
               fontWeight: FontWeight.w400,
-              color: AppColor.blackColor,
+              color: AppColor.whiteColor,
             ),
           ),
         ),
@@ -72,61 +72,74 @@ class _UploadComunityPostState extends State<UploadComunityPost> {
             },
             icon: const Icon(
               Icons.west,
-              color: AppColor.blackColor,
+              color: AppColor.whiteColor,
             )),
       ),
-      body: Padding(
-        padding: const EdgeInsets.only(top: 30.0, left: 16, right: 16),
+      body: Container(
+        height: MediaQuery.of(context).size.height,
+        width: double.infinity,
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: const BorderRadius.only(
+            topLeft: Radius.circular(30),
+          ),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.grey.withOpacity(0.5),
+              spreadRadius: 5,
+              blurRadius: 7,
+              offset: const Offset(0, 3), // changes position of shadow
+            ),
+          ],
+        ),
         child: SingleChildScrollView(
           scrollDirection: Axis.vertical,
           child: Column(
             children: [
-              Container(
-                height: 783,
-                width: double.infinity,
-                color: AppColor.whiteColor,
-                child: Padding(
-                  padding: const EdgeInsets.only(left: 10.0, right: 10.0),
-                  child: Column(
-                    children: [
-                      const VerticalSpeacing(16),
-                      Text(
-                        'Upload Post Image',
-                        style: GoogleFonts.getFont(
-                          "Poppins",
-                          textStyle: const TextStyle(
-                            fontSize: 18,
-                            fontWeight: FontWeight.w400,
-                            color: AppColor.blackColor,
+              Padding(
+                padding: const EdgeInsets.only(left: 10.0, right: 10.0),
+                child: Column(
+                  children: [
+                    const VerticalSpeacing(25),
+                    Container(
+                      height: 192,
+                      width: double.infinity,
+                      decoration: const BoxDecoration(
+                        image: DecorationImage(
+                          image: NetworkImage(
+                              'https://blog.adoptuskids.org/wp-content/uploads/2019/08/ausk-family-profile-pic-2-620x405.jpg'),
+                          fit: BoxFit.fill,
+                        ),
+                      ),
+                      child: const Center(
+                        child: CircleAvatar(
+                          backgroundColor: AppColor.primaryColor,
+                          child: Padding(
+                            padding: EdgeInsets.all(8.0),
+                            child: Icon(
+                              Icons.photo_camera,
+                              color: AppColor.whiteColor,
+                            ),
                           ),
                         ),
                       ),
-                      const VerticalSpeacing(16),
-                      Container(
-                        height: 200,
-                        width: double.infinity,
-                        decoration: const BoxDecoration(
-                          image: DecorationImage(
-                            image: NetworkImage(
-                                'https://blog.adoptuskids.org/wp-content/uploads/2019/08/ausk-family-profile-pic-2-620x405.jpg'),
-                            fit: BoxFit.fill,
-                          ),
-                        ),
-                      ),
-                      const VerticalSpeacing(16.0),
-                      const TextFieldCustom(
-                          maxLines: 1, hintText: 'Your title...'),
-                      const TextFieldCustom(
+                    ),
+                    const VerticalSpeacing(16.0),
+                    const TextFieldCustom(
+                        maxLines: 1, hintText: 'Your title...'),
+                    const SizedBox(
+                      height: 140,
+                      child: TextFieldCustom(
                           maxLines: 1, hintText: 'Your content...'),
-                      const VerticalSpeacing(30.0),
-                      RoundedButton(
-                        title: 'Continue',
-                        onpress: () {
-                          showCommunityDialog(context);
-                        },
-                      )
-                    ],
-                  ),
+                    ),
+                    const VerticalSpeacing(30.0),
+                    RoundedButton(
+                      title: 'Continue',
+                      onpress: () {
+                        showCommunityDialog(context);
+                      },
+                    )
+                  ],
                 ),
               ),
             ],

@@ -29,7 +29,6 @@ class _FilterPopUpFamilyState extends State<FilterPopUpFamily> {
   bool button15 = false;
   bool button16 = false;
 
-
   @override
   Widget build(BuildContext context) {
     return Dialog.fullscreen(
@@ -45,7 +44,6 @@ class _FilterPopUpFamilyState extends State<FilterPopUpFamily> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-
                 const Center(
                   child: Text(
                     "Filters",
@@ -58,7 +56,7 @@ class _FilterPopUpFamilyState extends State<FilterPopUpFamily> {
                   ),
                 ),
                 const VerticalSpeacing(60),
-              const  PriceRangeSlider(),
+                const PriceRangeSlider(),
                 const VerticalSpeacing(16),
                 const Text(
                   " provider Categories",
@@ -275,7 +273,7 @@ class _FilterPopUpFamilyState extends State<FilterPopUpFamily> {
                     width: 100,
                     decoration: BoxDecoration(
                       color:
-                      button7 ? AppColor.primaryColor : Colors.transparent,
+                          button7 ? AppColor.primaryColor : Colors.transparent,
                       border: Border.all(color: AppColor.primaryColor),
                     ),
                     child: Center(
@@ -511,7 +509,6 @@ class _FilterPopUpFamilyState extends State<FilterPopUpFamily> {
                 const VerticalSpeacing(
                   30,
                 ),
-
                 const Text(
                   "Rating Star",
                   style: TextStyle(
@@ -532,9 +529,9 @@ class _FilterPopUpFamilyState extends State<FilterPopUpFamily> {
                     itemCount: 5,
                     itemSize: 30,
                     itemBuilder: (context, _) => const Icon(
-                      Icons.star_rate_rounded,
-                      color: Colors.amber,
-                    ),
+                          Icons.star_rate_rounded,
+                          color: Colors.amber,
+                        ),
                     onRatingUpdate: (rating) {}),
                 const VerticalSpeacing(
                   50,
@@ -592,7 +589,6 @@ class _FilterPopUpFamilyState extends State<FilterPopUpFamily> {
                     ),
                   ],
                 ),
-
                 const SizedBox(height: 40.0),
               ],
             ),

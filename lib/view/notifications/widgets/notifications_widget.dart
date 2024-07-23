@@ -33,7 +33,10 @@ class NotificationsWidget extends StatelessWidget {
         leading: Container(
           height: 50,
           width: 50,
-          color: AppColor.primaryColor,
+          decoration: BoxDecoration(
+            color: AppColor.primaryColor,
+            borderRadius: BorderRadius.circular(25),
+          ),
           child: const Center(
             child: Icon(
               Icons.notifications,
