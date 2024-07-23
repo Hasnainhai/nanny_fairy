@@ -150,9 +150,9 @@ class _ProviderDetailsState extends State<ProviderDetails> {
                           style: GoogleFonts.getFont(
                             "Poppins",
                             textStyle: const TextStyle(
-                              fontSize: 18,
+                              fontSize: 14,
                               fontWeight: FontWeight.w600,
-                              color: Colors.black,
+                              color:AppColor.blackColor
                             ),
                           ),
                         ),
@@ -166,9 +166,9 @@ class _ProviderDetailsState extends State<ProviderDetails> {
                               style: GoogleFonts.getFont(
                                 "Poppins",
                                 textStyle: const TextStyle(
-                                  fontSize: 14,
+                                  fontSize: 11,
                                   fontWeight: FontWeight.w400,
-                                  color: Colors.black54,
+                                  color: AppColor.blackColor
                                 ),
                               ),
                             ),
@@ -180,9 +180,9 @@ class _ProviderDetailsState extends State<ProviderDetails> {
                           style: GoogleFonts.getFont(
                             "Poppins",
                             textStyle: const TextStyle(
-                              fontSize: 14,
+                              fontSize: 16,
                               fontWeight: FontWeight.w400,
-                              color: Colors.black54,
+                              color: AppColor.grayColor,
                             ),
                           ),
                           textAlign: TextAlign.center,
@@ -202,7 +202,7 @@ class _ProviderDetailsState extends State<ProviderDetails> {
                                       textStyle: const TextStyle(
                                         fontSize: 14,
                                         fontWeight: FontWeight.w400,
-                                        color: Colors.black,
+                                        color: AppColor.blackColor
                                       ),
                                     ),
                                   ),
@@ -213,7 +213,7 @@ class _ProviderDetailsState extends State<ProviderDetails> {
                                       textStyle: const TextStyle(
                                         fontSize: 14,
                                         fontWeight: FontWeight.w600,
-                                        color: Colors.black,
+                                        color:AppColor.blackColor
                                       ),
                                     ),
                                   ),
@@ -230,7 +230,7 @@ class _ProviderDetailsState extends State<ProviderDetails> {
                                       textStyle: const TextStyle(
                                         fontSize: 14,
                                         fontWeight: FontWeight.w400,
-                                        color: Colors.black,
+                                        color:AppColor.blackColor
                                       ),
                                     ),
                                   ),
@@ -241,7 +241,7 @@ class _ProviderDetailsState extends State<ProviderDetails> {
                                       textStyle: const TextStyle(
                                         fontSize: 14,
                                         fontWeight: FontWeight.w600,
-                                        color: Colors.black,
+                                        color:AppColor.blackColor
                                       ),
                                     ),
                                   ),
@@ -258,7 +258,7 @@ class _ProviderDetailsState extends State<ProviderDetails> {
                                       textStyle: const TextStyle(
                                         fontSize: 14,
                                         fontWeight: FontWeight.w400,
-                                        color: Colors.black,
+                                        color:AppColor.blackColor
                                       ),
                                     ),
                                   ),
@@ -269,7 +269,7 @@ class _ProviderDetailsState extends State<ProviderDetails> {
                                       textStyle: const TextStyle(
                                         fontSize: 14,
                                         fontWeight: FontWeight.w600,
-                                        color: Colors.black,
+                                        color:AppColor.blackColor
                                       ),
                                     ),
                                   ),
@@ -291,7 +291,7 @@ class _ProviderDetailsState extends State<ProviderDetails> {
                                 textStyle: const TextStyle(
                                   fontSize: 14,
                                   fontWeight: FontWeight.w600,
-                                  color: Colors.black,
+                                  color: AppColor.blackColor
                                 ),
                               ),
                             ),
@@ -305,28 +305,27 @@ class _ProviderDetailsState extends State<ProviderDetails> {
                                     title: '20+', subTitle: 'Experience'),
                                 const SizedBox(width: 16),
                                 Container(
+                                  height: 39,
+                                  width: 43,
                                   decoration: BoxDecoration(
                                       color: AppColor.avatarColor,
                                       borderRadius: BorderRadius.circular(4)),
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: Column(
-                                      children: [
-                                        const Icon(Icons.school_outlined,
-                                            color: AppColor.whiteColor),
-                                        Text(
-                                          'MBBS',
-                                          style: GoogleFonts.getFont(
-                                            "Poppins",
-                                            textStyle: const TextStyle(
-                                              fontSize: 10,
-                                              fontWeight: FontWeight.w600,
-                                              color: Colors.white,
-                                            ),
+                                  child: Column(
+                                    children: [
+                                      const Icon(Icons.school_outlined,
+                                          color: AppColor.whiteColor),
+                                      Text(
+                                        'MBBS',
+                                        style: GoogleFonts.getFont(
+                                          "Poppins",
+                                          textStyle: const TextStyle(
+                                            fontSize: 10,
+                                            fontWeight: FontWeight.w600,
+                                            color: Colors.white,
                                           ),
                                         ),
-                                      ],
-                                    ),
+                                      ),
+                                    ],
                                   ),
                                 ),
                               ],
@@ -342,7 +341,7 @@ class _ProviderDetailsState extends State<ProviderDetails> {
                                   style: GoogleFonts.getFont(
                                     "Poppins",
                                     textStyle: const TextStyle(
-                                      fontSize: 16,
+                                      fontSize: 14,
                                       fontWeight: FontWeight.w400,
                                       color: AppColor.blackColor,
                                     ),
@@ -352,45 +351,56 @@ class _ProviderDetailsState extends State<ProviderDetails> {
                                 const Text(
                                   'Lorem ipsum dolor sit amet c',
                                   style: TextStyle(
-                                    fontSize: 16,
+                                    fontSize: 10,
                                     color: AppColor.grayColor,
                                   ),
                                 ),
                                 const SizedBox(height: 16),
                                 Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceEvenly,
+                                  mainAxisAlignment: MainAxisAlignment.end,
                                   children: [
                                     DayButtonFamily(
                                       day: 'M',
-                                      isSelected: true,
+                                      isSelected: false,
                                       onTap: (bool isSelected) {},
                                     ),
+                                    const SizedBox(width: 5),
                                     DayButtonFamily(
                                       day: 'T',
                                       isSelected: false,
                                       onTap: (bool isSelected) {},
                                     ),
+                                    const SizedBox(width: 5),
                                     DayButtonFamily(
                                       day: 'W',
-                                      isSelected: true,
+                                      isSelected: false,
                                       onTap: (bool isSelected) {},
                                     ),
+                                    const SizedBox(width: 5),
                                     DayButtonFamily(
                                       day: 'T',
                                       isSelected: false,
                                       onTap: (bool isSelected) {},
                                     ),
+                                    const SizedBox(width: 5),
                                     DayButtonFamily(
                                       day: 'F',
-                                      isSelected: true,
+                                      isSelected: false,
                                       onTap: (bool isSelected) {},
                                     ),
+                                    const SizedBox(width: 5),
                                     DayButtonFamily(
                                       day: 'S',
                                       isSelected: false,
                                       onTap: (bool isSelected) {},
                                     ),
+                                    const SizedBox(width: 5),
+                                    DayButtonFamily(
+                                      day: 'S',
+                                      isSelected: false,
+                                      onTap: (bool isSelected) {},
+                                    ),
+                                    const SizedBox(width: 10),
                                   ],
                                 ),
                                 const SizedBox(height: 16),
@@ -476,11 +486,11 @@ class _ProviderDetailsState extends State<ProviderDetails> {
                                         borderRadius: BorderRadius.circular(20),
                                         boxShadow: [
                                           BoxShadow(
-                                            color: Colors.grey.withOpacity(0.5),
-                                            spreadRadius: 5,
-                                            blurRadius: 7,
+                                            color: AppColor.primaryColor.withOpacity(0.1),
+                                            spreadRadius: 2,
+                                            blurRadius: 2,
                                             offset: const Offset(0,
-                                                3), // changes position of shadow
+                                                2),
                                           ),
                                         ],
                                       ),
@@ -563,11 +573,11 @@ class _ProviderDetailsState extends State<ProviderDetails> {
                                         borderRadius: BorderRadius.circular(20),
                                         boxShadow: [
                                           BoxShadow(
-                                            color: Colors.grey.withOpacity(0.5),
-                                            spreadRadius: 5,
-                                            blurRadius: 7,
+                                            color: AppColor.primaryColor.withOpacity(0.1),
+                                            spreadRadius: 2,
+                                            blurRadius: 2,
                                             offset: const Offset(0,
-                                                3), // changes position of shadow
+                                                2),
                                           ),
                                         ],
                                       ),
@@ -582,7 +592,7 @@ class _ProviderDetailsState extends State<ProviderDetails> {
                                               width: 50,
                                               decoration: BoxDecoration(
                                                 borderRadius:
-                                                    BorderRadius.circular(12),
+                                                BorderRadius.circular(12),
                                                 image: const DecorationImage(
                                                     image: NetworkImage(
                                                         'https://newprofilepic.photo-cdn.net//assets/images/article/profile.jpg?90af0c8')),
@@ -591,7 +601,7 @@ class _ProviderDetailsState extends State<ProviderDetails> {
                                             const SizedBox(width: 10),
                                             Column(
                                               crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
+                                              CrossAxisAlignment.start,
                                               children: [
                                                 Text(
                                                   'Aliza shah',

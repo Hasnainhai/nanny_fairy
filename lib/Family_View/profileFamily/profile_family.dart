@@ -110,7 +110,26 @@ class _ProfileViewFamilyState extends State<ProfileViewFamily> {
     return Container(
       height: MediaQuery.of(context).size.height * 0.6,
       width: MediaQuery.of(context).size.width * 0.9,
-      color: AppColor.whiteColor,
+
+      decoration: BoxDecoration(
+        color: AppColor.whiteColor,
+        borderRadius: BorderRadius.circular(10.0),
+        border: Border.all(
+          strokeAlign: BorderSide.strokeAlignCenter,
+          color: const Color(0xff1B81BC)
+              .withOpacity(0.10), // Stroke color with 10% opacity
+          width: 1,
+        ),
+        boxShadow: [
+          BoxShadow(
+            color: const Color(0xff1B81BC)
+                .withOpacity(0.1), // Drop shadow color with 4% opacity
+            blurRadius: 2,
+            offset: const Offset(1, 2),
+            spreadRadius: 1,
+          ),
+        ],
+      ),
       child: Padding(
         padding: const EdgeInsets.all(16.0),
         child: ListView(
