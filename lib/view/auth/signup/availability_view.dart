@@ -16,6 +16,8 @@ class AvailabilityView extends StatefulWidget {
 }
 
 class _AvailabilityViewState extends State<AvailabilityView> {
+  String selectedDay = 'Sunday';
+  List<String> days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -108,38 +110,50 @@ class _AvailabilityViewState extends State<AvailabilityView> {
                         ),
                         const SizedBox(height: 16),
                         Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          mainAxisAlignment: MainAxisAlignment.end,
                           children: [
                             DayButton(
                               day: 'M',
-                              isSelected: true,
+                              isSelected: false,
                               onTap: (bool isSelected) {},
                             ),
+                            SizedBox(width: 8),
                             DayButton(
                               day: 'T',
                               isSelected: false,
                               onTap: (bool isSelected) {},
                             ),
+                            SizedBox(width: 8),
                             DayButton(
                               day: 'W',
                               isSelected: true,
                               onTap: (bool isSelected) {},
                             ),
+                            SizedBox(width: 8),
                             DayButton(
                               day: 'T',
                               isSelected: false,
                               onTap: (bool isSelected) {},
                             ),
+                            SizedBox(width: 8),
                             DayButton(
                               day: 'F',
                               isSelected: true,
                               onTap: (bool isSelected) {},
                             ),
+                            SizedBox(width: 8),
                             DayButton(
                               day: 'S',
                               isSelected: false,
                               onTap: (bool isSelected) {},
                             ),
+                            SizedBox(width: 8),
+                            DayButton(
+                              day: 'S',
+                              isSelected: false,
+                              onTap: (bool isSelected) {},
+                            ),
+                            SizedBox(width: 8),
                           ],
                         ),
                         const SizedBox(height: 16),
@@ -206,42 +220,53 @@ class _AvailabilityViewState extends State<AvailabilityView> {
                     padding: const EdgeInsets.all(12.0),
                     child: Column(
                       children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(
-                              'Timing',
-                              style: GoogleFonts.getFont(
-                                "Poppins",
-                                textStyle: const TextStyle(
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.w400,
-                                  color: AppColor.blackColor,
-                                ),
-                              ),
+                      Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          'Time',
+                          style: GoogleFonts.getFont(
+                            "Poppins",
+                            textStyle: const TextStyle(
+                              fontSize: 14,
+                              fontWeight: FontWeight.w400,
+                              color: AppColor.blackColor,
                             ),
-                            Row(
-                              children: [
-                                Text(
-                                  'Sunday',
+                          ),
+                        ),
+                        DropdownButtonHideUnderline(
+                          child: DropdownButton<String>(
+                            value: selectedDay,
+                            icon: const Icon(
+                              Icons.expand_more_outlined,
+                              color: Colors.blue,
+                            ),
+                            onChanged: (String? newValue) {
+                              setState(() {
+                                selectedDay = newValue!;
+                              });
+                            },
+                            items: days.map<DropdownMenuItem<String>>((String value) {
+                              return DropdownMenuItem<String>(
+                                value: value,
+                                child: Text(
+                                  value,
                                   style: GoogleFonts.getFont(
                                     "Poppins",
                                     textStyle: const TextStyle(
-                                      fontSize: 18,
+                                      fontSize: 14,
                                       fontWeight: FontWeight.w400,
-                                      color: AppColor.primaryColor,
+                                      color: Colors.blue,
                                     ),
                                   ),
                                 ),
-                                const Icon(
-                                  Icons.expand_more_outlined,
-                                  color: AppColor.primaryColor,
-                                )
-                              ],
-                            ),
-                          ],
+                              );
+                            }).toList(),
+                          ),
                         ),
-                        const VerticalSpeacing(20.0),
+                      ],
+                    ),
+                        const VerticalSpeacing(10.0),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
@@ -250,7 +275,7 @@ class _AvailabilityViewState extends State<AvailabilityView> {
                               style: GoogleFonts.getFont(
                                 "Poppins",
                                 textStyle: const TextStyle(
-                                  fontSize: 16,
+                                  fontSize: 14,
                                   fontWeight: FontWeight.w400,
                                   color: AppColor.blackColor,
                                 ),
@@ -302,7 +327,7 @@ class _AvailabilityViewState extends State<AvailabilityView> {
                               style: GoogleFonts.getFont(
                                 "Poppins",
                                 textStyle: const TextStyle(
-                                  fontSize: 16,
+                                  fontSize: 14,
                                   fontWeight: FontWeight.w400,
                                   color: AppColor.blackColor,
                                 ),
@@ -350,11 +375,11 @@ class _AvailabilityViewState extends State<AvailabilityView> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text(
-                              'Night',
+                              'AfterNoon',
                               style: GoogleFonts.getFont(
                                 "Poppins",
                                 textStyle: const TextStyle(
-                                  fontSize: 16,
+                                  fontSize: 14,
                                   fontWeight: FontWeight.w400,
                                   color: AppColor.blackColor,
                                 ),
@@ -520,8 +545,8 @@ class AvailabilityCheckBox extends StatelessWidget {
         borderRadius: BorderRadius.circular(8),
         border: Border.all(color: Colors.grey),
       ),
-      width: 24,
-      height: 24,
+      height: 23,
+      width: 22,
       child: isAvailable
           ? const Icon(
               Icons.check,

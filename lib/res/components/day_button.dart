@@ -38,17 +38,22 @@ class _DayButtonState extends State<DayButton> {
     return GestureDetector(
       onTap: _handleTap,
       child: Container(
+        height: 23,
+        width: 22,
         decoration: BoxDecoration(
           color: _isSelected ? Colors.blue : Colors.transparent,
-          borderRadius: BorderRadius.circular(8),
+          borderRadius: BorderRadius.circular(6),
           border: Border.all(color: _isSelected ? Colors.blue : Colors.grey),
         ),
-        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-        child: Text(
-          widget.day,
-          style: TextStyle(
-            color: _isSelected ? Colors.white : Colors.black,
-            fontWeight: FontWeight.bold,
+        // padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 10),
+        child: Center(
+          child: Text(
+            widget.day,
+            style: TextStyle(
+              fontSize: 14,
+              color: _isSelected ? Colors.white : Colors.black,
+              // fontWeight: FontWeight.w500,
+            ),
           ),
         ),
       ),
