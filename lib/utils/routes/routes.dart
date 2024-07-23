@@ -5,6 +5,8 @@ import 'package:nanny_fairy/Family_View/homeFamily/home_view_family.dart';
 import 'package:nanny_fairy/Family_View/findJobFamily/job_view_family.dart';
 import 'package:nanny_fairy/Family_View/homeFamily/dashboard_family/dashboard_family.dart';
 import 'package:nanny_fairy/Family_View/payment_family/payment_family.dart';
+import 'package:nanny_fairy/Family_View/profileFamily/my_profile_family.dart';
+import 'package:nanny_fairy/Family_View/profileFamily/widgets/edit_profile_family.dart';
 import 'package:nanny_fairy/Family_View/settingsFamily/setting_family.dart';
 import 'package:nanny_fairy/Family_View/signup/create_account_family.dart';
 import 'package:nanny_fairy/Family_View/signup/register_details_family.dart';
@@ -177,6 +179,12 @@ class Routes {
       case RoutesName.settingsFamily:
         return MaterialPageRoute(
             builder: (BuildContext context) => const SettingsFamilyView());
+      case RoutesName.myProfileFamily:
+        return MaterialPageRoute(
+            builder: (BuildContext context) => const MyProfileFamily());
+      case RoutesName.editProfileFamily:
+        return MaterialPageRoute(
+            builder: (BuildContext context) => const EditProfileFamily());
 
       default:
         return MaterialPageRoute(builder: (_) {

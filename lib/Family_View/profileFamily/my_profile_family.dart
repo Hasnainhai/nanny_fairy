@@ -4,8 +4,8 @@ import 'package:nanny_fairy/res/components/widgets/vertical_spacing.dart';
 import 'package:nanny_fairy/utils/routes/routes_name.dart';
 import '../../res/components/colors.dart';
 
-class MyProfile extends StatelessWidget {
-  const MyProfile({super.key});
+class MyProfileFamily extends StatelessWidget {
+  const MyProfileFamily({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -38,7 +38,7 @@ class MyProfile extends StatelessWidget {
         actions: [
           IconButton(
             onPressed: () {
-              Navigator.pushNamed(context, RoutesName.editProfile);
+              Navigator.pushNamed(context, RoutesName.editProfileFamily);
             },
             icon: const Icon(
               Icons.border_color_outlined,
@@ -118,20 +118,7 @@ class MyProfile extends StatelessWidget {
                   label: 'Description',
                   value: 'My name is Hasnain, I am a software engineer.',
                 ),
-                Divider(),
-                VerticalSpeacing(10.0),
-                ProfileItem(
-                  icon: Icons.euro_outlined,
-                  label: 'Hourly Rate',
-                  value: '\$50',
-                ),
-                Divider(),
-                VerticalSpeacing(10.0),
-                ProfileItem(
-                  icon: Icons.star_outline,
-                  label: 'Skills',
-                  value: 'Cleaning...',
-                ),
+
                 VerticalSpeacing(16.0),
               ],
             ),
