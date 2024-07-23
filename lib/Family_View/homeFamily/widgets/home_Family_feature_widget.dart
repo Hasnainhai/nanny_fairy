@@ -3,15 +3,14 @@ import 'package:google_fonts/google_fonts.dart';
 import '../../../res/components/colors.dart';
 import '../../../res/components/widgets/vertical_spacing.dart';
 
-class HomeFeatureContainer extends StatelessWidget {
-  const HomeFeatureContainer(
+class HomeFeatureContainerFamily extends StatelessWidget {
+  const HomeFeatureContainerFamily(
       {super.key,
-      required this.img,
-      required this.title,
-      required this.subTitle, required this.bgColor, required this.txColor});
+        required this.img,
+        required this.title,
+     required this.bgColor, required this.txColor});
   final String img;
   final String title;
-  final String subTitle;
   final Color bgColor;
   final Color txColor;
 
@@ -46,8 +45,8 @@ class HomeFeatureContainer extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Container(
-              height: 46,
-              width: 66,
+              height: 44,
+              width: 47,
               decoration: BoxDecoration(
                 image: DecorationImage(
                   image: AssetImage(img),
@@ -60,23 +59,13 @@ class HomeFeatureContainer extends StatelessWidget {
               style: GoogleFonts.getFont(
                 "Poppins",
                 textStyle: const TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.w600,
-                  color: AppColor.primaryColor,
+                  fontSize: 14,
+                  fontWeight: FontWeight.w400,
+                  color: AppColor.whiteColor,
                 ),
               ),
             ),
-            Text(
-              subTitle,
-              style: GoogleFonts.getFont(
-                "Poppins",
-                textStyle:  TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.w600,
-                  color: txColor,
-                ),
-              ),
-            ),
+
           ],
         ),
       ),
