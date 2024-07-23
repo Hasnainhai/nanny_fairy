@@ -138,7 +138,7 @@ class _ProfileViewFamilyState extends State<ProfileViewFamily> {
               children: [
                 ProfileWidgetsFamily(
                   ontap: () {
-                    Navigator.pushNamed(context, RoutesName.myProfile);
+                    Navigator.pushNamed(context, RoutesName.myProfileFamily);
                   },
                   tColor: Color(0xff40C269),
                   bColor:Color(0xffCDFF9D),

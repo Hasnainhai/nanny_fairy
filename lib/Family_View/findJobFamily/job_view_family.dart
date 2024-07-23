@@ -110,9 +110,17 @@ class JobViewFamily extends StatelessWidget {
   }
 }
 
-class SearchBar extends StatelessWidget {
+
+class SearchBar extends StatefulWidget {
   const SearchBar({super.key});
 
+  @override
+  State<SearchBar> createState() => _SearchBarState();
+}
+
+class _SearchBarState extends State<SearchBar> {
+  String selectedKM = '2KM';
+  List<String> kM = ['4KM', '8KM', '12KM',];
   @override
   Widget build(BuildContext context) {
     return Row(
@@ -145,14 +153,17 @@ class SearchBar extends StatelessWidget {
               SizedBox(
                 width: 150,
                 height: 50,
-                child: TextFormField(
-                  decoration: const InputDecoration(
-                      border: InputBorder.none,
-                      hintText: 'Search',
-                      prefixIcon: Icon(
-                        Icons.search,
-                        color: AppColor.blackColor,
-                      )),
+                child: Padding(
+                  padding: const EdgeInsets.only(top: 5),
+                  child: TextFormField(
+                    decoration: const InputDecoration(
+                        border: InputBorder.none,
+                        hintText: 'Search',
+                        prefixIcon: Icon(
+                          Icons.search,
+                          color: AppColor.blackColor,
+                        )),
+                  ),
                 ),
               ),
             ],
@@ -185,6 +196,7 @@ class SearchBar extends StatelessWidget {
             child: IconButton(
               onPressed: () {
                 Navigator.pushNamed(context, RoutesName.filterPopUpFamily);
+
               },
               icon: const Icon(
                 Icons.filter_alt_outlined,
@@ -217,17 +229,25 @@ class SearchBar extends StatelessWidget {
             ],
           ),
           child: Center(
-            child: Text(
-              '25\nKM',
-              style: GoogleFonts.getFont(
-                "Poppins",
-                textStyle: const TextStyle(
-                  fontSize: 14,
-                  fontWeight: FontWeight.w600,
-                  color: AppColor.blackColor,
+            child:Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  '12 Km',
+                  style: GoogleFonts.getFont(
+                    "Poppins",
+                    textStyle: const TextStyle(
+                      fontSize: 12,
+                      fontWeight: FontWeight.w600,
+                      color: AppColor.primaryColor,
+                    ),
+                  ),
                 ),
-              ),
+                const  Icon(Icons.expand_more_outlined,color: AppColor.primaryColor,),
+
+              ],
             ),
+
           ),
         ),
       ],
