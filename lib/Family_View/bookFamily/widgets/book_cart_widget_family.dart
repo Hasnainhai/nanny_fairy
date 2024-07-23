@@ -3,6 +3,8 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:nanny_fairy/res/components/rounded_button.dart';
 import 'package:nanny_fairy/res/components/widgets/vertical_spacing.dart';
 import 'package:nanny_fairy/utils/routes/routes_name.dart';
+import 'package:nanny_fairy/view/booked/widgets/booking_widget.dart';
+import 'package:nanny_fairy/view/home/widgets/home_feature_widget.dart';
 import '../../../res/components/colors.dart';
 import '../../../res/components/day_button.dart';
 import '../../../res/components/widgets/card_button.dart';
@@ -94,173 +96,202 @@ class _BookingCartWidgetFamilyState extends State<BookingCartWidgetFamily> {
           ],
         ),
         child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            ListTile(
-              leading: Container(
-                height: 56,
-                width: 56,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(12.0),
-                  image: const DecorationImage(
-                    image: NetworkImage(
-                        'https://www.shutterstock.com/image-photo/family-selfie-portrait-grandparents-children-260nw-2352440117.jpg'),
-                    fit: BoxFit.fill,
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                Container(
+                  height: 79,
+                  width: 79,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(12.0),
+                    image: const DecorationImage(
+                      image: NetworkImage(
+                          'https://www.shutterstock.com/image-photo/family-selfie-portrait-grandparents-children-260nw-2352440117.jpg'),
+                      fit: BoxFit.fill,
+                    ),
                   ),
                 ),
-              ),
-              title: Text(
-                'Hassnain\n⭐4.8(45 Reviews)',
-                style: GoogleFonts.getFont(
-                  "Poppins",
-                  textStyle: const TextStyle(
-                    fontSize: 12,
-                    fontWeight: FontWeight.w500,
-                    color: AppColor.blackColor,
-                  ),
-                ),
-              ),
-              subtitle: Row(
-                children: [
-                  Column(
-                    children: [
-                      Icon(Icons.school_outlined, color: AppColor.blackColor),
-                      Text(
-                        'MBBS',
-                        style: GoogleFonts.getFont(
-                          "Poppins",
-                          textStyle: const TextStyle(
-                            fontSize: 8,
-                            fontWeight: FontWeight.w300,
-                            color: AppColor.blackColor,
-                          ),
+                const SizedBox(width: 10),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'Hassnain Haider',
+                      style: GoogleFonts.getFont(
+                        "Poppins",
+                        textStyle: const TextStyle(
+                          fontSize: 14,
+                          fontWeight: FontWeight.w600,
+                          color: AppColor.blackColor,
                         ),
                       ),
-                    ],
-                  ),
-                  SizedBox(width: 5),
-                  Column(
-                    children: [
-                      Icon(Icons.plus_one_outlined, color: AppColor.blackColor),
-                      Text(
-                        'Skill',
-                        style: GoogleFonts.getFont(
-                          "Poppins",
-                          textStyle: const TextStyle(
-                            fontSize: 8,
-                            fontWeight: FontWeight.w300,
-                            color: AppColor.blackColor,
-                          ),
+                    ),
+                    Text(
+                      '⭐4.8(45 Reviews)',
+                      style: GoogleFonts.getFont(
+                        "Poppins",
+                        textStyle: const TextStyle(
+                          fontSize: 11,
+                          fontWeight: FontWeight.w500,
+                          color: AppColor.blackColor,
                         ),
                       ),
-                    ],
-                  ),
-                  Column(
-                    children: [
-                      Row(
-                        children: [
-                          Text(
-                            '23',
-                            style: GoogleFonts.getFont(
-                              "Poppins",
-                              textStyle: const TextStyle(
-                                fontSize: 15,
-                                fontWeight: FontWeight.w600,
-                                color: AppColor.blackColor,
+                    ),
+                    const VerticalSpeacing(10),
+                    Row(
+                      children: [
+                        Column(
+                          children: [
+                            const Icon(Icons.school_outlined,
+                                color: AppColor.blackColor),
+                            Text(
+                              'MBBS',
+                              style: GoogleFonts.getFont(
+                                "Poppins",
+                                textStyle: const TextStyle(
+                                  fontSize: 8,
+                                  fontWeight: FontWeight.w300,
+                                  color: AppColor.blackColor,
+                                ),
                               ),
                             ),
-                          ),
-                          Icon(
-                            Icons.euro_outlined,
-                            color: AppColor.blackColor,
-                            size: 16,
-                          ),
-                        ],
-                      ),
-                      Text(
-                        'Hourse Rate',
-                        style: GoogleFonts.getFont(
-                          "Poppins",
-                          textStyle: const TextStyle(
-                            fontSize: 8,
-                            fontWeight: FontWeight.w300,
-                            color: AppColor.blackColor,
-                          ),
+                          ],
                         ),
+                        const SizedBox(width: 5),
+                        Column(
+                          children: [
+                            const Icon(Icons.plus_one_outlined,
+                                color: AppColor.blackColor),
+                            Text(
+                              'Skill',
+                              style: GoogleFonts.getFont(
+                                "Poppins",
+                                textStyle: const TextStyle(
+                                  fontSize: 8,
+                                  fontWeight: FontWeight.w300,
+                                  color: AppColor.blackColor,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                        Column(
+                          children: [
+                            Row(
+                              children: [
+                                Text(
+                                  '23',
+                                  style: GoogleFonts.getFont(
+                                    "Poppins",
+                                    textStyle: const TextStyle(
+                                      fontSize: 15,
+                                      fontWeight: FontWeight.w600,
+                                      color: AppColor.blackColor,
+                                    ),
+                                  ),
+                                ),
+                                const Icon(
+                                  Icons.euro_outlined,
+                                  color: AppColor.blackColor,
+                                  size: 16,
+                                ),
+                              ],
+                            ),
+                            Text(
+                              'Horse Rate',
+                              style: GoogleFonts.getFont(
+                                "Poppins",
+                                textStyle: const TextStyle(
+                                  fontSize: 8,
+                                  fontWeight: FontWeight.w300,
+                                  color: AppColor.blackColor,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+                const SizedBox(width: 30),
+                CardButton(
+                  title: widget.primaryButtonTxt,
+                  color: AppColor.primaryColor,
+                  onTap: () {
+                    widget.ontapView();
+                  },
+                ),
+              ],
+            ),
+            const VerticalSpeacing(10.0),
+            Padding(
+              padding: const EdgeInsets.only(left: 10, right: 10),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    'Online: Today',
+                    style: GoogleFonts.getFont(
+                      "Poppins",
+                      textStyle: const TextStyle(
+                        fontSize: 12,
+                        fontWeight: FontWeight.w600,
+                        color: AppColor.blackColor,
+                      ),
+                    ),
+                  ),
+                  Row(
+                    children: [
+                      DayButtonFamily(
+                        day: 'M',
+                        isSelected: false,
+                        onTap: (bool isSelected) {},
+                      ),
+                      const SizedBox(width: 4),
+                      DayButtonFamily(
+                        day: 'T',
+                        isSelected: false,
+                        onTap: (bool isSelected) {},
+                      ),
+                      const SizedBox(width: 4),
+                      DayButtonFamily(
+                        day: 'W',
+                        isSelected: false,
+                        onTap: (bool isSelected) {},
+                      ),
+                      const SizedBox(width: 4),
+                      DayButtonFamily(
+                        day: 'T',
+                        isSelected: false,
+                        onTap: (bool isSelected) {},
+                      ),
+                      const SizedBox(width: 4),
+                      DayButtonFamily(
+                        day: 'F',
+                        isSelected: false,
+                        onTap: (bool isSelected) {},
+                      ),
+                      const SizedBox(width: 4),
+                      DayButtonFamily(
+                        day: 'S',
+                        isSelected: false,
+                        onTap: (bool isSelected) {},
+                      ),
+                      const SizedBox(width: 4),
+                      DayButtonFamily(
+                        day: 'S',
+                        isSelected: false,
+                        onTap: (bool isSelected) {},
                       ),
                     ],
                   ),
                 ],
               ),
-              trailing: CardButton(
-                title: widget.primaryButtonTxt,
-                color: widget.primaryButtonColor,
-                onTap: () {
-                  widget.ontapView();
-                },
-              ),
             ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  'Online: Today',
-                  style: GoogleFonts.getFont(
-                    "Poppins",
-                    textStyle: const TextStyle(
-                      fontSize: 12,
-                      fontWeight: FontWeight.w600,
-                      color: AppColor.blackColor,
-                    ),
-                  ),
-                ),
-                Row(
-                  children: [
-                    DayButtonFamily(
-                      day: 'M',
-                      isSelected: false,
-                      onTap: (bool isSelected) {},
-                    ),
-                    SizedBox(width: 4),
-                    DayButtonFamily(
-                      day: 'T',
-                      isSelected: false,
-                      onTap: (bool isSelected) {},
-                    ),
-                    SizedBox(width: 4),
-                    DayButtonFamily(
-                      day: 'W',
-                      isSelected: false,
-                      onTap: (bool isSelected) {},
-                    ),
-                    SizedBox(width: 4),
-                    DayButtonFamily(
-                      day: 'T',
-                      isSelected: false,
-                      onTap: (bool isSelected) {},
-                    ),
-                    SizedBox(width: 4),
-                    DayButtonFamily(
-                      day: 'F',
-                      isSelected: false,
-                      onTap: (bool isSelected) {},
-                    ),
-                    SizedBox(width: 4),
-                    DayButtonFamily(
-                      day: 'S',
-                      isSelected: false,
-                      onTap: (bool isSelected) {},
-                    ),
-                    SizedBox(width: 4),
-                    DayButtonFamily(
-                      day: 'S',
-                      isSelected: false,
-                      onTap: (bool isSelected) {},
-                    ),
-                  ],
-                ),
-              ],
-            ),
-            const VerticalSpeacing(10.0),
           ],
         ),
       ),
