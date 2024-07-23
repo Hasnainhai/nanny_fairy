@@ -305,7 +305,7 @@ class _FamilyDetailProviderState extends State<FamilyDetailProvider> {
             ),
             VerticalSpeacing(MediaQuery.of(context).size.height*0.6),
             Padding(
-              padding: const EdgeInsets.only(left: 16.0,right: 16.0),
+              padding: const EdgeInsets.only(left: 32.0,right: 32.0),
               child: RoundedButton(
                 title: 'Chat With Family',
                 onpress: () {

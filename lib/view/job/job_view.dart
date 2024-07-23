@@ -106,65 +106,122 @@ class SearchBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: 50,
-      width: 320,
-      decoration: BoxDecoration(
-        color: AppColor.whiteColor,
-        borderRadius: BorderRadius.circular(12),
-        border: Border.all(
-          strokeAlign: BorderSide.strokeAlignCenter,
-          color: const Color(0xff1B81BC)
-              .withOpacity(0.10), // Stroke color with 10% opacity
-          width: 1,
+    return Row(
+      children: [
+        Container(
+          height: 50,
+          width: 200,
+          decoration: BoxDecoration(
+            color: AppColor.whiteColor,
+            borderRadius: BorderRadius.circular(12),
+            border: Border.all(
+              strokeAlign: BorderSide.strokeAlignCenter,
+              color: const Color(0xff1B81BC)
+                  .withOpacity(0.10), // Stroke color with 10% opacity
+              width: 1,
+            ),
+            boxShadow: [
+              BoxShadow(
+                color: const Color(0xff1B81BC)
+                    .withOpacity(0.1), // Drop shadow color with 4% opacity
+                blurRadius: 2,
+                offset: const Offset(1, 2),
+                spreadRadius: 1,
+              ),
+            ],
+          ),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              SizedBox(
+                width: 150,
+                height: 50,
+                child: TextFormField(
+                  decoration: const InputDecoration(
+                      border: InputBorder.none,
+                      hintText: 'Search',
+                      prefixIcon: Icon(
+                        Icons.search,
+                        color: AppColor.blackColor,
+                      )),
+                ),
+              ),
+            ],
+          ),
         ),
-        boxShadow: [
-          BoxShadow(
-            color: const Color(0xff1B81BC)
-                .withOpacity(0.1), // Drop shadow color with 4% opacity
-            blurRadius: 2,
-            offset: const Offset(1, 2),
-            spreadRadius: 1,
+        const SizedBox(width: 5.0),
+        Container(
+          height: 50,
+          width: 56,
+          decoration: BoxDecoration(
+            color: AppColor.whiteColor,
+            borderRadius: BorderRadius.circular(12),
+            border: Border.all(
+              strokeAlign: BorderSide.strokeAlignCenter,
+              color: const Color(0xff1B81BC)
+                  .withOpacity(0.10), // Stroke color with 10% opacity
+              width: 1,
+            ),
+            boxShadow: [
+              BoxShadow(
+                color: const Color(0xff1B81BC)
+                    .withOpacity(0.1), // Drop shadow color with 4% opacity
+                blurRadius: 2,
+                offset: const Offset(1, 2),
+                spreadRadius: 1,
+              ),
+            ],
           ),
-        ],
-      ),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          SizedBox(
-            width: 250,
-            height: 50,
-            child: TextFormField(
-              decoration: const InputDecoration(
-                  border: InputBorder.none,
-                  hintText: 'Search',
-                  prefixIcon: Icon(
-                    Icons.search,
-                    color: AppColor.blackColor,
-                  )),
+          child: Center(
+            child: IconButton(
+              onPressed: () {
+                Navigator.pushNamed(context, RoutesName.filterPopup);
+              },
+              icon: const Icon(
+                Icons.filter_alt_outlined,
+                color: AppColor.primaryColor,
+              ),
             ),
           ),
-          Container(
-            height: 50,
-            width: 56,
-            decoration: const BoxDecoration(
-              color: AppColor.boxFillColor,
-              borderRadius: BorderRadius.only(
-                  topRight: Radius.circular(12),
-                  bottomRight: Radius.circular(12)),
+        ),
+        const SizedBox(width: 5.0),
+        Container(
+          height: 50,
+          width: 56,
+          decoration: BoxDecoration(
+            color: AppColor.whiteColor,
+            borderRadius: BorderRadius.circular(12),
+            border: Border.all(
+              strokeAlign: BorderSide.strokeAlignCenter,
+              color: const Color(0xff1B81BC)
+                  .withOpacity(0.10), // Stroke color with 10% opacity
+              width: 1,
             ),
-            child: Center(
-              child: IconButton(
-                onPressed: () {},
-                icon: const Icon(
-                  Icons.filter_alt_outlined,
-                  color: AppColor.primaryColor,
+            boxShadow: [
+              BoxShadow(
+                color: const Color(0xff1B81BC)
+                    .withOpacity(0.1), // Drop shadow color with 4% opacity
+                blurRadius: 2,
+                offset: const Offset(1, 2),
+                spreadRadius: 1,
+              ),
+            ],
+          ),
+          child: Center(
+            child: Text(
+              '25\nKM',
+              style: GoogleFonts.getFont(
+                "Poppins",
+                textStyle: const TextStyle(
+                  fontSize: 14,
+                  fontWeight: FontWeight.w600,
+                  color: AppColor.blackColor,
                 ),
               ),
             ),
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 }

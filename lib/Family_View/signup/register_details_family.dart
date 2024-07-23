@@ -93,8 +93,6 @@ class _RegisterDetailsFamilyState extends State<RegisterDetailsFamily> {
                 const VerticalSpeacing(16),
                 const TextFieldCustom(prefixIcon: Icon(Icons.calendar_month_outlined),maxLines: 1,hintText: 'Date of birth'),
                 const VerticalSpeacing(16),
-                const TextFieldCustom(prefixIcon: Icon(Icons.mail_outline),maxLines: 1,hintText: 'Enter Email'),
-                const VerticalSpeacing(16),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.center,
@@ -144,7 +142,8 @@ class _RegisterDetailsFamilyState extends State<RegisterDetailsFamily> {
                 ),
                 const VerticalSpeacing(24.0),
                 RoundedButton(title: 'Register', onpress: (){
-                  Navigator.pushNamed(context, RoutesName.createAccountFamily);
+                  Navigator.pushNamed(
+                      context, RoutesName.selectPassionFamily);
                 }),
                 const VerticalSpeacing(30.0),
               ],

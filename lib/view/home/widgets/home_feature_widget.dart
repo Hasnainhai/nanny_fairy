@@ -18,8 +18,8 @@ class HomeFeatureContainer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 102,
-      width: 102,
+      height: 139,
+      width: 147,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(12.0),
         color: bgColor,
