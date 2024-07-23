@@ -34,7 +34,7 @@ class BookedView extends StatelessWidget {
         ),
       ),
       body: Padding(
-        padding: const EdgeInsets.only(left: 16.0, right: 16.0),
+        padding: const EdgeInsets.only(left: 2.0, right: 1.0),
         child: ListView(
           children:  [
             Column(

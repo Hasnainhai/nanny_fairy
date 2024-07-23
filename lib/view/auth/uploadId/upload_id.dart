@@ -46,10 +46,28 @@ class UploadId extends StatelessWidget {
         padding: const EdgeInsets.only(left: 16.0, right: 16.0),
         child: Column(
           children: [
+            const VerticalSpeacing(20.0),
             Container(
               height: 193,
               width: double.infinity,
-              color: AppColor.whiteColor,
+              decoration: BoxDecoration(
+                color: AppColor.whiteColor,
+                border: Border.all(
+                  strokeAlign: BorderSide.strokeAlignCenter,
+                  color: const Color(0xff1B81BC)
+                      .withOpacity(0.10), // Stroke color with 10% opacity
+                  width: 1,
+                ),
+                boxShadow: [
+                  BoxShadow(
+                    color: const Color(0xff1B81BC)
+                        .withOpacity(0.1), // Drop shadow color with 4% opacity
+                    blurRadius: 2,
+                    offset: const Offset(1, 2),
+                    spreadRadius: 1,
+                  ),
+                ],
+              ),
               child: Center(
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -60,7 +78,7 @@ class UploadId extends StatelessWidget {
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(28),
                           color: AppColor.primaryColor),
-                      child: Center(
+                      child: const Center(
                         child: Icon(
                           Icons.image,
                           color: AppColor.whiteColor,
@@ -82,11 +100,28 @@ class UploadId extends StatelessWidget {
                 ),
               ),
             ),
-            VerticalSpeacing(20.0),
+            const VerticalSpeacing(20.0),
             Container(
               height: 193,
               width: double.infinity,
-              color: AppColor.whiteColor,
+              decoration: BoxDecoration(
+                color: AppColor.whiteColor,
+                border: Border.all(
+                  strokeAlign: BorderSide.strokeAlignCenter,
+                  color: const Color(0xff1B81BC)
+                      .withOpacity(0.10), // Stroke color with 10% opacity
+                  width: 1,
+                ),
+                boxShadow: [
+                  BoxShadow(
+                    color: const Color(0xff1B81BC)
+                        .withOpacity(0.1), // Drop shadow color with 4% opacity
+                    blurRadius: 2,
+                    offset: const Offset(1, 2),
+                    spreadRadius: 1,
+                  ),
+                ],
+              ),
               child: Center(
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
