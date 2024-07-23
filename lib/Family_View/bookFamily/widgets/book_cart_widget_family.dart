@@ -335,16 +335,22 @@ class _DayButtonFamilyState extends State<DayButtonFamily> {
     return GestureDetector(
       onTap: _handleTap,
       child: Container(
+        height: 15,
+        width: 15,
         decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(2),
           color: _isSelected ? Colors.blue : Colors.transparent,
           border: Border.all(color: _isSelected ? Colors.blue : Colors.grey),
         ),
-        padding: const EdgeInsets.only(left: 4, right: 4, top: 2, bottom: 2),
-        child: Text(
-          widget.day,
-          style: TextStyle(
-            color: _isSelected ? Colors.white : Colors.black,
-            fontWeight: FontWeight.w500,
+        // padding: const EdgeInsets.only(left: 4, right: 4, top: 2, bottom: 2),
+        child: Center(
+          child: Text(
+            widget.day,
+            style: TextStyle(
+              fontSize: 8,
+              color: _isSelected ? Colors.white : AppColor.blackColor,
+              fontWeight: FontWeight.w500,
+            ),
           ),
         ),
       ),

@@ -11,9 +11,10 @@ class MyProfile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColor.secondaryBgColor,
+      backgroundColor: AppColor.primaryColor,
       appBar: AppBar(
-        backgroundColor: AppColor.secondaryBgColor,
+        backgroundColor: Colors.transparent,
+        elevation: 0.0,
         title: Text(
           'your profile details',
           style: GoogleFonts.getFont(
@@ -21,7 +22,7 @@ class MyProfile extends StatelessWidget {
             textStyle: const TextStyle(
               fontSize: 18,
               fontWeight: FontWeight.w400,
-              color: AppColor.blackColor,
+              color: AppColor.whiteColor,
             ),
           ),
         ),
@@ -32,7 +33,7 @@ class MyProfile extends StatelessWidget {
             },
             icon: const Icon(
               Icons.west,
-              color: AppColor.blackColor,
+              color: AppColor.whiteColor,
             )),
         actions: [
           IconButton(
@@ -41,271 +42,278 @@ class MyProfile extends StatelessWidget {
               },
               icon: const Icon(
                 Icons.border_color_outlined,
-                color: AppColor.blackColor,
+                color: AppColor.whiteColor,
               ))
         ],
       ),
-      body: Padding(
-        padding: const EdgeInsets.only(top: 30.0, left: 16.0, right: 16.0),
-        child: SingleChildScrollView(
-          scrollDirection: Axis.vertical,
-          child: Container(
-            height: MediaQuery.of(context).size.height,
-            width: double.infinity,
-            color: AppColor.whiteColor,
-            child: Padding(
-              padding: const EdgeInsets.all(10.0),
-              child: SingleChildScrollView(
-                scrollDirection: Axis.vertical,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text.rich(
+      body: Container(
+        height: MediaQuery.of(context).size.height,
+        width: double.infinity,
+        decoration: const BoxDecoration(
+          color: AppColor.whiteColor,
+          borderRadius: BorderRadius.only(
+            topLeft: Radius.circular(30),
+          ),
+        ),
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: SingleChildScrollView(
+            scrollDirection: Axis.vertical,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text.rich(
+                  TextSpan(
+                    text: 'Name\n\n',
+                    style: GoogleFonts.getFont(
+                      "Poppins",
+                      textStyle: const TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w400,
+                        color: AppColor.blackColor,
+                      ),
+                    ),
+                    children: [
                       TextSpan(
-                        text: 'Name\n\n',
+                        text: 'Hassnain Haider',
                         style: GoogleFonts.getFont(
                           "Poppins",
                           textStyle: const TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.w600,
+                            fontSize: 14,
+                            fontWeight: FontWeight.w400,
                             color: AppColor.blackColor,
                           ),
                         ),
-                        children: [
-                          TextSpan(
-                            text: 'Hassnain Haider',
-                            style: GoogleFonts.getFont(
-                              "Poppins",
-                              textStyle: const TextStyle(
-                                fontSize: 14,
-                                fontWeight: FontWeight.w400,
-                                color: AppColor.blackColor,
-                              ),
-                            ),
-                          ),
-                        ],
                       ),
-                    ),
-                    const VerticalSpeacing(16.0),
-                    Text.rich(
-                      TextSpan(
-                        text: 'Address\n\n',
-                        style: GoogleFonts.getFont(
-                          "Poppins",
-                          textStyle: const TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.w600,
-                            color: AppColor.blackColor,
-                          ),
-                        ),
-                        children: [
-                          TextSpan(
-                            text: 'E-11 block Islamabad',
-                            style: GoogleFonts.getFont(
-                              "Poppins",
-                              textStyle: const TextStyle(
-                                fontSize: 14,
-                                fontWeight: FontWeight.w400,
-                                color: AppColor.blackColor,
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    const VerticalSpeacing(16.0),
-                    Text.rich(
-                      TextSpan(
-                        text: 'Hourly Rate\n\n',
-                        style: GoogleFonts.getFont(
-                          "Poppins",
-                          textStyle: const TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.w600,
-                            color: AppColor.blackColor,
-                          ),
-                        ),
-                        children: [
-                          TextSpan(
-                            text: '\$50',
-                            style: GoogleFonts.getFont(
-                              "Poppins",
-                              textStyle: const TextStyle(
-                                fontSize: 14,
-                                fontWeight: FontWeight.w400,
-                                color: AppColor.blackColor,
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    const VerticalSpeacing(16.0),
-                    Text.rich(
-                      TextSpan(
-                        text: 'TelePhone Number\n\n',
-                        style: GoogleFonts.getFont(
-                          "Poppins",
-                          textStyle: const TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.w600,
-                            color: AppColor.blackColor,
-                          ),
-                        ),
-                        children: [
-                          TextSpan(
-                            text: '+923129739152',
-                            style: GoogleFonts.getFont(
-                              "Poppins",
-                              textStyle: const TextStyle(
-                                fontSize: 14,
-                                fontWeight: FontWeight.w400,
-                                color: AppColor.blackColor,
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    const VerticalSpeacing(16.0),
-                    Text.rich(
-                      TextSpan(
-                        text: 'Date of Birdth\n\n',
-                        style: GoogleFonts.getFont(
-                          "Poppins",
-                          textStyle: const TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.w600,
-                            color: AppColor.blackColor,
-                          ),
-                        ),
-                        children: [
-                          TextSpan(
-                            text: '12/11/2003',
-                            style: GoogleFonts.getFont(
-                              "Poppins",
-                              textStyle: const TextStyle(
-                                fontSize: 14,
-                                fontWeight: FontWeight.w400,
-                                color: AppColor.blackColor,
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    const VerticalSpeacing(16.0),
-                    Text.rich(
-                      TextSpan(
-                        text: 'Email Address\n\n',
-                        style: GoogleFonts.getFont(
-                          "Poppins",
-                          textStyle: const TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.w600,
-                            color: AppColor.blackColor,
-                          ),
-                        ),
-                        children: [
-                          TextSpan(
-                            text: 'Hassnain@gmail.com',
-                            style: GoogleFonts.getFont(
-                              "Poppins",
-                              textStyle: const TextStyle(
-                                fontSize: 14,
-                                fontWeight: FontWeight.w400,
-                                color: AppColor.blackColor,
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    const VerticalSpeacing(16.0),
-                    Text.rich(
-                      TextSpan(
-                        text: 'Password\n\n',
-                        style: GoogleFonts.getFont(
-                          "Poppins",
-                          textStyle: const TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.w600,
-                            color: AppColor.blackColor,
-                          ),
-                        ),
-                        children: [
-                          TextSpan(
-                            text: '***********',
-                            style: GoogleFonts.getFont(
-                              "Poppins",
-                              textStyle: const TextStyle(
-                                fontSize: 14,
-                                fontWeight: FontWeight.w400,
-                                color: AppColor.blackColor,
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    const VerticalSpeacing(16.0),
-                    Text.rich(
-                      TextSpan(
-                        text: 'Confirm Password\n\n',
-                        style: GoogleFonts.getFont(
-                          "Poppins",
-                          textStyle: const TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.w600,
-                            color: AppColor.blackColor,
-                          ),
-                        ),
-                        children: [
-                          TextSpan(
-                            text: '*********',
-                            style: GoogleFonts.getFont(
-                              "Poppins",
-                              textStyle: const TextStyle(
-                                fontSize: 14,
-                                fontWeight: FontWeight.w400,
-                                color: AppColor.blackColor,
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    const VerticalSpeacing(16.0),
-                    Text.rich(
-                      TextSpan(
-                        text: 'Discription\n\n',
-                        style: GoogleFonts.getFont(
-                          "Poppins",
-                          textStyle: const TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.w600,
-                            color: AppColor.blackColor,
-                          ),
-                        ),
-                        children: [
-                          TextSpan(
-                            text: 'my name is hasnain i am sofware engineer',
-                            style: GoogleFonts.getFont(
-                              "Poppins",
-                              textStyle: const TextStyle(
-                                fontSize: 14,
-                                fontWeight: FontWeight.w400,
-                                color: AppColor.blackColor,
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    const VerticalSpeacing(16.0),
-                  ],
+                    ],
+                  ),
                 ),
-              ),
+                Divider(),
+                const VerticalSpeacing(10.0),
+                Text.rich(
+                  TextSpan(
+                    text: 'Address\n\n',
+                    style: GoogleFonts.getFont(
+                      "Poppins",
+                      textStyle: const TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w400,
+                        color: AppColor.blackColor,
+                      ),
+                    ),
+                    children: [
+                      TextSpan(
+                        text: 'E-11 block Islamabad',
+                        style: GoogleFonts.getFont(
+                          "Poppins",
+                          textStyle: const TextStyle(
+                            fontSize: 14,
+                            fontWeight: FontWeight.w400,
+                            color: AppColor.blackColor,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                Divider(),
+                const VerticalSpeacing(10.0),
+                Text.rich(
+                  TextSpan(
+                    text: 'Hourly Rate\n\n',
+                    style: GoogleFonts.getFont(
+                      "Poppins",
+                      textStyle: const TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w400,
+                        color: AppColor.blackColor,
+                      ),
+                    ),
+                    children: [
+                      TextSpan(
+                        text: '\$50',
+                        style: GoogleFonts.getFont(
+                          "Poppins",
+                          textStyle: const TextStyle(
+                            fontSize: 14,
+                            fontWeight: FontWeight.w400,
+                            color: AppColor.blackColor,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                Divider(),
+                const VerticalSpeacing(10.0),
+                Text.rich(
+                  TextSpan(
+                    text: 'TelePhone Number\n\n',
+                    style: GoogleFonts.getFont(
+                      "Poppins",
+                      textStyle: const TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w400,
+                        color: AppColor.blackColor,
+                      ),
+                    ),
+                    children: [
+                      TextSpan(
+                        text: '+923129739152',
+                        style: GoogleFonts.getFont(
+                          "Poppins",
+                          textStyle: const TextStyle(
+                            fontSize: 14,
+                            fontWeight: FontWeight.w400,
+                            color: AppColor.blackColor,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                Divider(),
+                const VerticalSpeacing(10.0),
+                Text.rich(
+                  TextSpan(
+                    text: 'Date of Birdth\n\n',
+                    style: GoogleFonts.getFont(
+                      "Poppins",
+                      textStyle: const TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w400,
+                        color: AppColor.blackColor,
+                      ),
+                    ),
+                    children: [
+                      TextSpan(
+                        text: '12/11/2003',
+                        style: GoogleFonts.getFont(
+                          "Poppins",
+                          textStyle: const TextStyle(
+                            fontSize: 14,
+                            fontWeight: FontWeight.w400,
+                            color: AppColor.blackColor,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                Divider(),
+                const VerticalSpeacing(10.0),
+                Text.rich(
+                  TextSpan(
+                    text: 'Email Address\n\n',
+                    style: GoogleFonts.getFont(
+                      "Poppins",
+                      textStyle: const TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w400,
+                        color: AppColor.blackColor,
+                      ),
+                    ),
+                    children: [
+                      TextSpan(
+                        text: 'Hassnain@gmail.com',
+                        style: GoogleFonts.getFont(
+                          "Poppins",
+                          textStyle: const TextStyle(
+                            fontSize: 14,
+                            fontWeight: FontWeight.w400,
+                            color: AppColor.blackColor,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                Divider(),
+                const VerticalSpeacing(10.0),
+                Text.rich(
+                  TextSpan(
+                    text: 'Password\n\n',
+                    style: GoogleFonts.getFont(
+                      "Poppins",
+                      textStyle: const TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w400,
+                        color: AppColor.blackColor,
+                      ),
+                    ),
+                    children: [
+                      TextSpan(
+                        text: '***********',
+                        style: GoogleFonts.getFont(
+                          "Poppins",
+                          textStyle: const TextStyle(
+                            fontSize: 14,
+                            fontWeight: FontWeight.w400,
+                            color: AppColor.blackColor,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                Divider(),
+                const VerticalSpeacing(10.0),
+                Text.rich(
+                  TextSpan(
+                    text: 'Confirm Password\n\n',
+                    style: GoogleFonts.getFont(
+                      "Poppins",
+                      textStyle: const TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w400,
+                        color: AppColor.blackColor,
+                      ),
+                    ),
+                    children: [
+                      TextSpan(
+                        text: '*********',
+                        style: GoogleFonts.getFont(
+                          "Poppins",
+                          textStyle: const TextStyle(
+                            fontSize: 14,
+                            fontWeight: FontWeight.w400,
+                            color: AppColor.blackColor,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                Divider(),
+                const VerticalSpeacing(10.0),
+                Text.rich(
+                  TextSpan(
+                    text: 'Discription\n\n',
+                    style: GoogleFonts.getFont(
+                      "Poppins",
+                      textStyle: const TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w400,
+                        color: AppColor.blackColor,
+                      ),
+                    ),
+                    children: [
+                      TextSpan(
+                        text: 'my name is hasnain i am sofware engineer',
+                        style: GoogleFonts.getFont(
+                          "Poppins",
+                          textStyle: const TextStyle(
+                            fontSize: 14,
+                            fontWeight: FontWeight.w400,
+                            color: AppColor.blackColor,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                const VerticalSpeacing(16.0),
+              ],
             ),
           ),
         ),
