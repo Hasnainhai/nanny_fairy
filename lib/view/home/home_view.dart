@@ -103,7 +103,7 @@ class HomeView extends StatelessWidget {
             ),
             const VerticalSpeacing(10),
             const SizedBox(
-              height: 150,
+              height: 140,
               child: SingleChildScrollView(
                 scrollDirection: Axis.horizontal,
                 child: Row(

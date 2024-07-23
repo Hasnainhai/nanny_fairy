@@ -71,7 +71,7 @@ class _SelectPreferenceState extends State<SelectPreference> {
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                TextFieldCustom(
+                const TextFieldCustom(
                   prefixIcon: Icon(Icons.school_outlined),
                   maxLines: 1,
                   hintText: 'Enter your experience',
@@ -89,16 +89,27 @@ class _SelectPreferenceState extends State<SelectPreference> {
                   ),
                 ),
                 const VerticalSpeacing(16.0),
+                Text(
+                  'Name',
+                  style: GoogleFonts.getFont(
+                    "Poppins",
+                    textStyle: const TextStyle(
+                      fontSize: 14,
+                      fontWeight: FontWeight.w400,
+                      color: AppColor.blackColor,
+                    ),
+                  ),
+                ),
                 const TextFieldCustom(
                   maxLines: 1,
                   hintText: 'Job',
                 ),
                 Text(
-                  'Experience',
+                  'Which Skill You are provided',
                   style: GoogleFonts.getFont(
                     "Poppins",
                     textStyle: const TextStyle(
-                      fontSize: 16,
+                      fontSize: 14,
                       fontWeight: FontWeight.w400,
                       color: AppColor.blackColor,
                     ),
@@ -106,7 +117,24 @@ class _SelectPreferenceState extends State<SelectPreference> {
                 ),
                 const VerticalSpeacing(10),
                 Container(
-                  color: AppColor.boxFillColor.withOpacity(0.3),
+                  decoration: BoxDecoration(
+                    color: AppColor.whiteColor,
+                    border: Border.all(
+                      strokeAlign: BorderSide.strokeAlignCenter,
+                      color: const Color(0xff1B81BC)
+                          .withOpacity(0.10), // Stroke color with 10% opacity
+                      width: 1,
+                    ),
+                    boxShadow: [
+                      BoxShadow(
+                        color: const Color(0xff1B81BC).withOpacity(
+                            0.1), // Drop shadow color with 4% opacity
+                        blurRadius: 2,
+                        offset: const Offset(1, 2),
+                        spreadRadius: 1,
+                      ),
+                    ],
+                  ),
                   child: Padding(
                     padding: const EdgeInsets.only(left: 8, right: 8.0),
                     child: DropdownButton(

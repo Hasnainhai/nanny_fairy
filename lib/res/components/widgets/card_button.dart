@@ -19,21 +19,23 @@ class CardButton extends StatelessWidget {
         onTap();
       },
       child: Container(
-        height: 30,
-        width: 78,
+
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(32),
           color: color,
         ),
-        child: Center(
-          child: Text(
-            title,
-            style: GoogleFonts.getFont(
-              "Poppins",
-              textStyle: const TextStyle(
-                fontSize: 9,
-                fontWeight: FontWeight.w400,
-                color: AppColor.whiteColor,
+        child: Padding(
+          padding: const EdgeInsets.symmetric(vertical: 6,horizontal: 12),
+          child: Center(
+            child: Text(
+              title,
+              style: GoogleFonts.getFont(
+                "Poppins",
+                textStyle: const TextStyle(
+                  fontSize: 9,
+                  fontWeight: FontWeight.w400,
+                  color: AppColor.whiteColor,
+                ),
               ),
             ),
           ),
