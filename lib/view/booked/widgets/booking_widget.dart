@@ -98,10 +98,8 @@ class _BookingCartWidgetState extends State<BookingCartWidget> {
                     width: 79,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(12.0),
-                      image: const DecorationImage(
-                        image: NetworkImage(
-                            'https://www.shutterstock.com/image-photo/family-selfie-portrait-grandparents-children-260nw-2352440117.jpg'),
-                        fit: BoxFit.fill,
+                      image: const  DecorationImage(
+                        image: AssetImage('images/post.png'),fit: BoxFit.fill,
                       ),
                     ),
                   ),

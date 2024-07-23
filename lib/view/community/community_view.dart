@@ -37,9 +37,8 @@ class _CommunityViewState extends State<CommunityView> {
           centerTitle: true,
           actions: [
             InkWell(
-              onTap: (){
+              onTap: () {
                 Navigator.pushNamed(context, RoutesName.uploadCommunityPost);
-
               },
               child: Padding(
                 padding: const EdgeInsets.only(right: 10.0),
@@ -47,23 +46,23 @@ class _CommunityViewState extends State<CommunityView> {
                   height: 31,
                   width: 97,
                   color: AppColor.primaryColor,
-                  child: Center(child: Text(
-                    'Upload Post',
-                    style: GoogleFonts.getFont(
-                      "Poppins",
-                      textStyle: const TextStyle(
-                        fontSize: 12,
-                        fontWeight: FontWeight.w400,
-                        color: AppColor.whiteColor,
+                  child: Center(
+                    child: Text(
+                      'Upload Post',
+                      style: GoogleFonts.getFont(
+                        "Poppins",
+                        textStyle: const TextStyle(
+                          fontSize: 12,
+                          fontWeight: FontWeight.w400,
+                          color: AppColor.whiteColor,
+                        ),
                       ),
                     ),
-                  ),),
+                  ),
                 ),
               ),
             ),
-
           ],
-
           bottom: const TabBar(
             indicatorColor: AppColor.primaryColor,
             labelColor: AppColor.primaryColor,
@@ -74,58 +73,40 @@ class _CommunityViewState extends State<CommunityView> {
             ],
           ),
         ),
-        body: TabBarView(
+        body: const TabBarView(
           children: [
             //Topics View
             Padding(
-              padding: const EdgeInsets.only(top: 10, left: 16.0, right: 16.0),
-              child: SingleChildScrollView(
-                scrollDirection: Axis.vertical,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const CommunituCartWidget(),
-                    Text(
-                      'Cleaning',
-                      style: GoogleFonts.getFont(
-                        "Poppins",
-                        textStyle: const TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.w400,
-                          color: AppColor.blackColor,
-                        ),
-                      ),
-                    ),
-                    const VerticalSpeacing(5.0),
-                    const CommunituCartWidget(),
-                    Text(
-                      'Family',
-                      style: GoogleFonts.getFont(
-                        "Poppins",
-                        textStyle: const TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.w400,
-                          color: AppColor.blackColor,
-                        ),
-                      ),
-                    ),
-                    const VerticalSpeacing(5.0),
-                    const CommunituCartWidget(),
-                  ],
-                ),
-              ),
-            ),
-
-            //Blog View
-            const Padding(
               padding: EdgeInsets.only(top: 10, left: 16.0, right: 16.0),
               child: SingleChildScrollView(
                 scrollDirection: Axis.vertical,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
+                    VerticalSpeacing(16.0),
                     CommunituCartWidget(),
+                    VerticalSpeacing(16.0),
                     CommunituCartWidget(),
+                    VerticalSpeacing(16.0),
+                    CommunituCartWidget(),
+                  ],
+                ),
+              ),
+            ),
+
+            //Blog View
+            Padding(
+              padding: EdgeInsets.only(top: 10, left: 16.0, right: 16.0),
+              child: SingleChildScrollView(
+                scrollDirection: Axis.vertical,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    VerticalSpeacing(16.0),
+                    CommunituCartWidget(),
+                    VerticalSpeacing(16.0),
+                    CommunituCartWidget(),
+                    VerticalSpeacing(16.0),
                     CommunituCartWidget(),
                   ],
                 ),

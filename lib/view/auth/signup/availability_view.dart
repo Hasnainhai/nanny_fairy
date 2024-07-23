@@ -58,7 +58,7 @@ class _AvailabilityViewState extends State<AvailabilityView> {
           borderRadius: BorderRadius.only(topLeft: Radius.circular(20)),
         ),
         child: Padding(
-          padding: const EdgeInsets.all(16.0),
+          padding: const EdgeInsets.only(left: 16,right: 16,top: 16),
           child: SingleChildScrollView(
             child: Column(
               children: [
