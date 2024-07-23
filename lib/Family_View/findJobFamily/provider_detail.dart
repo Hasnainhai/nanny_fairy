@@ -118,17 +118,7 @@ class _ProviderDetailsState extends State<ProviderDetails> {
       body: Stack(
         clipBehavior: Clip.none,
         children: [
-          // Container(
-          //   height: 150,
-          //   width: double.infinity,
-          //   decoration: const BoxDecoration(
-          //     color: AppColor.primaryColor,
-          //     borderRadius: BorderRadius.only(
-          //       bottomLeft: Radius.circular(20),
-          //       bottomRight: Radius.circular(20),
-          //     ),
-          //   ),
-          // ),
+
           Padding(
             padding: const EdgeInsets.only(top: 90),
             child: Container(

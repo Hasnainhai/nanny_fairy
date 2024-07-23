@@ -140,8 +140,8 @@ class _ProfileViewFamilyState extends State<ProfileViewFamily> {
                   ontap: () {
                     Navigator.pushNamed(context, RoutesName.myProfile);
                   },
-                  tColor: AppColor.primaryColor,
-                  bColor: AppColor.primaryColor,
+                  tColor: Color(0xff40C269),
+                  bColor:Color(0xffCDFF9D),
                   icon: Icons.person_outline,
                   trIcon: Icons.arrow_forward_ios,
                   title: 'My Profile',
@@ -151,8 +151,8 @@ class _ProfileViewFamilyState extends State<ProfileViewFamily> {
                   ontap: () {
                     Navigator.pushNamed(context, RoutesName.notificationsView);
                   },
-                  tColor: AppColor.primaryColor,
-                  bColor: AppColor.primaryColor,
+                  tColor: Color(0xff46C5CA),
+                  bColor:Color(0xff6DF5FC),
                   icon: Icons.notifications_outlined,
                   trIcon: Icons.arrow_forward_ios,
                   title: 'Notifications',
@@ -162,8 +162,8 @@ class _ProfileViewFamilyState extends State<ProfileViewFamily> {
                     ontap: () {
                       Navigator.pushNamed(context, RoutesName.settingsFamily);
                     },
-                    tColor: AppColor.primaryColor,
-                    bColor: AppColor.primaryColor,
+                    tColor: Color(0xffA24ABF),
+                    bColor:Color(0xffDF9EF5),
                     icon: Icons.settings_outlined,
                     trIcon: Icons.arrow_forward_ios,
                     title: 'Settings'),
@@ -172,8 +172,8 @@ class _ProfileViewFamilyState extends State<ProfileViewFamily> {
                     ontap: () {
                       Navigator.pushNamed(context, RoutesName.paymentView);
                     },
-                    tColor: AppColor.primaryColor,
-                    bColor: AppColor.primaryColor,
+                    tColor: Color(0xff9E93F4),
+                    bColor:Color(0x7465EC),
                     icon: Icons.account_balance_wallet_outlined,
                     trIcon: Icons.arrow_forward_ios,
                     title: 'Payment'),
@@ -185,8 +185,8 @@ class _ProfileViewFamilyState extends State<ProfileViewFamily> {
                         MaterialPageRoute(
                             builder: (c) => const TotalRatingScreen()));
                   },
-                  tColor: AppColor.primaryColor,
-                  bColor: AppColor.primaryColor,
+                  tColor: Color(0xffEC4091),
+                  bColor:Color(0xffFF9CCB),
                   icon: Icons.star_outline,
                   trIcon: Icons.arrow_forward_ios,
                   title: 'Ratings',
@@ -196,8 +196,8 @@ class _ProfileViewFamilyState extends State<ProfileViewFamily> {
                   ontap: () {
                     Navigator.pushNamed(context, RoutesName.loginView);
                   },
-                  tColor: AppColor.primaryColor,
-                  bColor: AppColor.primaryColor,
+                  tColor: Color(0xffEC4091),
+                  bColor:Color(0xffFF9CCB),
                   icon: Icons.logout_outlined,
                   trIcon: Icons.arrow_forward_ios,
                   title: 'Log Out',
