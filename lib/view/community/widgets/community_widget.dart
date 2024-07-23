@@ -44,8 +44,7 @@ class CommunituCartWidget extends StatelessWidget {
                 width: double.infinity,
                 decoration: const BoxDecoration(
                   image: DecorationImage(
-                    image: NetworkImage(
-                        'https://blog.adoptuskids.org/wp-content/uploads/2019/08/ausk-family-profile-pic-2-620x405.jpg'),
+                    image: AssetImage('images/community.png'),
                     fit: BoxFit.fill,
                   ),
                 ),
