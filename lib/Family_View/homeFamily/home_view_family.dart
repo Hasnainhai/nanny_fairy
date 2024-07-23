@@ -16,225 +16,234 @@ class HomeViewFamily extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      body: Column(
-        children: [
-          Stack(
-            clipBehavior: Clip.none,
-            children: [
-              Container(
-                height: 179,
-                width: double.infinity,
-                decoration: const BoxDecoration(
-                  color: AppColor.primaryColor,
-                  borderRadius: BorderRadius.only(
-                    bottomLeft: Radius.circular(20),
-                    bottomRight: Radius.circular(20),
-                  ),
-                ),
-                child: Center(
-                  child: ListTile(
-                    leading: const CircleAvatar(
-                      radius: 40,
-                      backgroundImage: NetworkImage(
-                          'https://play-lh.googleusercontent.com/jInS55DYPnTZq8GpylyLmK2L2cDmUoahVacfN_Js_TsOkBEoizKmAl5-p8iFeLiNjtE=w526-h296-rw'),
-                    ),
-                    title: Text(
-                      'WellCome',
-                      style: GoogleFonts.getFont(
-                        "Poppins",
-                        textStyle: const TextStyle(
-                          fontSize: 12,
-                          fontWeight: FontWeight.w500,
-                          color: AppColor.whiteColor,
-                        ),
-                      ),
-                    ),
-                    subtitle: Text(
-                      'Aliza Zehra',
-                      style: GoogleFonts.getFont(
-                        "Poppins",
-                        textStyle: const TextStyle(
-                          fontSize: 14,
-                          fontWeight: FontWeight.w500,
-                          color: AppColor.whiteColor,
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-              Positioned(
-                top: 159, // Adjust this value as needed
-                left: (MediaQuery.of(context).size.width - 320) /
-                    2, // Center horizontally
-                child: const SearchBar(),
-              ),
-            ],
-          ),
-          const VerticalSpeacing(50.0),
-          Padding(
-            padding: const EdgeInsets.only(left: 16.0, right: 16.0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            Stack(
+              clipBehavior: Clip.none,
               children: [
-                Text(
-                  'What are you looking for',
-                  style: GoogleFonts.getFont(
-                    "Poppins",
-                    textStyle: const TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.w600,
-                      color: AppColor.blackColor,
+                Container(
+                  height: 179,
+                  width: double.infinity,
+                  decoration: const BoxDecoration(
+                    color: AppColor.primaryColor,
+                    borderRadius: BorderRadius.only(
+                      bottomLeft: Radius.circular(20),
+                      bottomRight: Radius.circular(20),
                     ),
                   ),
+                  child: Center(
+                    child: ListTile(
+                      leading: const CircleAvatar(
+                        radius: 40,
+                        backgroundImage: NetworkImage(
+                            'https://play-lh.googleusercontent.com/jInS55DYPnTZq8GpylyLmK2L2cDmUoahVacfN_Js_TsOkBEoizKmAl5-p8iFeLiNjtE=w526-h296-rw'),
+                      ),
+                      title: Text(
+                        'WellCome',
+                        style: GoogleFonts.getFont(
+                          "Poppins",
+                          textStyle: const TextStyle(
+                            fontSize: 12,
+                            fontWeight: FontWeight.w500,
+                            color: AppColor.whiteColor,
+                          ),
+                        ),
+                      ),
+                      subtitle: Text(
+                        'Aliza Zehra',
+                        style: GoogleFonts.getFont(
+                          "Poppins",
+                          textStyle: const TextStyle(
+                            fontSize: 14,
+                            fontWeight: FontWeight.w500,
+                            color: AppColor.whiteColor,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+                Positioned(
+                  top: 159, // Adjust this value as needed
+                  left: (MediaQuery.of(context).size.width - 320) /
+                      2, // Center horizontally
+                  child: const SearchBar(),
                 ),
               ],
             ),
-          ),
-          const VerticalSpeacing(10),
-          const SizedBox(
-            height: 120,
-            child: SingleChildScrollView(
-              scrollDirection: Axis.horizontal,
+            const VerticalSpeacing(50.0),
+            Padding(
+              padding: const EdgeInsets.only(left: 16.0, right: 16.0),
               child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  SizedBox(width: 16),
-                  HomeFeatureContainerFamily(
-                    bgColor: Color(0xff51A1BA),
-                    img: 'images/cleaning.png',
-                    title: 'Cleaning',
-                    txColor: AppColor.whiteColor,
-                  ),
-                  SizedBox(width: 16),
-                  HomeFeatureContainerFamily(
-                    txColor: AppColor.whiteColor,
-                    bgColor: Color(0xffFEAA48),
-                    img: 'images/homeSitter.png',
-                    title: 'Sitter',
-                  ),
-                  SizedBox(width: 16),
-                  HomeFeatureContainerFamily(
-                    txColor: AppColor.whiteColor,
-                    bgColor: Color(0xffDDC912),
-                    img: 'images/cleaning.png',
-                    title: 'Eiderly',
-                  ),
-                  SizedBox(width: 16),
-                  HomeFeatureContainerFamily(
-                    txColor: AppColor.whiteColor,
-                    bgColor: Color(0xffFEAA48),
-                    img: 'images/homeSitter.png',
-                    title: 'Sitter',
-                  ),
-                  SizedBox(width: 16),
-                  HomeFeatureContainerFamily(
-                    txColor: AppColor.whiteColor,
-                    bgColor: Color(0xffDDC912),
-                    img: 'images/cleaning.png',
-                    title: 'Eiderly',
+                  Text(
+                    'What are you looking for',
+                    style: GoogleFonts.getFont(
+                      "Poppins",
+                      textStyle: const TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w600,
+                        color: AppColor.blackColor,
+                      ),
+                    ),
                   ),
                 ],
               ),
             ),
-          ),
-          const VerticalSpeacing(16.0),
-          Padding(
-            padding: const EdgeInsets.only(left: 16.0, right: 16.0),
-            child: Column(
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            const VerticalSpeacing(10),
+            const SizedBox(
+              height: 120,
+              child: SingleChildScrollView(
+                scrollDirection: Axis.horizontal,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
-                    Text(
-                      'What are you looking for',
-                      style: GoogleFonts.getFont(
-                        "Poppins",
-                        textStyle: const TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.w600,
-                          color: AppColor.blackColor,
-                        ),
-                      ),
+                    SizedBox(width: 16),
+                    HomeFeatureContainerFamily(
+                      bgColor: Color(0xff51A1BA),
+                      img: 'images/cleaning.png',
+                      title: 'Cleaning',
+                      txColor: AppColor.whiteColor,
                     ),
-                    InkWell(
-                      onTap: () {
-                        Navigator.pushNamed(
-                            context, RoutesName.jobViewFamily);
-                      },
-                      child: Text(
-                        'see all',
+                    SizedBox(width: 16),
+                    HomeFeatureContainerFamily(
+                      txColor: AppColor.whiteColor,
+                      bgColor: Color(0xffFEAA48),
+                      img: 'images/homeSitter.png',
+                      title: 'Sitter',
+                    ),
+                    SizedBox(width: 16),
+                    HomeFeatureContainerFamily(
+                      txColor: AppColor.whiteColor,
+                      bgColor: Color(0xffDDC912),
+                      img: 'images/cleaning.png',
+                      title: 'Eiderly',
+                    ),
+                    SizedBox(width: 16),
+                    HomeFeatureContainerFamily(
+                      txColor: AppColor.whiteColor,
+                      bgColor: Color(0xffFEAA48),
+                      img: 'images/homeSitter.png',
+                      title: 'Sitter',
+                    ),
+                    SizedBox(width: 16),
+                    HomeFeatureContainerFamily(
+                      txColor: AppColor.whiteColor,
+                      bgColor: Color(0xffDDC912),
+                      img: 'images/cleaning.png',
+                      title: 'Eiderly',
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            const VerticalSpeacing(16.0),
+            Padding(
+              padding: const EdgeInsets.only(left: 16.0, right: 16.0),
+              child: Column(
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        'What are you looking for',
                         style: GoogleFonts.getFont(
                           "Poppins",
                           textStyle: const TextStyle(
                             fontSize: 16,
                             fontWeight: FontWeight.w600,
-                            color: AppColor.primaryColor,
+                            color: AppColor.blackColor,
                           ),
                         ),
                       ),
-                    ),
-                  ],
-                ),
-                const VerticalSpeacing(16.0),
+                      InkWell(
+                        onTap: () {
+                          Navigator.pushNamed(
+                              context, RoutesName.jobViewFamily);
+                        },
+                        child: Text(
+                          'see all',
+                          style: GoogleFonts.getFont(
+                            "Poppins",
+                            textStyle: const TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.w600,
+                              color: AppColor.primaryColor,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                  const VerticalSpeacing(16.0),
 
-                SizedBox(
-                  height: MediaQuery.of(context).size.height * 0.3,
-                  child: SingleChildScrollView(
-                    scrollDirection: Axis.vertical,
-                    child: Column(
-                      children: [
-                        BookingCartWidgetFamily(
-                          primaryButtonColor: AppColor.primaryColor,
-                          primaryButtonTxt: 'View',
-                          ontapView: () {
-                            Navigator.pushNamed(
-                                context, RoutesName.providerDetails);
-                          },
-                        ),
-                        BookingCartWidgetFamily(
-                          primaryButtonColor: AppColor.primaryColor,
-                          ontapView: () {
-                            Navigator.pushNamed(
-                                context, RoutesName.providerDetails);
-                          },
-                          primaryButtonTxt: 'View',
-                        ),
-                        BookingCartWidgetFamily(
-                          primaryButtonColor: AppColor.primaryColor,
-                          ontapView: () {
-                            Navigator.pushNamed(
-                                context, RoutesName.providerDetails);
-                          },
-                          primaryButtonTxt: 'View',
-                        ),
-                        BookingCartWidgetFamily(
-                          primaryButtonColor: AppColor.primaryColor,
-                          ontapView: () {
-                            Navigator.pushNamed(
-                                context, RoutesName.providerDetails);
-                          },
-                          primaryButtonTxt: 'View',
-                        ),
-                      ],
+                  SizedBox(
+                    height: MediaQuery.of(context).size.height * 0.3,
+                    child: SingleChildScrollView(
+                      scrollDirection: Axis.vertical,
+                      child: Column(
+                        children: [
+                          BookingCartWidgetFamily(
+                            primaryButtonColor: AppColor.primaryColor,
+                            primaryButtonTxt: 'View',
+                            ontapView: () {
+                              Navigator.pushNamed(
+                                  context, RoutesName.providerDetails);
+                            },
+                          ),
+                          BookingCartWidgetFamily(
+                            primaryButtonColor: AppColor.primaryColor,
+                            ontapView: () {
+                              Navigator.pushNamed(
+                                  context, RoutesName.providerDetails);
+                            },
+                            primaryButtonTxt: 'View',
+                          ),
+                          BookingCartWidgetFamily(
+                            primaryButtonColor: AppColor.primaryColor,
+                            ontapView: () {
+                              Navigator.pushNamed(
+                                  context, RoutesName.providerDetails);
+                            },
+                            primaryButtonTxt: 'View',
+                          ),
+                          BookingCartWidgetFamily(
+                            primaryButtonColor: AppColor.primaryColor,
+                            ontapView: () {
+                              Navigator.pushNamed(
+                                  context, RoutesName.providerDetails);
+                            },
+                            primaryButtonTxt: 'View',
+                          ),
+                        ],
+                      ),
                     ),
                   ),
-                ),
 
 
-              ],
+                ],
+              ),
             ),
-          ),
 
-        ],
+          ],
+        ),
       ),
     );
   }
 }
 
-class SearchBar extends StatelessWidget {
+class SearchBar extends StatefulWidget {
   const SearchBar({super.key});
 
+  @override
+  State<SearchBar> createState() => _SearchBarState();
+}
+
+class _SearchBarState extends State<SearchBar> {
+  String selectedKM = '2KM';
+  List<String> kM = ['4KM', '8KM', '12KM',];
   @override
   Widget build(BuildContext context) {
     return Row(
@@ -267,14 +276,17 @@ class SearchBar extends StatelessWidget {
               SizedBox(
                 width: 150,
                 height: 50,
-                child: TextFormField(
-                  decoration: const InputDecoration(
-                      border: InputBorder.none,
-                      hintText: 'Search',
-                      prefixIcon: Icon(
-                        Icons.search,
-                        color: AppColor.blackColor,
-                      )),
+                child: Padding(
+                  padding: const EdgeInsets.only(top: 5),
+                  child: TextFormField(
+                    decoration: const InputDecoration(
+                        border: InputBorder.none,
+                        hintText: 'Search',
+                        prefixIcon: Icon(
+                          Icons.search,
+                          color: AppColor.blackColor,
+                        )),
+                  ),
                 ),
               ),
             ],
@@ -340,17 +352,25 @@ class SearchBar extends StatelessWidget {
             ],
           ),
           child: Center(
-            child: Text(
-              '25\nKM',
-              style: GoogleFonts.getFont(
-                "Poppins",
-                textStyle: const TextStyle(
-                  fontSize: 14,
-                  fontWeight: FontWeight.w600,
-                  color: AppColor.blackColor,
+            child:Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  '12 Km',
+                  style: GoogleFonts.getFont(
+                    "Poppins",
+                    textStyle: const TextStyle(
+                      fontSize: 12,
+                      fontWeight: FontWeight.w600,
+                      color: AppColor.primaryColor,
+                    ),
+                  ),
                 ),
-              ),
+               const  Icon(Icons.expand_more_outlined,color: AppColor.primaryColor,),
+
+              ],
             ),
+
           ),
         ),
       ],

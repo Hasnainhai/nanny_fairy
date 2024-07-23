@@ -160,7 +160,7 @@ class _ProfileViewFamilyState extends State<ProfileViewFamily> {
                 const Divider(),
                 ProfileWidgetsFamily(
                     ontap: () {
-                      Navigator.pushNamed(context, RoutesName.settingsView);
+                      Navigator.pushNamed(context, RoutesName.settingsFamily);
                     },
                     tColor: AppColor.primaryColor,
                     bColor: AppColor.primaryColor,

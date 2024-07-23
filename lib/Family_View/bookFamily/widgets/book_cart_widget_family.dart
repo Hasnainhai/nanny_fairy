@@ -145,8 +145,11 @@ class _BookingCartWidgetFamilyState extends State<BookingCartWidgetFamily> {
                       children: [
                         Column(
                           children: [
-                            const Icon(Icons.school_outlined,
-                                color: AppColor.blackColor),
+                            const Icon(
+                              Icons.school_outlined,
+                              color: AppColor.blackColor,
+                              size: 16,
+                            ),
                             Text(
                               'MBBS',
                               style: GoogleFonts.getFont(
@@ -160,11 +163,14 @@ class _BookingCartWidgetFamilyState extends State<BookingCartWidgetFamily> {
                             ),
                           ],
                         ),
-                        const SizedBox(width: 5),
+                        const SizedBox(width: 10),
                         Column(
                           children: [
-                            const Icon(Icons.plus_one_outlined,
-                                color: AppColor.blackColor),
+                            const Icon(
+                              Icons.plus_one_outlined,
+                              color: AppColor.blackColor,
+                              size: 16,
+                            ),
                             Text(
                               'Skill',
                               style: GoogleFonts.getFont(
@@ -178,6 +184,7 @@ class _BookingCartWidgetFamilyState extends State<BookingCartWidgetFamily> {
                             ),
                           ],
                         ),
+                        const SizedBox(width: 10),
                         Column(
                           children: [
                             Row(
@@ -187,7 +194,7 @@ class _BookingCartWidgetFamilyState extends State<BookingCartWidgetFamily> {
                                   style: GoogleFonts.getFont(
                                     "Poppins",
                                     textStyle: const TextStyle(
-                                      fontSize: 15,
+                                      fontSize: 12,
                                       fontWeight: FontWeight.w600,
                                       color: AppColor.blackColor,
                                     ),
