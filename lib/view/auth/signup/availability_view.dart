@@ -17,7 +17,15 @@ class AvailabilityView extends StatefulWidget {
 
 class _AvailabilityViewState extends State<AvailabilityView> {
   String selectedDay = 'Sunday';
-  List<String> days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+  List<String> days = [
+    'Sunday',
+    'Monday',
+    'Tuesday',
+    'Wednesday',
+    'Thursday',
+    'Friday',
+    'Saturday'
+  ];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -58,7 +66,7 @@ class _AvailabilityViewState extends State<AvailabilityView> {
           borderRadius: BorderRadius.only(topLeft: Radius.circular(20)),
         ),
         child: Padding(
-          padding: const EdgeInsets.only(left: 16,right: 16,top: 16),
+          padding: const EdgeInsets.only(left: 16, right: 16, top: 16),
           child: SingleChildScrollView(
             child: Column(
               children: [
@@ -117,43 +125,43 @@ class _AvailabilityViewState extends State<AvailabilityView> {
                               isSelected: false,
                               onTap: (bool isSelected) {},
                             ),
-                            SizedBox(width: 8),
+                            const SizedBox(width: 8),
                             DayButton(
                               day: 'T',
                               isSelected: false,
                               onTap: (bool isSelected) {},
                             ),
-                            SizedBox(width: 8),
+                            const SizedBox(width: 8),
                             DayButton(
                               day: 'W',
                               isSelected: true,
                               onTap: (bool isSelected) {},
                             ),
-                            SizedBox(width: 8),
+                            const SizedBox(width: 8),
                             DayButton(
                               day: 'T',
                               isSelected: false,
                               onTap: (bool isSelected) {},
                             ),
-                            SizedBox(width: 8),
+                            const SizedBox(width: 8),
                             DayButton(
                               day: 'F',
                               isSelected: true,
                               onTap: (bool isSelected) {},
                             ),
-                            SizedBox(width: 8),
+                            const SizedBox(width: 8),
                             DayButton(
                               day: 'S',
                               isSelected: false,
                               onTap: (bool isSelected) {},
                             ),
-                            SizedBox(width: 8),
+                            const SizedBox(width: 8),
                             DayButton(
                               day: 'S',
                               isSelected: false,
                               onTap: (bool isSelected) {},
                             ),
-                            SizedBox(width: 8),
+                            const SizedBox(width: 8),
                           ],
                         ),
                         const SizedBox(height: 16),
@@ -220,52 +228,53 @@ class _AvailabilityViewState extends State<AvailabilityView> {
                     padding: const EdgeInsets.all(12.0),
                     child: Column(
                       children: [
-                      Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          'Time',
-                          style: GoogleFonts.getFont(
-                            "Poppins",
-                            textStyle: const TextStyle(
-                              fontSize: 14,
-                              fontWeight: FontWeight.w400,
-                              color: AppColor.blackColor,
-                            ),
-                          ),
-                        ),
-                        DropdownButtonHideUnderline(
-                          child: DropdownButton<String>(
-                            value: selectedDay,
-                            icon: const Icon(
-                              Icons.expand_more_outlined,
-                              color: Colors.blue,
-                            ),
-                            onChanged: (String? newValue) {
-                              setState(() {
-                                selectedDay = newValue!;
-                              });
-                            },
-                            items: days.map<DropdownMenuItem<String>>((String value) {
-                              return DropdownMenuItem<String>(
-                                value: value,
-                                child: Text(
-                                  value,
-                                  style: GoogleFonts.getFont(
-                                    "Poppins",
-                                    textStyle: const TextStyle(
-                                      fontSize: 14,
-                                      fontWeight: FontWeight.w400,
-                                      color: Colors.blue,
-                                    ),
-                                  ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              'Time',
+                              style: GoogleFonts.getFont(
+                                "Poppins",
+                                textStyle: const TextStyle(
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.w400,
+                                  color: AppColor.blackColor,
                                 ),
-                              );
-                            }).toList(),
-                          ),
+                              ),
+                            ),
+                            DropdownButtonHideUnderline(
+                              child: DropdownButton<String>(
+                                value: selectedDay,
+                                icon: const Icon(
+                                  Icons.expand_more_outlined,
+                                  color: Colors.blue,
+                                ),
+                                onChanged: (String? newValue) {
+                                  setState(() {
+                                    selectedDay = newValue!;
+                                  });
+                                },
+                                items: days.map<DropdownMenuItem<String>>(
+                                    (String value) {
+                                  return DropdownMenuItem<String>(
+                                    value: value,
+                                    child: Text(
+                                      value,
+                                      style: GoogleFonts.getFont(
+                                        "Poppins",
+                                        textStyle: const TextStyle(
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.w400,
+                                          color: Colors.blue,
+                                        ),
+                                      ),
+                                    ),
+                                  );
+                                }).toList(),
+                              ),
+                            ),
+                          ],
                         ),
-                      ],
-                    ),
                         const VerticalSpeacing(10.0),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -317,8 +326,8 @@ class _AvailabilityViewState extends State<AvailabilityView> {
                             ),
                           ],
                         ),
-                        Divider(),
-                        VerticalSpeacing(16),
+                        const Divider(),
+                        const VerticalSpeacing(16),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
@@ -369,8 +378,8 @@ class _AvailabilityViewState extends State<AvailabilityView> {
                             ),
                           ],
                         ),
-                        Divider(),
-                        VerticalSpeacing(16),
+                        const Divider(),
+                        const VerticalSpeacing(16),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
