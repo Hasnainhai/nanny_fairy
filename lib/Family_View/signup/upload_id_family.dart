@@ -52,6 +52,7 @@ class UploadIdFamily extends StatelessWidget {
               width: double.infinity,
               decoration: BoxDecoration(
                 color: AppColor.whiteColor,
+                borderRadius: BorderRadius.circular(6),
                 border: Border.all(
                   strokeAlign: BorderSide.strokeAlignCenter,
                   color: const Color(0xff1B81BC)
@@ -106,6 +107,7 @@ class UploadIdFamily extends StatelessWidget {
               width: double.infinity,
               decoration: BoxDecoration(
                 color: AppColor.whiteColor,
+                borderRadius: BorderRadius.circular(6),
                 border: Border.all(
                   strokeAlign: BorderSide.strokeAlignCenter,
                   color: const Color(0xff1B81BC)
