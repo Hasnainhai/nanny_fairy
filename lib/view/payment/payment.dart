@@ -1,8 +1,4 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
-// ignore_for_file: use_build_context_synchronously
-import 'dart:convert';
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:nanny_fairy/res/components/rounded_button.dart';
 import 'package:nanny_fairy/res/components/toggle_widget.dart';
@@ -30,11 +26,10 @@ class _PaymentViewState extends State<PaymentView> {
       builder: (BuildContext context) {
         return AlertDialog(
           backgroundColor: AppColor.whiteColor,
-          shape: const RoundedRectangleBorder(),
           content: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              Icon(Icons.check_circle_outline,
+              const Icon(Icons.check_circle_outline,
                   color: AppColor.primaryColor, size: 150),
               const VerticalSpeacing(16),
               Text(
@@ -130,24 +125,36 @@ class _PaymentViewState extends State<PaymentView> {
                                 height: 66,
                                 width: 135,
                                 decoration: BoxDecoration(
+                                  color: firstButton
+                                      ? AppColor.primaryColor
+                                      : AppColor.secondaryBgColor,
+                                  borderRadius: BorderRadius.circular(10.0),
+                                  border: Border.all(
+                                    width: 1,
                                     color: firstButton
-                                        ? AppColor.primaryColor
+                                        ? AppColor.blackColor
                                         : Colors.transparent,
-                                    border: Border.all(
-                                        width: 1,
-                                        color: firstButton
-                                            ? AppColor.primaryColor
-                                            : AppColor.grayColor)),
+                                  ),
+                                  boxShadow: [
+                                    BoxShadow(
+                                      color: const Color(0xff1B81BC).withOpacity(
+                                          0.1), // Drop shadow color with 4% opacity
+                                      blurRadius: 2,
+                                      offset: const Offset(1, 2),
+                                      spreadRadius: 1,
+                                    ),
+                                  ],
+                                ),
                                 child: Column(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
                                     Container(
                                       height: 30.0,
-                                      width: 30.0,
+                                      width: 40.0,
                                       decoration: const BoxDecoration(
                                           image: DecorationImage(
-                                              image: AssetImage(
-                                                  'images/masterCart.png'),
+                                              image:
+                                                  AssetImage('images/idle.png'),
                                               fit: BoxFit.contain)),
                                     ),
                                     const VerticalSpeacing(5),
@@ -182,12 +189,23 @@ class _PaymentViewState extends State<PaymentView> {
                                 decoration: BoxDecoration(
                                   color: thirdButton
                                       ? AppColor.primaryColor
-                                      : Colors.transparent,
+                                      : AppColor.secondaryBgColor,
+                                  borderRadius: BorderRadius.circular(10.0),
                                   border: Border.all(
-                                      width: 1,
-                                      color: thirdButton
-                                          ? AppColor.primaryColor
-                                          : AppColor.grayColor),
+                                    width: 1,
+                                    color: thirdButton
+                                        ? AppColor.blackColor
+                                        : Colors.transparent,
+                                  ),
+                                  boxShadow: [
+                                    BoxShadow(
+                                      color: const Color(0xff1B81BC).withOpacity(
+                                          0.1), // Drop shadow color with 4% opacity
+                                      blurRadius: 2,
+                                      offset: const Offset(1, 2),
+                                      spreadRadius: 1,
+                                    ),
+                                  ],
                                 ),
                                 child: Column(
                                   mainAxisAlignment: MainAxisAlignment.center,
