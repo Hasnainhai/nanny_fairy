@@ -66,17 +66,17 @@ class _RatingState extends State<Rating> {
                     const SizedBox(
                       height: 40,
                     ),
-                    CircleAvatar(
+                    const CircleAvatar(
                       radius: 50,
-                      backgroundImage: const NetworkImage(
+                      backgroundImage: NetworkImage(
                           "https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&q=80&w=1587&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"),
 
                       // User Image URL
                     ),
-                    const VerticalSpeacing(30),
-                    Text(
-                      "name",
-                      style: const TextStyle(
+                    const VerticalSpeacing(16),
+                    const Text(
+                      "Aliza Shah",
+                      style: TextStyle(
                         fontFamily: 'CenturyGothic',
                         fontSize: 18,
                         fontWeight: FontWeight.w400,
@@ -89,7 +89,7 @@ class _RatingState extends State<Rating> {
                       textAlign: TextAlign.center,
                       style: TextStyle(
                         fontFamily: 'CenturyGothic',
-                        fontSize: 18,
+                        fontSize: 16,
                         fontWeight: FontWeight.w400,
                         color: AppColor.blackColor,
                       ),
@@ -111,16 +111,31 @@ class _RatingState extends State<Rating> {
                           countRatingStars = rating;
                         }),
                     const VerticalSpeacing(25),
-                    TextFieldCustom(
-                      controller: commentController,
-                      maxLines: 6,
-                      hintText: "Additional comments...",
+                    const Text(
+                      "Leave a your valuable comments",
+                      textAlign: TextAlign.start,
+                      style: TextStyle(
+                        fontFamily: 'CenturyGothic',
+                        fontSize: 20,
+                        fontWeight: FontWeight.w400,
+                        color: AppColor.blackColor,
+                      ),
+                    ),
+                    SizedBox(
+                      height: 120,
+                      width: double.infinity,
+                      child: TextFieldCustom(
+                        controller: commentController,
+                        maxLines: 6,
+                        hintText: "Additional comments...",
+                      ),
                     ),
                     const VerticalSpeacing(30),
                     RoundedButton(
-                        title: 'Submit Review', onpress: ()  {
+                        title: 'Submit Review',
+                        onpress: () {
                           Navigator.pop(context);
-                    }),
+                        }),
                     const VerticalSpeacing(40),
                   ],
                 ),
