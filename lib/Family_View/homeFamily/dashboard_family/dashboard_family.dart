@@ -112,23 +112,23 @@ class _DashBoardFamilyScreenState extends State<DashBoardFamilyScreen>
           ProfileViewFamily(),
         ],
       ),
-      bottomNavigationBar: BottomNavigationBar(
-        items: const [
+      bottomNavigationBar:  BottomNavigationBar(
+        items:  const [
           BottomNavigationBarItem(
-            icon: Icon(
-              Icons.home_outlined,
+            icon: ImageIcon(
+              AssetImage('images/home.png'),
             ),
-            label: ('Home'),
+            label: 'Home',
           ),
           BottomNavigationBarItem(
-            icon: Icon(
-              Icons.chat,
+            icon:ImageIcon(
+              AssetImage('images/chatting.png'),
             ),
             label: ('chat'),
           ),
           BottomNavigationBarItem(
-            icon: Icon(
-              Icons.book_online_outlined,
+            icon: ImageIcon(
+              AssetImage('images/booked.png'),
             ),
             label: ('Booked'),
           ),
@@ -137,7 +137,7 @@ class _DashBoardFamilyScreenState extends State<DashBoardFamilyScreen>
             label: ('community'),
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.person_outline),
+            icon: Icon(Icons.account_circle_outlined),
             label: ('profile'),
           ),
         ],
