@@ -20,20 +20,26 @@ class _FamilyDetailProviderState extends State<FamilyDetailProvider> {
       builder: (BuildContext context) {
         return AlertDialog(
           backgroundColor: AppColor.whiteColor,
-          contentPadding: EdgeInsets.zero, // Remove default padding
-          content: Container(
-            width: MediaQuery.of(context).size.width * 0.8, // Set width to 80% of screen width
+          shape: const RoundedRectangleBorder(
+            borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(12),
+              topRight: Radius.circular(12),
+              bottomRight: Radius.circular(12),
+              bottomLeft: Radius.zero,
+            ),
+          ),
+          contentPadding: EdgeInsets.zero,
+          content: SizedBox(
+            width: MediaQuery.of(context).size.width * 0.8,
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
                 Container(
                   height: 150,
-                  width: double.infinity, // Fill the width of the parent container
-                  decoration:  BoxDecoration(
-                    borderRadius: BorderRadius.circular(
-                      12,
-
-                    ),
+                  width:
+                      double.infinity, // Fill the width of the parent container
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(12),
                     color: AppColor.primaryColor,
                   ),
                   child: Center(
@@ -59,7 +65,7 @@ class _FamilyDetailProviderState extends State<FamilyDetailProvider> {
                 ),
                 const VerticalSpeacing(30),
                 Padding(
-                  padding: const EdgeInsets.only(left: 16.0,right: 16.0),
+                  padding: const EdgeInsets.only(left: 16.0, right: 16.0),
                   child: RoundedButton(
                     title: 'Subscribe and Chat',
                     onpress: () {
@@ -75,7 +81,6 @@ class _FamilyDetailProviderState extends State<FamilyDetailProvider> {
       },
     );
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -127,6 +132,7 @@ class _FamilyDetailProviderState extends State<FamilyDetailProvider> {
                   left: 16,
                   right: 16,
                   child: Container(
+                    height: MediaQuery.of(context).size.height,
                     padding: const EdgeInsets.symmetric(
                         vertical: 16.0, horizontal: 16.0),
                     decoration: BoxDecoration(
@@ -281,12 +287,10 @@ class _FamilyDetailProviderState extends State<FamilyDetailProvider> {
                                   ),
                                 ],
                               ),
-                              VerticalSpeacing(100),
-
+                              // VerticalSpeacing(100),
                             ],
                           ),
                         ),
-
                       ],
                     ),
                   ),
@@ -303,14 +307,13 @@ class _FamilyDetailProviderState extends State<FamilyDetailProvider> {
                 ),
               ],
             ),
-            VerticalSpeacing(MediaQuery.of(context).size.height*0.57),
+            VerticalSpeacing(MediaQuery.of(context).size.height * 0.57),
             Padding(
-              padding: const EdgeInsets.only(left: 32.0,right: 32.0),
+              padding: const EdgeInsets.only(left: 32.0, right: 32.0),
               child: RoundedButton(
                 title: 'Chat With Family',
                 onpress: () {
                   showSubscribtionDialog(context);
-
                 },
               ),
             ),

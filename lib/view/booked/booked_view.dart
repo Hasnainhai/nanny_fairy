@@ -17,7 +17,7 @@ class BookedView extends StatelessWidget {
           backgroundColor: AppColor.primaryColor,
           automaticallyImplyLeading: false,
           title: Text(
-            'Completed Tasks',
+            'Completed Booked',
             style: GoogleFonts.getFont(
               "Poppins",
               textStyle: const TextStyle(

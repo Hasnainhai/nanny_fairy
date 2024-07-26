@@ -74,35 +74,15 @@ class _JobViewState extends State<JobView> {
                   child: Column(
                     children: [
                       BookingCartWidget(
-                          ontapView: () {
-                            Navigator.pushNamed(
-                                context, RoutesName.familyDetail);
-                          },
-                          primaryButtonTxt: 'View'),
+                          ontapView: () {}, primaryButtonTxt: 'Completed'),
                       BookingCartWidget(
-                          ontapView: () {
-                            Navigator.pushNamed(
-                                context, RoutesName.familyDetail);
-                          },
-                          primaryButtonTxt: 'View'),
+                          ontapView: () {}, primaryButtonTxt: 'Completed'),
                       BookingCartWidget(
-                          ontapView: () {
-                            Navigator.pushNamed(
-                                context, RoutesName.familyDetail);
-                          },
-                          primaryButtonTxt: 'View'),
+                          ontapView: () {}, primaryButtonTxt: 'Completed'),
                       BookingCartWidget(
-                          ontapView: () {
-                            Navigator.pushNamed(
-                                context, RoutesName.familyDetail);
-                          },
-                          primaryButtonTxt: 'View'),
+                          ontapView: () {}, primaryButtonTxt: 'Completed'),
                       BookingCartWidget(
-                          ontapView: () {
-                            Navigator.pushNamed(
-                                context, RoutesName.familyDetail);
-                          },
-                          primaryButtonTxt: 'View'),
+                          ontapView: () {}, primaryButtonTxt: 'Completed'),
                     ],
                   ),
                 ),
