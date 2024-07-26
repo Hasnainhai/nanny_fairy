@@ -110,7 +110,25 @@ class _ProfileViewState extends State<ProfileView> {
     return Container(
       height: MediaQuery.of(context).size.height * 0.6,
       width: MediaQuery.of(context).size.width * 0.9,
-      color: AppColor.whiteColor,
+      decoration: BoxDecoration(
+        color: AppColor.whiteColor,
+        borderRadius: BorderRadius.circular(10.0),
+        border: Border.all(
+          strokeAlign: BorderSide.strokeAlignCenter,
+          color: const Color(0xff1B81BC)
+              .withOpacity(0.10), // Stroke color with 10% opacity
+          width: 1,
+        ),
+        boxShadow: [
+          BoxShadow(
+            color: const Color(0xff1B81BC)
+                .withOpacity(0.1), // Drop shadow color with 4% opacity
+            blurRadius: 2,
+            offset: const Offset(1, 2),
+            spreadRadius: 1,
+          ),
+        ],
+      ),
       child: Padding(
         padding: const EdgeInsets.all(16.0),
         child: ListView(
@@ -121,8 +139,8 @@ class _ProfileViewState extends State<ProfileView> {
                   ontap: () {
                     Navigator.pushNamed(context, RoutesName.myProfile);
                   },
-                  tColor: AppColor.primaryColor,
-                  bColor: AppColor.primaryColor,
+                  tColor: const Color(0xff40C269),
+                  bColor: const Color(0xffCDFF9D),
                   icon: Icons.person_outline,
                   trIcon: Icons.arrow_forward_ios,
                   title: 'My Profile',
@@ -132,8 +150,8 @@ class _ProfileViewState extends State<ProfileView> {
                   ontap: () {
                     Navigator.pushNamed(context, RoutesName.notificationsView);
                   },
-                  tColor: AppColor.primaryColor,
-                  bColor: AppColor.primaryColor,
+                  tColor: const Color(0xff46C5CA),
+                  bColor: const Color(0xff6DF5FC),
                   icon: Icons.notifications_outlined,
                   trIcon: Icons.arrow_forward_ios,
                   title: 'Notifications',
@@ -143,8 +161,8 @@ class _ProfileViewState extends State<ProfileView> {
                     ontap: () {
                       Navigator.pushNamed(context, RoutesName.settingsView);
                     },
-                    tColor: AppColor.primaryColor,
-                    bColor: AppColor.primaryColor,
+                    tColor: const Color(0xffA24ABF),
+                    bColor: const Color(0xffDF9EF5),
                     icon: Icons.settings_outlined,
                     trIcon: Icons.arrow_forward_ios,
                     title: 'Settings'),
@@ -153,19 +171,21 @@ class _ProfileViewState extends State<ProfileView> {
                     ontap: () {
                       Navigator.pushNamed(context, RoutesName.paymentView);
                     },
-                    tColor: AppColor.primaryColor,
-                    bColor: AppColor.primaryColor,
+                    tColor: const Color(0xff9E93F4),
+                    bColor: const Color(0x7465EC),
                     icon: Icons.account_balance_wallet_outlined,
                     trIcon: Icons.arrow_forward_ios,
                     title: 'Payment'),
                 const Divider(),
                 ProfileWidgets(
                   ontap: () {
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (c) => TotalRatingScreen()));
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (c) => const TotalRatingScreen()));
                   },
-                  tColor: AppColor.primaryColor,
-                  bColor: AppColor.primaryColor,
+                  tColor: const Color(0xffEC4091),
+                  bColor: const Color(0xffFF9CCB),
                   icon: Icons.star_outline,
                   trIcon: Icons.arrow_forward_ios,
                   title: 'Ratings',
@@ -175,8 +195,8 @@ class _ProfileViewState extends State<ProfileView> {
                   ontap: () {
                     Navigator.pushNamed(context, RoutesName.loginView);
                   },
-                  tColor: AppColor.primaryColor,
-                  bColor: AppColor.primaryColor,
+                  tColor: const Color(0xffEC4091),
+                  bColor: const Color(0xffFF9CCB),
                   icon: Icons.logout_outlined,
                   trIcon: Icons.arrow_forward_ios,
                   title: 'Log Out',
