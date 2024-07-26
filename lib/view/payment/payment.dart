@@ -26,10 +26,13 @@ class _PaymentViewState extends State<PaymentView> {
       builder: (BuildContext context) {
         return AlertDialog(
           backgroundColor: AppColor.whiteColor,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(12),
+          ),
           content: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              const Icon(Icons.check_circle_outline,
+              const Icon(Icons.check_circle,
                   color: AppColor.primaryColor, size: 150),
               const VerticalSpeacing(16),
               Text(

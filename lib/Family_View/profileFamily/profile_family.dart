@@ -159,7 +159,7 @@ class _ProfileViewFamilyState extends State<ProfileViewFamily> {
                 const Divider(),
                 ProfileWidgetsFamily(
                     ontap: () {
-                      Navigator.pushNamed(context, RoutesName.settingsFamily);
+                      Navigator.pushNamed(context, RoutesName.settingsView);
                     },
                     tColor: const Color(0xffA24ABF),
                     bColor: const Color(0xffDF9EF5),
@@ -172,7 +172,7 @@ class _ProfileViewFamilyState extends State<ProfileViewFamily> {
                       Navigator.pushNamed(context, RoutesName.paymentView);
                     },
                     tColor: const Color(0xff9E93F4),
-                    bColor: const Color(0x7465EC),
+                    bColor: const Color(0xff7465EC),
                     icon: Icons.account_balance_wallet_outlined,
                     trIcon: Icons.arrow_forward_ios,
                     title: 'Payment'),

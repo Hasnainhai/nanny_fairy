@@ -52,7 +52,7 @@ class _SearchBarProviderState extends State<SearchBarProvider> {
             width: 200,
             decoration: BoxDecoration(
               color: AppColor.whiteColor,
-              borderRadius: BorderRadius.circular(12),
+              borderRadius: BorderRadius.circular(6),
               border: Border.all(
                 color: const Color(0xff1B81BC).withOpacity(0.10),
                 width: 1,
@@ -73,12 +73,11 @@ class _SearchBarProviderState extends State<SearchBarProvider> {
                   width: 150,
                   height: 50,
                   child: Padding(
-                    padding: const EdgeInsets.only(top: 4),
+                    padding: const EdgeInsets.only(top: 2),
                     child: Focus(
                       focusNode: _searchFocusNode,
                       child: TextFormField(
                         controller: searchController,
-
                         decoration: const InputDecoration(
                           border: InputBorder.none,
                           hintText: 'Search Here',
@@ -103,7 +102,7 @@ class _SearchBarProviderState extends State<SearchBarProvider> {
             width: 56,
             decoration: BoxDecoration(
               color: AppColor.whiteColor,
-              borderRadius: BorderRadius.circular(12),
+              borderRadius: BorderRadius.circular(6),
               border: Border.all(
                 color: const Color(0xff1B81BC).withOpacity(0.10),
                 width: 1,
@@ -135,7 +134,7 @@ class _SearchBarProviderState extends State<SearchBarProvider> {
             width: 56,
             decoration: BoxDecoration(
               color: AppColor.whiteColor,
-              borderRadius: BorderRadius.circular(12),
+              borderRadius: BorderRadius.circular(6),
               border: Border.all(
                 color: const Color(0xff1B81BC).withOpacity(0.10),
                 width: 1,
@@ -202,11 +201,10 @@ class _SearchBarProviderState extends State<SearchBarProvider> {
                                     ),
                                   ),
                                 ),
-                               const  Icon(
+                                const Icon(
                                   Icons.expand_more_outlined,
                                   color: AppColor.blackColor,
                                   size: 16,
-
                                 ),
                               ],
                             ),
