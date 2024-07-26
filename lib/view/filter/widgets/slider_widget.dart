@@ -24,7 +24,7 @@ class _PriceRangeSliderState extends State<PriceRangeSlider> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            'Price Range: \$${_values.start.toInt()} - \$${_values.end.toInt()}',
+            'Hourly Rate: \$${_values.start.toInt()} - \$${_values.end.toInt()}',
             style: const TextStyle(
               fontFamily: 'CenturyGothic',
               fontSize: 18,

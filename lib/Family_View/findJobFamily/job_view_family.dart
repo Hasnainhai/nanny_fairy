@@ -26,17 +26,17 @@ class _JobViewFamilyState extends State<JobViewFamily> {
               clipBehavior: Clip.none,
               children: [
                 Container(
-                    height: 150,
-                    width: double.infinity,
-                    decoration: const BoxDecoration(
-                      color: AppColor.primaryColor,
-                      borderRadius: BorderRadius.only(
-                        bottomLeft: Radius.circular(20),
-                        bottomRight: Radius.circular(20),
-                      ),
+                  height: 150,
+                  width: double.infinity,
+                  decoration: const BoxDecoration(
+                    color: AppColor.primaryColor,
+                    borderRadius: BorderRadius.only(
+                      bottomLeft: Radius.circular(20),
+                      bottomRight: Radius.circular(20),
                     ),
-                    child: Center(
-                        child: Row(
+                  ),
+                  child: Center(
+                    child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Text(
@@ -51,7 +51,9 @@ class _JobViewFamilyState extends State<JobViewFamily> {
                           ),
                         ),
                       ],
-                    ))),
+                    ),
+                  ),
+                ),
                 Positioned(
                   top: 125, // Adjust this value as needed
                   left: (MediaQuery.of(context).size.width - 320) /

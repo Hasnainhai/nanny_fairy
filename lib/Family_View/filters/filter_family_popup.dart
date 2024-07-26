@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:nanny_fairy/res/components/rounded_button.dart';
 import '../../res/components/colors.dart';
 import '../../res/components/widgets/vertical_spacing.dart';
 import '../../view/filter/widgets/slider_widget.dart';
@@ -28,6 +29,7 @@ class _FilterPopUpFamilyState extends State<FilterPopUpFamily> {
   bool button14 = true;
   bool button15 = false;
   bool button16 = false;
+  bool button17 = false;
 
   @override
   Widget build(BuildContext context) {
@@ -35,27 +37,79 @@ class _FilterPopUpFamilyState extends State<FilterPopUpFamily> {
       backgroundColor: AppColor.secondaryBgColor,
       child: ListView(
         children: [
+          Container(
+            height: 116,
+            width: double.infinity,
+            color: AppColor.primaryColor,
+            child: Center(
+              child: Padding(
+                padding: const EdgeInsets.only(left: 16.0, right: 16.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    IconButton(
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
+                      icon: const Icon(
+                        Icons.close,
+                        color: AppColor.whiteColor,
+                      ),
+                    ),
+                    const Text(
+                      "Filters",
+                      style: TextStyle(
+                        fontFamily: 'CenturyGothic',
+                        fontSize: 18,
+                        fontWeight: FontWeight.w400,
+                        color: AppColor.whiteColor,
+                      ),
+                    ),
+                    InkWell(
+                      onTap: () {
+                        setState(() {});
+                        button1 = false;
+                        button2 = false;
+                        button3 = false;
+                        button4 = false;
+                        button5 = false;
+                        button6 = false;
+                        button7 = false;
+                        button8 = false;
+                        button9 = false;
+                        button10 = false;
+                        button11 = false;
+                        button12 = false;
+                        button13 = false;
+                        button14 = false;
+                        button15 = false;
+                        button16 = false;
+                        button17 = false;
+                      },
+                      child: const Text(
+                        "Reset",
+                        style: TextStyle(
+                          fontFamily: 'CenturyGothic',
+                          fontSize: 18,
+                          fontWeight: FontWeight.w400,
+                          color: AppColor.whiteColor,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ),
           Padding(
             padding: const EdgeInsets.only(
               left: 20,
               right: 20,
-              top: 16.0,
             ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const Center(
-                  child: Text(
-                    "Filters",
-                    style: TextStyle(
-                      fontFamily: 'CenturyGothic',
-                      fontSize: 18,
-                      fontWeight: FontWeight.w400,
-                      color: AppColor.blackColor,
-                    ),
-                  ),
-                ),
-                const VerticalSpeacing(60),
+                const VerticalSpeacing(38),
                 const PriceRangeSlider(),
                 const VerticalSpeacing(16),
                 const Text(
@@ -71,95 +125,32 @@ class _FilterPopUpFamilyState extends State<FilterPopUpFamily> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    InkWell(
+                    FilterButton(
+                      label: "Cleaning",
+                      isSelected: button1,
                       onTap: () {
                         setState(() {
                           button1 = !button1;
                         });
                       },
-                      child: Container(
-                        height: 45,
-                        width: 100,
-                        decoration: BoxDecoration(
-                          color: button1
-                              ? AppColor.primaryColor
-                              : Colors.transparent,
-                          border: Border.all(color: AppColor.primaryColor),
-                        ),
-                        child: Center(
-                          child: Text(
-                            "Cleaning",
-                            style: TextStyle(
-                              fontFamily: 'CenturyGothic',
-                              fontSize: 12,
-                              fontWeight: FontWeight.w400,
-                              color: button1
-                                  ? AppColor.whiteColor
-                                  : AppColor.blackColor,
-                            ),
-                          ),
-                        ),
-                      ),
                     ),
-                    InkWell(
+                    FilterButton(
+                      label: "Home",
+                      isSelected: button2,
                       onTap: () {
                         setState(() {
                           button2 = !button2;
                         });
                       },
-                      child: Container(
-                        height: 45,
-                        width: 100,
-                        decoration: BoxDecoration(
-                          color: button2
-                              ? AppColor.primaryColor
-                              : Colors.transparent,
-                          border: Border.all(color: AppColor.primaryColor),
-                        ),
-                        child: Center(
-                          child: Text(
-                            "Home",
-                            style: TextStyle(
-                              fontFamily: 'CenturyGothic',
-                              fontSize: 14,
-                              fontWeight: FontWeight.w400,
-                              color: button2
-                                  ? AppColor.whiteColor
-                                  : AppColor.blackColor,
-                            ),
-                          ),
-                        ),
-                      ),
                     ),
-                    InkWell(
+                    FilterButton(
+                      label: "Children Care",
+                      isSelected: button3,
                       onTap: () {
                         setState(() {
                           button3 = !button3;
                         });
                       },
-                      child: Container(
-                        height: 45,
-                        width: 100,
-                        decoration: BoxDecoration(
-                          color: button3
-                              ? AppColor.primaryColor
-                              : Colors.transparent,
-                          border: Border.all(color: AppColor.primaryColor),
-                        ),
-                        child: Center(
-                          child: Text(
-                            "Children Care",
-                            style: TextStyle(
-                              fontFamily: 'CenturyGothic',
-                              fontSize: 14,
-                              fontWeight: FontWeight.w400,
-                              color: button3
-                                  ? AppColor.whiteColor
-                                  : AppColor.blackColor,
-                            ),
-                          ),
-                        ),
-                      ),
                     ),
                   ],
                 ),
@@ -169,127 +160,44 @@ class _FilterPopUpFamilyState extends State<FilterPopUpFamily> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    InkWell(
+                    FilterButton(
+                      label: "Music Lesson",
+                      isSelected: button4,
                       onTap: () {
                         setState(() {
                           button4 = !button4;
                         });
                       },
-                      child: Container(
-                        height: 45,
-                        width: 100,
-                        decoration: BoxDecoration(
-                          color: button4
-                              ? AppColor.primaryColor
-                              : Colors.transparent,
-                          border: Border.all(color: AppColor.primaryColor),
-                        ),
-                        child: Center(
-                          child: Text(
-                            "music lesson",
-                            style: TextStyle(
-                              fontFamily: 'CenturyGothic',
-                              fontSize: 12,
-                              fontWeight: FontWeight.w400,
-                              color: button4
-                                  ? AppColor.whiteColor
-                                  : AppColor.blackColor,
-                            ),
-                          ),
-                        ),
-                      ),
                     ),
-                    InkWell(
+                    FilterButton(
+                      label: "House Setting",
+                      isSelected: button5,
                       onTap: () {
                         setState(() {
                           button5 = !button5;
                         });
                       },
-                      child: Container(
-                        height: 45,
-                        width: 100,
-                        decoration: BoxDecoration(
-                          color: button5
-                              ? AppColor.primaryColor
-                              : Colors.transparent,
-                          border: Border.all(color: AppColor.primaryColor),
-                        ),
-                        child: Center(
-                          child: Text(
-                            "house setting",
-                            style: TextStyle(
-                              fontFamily: 'CenturyGothic',
-                              fontSize: 14,
-                              fontWeight: FontWeight.w400,
-                              color: button5
-                                  ? AppColor.whiteColor
-                                  : AppColor.blackColor,
-                            ),
-                          ),
-                        ),
-                      ),
                     ),
-                    InkWell(
+                    FilterButton(
+                      label: "Elderly Care",
+                      isSelected: button6,
                       onTap: () {
                         setState(() {
                           button6 = !button6;
                         });
                       },
-                      child: Container(
-                        height: 45,
-                        width: 100,
-                        decoration: BoxDecoration(
-                          color: button6
-                              ? AppColor.primaryColor
-                              : Colors.transparent,
-                          border: Border.all(color: AppColor.primaryColor),
-                        ),
-                        child: Center(
-                          child: Text(
-                            "Elderly care ",
-                            style: TextStyle(
-                              fontFamily: 'CenturyGothic',
-                              fontSize: 14,
-                              fontWeight: FontWeight.w400,
-                              color: button6
-                                  ? AppColor.whiteColor
-                                  : AppColor.blackColor,
-                            ),
-                          ),
-                        ),
-                      ),
                     ),
                   ],
                 ),
                 const VerticalSpeacing(14),
-                InkWell(
+                FilterButton(
+                  label: "Pet Care",
+                  isSelected: button7,
                   onTap: () {
                     setState(() {
                       button7 = !button7;
                     });
                   },
-                  child: Container(
-                    height: 45,
-                    width: 100,
-                    decoration: BoxDecoration(
-                      color:
-                          button7 ? AppColor.primaryColor : Colors.transparent,
-                      border: Border.all(color: AppColor.primaryColor),
-                    ),
-                    child: Center(
-                      child: Text(
-                        "Pet care",
-                        style: TextStyle(
-                          fontFamily: 'CenturyGothic',
-                          fontSize: 14,
-                          fontWeight: FontWeight.w400,
-                          color: button7
-                              ? AppColor.whiteColor
-                              : AppColor.blackColor,
-                        ),
-                      ),
-                    ),
-                  ),
                 ),
                 const VerticalSpeacing(16),
                 const Text(
@@ -305,95 +213,32 @@ class _FilterPopUpFamilyState extends State<FilterPopUpFamily> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    InkWell(
+                    FilterButton(
+                      label: "2KM",
+                      isSelected: button10,
                       onTap: () {
                         setState(() {
                           button10 = !button10;
                         });
                       },
-                      child: Container(
-                        height: 45,
-                        width: 100,
-                        decoration: BoxDecoration(
-                          color: button10
-                              ? AppColor.primaryColor
-                              : Colors.transparent,
-                          border: Border.all(color: AppColor.primaryColor),
-                        ),
-                        child: Center(
-                          child: Text(
-                            "2KM",
-                            style: TextStyle(
-                              fontFamily: 'CenturyGothic',
-                              fontSize: 12,
-                              fontWeight: FontWeight.w400,
-                              color: button10
-                                  ? AppColor.whiteColor
-                                  : AppColor.blackColor,
-                            ),
-                          ),
-                        ),
-                      ),
                     ),
-                    InkWell(
+                    FilterButton(
+                      label: "4KM",
+                      isSelected: button8,
                       onTap: () {
                         setState(() {
                           button8 = !button8;
                         });
                       },
-                      child: Container(
-                        height: 45,
-                        width: 100,
-                        decoration: BoxDecoration(
-                          color: button8
-                              ? AppColor.primaryColor
-                              : Colors.transparent,
-                          border: Border.all(color: AppColor.primaryColor),
-                        ),
-                        child: Center(
-                          child: Text(
-                            "4KM",
-                            style: TextStyle(
-                              fontFamily: 'CenturyGothic',
-                              fontSize: 14,
-                              fontWeight: FontWeight.w400,
-                              color: button8
-                                  ? AppColor.whiteColor
-                                  : AppColor.blackColor,
-                            ),
-                          ),
-                        ),
-                      ),
                     ),
-                    InkWell(
+                    FilterButton(
+                      label: "8KM",
+                      isSelected: button9,
                       onTap: () {
                         setState(() {
                           button9 = !button9;
                         });
                       },
-                      child: Container(
-                        height: 45,
-                        width: 100,
-                        decoration: BoxDecoration(
-                          color: button9
-                              ? AppColor.primaryColor
-                              : Colors.transparent,
-                          border: Border.all(color: AppColor.primaryColor),
-                        ),
-                        child: Center(
-                          child: Text(
-                            "8KM",
-                            style: TextStyle(
-                              fontFamily: 'CenturyGothic',
-                              fontSize: 14,
-                              fontWeight: FontWeight.w400,
-                              color: button9
-                                  ? AppColor.whiteColor
-                                  : AppColor.blackColor,
-                            ),
-                          ),
-                        ),
-                      ),
                     ),
                   ],
                 ),
@@ -414,97 +259,77 @@ class _FilterPopUpFamilyState extends State<FilterPopUpFamily> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    InkWell(
+                    FilterButton(
+                      label: "M",
+                      isSelected: button11,
                       onTap: () {
                         setState(() {
                           button11 = !button11;
                         });
                       },
-                      child: Container(
-                        height: 45,
-                        width: 100,
-                        decoration: BoxDecoration(
-                          color: button11
-                              ? AppColor.primaryColor
-                              : Colors.transparent,
-                          border: Border.all(color: AppColor.primaryColor),
-                        ),
-                        child: Center(
-                          child: Text(
-                            "W",
-                            style: TextStyle(
-                              fontFamily: 'CenturyGothic',
-                              fontSize: 12,
-                              fontWeight: FontWeight.w400,
-                              color: button11
-                                  ? AppColor.whiteColor
-                                  : AppColor.blackColor,
-                            ),
-                          ),
-                        ),
-                      ),
                     ),
-                    InkWell(
+                    FilterButton(
+                      label: "T",
+                      isSelected: button12,
                       onTap: () {
                         setState(() {
                           button12 = !button12;
                         });
                       },
-                      child: Container(
-                        height: 45,
-                        width: 100,
-                        decoration: BoxDecoration(
-                          color: button12
-                              ? AppColor.primaryColor
-                              : Colors.transparent,
-                          border: Border.all(color: AppColor.primaryColor),
-                        ),
-                        child: Center(
-                          child: Text(
-                            "M",
-                            style: TextStyle(
-                              fontFamily: 'CenturyGothic',
-                              fontSize: 14,
-                              fontWeight: FontWeight.w400,
-                              color: button12
-                                  ? AppColor.whiteColor
-                                  : AppColor.blackColor,
-                            ),
-                          ),
-                        ),
-                      ),
                     ),
-                    InkWell(
+                    FilterButton(
+                      label: "W",
+                      isSelected: button13,
                       onTap: () {
                         setState(() {
                           button13 = !button13;
                         });
                       },
-                      child: Container(
-                        height: 45,
-                        width: 100,
-                        decoration: BoxDecoration(
-                          color: button13
-                              ? AppColor.primaryColor
-                              : Colors.transparent,
-                          border: Border.all(color: AppColor.primaryColor),
-                        ),
-                        child: Center(
-                          child: Text(
-                            "T",
-                            style: TextStyle(
-                              fontFamily: 'CenturyGothic',
-                              fontSize: 14,
-                              fontWeight: FontWeight.w400,
-                              color: button13
-                                  ? AppColor.whiteColor
-                                  : AppColor.blackColor,
-                            ),
-                          ),
-                        ),
-                      ),
                     ),
                   ],
+                ),
+                const VerticalSpeacing(16),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    FilterButton(
+                      label: "T",
+                      isSelected: button14,
+                      onTap: () {
+                        setState(() {
+                          button14 = !button14;
+                        });
+                      },
+                    ),
+                    FilterButton(
+                      label: "F",
+                      isSelected: button15,
+                      onTap: () {
+                        setState(() {
+                          button15 = !button15;
+                        });
+                      },
+                    ),
+                    FilterButton(
+                      label: "S",
+                      isSelected: button16,
+                      onTap: () {
+                        setState(() {
+                          button16 = !button16;
+                        });
+                      },
+                    ),
+                  ],
+                ),
+                const VerticalSpeacing(16.0),
+                FilterButton(
+                  label: "S",
+                  isSelected: button17,
+                  onTap: () {
+                    setState(() {
+                      button17 = !button17;
+                    });
+                  },
                 ),
                 const VerticalSpeacing(
                   30,
@@ -536,64 +361,56 @@ class _FilterPopUpFamilyState extends State<FilterPopUpFamily> {
                 const VerticalSpeacing(
                   50,
                 ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    InkWell(
-                      onTap: () {
-                        Navigator.pop(context);
-                      },
-                      child: Container(
-                        height: 56,
-                        width: MediaQuery.of(context).size.width / 2 - 25,
-                        decoration: BoxDecoration(
-                          color: Colors.transparent,
-                          border: Border.all(
-                            color: AppColor.primaryColor,
-                          ),
-                        ),
-                        child: const Center(
-                          child: Text(
-                            "Clear Filter",
-                            style: TextStyle(
-                              color: AppColor.blackColor,
-                              fontWeight: FontWeight.w600,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                    InkWell(
-                      onTap: () {
-                        Navigator.pop(context);
-                      },
-                      child: Container(
-                        height: 56,
-                        width: MediaQuery.of(context).size.width / 2 - 25,
-                        decoration: BoxDecoration(
-                          color: AppColor.primaryColor,
-                          border: Border.all(
-                            color: AppColor.primaryColor,
-                          ),
-                        ),
-                        child: const Center(
-                          child: Text(
-                            "Apply Filter",
-                            style: TextStyle(
-                              color: AppColor.whiteColor,
-                              fontWeight: FontWeight.w600,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
+                RoundedButton(
+                    title: 'Apply Filters',
+                    onpress: () {
+                      Navigator.pop(context);
+                    }),
                 const SizedBox(height: 40.0),
               ],
             ),
           ),
         ],
+      ),
+    );
+  }
+}
+
+class FilterButton extends StatelessWidget {
+  final String label;
+  final bool isSelected;
+  final VoidCallback onTap;
+
+  const FilterButton({
+    required this.label,
+    required this.isSelected,
+    required this.onTap,
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return InkWell(
+      onTap: onTap,
+      child: Container(
+        height: 45,
+        width: 100,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(6),
+          color: isSelected ? AppColor.primaryColor : Colors.transparent,
+          border: Border.all(color: AppColor.borderColor, width: 1),
+        ),
+        child: Center(
+          child: Text(
+            label,
+            style: TextStyle(
+              fontFamily: 'CenturyGothic',
+              fontSize: 14,
+              fontWeight: FontWeight.w400,
+              color: isSelected ? AppColor.whiteColor : AppColor.blackColor,
+            ),
+          ),
+        ),
       ),
     );
   }
