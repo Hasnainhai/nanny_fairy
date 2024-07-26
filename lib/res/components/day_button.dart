@@ -1,6 +1,7 @@
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:nanny_fairy/res/components/colors.dart';
 
 class DayButton extends StatefulWidget {
   final String day;
@@ -41,9 +42,9 @@ class _DayButtonState extends State<DayButton> {
         height: 23,
         width: 22,
         decoration: BoxDecoration(
-          color: _isSelected ? Colors.blue : Colors.transparent,
+          color: _isSelected ? AppColor.primaryColor : AppColor.secondaryBgColor,
           borderRadius: BorderRadius.circular(6),
-          border: Border.all(color: _isSelected ? Colors.blue : Colors.grey),
+          border: Border.all(color: _isSelected ?  AppColor.blackColor:  AppColor.blackColor,width: 0.5),
         ),
         // padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 10),
         child: Center(

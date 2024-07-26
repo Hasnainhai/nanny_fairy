@@ -27,7 +27,7 @@ class _ToggleRadioButtonState extends State<ToggleRadioButton> {
       width: double.infinity,
       decoration: BoxDecoration(
         color: isSelected ? AppColor.primaryColor : AppColor.whiteColor,
-        borderRadius: BorderRadius.circular(12),
+        borderRadius: BorderRadius.circular(6),
         border: Border.all(
           strokeAlign: BorderSide.strokeAlignCenter,
           color: const Color(0xff1B81BC)

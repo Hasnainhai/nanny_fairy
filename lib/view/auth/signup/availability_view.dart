@@ -441,6 +441,7 @@ class _AvailabilityViewState extends State<AvailabilityView> {
                       Navigator.pushNamed(
                           context, RoutesName.educationHorlyView);
                     }),
+                const VerticalSpeacing(40.0),
               ],
             ),
           ),
@@ -450,28 +451,43 @@ class _AvailabilityViewState extends State<AvailabilityView> {
   }
 }
 
-class TimingContainer extends StatelessWidget {
+class TimingContainer extends StatefulWidget {
   const TimingContainer({super.key, required this.time});
   final String time;
 
   @override
+  _TimingContainerState createState() => _TimingContainerState();
+}
+
+class _TimingContainerState extends State<TimingContainer> {
+  bool _isSelected = false;
+
+  @override
   Widget build(BuildContext context) {
-    return Container(
-      height: 20,
-      width: 67,
-      decoration: BoxDecoration(
-        border: Border.all(width: 0.5, color: AppColor.blackColor),
-        borderRadius: BorderRadius.circular(8),
-      ),
-      child: Center(
-        child: Text(
-          time,
-          style: GoogleFonts.getFont(
-            "Poppins",
-            textStyle: const TextStyle(
-              fontSize: 10,
-              fontWeight: FontWeight.w400,
-              color: AppColor.blackColor,
+    return GestureDetector(
+      onTap: () {
+        setState(() {
+          _isSelected = !_isSelected;
+        });
+      },
+      child: Container(
+        height: 20,
+        width: 67,
+        decoration: BoxDecoration(
+          color: _isSelected ? AppColor.primaryColor : Colors.white,
+          border: Border.all(width: 0.5, color: AppColor.blackColor),
+          borderRadius: BorderRadius.circular(8),
+        ),
+        child: Center(
+          child: Text(
+            widget.time,
+            style: GoogleFonts.getFont(
+              "Poppins",
+              textStyle: TextStyle(
+                fontSize: 10,
+                fontWeight: FontWeight.w400,
+                color: _isSelected ? AppColor.whiteColor : AppColor.blackColor,
+              ),
             ),
           ),
         ),
@@ -550,9 +566,9 @@ class AvailabilityCheckBox extends StatelessWidget {
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 4),
       decoration: BoxDecoration(
-        color: isAvailable ? Colors.blue : Colors.transparent,
-        borderRadius: BorderRadius.circular(8),
-        border: Border.all(color: Colors.grey),
+        color: isAvailable ? AppColor.primaryColor : Colors.transparent,
+        borderRadius: BorderRadius.circular(6),
+        border: Border.all(color: AppColor.blackColor, width: 0.5),
       ),
       height: 23,
       width: 22,
