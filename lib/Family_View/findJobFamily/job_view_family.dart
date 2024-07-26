@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:nanny_fairy/Family_View/bookFamily/widgets/book_cart_widget_family.dart';
+import 'package:nanny_fairy/Family_View/homeFamily/widgets/bookCart_home_widget.dart';
 import 'package:nanny_fairy/res/components/searchBar.dart';
 import 'package:nanny_fairy/res/components/widgets/vertical_spacing.dart';
 import 'package:nanny_fairy/utils/routes/routes_name.dart';
@@ -76,35 +77,35 @@ class _JobViewFamilyState extends State<JobViewFamily> {
                   padding: const EdgeInsets.only(left: 16.0, right: 16.0),
                   child: Column(
                     children: [
-                      BookingCartWidgetFamily(
+                      BookingCartWidgetHome(
                           primaryButtonColor: AppColor.primaryColor,
                           ontapView: () {
                             Navigator.pushNamed(
                                 context, RoutesName.providerDetails);
                           },
                           primaryButtonTxt: 'View'),
-                      BookingCartWidgetFamily(
+                      BookingCartWidgetHome(
                           primaryButtonColor: AppColor.primaryColor,
                           ontapView: () {
                             Navigator.pushNamed(
                                 context, RoutesName.providerDetails);
                           },
                           primaryButtonTxt: 'View'),
-                      BookingCartWidgetFamily(
+                      BookingCartWidgetHome(
                           primaryButtonColor: AppColor.primaryColor,
                           ontapView: () {
                             Navigator.pushNamed(
                                 context, RoutesName.providerDetails);
                           },
                           primaryButtonTxt: 'View'),
-                      BookingCartWidgetFamily(
+                      BookingCartWidgetHome(
                           primaryButtonColor: AppColor.primaryColor,
                           ontapView: () {
                             Navigator.pushNamed(
                                 context, RoutesName.providerDetails);
                           },
                           primaryButtonTxt: 'View'),
-                      BookingCartWidgetFamily(
+                      BookingCartWidgetHome(
                           primaryButtonColor: AppColor.primaryColor,
                           ontapView: () {
                             Navigator.pushNamed(
