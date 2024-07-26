@@ -171,7 +171,7 @@ class _BookingCartWidgetState extends State<BookingCartWidget> {
                             vertical: 6, horizontal: 12),
                         child: Center(
                           child: Text(
-                            'View',
+                            'Completed',
                             style: GoogleFonts.getFont(
                               "Poppins",
                               textStyle: const TextStyle(

@@ -11,16 +11,17 @@ class SearchBarProvider extends StatefulWidget {
 }
 
 class _SearchBarProviderState extends State<SearchBarProvider> {
-  String selectedKM = '2KM';
+  String selectedKM = '2';
   final List<String> kM = [
-    '2KM',
-    '4KM',
-    '8KM',
-    '12KM',
+    '2',
+    '4',
+    '8',
+    '12',
   ];
 
   final FocusNode _searchFocusNode = FocusNode();
   final FocusNode _dropdownFocusNode = FocusNode();
+  final TextEditingController searchController = TextEditingController();
 
   @override
   void initState() {
@@ -76,9 +77,11 @@ class _SearchBarProviderState extends State<SearchBarProvider> {
                     child: Focus(
                       focusNode: _searchFocusNode,
                       child: TextFormField(
+                        controller: searchController,
+
                         decoration: const InputDecoration(
                           border: InputBorder.none,
-                          hintText: 'Search',
+                          hintText: 'Search Here',
                           prefixIcon: Icon(
                             Icons.search,
                             color: AppColor.blackColor,
@@ -152,10 +155,7 @@ class _SearchBarProviderState extends State<SearchBarProvider> {
                 child: DropdownButtonHideUnderline(
                   child: DropdownButton<String>(
                     value: selectedKM,
-                    icon: const Icon(
-                      Icons.expand_more_outlined,
-                      color: AppColor.primaryColor,
-                    ),
+                    icon: const SizedBox.shrink(), // Remove default icon
                     style: GoogleFonts.getFont(
                       "Poppins",
                       textStyle: const TextStyle(
@@ -174,7 +174,44 @@ class _SearchBarProviderState extends State<SearchBarProvider> {
                     items: kM.map<DropdownMenuItem<String>>((String value) {
                       return DropdownMenuItem<String>(
                         value: value,
-                        child: Text(value),
+                        child: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Text(
+                              value.split(" ")[0],
+                              style: GoogleFonts.getFont(
+                                "Poppins",
+                                textStyle: const TextStyle(
+                                  fontSize: 12,
+                                  fontWeight: FontWeight.w600,
+                                  color: AppColor.blackColor,
+                                ),
+                              ),
+                            ),
+                            Row(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                Text(
+                                  "KM",
+                                  style: GoogleFonts.getFont(
+                                    "Poppins",
+                                    textStyle: const TextStyle(
+                                      fontSize: 12,
+                                      fontWeight: FontWeight.w400,
+                                      color: AppColor.blackColor,
+                                    ),
+                                  ),
+                                ),
+                               const  Icon(
+                                  Icons.expand_more_outlined,
+                                  color: AppColor.blackColor,
+                                  size: 16,
+
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
                       );
                     }).toList(),
                   ),

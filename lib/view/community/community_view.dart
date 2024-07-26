@@ -20,7 +20,7 @@ class _CommunityViewState extends State<CommunityView> {
       child: Scaffold(
         backgroundColor: AppColor.secondaryBgColor,
         appBar: AppBar(
-          backgroundColor: Colors.transparent,
+          backgroundColor: AppColor.primaryColor,
           elevation: 0.0,
           automaticallyImplyLeading: false,
           title: Text(
@@ -30,7 +30,7 @@ class _CommunityViewState extends State<CommunityView> {
               textStyle: const TextStyle(
                 fontSize: 18,
                 fontWeight: FontWeight.w400,
-                color: AppColor.blackColor,
+                color: AppColor.whiteColor,
               ),
             ),
           ),
@@ -45,7 +45,10 @@ class _CommunityViewState extends State<CommunityView> {
                 child: Container(
                   height: 31,
                   width: 97,
-                  color: AppColor.primaryColor,
+                  decoration: BoxDecoration(
+                    color: AppColor.whiteColor,
+                    borderRadius: BorderRadius.circular(4),
+                  ),
                   child: Center(
                     child: Text(
                       'Upload Post',
@@ -54,7 +57,7 @@ class _CommunityViewState extends State<CommunityView> {
                         textStyle: const TextStyle(
                           fontSize: 12,
                           fontWeight: FontWeight.w400,
-                          color: AppColor.whiteColor,
+                          color: AppColor.primaryColor,
                         ),
                       ),
                     ),
@@ -64,9 +67,9 @@ class _CommunityViewState extends State<CommunityView> {
             ),
           ],
           bottom: const TabBar(
-            indicatorColor: AppColor.primaryColor,
-            labelColor: AppColor.primaryColor,
-            unselectedLabelColor: AppColor.blackColor,
+            indicatorColor: AppColor.avatarColor,
+            labelColor: AppColor.avatarColor,
+            unselectedLabelColor: AppColor.whiteColor,
             tabs: [
               Tab(text: 'Topics'),
               Tab(text: 'My Posts'),
