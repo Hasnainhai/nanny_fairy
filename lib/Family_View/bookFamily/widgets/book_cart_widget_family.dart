@@ -3,11 +3,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:nanny_fairy/res/components/rounded_button.dart';
 import 'package:nanny_fairy/res/components/widgets/vertical_spacing.dart';
 import 'package:nanny_fairy/utils/routes/routes_name.dart';
-import 'package:nanny_fairy/view/booked/widgets/booking_widget.dart';
-import 'package:nanny_fairy/view/home/widgets/home_feature_widget.dart';
 import '../../../res/components/colors.dart';
-import '../../../res/components/day_button.dart';
-import '../../../res/components/widgets/card_button.dart';
 
 class BookingCartWidgetFamily extends StatefulWidget {
   const BookingCartWidgetFamily(
@@ -101,6 +97,7 @@ class _BookingCartWidgetFamilyState extends State<BookingCartWidgetFamily> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
+                const SizedBox(width: 10),
                 Container(
                   height: 79,
                   width: 79,
@@ -222,28 +219,25 @@ class _BookingCartWidgetFamilyState extends State<BookingCartWidgetFamily> {
                     ),
                   ],
                 ),
-                const SizedBox(width: 30),
                 InkWell(
                   onTap: () {
                     widget.ontapView();
                   },
                   child: Container(
-                    width: 68,
-                    height: 30,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(32),
                       color: AppColor.primaryColor,
                     ),
                     child: Padding(
                       padding: const EdgeInsets.symmetric(
-                          vertical: 6, horizontal: 12),
+                          vertical: 8, horizontal: 12),
                       child: Center(
                         child: Text(
-                          'View',
+                          widget.primaryButtonTxt,
                           style: GoogleFonts.getFont(
                             "Poppins",
                             textStyle: const TextStyle(
-                              fontSize: 9,
+                              fontSize: 12,
                               fontWeight: FontWeight.w400,
                               color: AppColor.whiteColor,
                             ),
@@ -253,6 +247,7 @@ class _BookingCartWidgetFamilyState extends State<BookingCartWidgetFamily> {
                     ),
                   ),
                 ),
+                const SizedBox(width: 10),
               ],
             ),
             const VerticalSpeacing(10.0),

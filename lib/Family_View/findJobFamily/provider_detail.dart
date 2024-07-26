@@ -21,7 +21,15 @@ class _ProviderDetailsState extends State<ProviderDetails> {
       builder: (BuildContext context) {
         return AlertDialog(
           backgroundColor: AppColor.whiteColor,
-          contentPadding: EdgeInsets.zero, // Remove default padding
+          shape: const RoundedRectangleBorder(
+            borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(12),
+              topRight: Radius.circular(12),
+              bottomRight: Radius.circular(12),
+              bottomLeft: Radius.zero,
+            ),
+          ),
+          contentPadding: EdgeInsets.zero,
           content: Container(
             width: MediaQuery.of(context).size.width *
                 0.8, // Set width to 80% of screen width
