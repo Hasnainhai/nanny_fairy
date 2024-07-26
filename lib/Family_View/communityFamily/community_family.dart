@@ -21,7 +21,7 @@ class _CommunityViewFamilyState extends State<CommunityViewFamily> {
       child: Scaffold(
         backgroundColor: AppColor.secondaryBgColor,
         appBar: AppBar(
-          backgroundColor: Colors.transparent,
+          backgroundColor: AppColor.primaryColor,
           elevation: 0.0,
           automaticallyImplyLeading: false,
           title: Text(
@@ -31,7 +31,7 @@ class _CommunityViewFamilyState extends State<CommunityViewFamily> {
               textStyle: const TextStyle(
                 fontSize: 18,
                 fontWeight: FontWeight.w400,
-                color: AppColor.blackColor,
+                color: AppColor.whiteColor,
               ),
             ),
           ),
@@ -46,7 +46,10 @@ class _CommunityViewFamilyState extends State<CommunityViewFamily> {
                 child: Container(
                   height: 31,
                   width: 97,
-                  color: AppColor.primaryColor,
+                  decoration: BoxDecoration(
+                    color: AppColor.whiteColor,
+                    borderRadius: BorderRadius.circular(4),
+                  ),
                   child: Center(
                     child: Text(
                       'Upload Post',
@@ -55,7 +58,7 @@ class _CommunityViewFamilyState extends State<CommunityViewFamily> {
                         textStyle: const TextStyle(
                           fontSize: 12,
                           fontWeight: FontWeight.w400,
-                          color: AppColor.whiteColor,
+                          color: AppColor.primaryColor,
                         ),
                       ),
                     ),
@@ -65,9 +68,9 @@ class _CommunityViewFamilyState extends State<CommunityViewFamily> {
             ),
           ],
           bottom: const TabBar(
-            indicatorColor: AppColor.primaryColor,
-            labelColor: AppColor.primaryColor,
-            unselectedLabelColor: AppColor.blackColor,
+            indicatorColor: AppColor.avatarColor,
+            labelColor: AppColor.avatarColor,
+            unselectedLabelColor: AppColor.whiteColor,
             tabs: [
               Tab(text: 'Topics'),
               Tab(text: 'My Posts'),
