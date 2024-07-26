@@ -303,7 +303,7 @@ class _FamilyDetailProviderState extends State<FamilyDetailProvider> {
                 ),
               ],
             ),
-            VerticalSpeacing(MediaQuery.of(context).size.height*0.6),
+            VerticalSpeacing(MediaQuery.of(context).size.height*0.57),
             Padding(
               padding: const EdgeInsets.only(left: 32.0,right: 32.0),
               child: RoundedButton(

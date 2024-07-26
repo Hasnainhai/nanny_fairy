@@ -92,14 +92,16 @@ class _BookingCartWidgetState extends State<BookingCartWidget> {
           child: Column(
             children: [
               Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Container(
                     height: 79,
                     width: 79,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(12.0),
-                      image: const  DecorationImage(
-                        image: AssetImage('images/post.png'),fit: BoxFit.fill,
+                      image: const DecorationImage(
+                        image: AssetImage('images/post.png'),
+                        fit: BoxFit.fill,
                       ),
                     ),
                   ),
@@ -143,22 +145,45 @@ class _BookingCartWidgetState extends State<BookingCartWidget> {
                             color: AppColor.avatarColor,
                             onTap: () {},
                           ),
-                          const SizedBox(width: 6),
-                          CardButton(
-                            title: 'Home',
-                            color: AppColor.avatarColor,
-                            onTap: () {},
-                          ),
+                          // const SizedBox(width: 6),
+                          // CardButton(
+                          //   title: 'Home',
+                          //   color: AppColor.avatarColor,
+                          //   onTap: () {},
+                          // ),
                         ],
                       ),
                     ],
                   ),
-                  CardButton(
-                    title: widget.primaryButtonTxt,
-                    color: AppColor.primaryColor,
+                  InkWell(
                     onTap: () {
                       widget.ontapView();
                     },
+                    child: Container(
+                      height: 30,
+                      width: 78,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(32),
+                        color: AppColor.primaryColor,
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(
+                            vertical: 6, horizontal: 12),
+                        child: Center(
+                          child: Text(
+                            'View',
+                            style: GoogleFonts.getFont(
+                              "Poppins",
+                              textStyle: const TextStyle(
+                                fontSize: 9,
+                                fontWeight: FontWeight.w400,
+                                color: AppColor.whiteColor,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
                   ),
                 ],
               ),
