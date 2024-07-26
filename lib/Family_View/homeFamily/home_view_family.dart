@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:nanny_fairy/Family_View/homeFamily/widgets/bookCart_home_widget.dart';
 import 'package:nanny_fairy/Family_View/homeFamily/widgets/home_Family_feature_widget.dart';
 import 'package:nanny_fairy/res/components/colors.dart';
 import 'package:nanny_fairy/res/components/searchBar.dart';
@@ -192,7 +193,7 @@ class _HomeViewFamilyState extends State<HomeViewFamily> {
                       scrollDirection: Axis.vertical,
                       child: Column(
                         children: [
-                          BookingCartWidgetFamily(
+                          BookingCartWidgetHome(
                             primaryButtonColor: AppColor.primaryColor,
                             primaryButtonTxt: 'View',
                             ontapView: () {
@@ -200,7 +201,7 @@ class _HomeViewFamilyState extends State<HomeViewFamily> {
                                   context, RoutesName.providerDetails);
                             },
                           ),
-                          BookingCartWidgetFamily(
+                          BookingCartWidgetHome(
                             primaryButtonColor: AppColor.primaryColor,
                             ontapView: () {
                               Navigator.pushNamed(
@@ -208,7 +209,7 @@ class _HomeViewFamilyState extends State<HomeViewFamily> {
                             },
                             primaryButtonTxt: 'View',
                           ),
-                          BookingCartWidgetFamily(
+                          BookingCartWidgetHome(
                             primaryButtonColor: AppColor.primaryColor,
                             ontapView: () {
                               Navigator.pushNamed(
@@ -216,7 +217,7 @@ class _HomeViewFamilyState extends State<HomeViewFamily> {
                             },
                             primaryButtonTxt: 'View',
                           ),
-                          BookingCartWidgetFamily(
+                          BookingCartWidgetHome(
                             primaryButtonColor: AppColor.primaryColor,
                             ontapView: () {
                               Navigator.pushNamed(
