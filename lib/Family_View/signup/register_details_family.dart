@@ -77,9 +77,9 @@ class _RegisterDetailsFamilyState extends State<RegisterDetailsFamily> {
                     Expanded(child: TextFieldCustom(prefixIcon: Icon(Icons.person_outline),maxLines: 1,hintText: 'Enter last')),
                   ],
                 ),
-                const VerticalSpeacing(16),
+                const VerticalSpeacing(10),
                 const TextFieldCustom(prefixIcon: Icon(Icons.location_on_outlined),maxLines: 1, hintText: 'Enter Address'),
-                const VerticalSpeacing(16),
+                const VerticalSpeacing(10),
                 const Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -88,11 +88,11 @@ class _RegisterDetailsFamilyState extends State<RegisterDetailsFamily> {
                     Expanded(child: TextFieldCustom(prefixIcon: Icon(Icons.lock_outline),maxLines: 1,hintText: 'Post Code')),
                   ],
                 ),
-                const VerticalSpeacing(16),
+                const VerticalSpeacing(10),
                 const TextFieldCustom(prefixIcon: Icon(Icons.phone),maxLines: 1, hintText: 'Enter telephone number'),
-                const VerticalSpeacing(16),
+                const VerticalSpeacing(10),
                 const TextFieldCustom(prefixIcon: Icon(Icons.calendar_month_outlined),maxLines: 1,hintText: 'Date of birth'),
-                const VerticalSpeacing(16),
+                const VerticalSpeacing(10),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.center,

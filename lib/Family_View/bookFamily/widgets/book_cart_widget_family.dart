@@ -32,7 +32,6 @@ class _BookingCartWidgetFamilyState extends State<BookingCartWidgetFamily> {
       builder: (BuildContext context) {
         return AlertDialog(
           backgroundColor: AppColor.whiteColor,
-          shape: const RoundedRectangleBorder(),
           content: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
@@ -224,12 +223,35 @@ class _BookingCartWidgetFamilyState extends State<BookingCartWidgetFamily> {
                   ],
                 ),
                 const SizedBox(width: 30),
-                CardButton(
-                  title: widget.primaryButtonTxt,
-                  color: AppColor.primaryColor,
+                InkWell(
                   onTap: () {
                     widget.ontapView();
                   },
+                  child: Container(
+                    width: 68,
+                    height: 30,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(32),
+                      color: AppColor.primaryColor,
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(
+                          vertical: 6, horizontal: 12),
+                      child: Center(
+                        child: Text(
+                          'View',
+                          style: GoogleFonts.getFont(
+                            "Poppins",
+                            textStyle: const TextStyle(
+                              fontSize: 9,
+                              fontWeight: FontWeight.w400,
+                              color: AppColor.whiteColor,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
                 ),
               ],
             ),
