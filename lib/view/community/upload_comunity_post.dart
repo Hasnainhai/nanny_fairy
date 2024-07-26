@@ -22,8 +22,7 @@ class _UploadComunityPostState extends State<UploadComunityPost> {
       builder: (BuildContext context) {
         return AlertDialog(
           backgroundColor: AppColor.whiteColor,
-          shape: const RoundedRectangleBorder(),
-          icon: const Icon(Icons.check_circle_outlined,
+          icon: const Icon(Icons.check_circle,
               color: AppColor.primaryColor, size: 120),
           title: Text(
             'Congratulation you\nupload your product',
@@ -106,8 +105,7 @@ class _UploadComunityPostState extends State<UploadComunityPost> {
                       width: double.infinity,
                       decoration: const BoxDecoration(
                         image: DecorationImage(
-                          image: NetworkImage(
-                              'https://blog.adoptuskids.org/wp-content/uploads/2019/08/ausk-family-profile-pic-2-620x405.jpg'),
+                          image: AssetImage('images/community.png'),
                           fit: BoxFit.fill,
                         ),
                       ),
