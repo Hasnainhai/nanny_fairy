@@ -186,7 +186,7 @@ class _ProfileViewFamilyState extends State<ProfileViewFamily> {
                   },
                   tColor: const Color(0xffEC4091),
                   bColor: const Color(0xffFF9CCB),
-                  icon: Icons.star_outline,
+                  icon: Icons.star,
                   trIcon: Icons.arrow_forward_ios,
                   title: 'Ratings',
                 ),
