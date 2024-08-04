@@ -50,9 +50,7 @@ class AuthViewModel extends ChangeNotifier {
         context: context,
       );
     } catch (e) {
-      // Handle errors if needed
       debugPrint('Error saving details: ${e.toString()}');
-      // Optionally show an error message
     } finally {
       _setLoading(false);
     }

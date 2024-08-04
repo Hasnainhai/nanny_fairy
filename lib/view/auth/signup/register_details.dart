@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:nanny_fairy/ViewModel/auth_view_model.dart';
 import 'package:nanny_fairy/res/components/rounded_button.dart';
 import 'package:nanny_fairy/res/components/widgets/custom_text_field.dart';
 import 'package:nanny_fairy/res/components/widgets/vertical_spacing.dart';
-import 'package:nanny_fairy/utils/routes/routes_name.dart';
+import 'package:nanny_fairy/utils/utils.dart';
+import 'package:provider/provider.dart';
 import '../../../res/components/colors.dart';
 import '../../../res/components/widgets/rounded_check_box.dart';
 
@@ -52,6 +54,8 @@ class _RegisterDetailsState extends State<RegisterDetails> {
 
   @override
   Widget build(BuildContext context) {
+    final authViewModel = Provider.of<AuthViewModel>(context);
+
     return Scaffold(
       backgroundColor: AppColor.primaryColor,
       appBar: PreferredSize(
@@ -99,52 +103,59 @@ class _RegisterDetailsState extends State<RegisterDetails> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 const VerticalSpeacing(30.0),
-                const Row(
+                Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Expanded(
                         child: TextFieldCustom(
-                            prefixIcon: Icon(Icons.person_outline),
+                            controller: firstNameController,
+                            prefixIcon: const Icon(Icons.person_outline),
                             maxLines: 1,
                             hintText: 'Enter Name')),
-                    SizedBox(width: 12),
+                    const SizedBox(width: 12),
                     Expanded(
                         child: TextFieldCustom(
-                            prefixIcon: Icon(Icons.person_outline),
+                            controller: lastNameController,
+                            prefixIcon: const Icon(Icons.person_outline),
                             maxLines: 1,
                             hintText: 'Enter last')),
                   ],
                 ),
                 const VerticalSpeacing(16),
-                const TextFieldCustom(
-                    prefixIcon: Icon(Icons.location_on_outlined),
+                TextFieldCustom(
+                    controller: addressController,
+                    prefixIcon: const Icon(Icons.location_on_outlined),
                     maxLines: 1,
                     hintText: 'Enter Address'),
                 const VerticalSpeacing(16),
-                const Row(
+                Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Expanded(
                         child: TextFieldCustom(
-                            prefixIcon: Icon(Icons.home_outlined),
+                            controller: houseNumberController,
+                            prefixIcon: const Icon(Icons.home_outlined),
                             maxLines: 1,
                             hintText: 'House Number')),
-                    SizedBox(width: 12),
+                    const SizedBox(width: 12),
                     Expanded(
                         child: TextFieldCustom(
-                            prefixIcon: Icon(Icons.lock_outline),
+                            controller: postCodeController,
+                            prefixIcon: const Icon(Icons.lock_outline),
                             maxLines: 1,
                             hintText: 'Post Code')),
                   ],
                 ),
                 const VerticalSpeacing(16),
-                const TextFieldCustom(
-                    prefixIcon: Icon(Icons.phone),
+                TextFieldCustom(
+                    controller: phoneController,
+                    prefixIcon: const Icon(Icons.phone),
                     maxLines: 1,
                     hintText: 'Enter telephone number'),
                 const VerticalSpeacing(16),
-                const TextFieldCustom(
-                    prefixIcon: Icon(Icons.calendar_month_outlined),
+                TextFieldCustom(
+                    controller: dobController,
+                    prefixIcon: const Icon(Icons.calendar_month_outlined),
                     maxLines: 1,
                     hintText: 'Date of birth'),
                 const VerticalSpeacing(16),
@@ -201,7 +212,20 @@ class _RegisterDetailsState extends State<RegisterDetails> {
                 RoundedButton(
                     title: 'Register',
                     onpress: () {
-                      Navigator.pushNamed(context, RoutesName.selectPassion);
+                      if (isChecked && isChecked2) {
+                        authViewModel.saveDetails(
+                            firstName: firstNameController.text,
+                            lastName: lastNameController.text,
+                            address: addressController.text,
+                            houseNumber: houseNumberController.text,
+                            postCode: postCodeController.text,
+                            phoneNumber: phoneController.text,
+                            dob: dobController.text,
+                            context: context);
+                      } else {
+                        Utils.flushBarErrorMessage(
+                            "Please select terms and Privacy Policy", context);
+                      }
                     }),
                 const VerticalSpeacing(30.0),
               ],

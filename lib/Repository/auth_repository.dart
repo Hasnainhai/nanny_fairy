@@ -6,14 +6,11 @@ import 'package:firebase_database/firebase_database.dart';
 
 class AuthRepository {
   final FirebaseAuth _firebaseAuth;
-  final DatabaseReference _databaseReference;
 
   AuthRepository({
     FirebaseAuth? firebaseAuth,
-    DatabaseReference? databaseReference,
-  })  : _firebaseAuth = firebaseAuth ?? FirebaseAuth.instance,
-        _databaseReference =
-            databaseReference ?? FirebaseDatabase.instance.ref();
+  }) : _firebaseAuth = firebaseAuth ?? FirebaseAuth.instance;
+  var databaseReference = FirebaseDatabase.instance.ref();
 
   Future<void> createAccount({
     required String email,
@@ -40,7 +37,11 @@ class AuthRepository {
       Navigator.of(context).pop();
       // Show success message or navigate to another screen
       Utils.toastMessage('Account created successfully!');
-      Navigator.pushNamed(context, RoutesName.registerDetails);
+      Navigator.pushNamedAndRemoveUntil(
+        context,
+        RoutesName.registerDetails,
+        (route) => false,
+      );
     } on FirebaseAuthException catch (e) {
       // Remove the loading indicator
       Navigator.of(context).pop();
@@ -73,7 +74,8 @@ class AuthRepository {
         phoneNumber.isEmpty ||
         dob.isEmpty) {
       // Show a toast message
-      Utils.toastMessage('Please fill in all fields');
+      Utils.flushBarErrorMessage("Please fill in all fields", context);
+
       return;
     }
 
@@ -95,7 +97,7 @@ class AuthRepository {
         throw Exception('User not authenticated');
       }
 
-      final userRef = _databaseReference.child('Providers').child(userId);
+      final userRef = databaseReference.child('Providers').child(userId);
 
       await userRef.set({
         'firstName': firstName,
@@ -112,12 +114,17 @@ class AuthRepository {
 
       // Show success message
       Utils.toastMessage('Details saved successfully!');
+      Navigator.pushNamedAndRemoveUntil(
+        context,
+        RoutesName.selectPassion,
+        (route) => false,
+      );
     } catch (e) {
       // Remove the loading indicator
       Navigator.of(context).pop();
-
+      Utils.flushBarErrorMessage("Failed to save details", context);
+      debugPrint(e.toString());
       // Show error message
-      Utils.toastMessage('Failed to save details: ${e.toString()}');
     }
   }
 }
