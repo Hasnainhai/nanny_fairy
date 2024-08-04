@@ -17,7 +17,7 @@ class RegisterDetails extends StatefulWidget {
 class _RegisterDetailsState extends State<RegisterDetails> {
   bool isChecked = false;
   bool isChecked2 = false;
-
+  TextEditingController firstNameController = TextEditingController();
   void _handleCheckboxChanged(bool? value) {
     setState(() {
       isChecked = value ?? false;
