@@ -18,6 +18,14 @@ class _RegisterDetailsState extends State<RegisterDetails> {
   bool isChecked = false;
   bool isChecked2 = false;
   TextEditingController firstNameController = TextEditingController();
+  TextEditingController lastNameController = TextEditingController();
+  TextEditingController addressController = TextEditingController();
+  TextEditingController houseNumberController = TextEditingController();
+  TextEditingController postCodeController = TextEditingController();
+
+  TextEditingController phoneController = TextEditingController();
+  TextEditingController dobController = TextEditingController();
+
   void _handleCheckboxChanged(bool? value) {
     setState(() {
       isChecked = value ?? false;
@@ -28,6 +36,18 @@ class _RegisterDetailsState extends State<RegisterDetails> {
     setState(() {
       isChecked2 = value ?? false;
     });
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    firstNameController.dispose();
+    lastNameController.dispose();
+    addressController.dispose();
+    houseNumberController.dispose();
+    postCodeController.dispose();
+    phoneController.dispose();
+    dobController.dispose();
   }
 
   @override
