@@ -56,6 +56,23 @@ class AuthViewModel extends ChangeNotifier {
     }
   }
 
+  Future<void> savePassion({
+    required List<String> passionList,
+    required BuildContext context,
+  }) async {
+    _setLoading(true);
+    try {
+      await _authRepository.savePassion(
+        passionList,
+        context,
+      );
+    } catch (e) {
+      debugPrint('Error saving details: ${e.toString()}');
+    } finally {
+      _setLoading(false);
+    }
+  }
+
   void _setLoading(bool value) {
     _isLoading = value;
     notifyListeners();
