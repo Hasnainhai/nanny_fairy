@@ -6,8 +6,26 @@ import 'package:nanny_fairy/res/components/widgets/vertical_spacing.dart';
 import 'package:nanny_fairy/utils/routes/routes_name.dart';
 import '../../../res/components/colors.dart';
 
-class CreateAccount extends StatelessWidget {
-  const CreateAccount({super.key});
+class CreateAccount extends StatefulWidget {
+  CreateAccount({super.key});
+
+  @override
+  State<CreateAccount> createState() => _CreateAccountState();
+}
+
+class _CreateAccountState extends State<CreateAccount> {
+  TextEditingController passwordController = TextEditingController();
+
+  TextEditingController emailController = TextEditingController();
+
+  TextEditingController confromPasswordController = TextEditingController();
+  @override
+  void dispose() {
+    super.dispose();
+    passwordController.dispose();
+    emailController.dispose();
+    confromPasswordController.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -94,14 +112,19 @@ class CreateAccount extends StatelessWidget {
                         const EdgeInsets.only(left: 16.0, right: 16.0, top: 50),
                     child: Column(
                       children: [
-                        const TextFieldCustom(prefixIcon: Icon(Icons.mail_outline),maxLines: 1,hintText: 'Enter Email'),
-
-                        const TextFieldCustom(
-                            prefixIcon: Icon(Icons.lock_outline),
+                        TextFieldCustom(
+                            controller: emailController,
+                            prefixIcon: const Icon(Icons.mail_outline),
+                            maxLines: 1,
+                            hintText: 'Enter Email'),
+                        TextFieldCustom(
+                            controller: passwordController,
+                            prefixIcon: const Icon(Icons.lock_outline),
                             maxLines: 1,
                             hintText: 'Set A Password'),
-                        const TextFieldCustom(
-                            prefixIcon: Icon(Icons.lock_outline),
+                        TextFieldCustom(
+                            controller: confromPasswordController,
+                            prefixIcon: const Icon(Icons.lock_outline),
                             maxLines: 1,
                             hintText: 'Confirm Password'),
                         const VerticalSpeacing(30),

@@ -157,7 +157,7 @@ class Routes {
             builder: (BuildContext context) => const JobViewFamily());
       case RoutesName.createAccount:
         return MaterialPageRoute(
-            builder: (BuildContext context) => const CreateAccount());
+            builder: (BuildContext context) => CreateAccount());
       case RoutesName.availabilityView:
         return MaterialPageRoute(
             builder: (BuildContext context) => const AvailabilityView());
