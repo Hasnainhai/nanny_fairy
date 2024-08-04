@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:nanny_fairy/utils/routes/routes_name.dart';
@@ -107,6 +109,7 @@ class AuthRepository {
         'postCode': postCode,
         'phoneNumber': phoneNumber,
         'dob': dob,
+        "uid": userId,
       });
 
       // Remove the loading indicator
@@ -125,6 +128,50 @@ class AuthRepository {
       Utils.flushBarErrorMessage("Failed to save details", context);
       debugPrint(e.toString());
       // Show error message
+    }
+  }
+
+  Future<void> savePassion(
+      List<String> passionList, BuildContext context) async {
+    // Show loading indicator
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) {
+        return const Center(
+          child: CircularProgressIndicator(),
+        );
+      },
+    );
+
+    try {
+      final userId = _firebaseAuth.currentUser?.uid;
+
+      if (userId == null) {
+        throw Exception('User not authenticated');
+      }
+
+      final userRef =
+          databaseReference.child('Providers').child(userId).child('Passions');
+
+      await userRef.set(passionList);
+
+      // Close the loading indicator
+      Navigator.of(context).pop();
+
+      Utils.toastMessage('Passions saved successfully!');
+      Navigator.pushNamedAndRemoveUntil(
+        context,
+        RoutesName.availabilityView,
+        (route) => false,
+      );
+    } catch (e) {
+      // Close the loading indicator
+      Navigator.of(context).pop();
+
+      // Handle any errors that occur during save
+      print('Error saving passions: $e');
+      Utils.flushBarErrorMessage('Failed to save passions', context);
     }
   }
 }
