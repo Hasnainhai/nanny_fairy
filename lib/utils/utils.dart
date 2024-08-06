@@ -2,11 +2,9 @@ import 'package:another_flushbar/flushbar.dart';
 import 'package:another_flushbar/flushbar_route.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-
 import '../res/components/colors.dart';
 
 class Utils {
-
   static void focusNode(
       BuildContext context, FocusNode current, FocusNode focusNext) {
     current.unfocus();
@@ -48,13 +46,16 @@ class Utils {
       SnackBar(
         showCloseIcon: true,
         closeIconColor: Colors.white,
-        content: const Text(
-          'error occure',
-          style: TextStyle(color: Colors.orangeAccent),
+        content: Text(
+          mesg,
+          style: const TextStyle(color: Colors.white),
         ),
-        backgroundColor: Colors.black,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(20.0),
+        backgroundColor: AppColor.primaryColor,
+        shape: const RoundedRectangleBorder(
+          borderRadius: BorderRadius.only(
+            topRight: Radius.circular(20),
+            topLeft: Radius.circular(20),
+          ),
         ),
       ),
     );
