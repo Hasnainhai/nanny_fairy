@@ -26,6 +26,7 @@ class _AvailabilityViewState extends State<AvailabilityView> {
     'Friday',
     'Saturday'
   ];
+  Map<String, Map<String, String>> selectedTimes = {};
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -67,444 +68,495 @@ class _AvailabilityViewState extends State<AvailabilityView> {
         ),
         child: Padding(
           padding: const EdgeInsets.only(left: 16, right: 16, top: 16),
-          child: SingleChildScrollView(
-            child: Column(
-              children: [
-                Container(
-                  decoration: BoxDecoration(
-                    color: AppColor.whiteColor,
-                    borderRadius: BorderRadius.circular(12),
-                    border: Border.all(
-                      strokeAlign: BorderSide.strokeAlignCenter,
-                      color: const Color(0xff1B81BC)
-                          .withOpacity(0.10), // Stroke color with 10% opacity
-                      width: 1,
-                    ),
-                    boxShadow: [
-                      BoxShadow(
-                        color: const Color(0xff1B81BC).withOpacity(
-                            0.1), // Drop shadow color with 4% opacity
-                        blurRadius: 2,
-                        offset: const Offset(1, 2),
-                        spreadRadius: 1,
-                      ),
-                    ],
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Container(
+                decoration: BoxDecoration(
+                  color: AppColor.whiteColor,
+                  borderRadius: BorderRadius.circular(12),
+                  border: Border.all(
+                    strokeAlign: BorderSide.strokeAlignCenter,
+                    color: const Color(0xff1B81BC)
+                        .withOpacity(0.10), // Stroke color with 10% opacity
+                    width: 1,
                   ),
-                  child: Padding(
-                    padding: const EdgeInsets.all(12.0),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        const SizedBox(
-                            height: 16), // Added spacing from the top
-                        Text(
-                          'Availability',
-                          style: GoogleFonts.getFont(
-                            "Poppins",
-                            textStyle: const TextStyle(
-                              fontSize: 16,
-                              fontWeight: FontWeight.w400,
-                              color: AppColor.blackColor,
-                            ),
-                          ),
-                        ),
-                        const SizedBox(height: 8),
-                        const Text(
-                          'Officia irure irure an',
-                          style: TextStyle(
+                  boxShadow: [
+                    BoxShadow(
+                      color: const Color(0xff1B81BC).withOpacity(
+                          0.1), // Drop shadow color with 4% opacity
+                      blurRadius: 2,
+                      offset: const Offset(1, 2),
+                      spreadRadius: 1,
+                    ),
+                  ],
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.all(12.0),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const SizedBox(height: 16), // Added spacing from the top
+                      Text(
+                        'Availability',
+                        style: GoogleFonts.getFont(
+                          "Poppins",
+                          textStyle: const TextStyle(
                             fontSize: 16,
-                            color: AppColor.grayColor,
+                            fontWeight: FontWeight.w400,
+                            color: AppColor.blackColor,
                           ),
                         ),
-                        const SizedBox(height: 16),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          children: [
-                            DayButton(
-                              day: 'M',
-                              isSelected: false,
-                              onTap: (bool isSelected) {},
-                            ),
-                            const SizedBox(width: 8),
-                            DayButton(
-                              day: 'T',
-                              isSelected: false,
-                              onTap: (bool isSelected) {},
-                            ),
-                            const SizedBox(width: 8),
-                            DayButton(
-                              day: 'W',
-                              isSelected: true,
-                              onTap: (bool isSelected) {},
-                            ),
-                            const SizedBox(width: 8),
-                            DayButton(
-                              day: 'T',
-                              isSelected: false,
-                              onTap: (bool isSelected) {},
-                            ),
-                            const SizedBox(width: 8),
-                            DayButton(
-                              day: 'F',
-                              isSelected: true,
-                              onTap: (bool isSelected) {},
-                            ),
-                            const SizedBox(width: 8),
-                            DayButton(
-                              day: 'S',
-                              isSelected: false,
-                              onTap: (bool isSelected) {},
-                            ),
-                            const SizedBox(width: 8),
-                            DayButton(
-                              day: 'S',
-                              isSelected: false,
-                              onTap: (bool isSelected) {},
-                            ),
-                            const SizedBox(width: 8),
-                          ],
-                        ),
-                        const SizedBox(height: 16),
-                        const AvailabilityRow(
-                          label: 'Morning',
-                          availability: [
-                            true,
-                            true,
-                            false,
-                            false,
-                            false,
-                            false,
-                            false
-                          ],
-                          timePeriod: 'morning',
-                        ),
-                        const Divider(),
-                        const AvailabilityRow(
-                          label: 'Evening',
-                          availability: [
-                            false,
-                            false,
-                            false,
-                            true,
-                            false,
-                            false,
-                            false
-                          ],
-                          timePeriod: 'Evening',
-                        ),
-                        const Divider(),
-                        const AvailabilityRow(
-                          label: 'Afternoon',
-                          availability: [
-                            false,
-                            false,
-                            false,
-                            false,
-                            false,
-                            true,
-                            false
-                          ],
-                          timePeriod: 'Afternoon',
-                        ),
-                        const VerticalSpeacing(10),
-                      ],
-                    ),
-                  ),
-                ),
-                const VerticalSpeacing(20.0),
-                Container(
-                  height: 216,
-                  width: double.infinity,
-                  decoration: BoxDecoration(
-                    color: AppColor.whiteColor,
-                    borderRadius: BorderRadius.circular(12.0),
-                    border: Border.all(
-                      strokeAlign: BorderSide.strokeAlignCenter,
-                      color: const Color(0xff1B81BC)
-                          .withOpacity(0.10), // Stroke color with 10% opacity
-                      width: 1,
-                    ),
-                    boxShadow: [
-                      BoxShadow(
-                        color: const Color(0xff1B81BC).withOpacity(
-                            0.1), // Drop shadow color with 4% opacity
-                        blurRadius: 2,
-                        offset: const Offset(1, 2),
-                        spreadRadius: 1,
                       ),
+                      const SizedBox(height: 8),
+                      const Text(
+                        'Officia irure irure an',
+                        style: TextStyle(
+                          fontSize: 16,
+                          color: AppColor.grayColor,
+                        ),
+                      ),
+                      const SizedBox(height: 16),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          DayButton(
+                            day: 'M',
+                            isSelected: false,
+                            onTap: (bool isSelected) {},
+                          ),
+                          const SizedBox(width: 8),
+                          DayButton(
+                            day: 'T',
+                            isSelected: false,
+                            onTap: (bool isSelected) {},
+                          ),
+                          const SizedBox(width: 8),
+                          DayButton(
+                            day: 'W',
+                            isSelected: false,
+                            onTap: (bool isSelected) {},
+                          ),
+                          const SizedBox(width: 8),
+                          DayButton(
+                            day: 'T',
+                            isSelected: false,
+                            onTap: (bool isSelected) {},
+                          ),
+                          const SizedBox(width: 8),
+                          DayButton(
+                            day: 'F',
+                            isSelected: false,
+                            onTap: (bool isSelected) {},
+                          ),
+                          const SizedBox(width: 8),
+                          DayButton(
+                            day: 'S',
+                            isSelected: false,
+                            onTap: (bool isSelected) {},
+                          ),
+                          const SizedBox(width: 8),
+                          DayButton(
+                            day: 'S',
+                            isSelected: false,
+                            onTap: (bool isSelected) {},
+                          ),
+                          const SizedBox(width: 8),
+                        ],
+                      ),
+                      const SizedBox(height: 16),
+                      const AvailabilityRow(
+                        label: 'Morning',
+                        availability: [
+                          false,
+                          false,
+                          false,
+                          false,
+                          false,
+                          false,
+                          false
+                        ],
+                        timePeriod: 'morning',
+                      ),
+                      const Divider(),
+                      const AvailabilityRow(
+                        label: 'Evening',
+                        availability: [
+                          false,
+                          false,
+                          false,
+                          false,
+                          false,
+                          false,
+                          false
+                        ],
+                        timePeriod: 'Evening',
+                      ),
+                      const Divider(),
+                      const AvailabilityRow(
+                        label: 'Afternoon',
+                        availability: [
+                          false,
+                          false,
+                          false,
+                          false,
+                          false,
+                          false,
+                          false
+                        ],
+                        timePeriod: 'Afternoon',
+                      ),
+                      const VerticalSpeacing(10),
                     ],
                   ),
-                  child: Padding(
-                    padding: const EdgeInsets.all(12.0),
-                    child: Column(
-                      children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(
-                              'Time',
-                              style: GoogleFonts.getFont(
-                                "Poppins",
-                                textStyle: const TextStyle(
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.w400,
-                                  color: AppColor.blackColor,
-                                ),
-                              ),
-                            ),
-                            DropdownButtonHideUnderline(
-                              child: DropdownButton<String>(
-                                value: selectedDay,
-                                icon: const Icon(
-                                  Icons.expand_more_outlined,
-                                  color: Colors.blue,
-                                ),
-                                onChanged: (String? newValue) {
-                                  setState(() {
-                                    selectedDay = newValue!;
-                                  });
-                                },
-                                items: days.map<DropdownMenuItem<String>>(
-                                    (String value) {
-                                  return DropdownMenuItem<String>(
-                                    value: value,
-                                    child: Text(
-                                      value,
-                                      style: GoogleFonts.getFont(
-                                        "Poppins",
-                                        textStyle: const TextStyle(
-                                          fontSize: 14,
-                                          fontWeight: FontWeight.w400,
-                                          color: Colors.blue,
-                                        ),
-                                      ),
-                                    ),
-                                  );
-                                }).toList(),
-                              ),
-                            ),
-                          ],
-                        ),
-                        const VerticalSpeacing(10.0),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(
-                              'Morning',
-                              style: GoogleFonts.getFont(
-                                "Poppins",
-                                textStyle: const TextStyle(
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.w400,
-                                  color: AppColor.blackColor,
-                                ),
-                              ),
-                            ),
-                            const SizedBox(width: 20),
-                            Row(
-                              children: [
-                                Text(
-                                  'From',
-                                  style: GoogleFonts.getFont(
-                                    "Poppins",
-                                    textStyle: const TextStyle(
-                                      fontSize: 14,
-                                      fontWeight: FontWeight.w400,
-                                      color: AppColor.blackColor,
-                                    ),
-                                  ),
-                                ),
-                                const SizedBox(width: 5),
-                                const TimingContainer(time: '9:00Am'),
-                                const SizedBox(width: 5),
-                                Text(
-                                  'To',
-                                  style: GoogleFonts.getFont(
-                                    "Poppins",
-                                    textStyle: const TextStyle(
-                                      fontSize: 14,
-                                      fontWeight: FontWeight.w400,
-                                      color: AppColor.blackColor,
-                                    ),
-                                  ),
-                                ),
-                                const SizedBox(width: 5),
-                                const TimingContainer(
-                                  time: '12:00Am',
-                                )
-                              ],
-                            ),
-                          ],
-                        ),
-                        const Divider(),
-                        const VerticalSpeacing(16),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(
-                              'Evening',
-                              style: GoogleFonts.getFont(
-                                "Poppins",
-                                textStyle: const TextStyle(
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.w400,
-                                  color: AppColor.blackColor,
-                                ),
-                              ),
-                            ),
-                            const SizedBox(width: 20),
-                            Row(
-                              children: [
-                                Text(
-                                  'From',
-                                  style: GoogleFonts.getFont(
-                                    "Poppins",
-                                    textStyle: const TextStyle(
-                                      fontSize: 14,
-                                      fontWeight: FontWeight.w400,
-                                      color: AppColor.blackColor,
-                                    ),
-                                  ),
-                                ),
-                                const SizedBox(width: 5),
-                                const TimingContainer(time: '2:00Am'),
-                                const SizedBox(width: 5),
-                                Text(
-                                  'To',
-                                  style: GoogleFonts.getFont(
-                                    "Poppins",
-                                    textStyle: const TextStyle(
-                                      fontSize: 14,
-                                      fontWeight: FontWeight.w400,
-                                      color: AppColor.blackColor,
-                                    ),
-                                  ),
-                                ),
-                                const SizedBox(width: 5),
-                                const TimingContainer(
-                                  time: '6:00Am',
-                                )
-                              ],
-                            ),
-                          ],
-                        ),
-                        const Divider(),
-                        const VerticalSpeacing(16),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(
-                              'AfterNoon',
-                              style: GoogleFonts.getFont(
-                                "Poppins",
-                                textStyle: const TextStyle(
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.w400,
-                                  color: AppColor.blackColor,
-                                ),
-                              ),
-                            ),
-                            const SizedBox(width: 20),
-                            Row(
-                              children: [
-                                Text(
-                                  'From',
-                                  style: GoogleFonts.getFont(
-                                    "Poppins",
-                                    textStyle: const TextStyle(
-                                      fontSize: 14,
-                                      fontWeight: FontWeight.w400,
-                                      color: AppColor.blackColor,
-                                    ),
-                                  ),
-                                ),
-                                const SizedBox(width: 5),
-                                const TimingContainer(time: '7:00Am'),
-                                const SizedBox(width: 5),
-                                Text(
-                                  'To',
-                                  style: GoogleFonts.getFont(
-                                    "Poppins",
-                                    textStyle: const TextStyle(
-                                      fontSize: 14,
-                                      fontWeight: FontWeight.w400,
-                                      color: AppColor.blackColor,
-                                    ),
-                                  ),
-                                ),
-                                const SizedBox(width: 5),
-                                const TimingContainer(
-                                  time: '12:00Am',
-                                )
-                              ],
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
-                  ),
                 ),
-                const VerticalSpeacing(46.0),
-                RoundedButton(
-                    title: 'Register',
-                    onpress: () {
-                      Navigator.pushNamed(
-                          context, RoutesName.educationHorlyView);
-                    }),
-                const VerticalSpeacing(40.0),
-              ],
-            ),
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-class TimingContainer extends StatefulWidget {
-  const TimingContainer({super.key, required this.time});
-  final String time;
-
-  @override
-  _TimingContainerState createState() => _TimingContainerState();
-}
-
-class _TimingContainerState extends State<TimingContainer> {
-  bool _isSelected = false;
-
-  @override
-  Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () {
-        setState(() {
-          _isSelected = !_isSelected;
-        });
-      },
-      child: Container(
-        height: 20,
-        width: 67,
-        decoration: BoxDecoration(
-          color: _isSelected ? AppColor.primaryColor : Colors.white,
-          border: Border.all(width: 0.5, color: AppColor.blackColor),
-          borderRadius: BorderRadius.circular(8),
-        ),
-        child: Center(
-          child: Text(
-            widget.time,
-            style: GoogleFonts.getFont(
-              "Poppins",
-              textStyle: TextStyle(
-                fontSize: 10,
-                fontWeight: FontWeight.w400,
-                color: _isSelected ? AppColor.whiteColor : AppColor.blackColor,
               ),
-            ),
+              // const VerticalSpeacing(20.0),
+              // Container(
+              //   height: 216,
+              //   width: double.infinity,
+              //   decoration: BoxDecoration(
+              //     color: AppColor.whiteColor,
+              //     borderRadius: BorderRadius.circular(12.0),
+              //     border: Border.all(
+              //       strokeAlign: BorderSide.strokeAlignCenter,
+              //       color: const Color(0xff1B81BC)
+              //           .withOpacity(0.10), // Stroke color with 10% opacity
+              //       width: 1,
+              //     ),
+              //     boxShadow: [
+              //       BoxShadow(
+              //         color: const Color(0xff1B81BC).withOpacity(
+              //             0.1), // Drop shadow color with 4% opacity
+              //         blurRadius: 2,
+              //         offset: const Offset(1, 2),
+              //         spreadRadius: 1,
+              //       ),
+              //     ],
+              //   ),
+              //   child: Padding(
+              //     padding: const EdgeInsets.all(12.0),
+              //     child: Column(
+              //       children: [
+              //         Text(
+              //           '$days',
+              //           style: GoogleFonts.getFont(
+              //             "Poppins",
+              //             textStyle: const TextStyle(
+              //               fontSize: 16,
+              //               fontWeight: FontWeight.w400,
+              //               color: AppColor.blackColor,
+              //             ),
+              //           ),
+              //         ),
+              //         const SizedBox(height: 8),
+              //         Row(
+              //           mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              //           children: [
+              //             _timePicker(days.toString(), 'Start'),
+              //             const Text('to'),
+              //             _timePicker(days.toString(), 'End'),
+              //           ],
+              //         ),
+
+              // Row(
+              //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              //   children: [
+              //     Text(
+              //       'Time',
+              //       style: GoogleFonts.getFont(
+              //         "Poppins",
+              //         textStyle: const TextStyle(
+              //           fontSize: 14,
+              //           fontWeight: FontWeight.w400,
+              //           color: AppColor.blackColor,
+              //         ),
+              //       ),
+              //     ),
+              //     DropdownButtonHideUnderline(
+              //       child: DropdownButton<String>(
+              //         value: selectedDay,
+              //         icon: const Icon(
+              //           Icons.expand_more_outlined,
+              //           color: Colors.blue,
+              //         ),
+              //         onChanged: (String? newValue) {
+              //           setState(() {
+              //             selectedDay = newValue!;
+              //           });
+              //         },
+              //         items: days.map<DropdownMenuItem<String>>(
+              //             (String value) {
+              //           return DropdownMenuItem<String>(
+              //             value: value,
+              //             child: Text(
+              //               value,
+              //               style: GoogleFonts.getFont(
+              //                 "Poppins",
+              //                 textStyle: const TextStyle(
+              //                   fontSize: 14,
+              //                   fontWeight: FontWeight.w400,
+              //                   color: Colors.blue,
+              //                 ),
+              //               ),
+              //             ),
+              //           );
+              //         }).toList(),
+              //       ),
+              //     ),
+              //   ],
+              // ),
+              // const VerticalSpeacing(10.0),
+              // Row(
+              //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              //   children: [
+              //     Text(
+              //       'Morning',
+              //       style: GoogleFonts.getFont(
+              //         "Poppins",
+              //         textStyle: const TextStyle(
+              //           fontSize: 14,
+              //           fontWeight: FontWeight.w400,
+              //           color: AppColor.blackColor,
+              //         ),
+              //       ),
+              //     ),
+              //     const SizedBox(width: 20),
+              //     Row(
+              //       children: [
+              //         Text(
+              //           'From',
+              //           style: GoogleFonts.getFont(
+              //             "Poppins",
+              //             textStyle: const TextStyle(
+              //               fontSize: 14,
+              //               fontWeight: FontWeight.w400,
+              //               color: AppColor.blackColor,
+              //             ),
+              //           ),
+              //         ),
+              //         const SizedBox(width: 5),
+              //         const TimingContainer(time: '9:00Am'),
+              //         const SizedBox(width: 5),
+              //         Text(
+              //           'To',
+              //           style: GoogleFonts.getFont(
+              //             "Poppins",
+              //             textStyle: const TextStyle(
+              //               fontSize: 14,
+              //               fontWeight: FontWeight.w400,
+              //               color: AppColor.blackColor,
+              //             ),
+              //           ),
+              //         ),
+              //         const SizedBox(width: 5),
+              //         const TimingContainer(
+              //           time: '12:00Am',
+              //         )
+              //       ],
+              //     ),
+              //   ],
+              // ),
+              // const Divider(),
+              // const VerticalSpeacing(16),
+              // Row(
+              //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              //   children: [
+              //     Text(
+              //       'Evening',
+              //       style: GoogleFonts.getFont(
+              //         "Poppins",
+              //         textStyle: const TextStyle(
+              //           fontSize: 14,
+              //           fontWeight: FontWeight.w400,
+              //           color: AppColor.blackColor,
+              //         ),
+              //       ),
+              //     ),
+              //     const SizedBox(width: 20),
+              //     Row(
+              //       children: [
+              //         Text(
+              //           'From',
+              //           style: GoogleFonts.getFont(
+              //             "Poppins",
+              //             textStyle: const TextStyle(
+              //               fontSize: 14,
+              //               fontWeight: FontWeight.w400,
+              //               color: AppColor.blackColor,
+              //             ),
+              //           ),
+              //         ),
+              //         const SizedBox(width: 5),
+              //         const TimingContainer(time: '2:00Am'),
+              //         const SizedBox(width: 5),
+              //         Text(
+              //           'To',
+              //           style: GoogleFonts.getFont(
+              //             "Poppins",
+              //             textStyle: const TextStyle(
+              //               fontSize: 14,
+              //               fontWeight: FontWeight.w400,
+              //               color: AppColor.blackColor,
+              //             ),
+              //           ),
+              //         ),
+              //         const SizedBox(width: 5),
+              //         const TimingContainer(
+              //           time: '6:00Am',
+              //         )
+              //       ],
+              //     ),
+              //   ],
+              // ),
+              // const Divider(),
+              // const VerticalSpeacing(16),
+              // Row(
+              //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              //   children: [
+              //     Text(
+              //       'AfterNoon',
+              //       style: GoogleFonts.getFont(
+              //         "Poppins",
+              //         textStyle: const TextStyle(
+              //           fontSize: 14,
+              //           fontWeight: FontWeight.w400,
+              //           color: AppColor.blackColor,
+              //         ),
+              //       ),
+              //     ),
+              //     const SizedBox(width: 20),
+              //     Row(
+              //       children: [
+              //         Text(
+              //           'From',
+              //           style: GoogleFonts.getFont(
+              //             "Poppins",
+              //             textStyle: const TextStyle(
+              //               fontSize: 14,
+              //               fontWeight: FontWeight.w400,
+              //               color: AppColor.blackColor,
+              //             ),
+              //           ),
+              //         ),
+              //         const SizedBox(width: 5),
+              //         const TimingContainer(time: '7:00Am'),
+              //         const SizedBox(width: 5),
+              //         Text(
+              //           'To',
+              //           style: GoogleFonts.getFont(
+              //             "Poppins",
+              //             textStyle: const TextStyle(
+              //               fontSize: 14,
+              //               fontWeight: FontWeight.w400,
+              //               color: AppColor.blackColor,
+              //             ),
+              //           ),
+              //         ),
+              //         const SizedBox(width: 5),
+              //         const TimingContainer(
+              //           time: '12:00Am',
+              //         )
+              //       ],
+              //     ),
+              //   ],
+              // ),
+              //       ],
+              //     ),
+              //   ),
+              // ),
+              const VerticalSpeacing(46.0),
+              RoundedButton(
+                  title: 'Register',
+                  onpress: () {
+                    Navigator.pushNamed(context, RoutesName.educationHorlyView);
+                  }),
+              const VerticalSpeacing(40.0),
+            ],
           ),
         ),
       ),
     );
   }
+  //
+  // Widget _timePicker(String day, String period) {
+  //   return GestureDetector(
+  //     onTap: () async {
+  //       TimeOfDay? selectedTime = await showTimePicker(
+  //         context: context,
+  //         initialTime: TimeOfDay.now(),
+  //       );
+  //       if (selectedTime != null) {
+  //         setState(() {
+  //           selectedTimes[day] ??= {};
+  //           selectedTimes[day]![period] = selectedTime.format(context);
+  //         });
+  //       }
+  //     },
+  //     child: Container(
+  //       padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+  //       decoration: BoxDecoration(
+  //         color: AppColor.whiteColor,
+  //         borderRadius: BorderRadius.circular(8),
+  //         border: Border.all(
+  //           color: AppColor.grayColor.withOpacity(0.5),
+  //         ),
+  //       ),
+  //       child: Text(
+  //         selectedTimes[day]?[period] ?? 'Select Time',
+  //         style: const TextStyle(fontSize: 16, color: AppColor.blackColor),
+  //       ),
+  //     ),
+  //   );
+  // }
 }
+//
+// class TimingContainer extends StatefulWidget {
+//   const TimingContainer({super.key, required this.time});
+//   final String time;
+//
+//   @override
+//   _TimingContainerState createState() => _TimingContainerState();
+// }
+//
+// class _TimingContainerState extends State<TimingContainer> {
+//   bool _isSelected = false;
+//
+//   @override
+//   Widget build(BuildContext context) {
+//     return GestureDetector(
+//       onTap: () {
+//         setState(() {
+//           _isSelected = !_isSelected;
+//         });
+//       },
+//       child: Container(
+//         height: 20,
+//         width: 67,
+//         decoration: BoxDecoration(
+//           color: _isSelected ? AppColor.primaryColor : Colors.white,
+//           border: Border.all(width: 0.5, color: AppColor.blackColor),
+//           borderRadius: BorderRadius.circular(8),
+//         ),
+//         child: Center(
+//           child: Text(
+//             widget.time,
+//             style: GoogleFonts.getFont(
+//               "Poppins",
+//               textStyle: TextStyle(
+//                 fontSize: 10,
+//                 fontWeight: FontWeight.w400,
+//                 color: _isSelected ? AppColor.whiteColor : AppColor.blackColor,
+//               ),
+//             ),
+//           ),
+//         ),
+//       ),
+//     );
+//   }
+// }
 
 class AvailabilityRow extends StatefulWidget {
   final String label;
@@ -546,7 +598,8 @@ class _AvailabilityRowState extends State<AvailabilityRow> {
     String day = _getDayName(index);
     _dbRef
         .child('Providers')
-        .child(userId).child('Availability')
+        .child(userId)
+        .child('Availability')
         .child('${widget.timePeriod}/$day')
         .set(_availability[index]);
   }
