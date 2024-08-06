@@ -117,7 +117,7 @@ class AuthViewModel extends ChangeNotifier {
     }
   }
 
-  Future<void> SaveIdImages(
+  Future<void> saveIdImages(
     BuildContext context,
     File? frontPic,
     File? backPic,
@@ -125,6 +125,21 @@ class AuthViewModel extends ChangeNotifier {
     _setLoading(true);
     try {
       await _authRepository.saveIdImages(context, frontPic, backPic);
+    } catch (e) {
+      debugPrint('Error saving details: ${e.toString()}');
+    } finally {
+      _setLoading(false);
+    }
+  }
+
+  Future<void> saveProfileAndBio(
+    BuildContext context,
+    File? profile,
+    String bio,
+  ) async {
+    _setLoading(true);
+    try {
+      await _authRepository.saveProfileAndBio(context, profile, bio);
     } catch (e) {
       debugPrint('Error saving details: ${e.toString()}');
     } finally {
