@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:another_flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:nanny_fairy/res/components/rounded_button.dart';
@@ -17,29 +18,27 @@ class UploadId extends StatefulWidget {
 }
 
 class _UploadIdState extends State<UploadId> {
-  File? image;
-  File? image2;
-
-  void pickImage() async {
-    final img = await pickImageFromGallery(
+  File? frontImage;
+  void idFrontPic() async {
+    File? img = await pickFrontImg(
       context,
-      image,
     );
     setState(
       () {
-        image = img;
+        frontImage = img;
       },
     );
   }
 
-  void backPic() async {
-    final img = await pickImageFromGallery(
+  File? backImage;
+
+  void idBackPic() async {
+    File? img = await pickFrontImg(
       context,
-      image2,
     );
     setState(
       () {
-        image2 = img;
+        backImage = img;
       },
     );
   }
@@ -103,16 +102,16 @@ class _UploadIdState extends State<UploadId> {
                   ),
                 ],
               ),
-              child: image != null
+              child: frontImage != null
                   ? Container(
                       height: 130,
                       width: 120,
                       decoration: BoxDecoration(
                         image: DecorationImage(
                           image: FileImage(
-                            image!,
+                            frontImage!,
                           ),
-                          fit: BoxFit.fill,
+                          fit: BoxFit.contain,
                         ),
                       ),
                     )
@@ -121,10 +120,8 @@ class _UploadIdState extends State<UploadId> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           InkWell(
-                            onTap: () async {
-                              setState(() {
-                                //  image = await pickImageFromGallery(context);
-                              });
+                            onTap: () {
+                              idFrontPic();
                             },
                             child: Container(
                               height: 56,
@@ -178,16 +175,16 @@ class _UploadIdState extends State<UploadId> {
                   ),
                 ],
               ),
-              child: image2 != null
+              child: backImage != null
                   ? Container(
                       height: 130,
                       width: 120,
                       decoration: BoxDecoration(
                         image: DecorationImage(
                           image: FileImage(
-                            image2!,
+                            backImage!,
                           ),
-                          fit: BoxFit.fill,
+                          fit: BoxFit.contain,
                         ),
                       ),
                     )
@@ -196,16 +193,21 @@ class _UploadIdState extends State<UploadId> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           InkWell(
-                            child: Container(
-                              height: 56,
-                              width: 56,
-                              decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(28),
-                                  color: AppColor.primaryColor),
-                              child: const Center(
-                                child: Icon(
-                                  Icons.image,
-                                  color: AppColor.whiteColor,
+                            child: InkWell(
+                              onTap: () {
+                                idBackPic();
+                              },
+                              child: Container(
+                                height: 56,
+                                width: 56,
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(28),
+                                    color: AppColor.primaryColor),
+                                child: const Center(
+                                  child: Icon(
+                                    Icons.image,
+                                    color: AppColor.whiteColor,
+                                  ),
                                 ),
                               ),
                             ),
