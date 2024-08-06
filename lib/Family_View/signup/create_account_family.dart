@@ -1,16 +1,37 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:nanny_fairy/FamilyController/family_auth_controller.dart';
 import 'package:nanny_fairy/res/components/rounded_button.dart';
 import 'package:nanny_fairy/res/components/widgets/custom_text_field.dart';
 import 'package:nanny_fairy/res/components/widgets/vertical_spacing.dart';
 import 'package:nanny_fairy/utils/routes/routes_name.dart';
+import 'package:provider/provider.dart';
 import '../../../res/components/colors.dart';
+import '../../utils/utils.dart';
 
-class CreateAccountFamily extends StatelessWidget {
+class CreateAccountFamily extends StatefulWidget {
   const CreateAccountFamily({super.key});
 
   @override
+  State<CreateAccountFamily> createState() => _CreateAccountFamilyState();
+}
+
+class _CreateAccountFamilyState extends State<CreateAccountFamily> {
+  TextEditingController passwordController = TextEditingController();
+
+  TextEditingController emailController = TextEditingController();
+
+  TextEditingController confromPasswordController = TextEditingController();
+  @override
+  void dispose() {
+    super.dispose();
+    passwordController.dispose();
+    emailController.dispose();
+    confromPasswordController.dispose();
+  }
+  @override
   Widget build(BuildContext context) {
+    final authViewModelFamily = Provider.of<FamilyAuthController>(context);
     return Scaffold(
         backgroundColor: AppColor.primaryColor,
         body: SafeArea(
@@ -94,15 +115,18 @@ class CreateAccountFamily extends StatelessWidget {
                         const EdgeInsets.only(left: 16.0, right: 16.0, top: 50),
                     child: Column(
                       children: [
-                        const TextFieldCustom(
+                         TextFieldCustom(
+                          controller: emailController,
                             prefixIcon: Icon(Icons.mail_outline),
                             maxLines: 1,
                             hintText: 'Enter Email'),
-                        const TextFieldCustom(
+                         TextFieldCustom(
+                          controller: passwordController,
                             prefixIcon: Icon(Icons.lock_outline),
                             maxLines: 1,
                             hintText: 'Set A Password'),
-                        const TextFieldCustom(
+                         TextFieldCustom(
+                           controller: confromPasswordController,
                             prefixIcon: Icon(Icons.lock_outline),
                             maxLines: 1,
                             hintText: 'Confirm Password'),
@@ -110,8 +134,18 @@ class CreateAccountFamily extends StatelessWidget {
                         RoundedButton(
                           title: 'Confirm',
                           onpress: () {
-                            Navigator.pushNamed(
-                                context, RoutesName.registerFamily);
+                            if (passwordController.text ==
+                                confromPasswordController.text) {
+                              authViewModelFamily.createAccount(
+                                  email: emailController.text,
+                                  password: passwordController.text,
+                                  context: context);
+                            } else {
+
+                              Utils.toastMessage(
+                                  "Your password did not match");
+                            }
+
                           },
                         ),
                       ],

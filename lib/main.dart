@@ -1,6 +1,8 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:nanny_fairy/FamilyController/family_auth_controller.dart';
 import 'package:nanny_fairy/Repository/auth_repository.dart';
+import 'package:nanny_fairy/Repository/family_auth_repository.dart';
 import 'package:nanny_fairy/ViewModel/auth_view_model.dart';
 import 'package:nanny_fairy/res/components/colors.dart';
 import 'package:nanny_fairy/utils/routes/routes.dart';
@@ -25,6 +27,12 @@ class MyApp extends StatelessWidget {
           ),
           ChangeNotifierProvider<AuthViewModel>(
             create: (context) => AuthViewModel(context.read<AuthRepository>()),
+          ),
+          Provider<AuthRepositoryFamily>(
+            create: (_) => AuthRepositoryFamily(),
+          ),
+          ChangeNotifierProvider<FamilyAuthController>(
+            create: (context) => FamilyAuthController(context.read<AuthRepositoryFamily>()),
           ),
         ],
         child: MaterialApp(
