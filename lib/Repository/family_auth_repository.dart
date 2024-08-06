@@ -1,10 +1,12 @@
-// ignore_for_file: use_build_context_synchronously
-
+import 'dart:io';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:nanny_fairy/utils/routes/routes_name.dart';
 import 'package:nanny_fairy/utils/utils.dart';
 import 'package:firebase_database/firebase_database.dart';
+import 'package:uuid/uuid.dart';
+
+import '../res/components/common_firebase_storge.dart';
 
 class AuthRepositoryFamily {
   final FirebaseAuth _firebaseAuth;
@@ -186,7 +188,11 @@ class AuthRepositoryFamily {
     }
   }
 
-  saveEducationAndHoursrate(String education, hourRate, BuildContext context) {
+  saveIdImages(
+      BuildContext context,
+      File? frontPic,
+      File? backImage,
+      ) async {
     showDialog(
       context: context,
       barrierDismissible: false,
@@ -197,59 +203,54 @@ class AuthRepositoryFamily {
       },
     );
     try {
+      var uuid = const Uuid().v1();
       final userId = _firebaseAuth.currentUser!.uid;
-      final userRef = databaseReference.child('Family').child(userId);
-      userRef.update({
-        "education": education,
-        "hoursrate": hourRate,
+      final userRef =
+      databaseReference.child('Family').child(userId).child("IdPicsFamily");
+
+      String frontUrl = "";
+      String backUrl = "";
+
+      if (frontPic != null) {
+        CommonFirebaseStorage commonStorage = CommonFirebaseStorage();
+        frontUrl = await commonStorage.storeFileFileToFirebase(
+          'Id/$uuid+1',
+          frontPic,
+        );
+      } else {
+        Utils.flushBarErrorMessage("Please pick The Id Front Pic", context);
+        Navigator.pop(context);
+        return;
+      }
+      if (backImage != null) {
+        CommonFirebaseStorage commonStorage = CommonFirebaseStorage();
+        backUrl = await commonStorage.storeFileFileToFirebase(
+          'Id/$uuid',
+          backImage,
+        );
+      } else {
+        Utils.flushBarErrorMessage("Please pick The Id Back Pic", context);
+        Navigator.pop(context);
+        return;
+      }
+
+      userRef.set({
+        "frontPic": frontUrl,
+        "backPic": backUrl,
       });
       Navigator.of(context).pop();
-
-      Utils.toastMessage('Education and Hours Rate saved successfully!');
-      Navigator.pushNamedAndRemoveUntil(
+      Utils.toastMessage('Images saved successfully!');
+      debugPrint(userId);
+      Navigator.pushNamed(
         context,
-        RoutesName.selectPassionFamily,
-        (route) => false,
+        RoutesName.uploadImgFamily,
       );
     } catch (e) {
       Navigator.of(context).pop();
 
       // Handle any errors that occur during save
-      print('Error saving passions: $e');
-      Utils.flushBarErrorMessage(
-          'Failed to save education and hours Rate', context);
-    }
-  }
-
-  saveRefernce(
-      String experince, job, skill, land, phone, BuildContext context) {
-    showDialog(
-      context: context,
-      barrierDismissible: false,
-      builder: (BuildContext context) {
-        return const Center(
-          child: CircularProgressIndicator(),
-        );
-      },
-    );
-    try {
-      final userId = _firebaseAuth.currentUser!.uid;
-
-      databaseReference.child('Family').child(userId).child('FamilyReference');
-      Navigator.of(context).pop();
-      Utils.toastMessage('Reference saved successfully!');
-
-      Navigator.pushNamedAndRemoveUntil(
-        context,
-        RoutesName.uploadIdFamily,
-        (route) => false,
-      );
-    } catch (e) {
-      Navigator.of(context).pop();
-
-      // Handle any errors that occur during save
-      print('Error saving refernce: $e');
-      Utils.flushBarErrorMessage('Failed to save Refernce', context);
+      print('Error saving images: $e');
+      Utils.flushBarErrorMessage('Failed to save Images', context);
     }
   }
 }
