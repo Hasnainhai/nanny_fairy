@@ -1,14 +1,33 @@
-import 'package:flutter/cupertino.dart';
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:nanny_fairy/res/components/rounded_button.dart';
+import 'package:nanny_fairy/res/components/widgets/image_picker.dart';
 import 'package:nanny_fairy/res/components/widgets/vertical_spacing.dart';
 
 import '../../../res/components/colors.dart';
 import '../../../utils/routes/routes_name.dart';
 
-class UploadId extends StatelessWidget {
+class UploadId extends StatefulWidget {
   const UploadId({super.key});
+
+  @override
+  State<UploadId> createState() => _UploadIdState();
+}
+
+class _UploadIdState extends State<UploadId> {
+  File? image;
+  void pickImage() async {
+    final img = await pickImageFromGallery(
+      context,
+    );
+    setState(
+      () {
+        image = img;
+      },
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -69,37 +88,55 @@ class UploadId extends StatelessWidget {
                   ),
                 ],
               ),
-              child: Center(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Container(
-                      height: 56,
-                      width: 56,
+              child: image != null
+                  ? Container(
+                      height: 130,
+                      width: 120,
                       decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(28),
-                          color: AppColor.primaryColor),
-                      child: const Center(
-                        child: Icon(
-                          Icons.image,
-                          color: AppColor.whiteColor,
+                        image: DecorationImage(
+                          image: FileImage(
+                            image!,
+                          ),
+                          fit: BoxFit.fill,
                         ),
                       ),
-                    ),
-                    Text(
-                      'please upload id front picture',
-                      style: GoogleFonts.getFont(
-                        "Poppins",
-                        textStyle: const TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.w400,
-                          color: AppColor.blackColor,
-                        ),
+                    )
+                  : Center(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          InkWell(
+                            onTap: () async {
+                              image = await pickImageFromGallery(context);
+                            },
+                            child: Container(
+                              height: 56,
+                              width: 56,
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(28),
+                                  color: AppColor.primaryColor),
+                              child: const Center(
+                                child: Icon(
+                                  Icons.image,
+                                  color: AppColor.whiteColor,
+                                ),
+                              ),
+                            ),
+                          ),
+                          Text(
+                            'please upload id front picture',
+                            style: GoogleFonts.getFont(
+                              "Poppins",
+                              textStyle: const TextStyle(
+                                fontSize: 18,
+                                fontWeight: FontWeight.w400,
+                                color: AppColor.blackColor,
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
                     ),
-                  ],
-                ),
-              ),
             ),
             const VerticalSpeacing(20.0),
             Container(
@@ -128,16 +165,18 @@ class UploadId extends StatelessWidget {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Container(
-                      height: 56,
-                      width: 56,
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(28),
-                          color: AppColor.primaryColor),
-                      child: const Center(
-                        child: Icon(
-                          Icons.image,
-                          color: AppColor.whiteColor,
+                    InkWell(
+                      child: Container(
+                        height: 56,
+                        width: 56,
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(28),
+                            color: AppColor.primaryColor),
+                        child: const Center(
+                          child: Icon(
+                            Icons.image,
+                            color: AppColor.whiteColor,
+                          ),
                         ),
                       ),
                     ),
