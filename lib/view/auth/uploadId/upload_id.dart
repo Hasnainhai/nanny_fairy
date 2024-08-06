@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:another_flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:nanny_fairy/res/components/rounded_button.dart';
@@ -17,14 +18,27 @@ class UploadId extends StatefulWidget {
 }
 
 class _UploadIdState extends State<UploadId> {
-  File? image;
-  void pickImage() async {
-    final img = await pickImageFromGallery(
+  File? frontImage;
+  void idFrontPic() async {
+    File? img = await pickFrontImg(
       context,
     );
     setState(
       () {
-        image = img;
+        frontImage = img;
+      },
+    );
+  }
+
+  File? backImage;
+
+  void idBackPic() async {
+    File? img = await pickFrontImg(
+      context,
+    );
+    setState(
+      () {
+        backImage = img;
       },
     );
   }
@@ -88,16 +102,16 @@ class _UploadIdState extends State<UploadId> {
                   ),
                 ],
               ),
-              child: image != null
+              child: frontImage != null
                   ? Container(
                       height: 130,
                       width: 120,
                       decoration: BoxDecoration(
                         image: DecorationImage(
                           image: FileImage(
-                            image!,
+                            frontImage!,
                           ),
-                          fit: BoxFit.fill,
+                          fit: BoxFit.contain,
                         ),
                       ),
                     )
@@ -106,8 +120,8 @@ class _UploadIdState extends State<UploadId> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           InkWell(
-                            onTap: () async {
-                              image = await pickImageFromGallery(context);
+                            onTap: () {
+                              idFrontPic();
                             },
                             child: Container(
                               height: 56,
@@ -161,39 +175,57 @@ class _UploadIdState extends State<UploadId> {
                   ),
                 ],
               ),
-              child: Center(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    InkWell(
-                      child: Container(
-                        height: 56,
-                        width: 56,
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(28),
-                            color: AppColor.primaryColor),
-                        child: const Center(
-                          child: Icon(
-                            Icons.image,
-                            color: AppColor.whiteColor,
+              child: backImage != null
+                  ? Container(
+                      height: 130,
+                      width: 120,
+                      decoration: BoxDecoration(
+                        image: DecorationImage(
+                          image: FileImage(
+                            backImage!,
                           ),
+                          fit: BoxFit.contain,
                         ),
                       ),
-                    ),
-                    Text(
-                      'please upload id back picture',
-                      style: GoogleFonts.getFont(
-                        "Poppins",
-                        textStyle: const TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.w400,
-                          color: AppColor.blackColor,
-                        ),
+                    )
+                  : Center(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          InkWell(
+                            child: InkWell(
+                              onTap: () {
+                                idBackPic();
+                              },
+                              child: Container(
+                                height: 56,
+                                width: 56,
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(28),
+                                    color: AppColor.primaryColor),
+                                child: const Center(
+                                  child: Icon(
+                                    Icons.image,
+                                    color: AppColor.whiteColor,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                          Text(
+                            'please upload id back picture',
+                            style: GoogleFonts.getFont(
+                              "Poppins",
+                              textStyle: const TextStyle(
+                                fontSize: 18,
+                                fontWeight: FontWeight.w400,
+                                color: AppColor.blackColor,
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
                     ),
-                  ],
-                ),
-              ),
             ),
             const VerticalSpeacing(46.0),
             RoundedButton(
