@@ -1,10 +1,11 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:nanny_fairy/FamilyController/family_auth_controller.dart';
 import 'package:nanny_fairy/res/components/rounded_button.dart';
 import 'package:nanny_fairy/res/components/widgets/vertical_spacing.dart';
+import 'package:provider/provider.dart';
 import '../../../res/components/colors.dart';
-import '../../../utils/routes/routes_name.dart';
 import '../../res/components/widgets/image_picker.dart';
 
 class UploadIdFamily extends StatefulWidget {
@@ -21,7 +22,7 @@ class _UploadIdFamilyState extends State<UploadIdFamily> {
       context,
     );
     setState(
-          () {
+      () {
         frontImage = img;
       },
     );
@@ -34,7 +35,7 @@ class _UploadIdFamilyState extends State<UploadIdFamily> {
       context,
     );
     setState(
-          () {
+      () {
         backImage = img;
       },
     );
@@ -42,6 +43,8 @@ class _UploadIdFamilyState extends State<UploadIdFamily> {
 
   @override
   Widget build(BuildContext context) {
+    final authController = Provider.of<FamilyAuthController>(context);
+
     return Scaffold(
       backgroundColor: AppColor.secondaryBgColor,
       appBar: PreferredSize(
@@ -101,53 +104,53 @@ class _UploadIdFamilyState extends State<UploadIdFamily> {
               ),
               child: frontImage != null
                   ? Container(
-                height: 130,
-                width: 120,
-                decoration: BoxDecoration(
-                  image: DecorationImage(
-                    image: FileImage(
-                      frontImage!,
-                    ),
-                    fit: BoxFit.contain,
-                  ),
-                ),
-              )
-                  : Center(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    InkWell(
-                      onTap: () {
-                        idFrontPic();
-                      },
-                      child: Container(
-                        height: 56,
-                        width: 56,
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(28),
-                            color: AppColor.primaryColor),
-                        child: const Center(
-                          child: Icon(
-                            Icons.image,
-                            color: AppColor.whiteColor,
+                      height: 130,
+                      width: 120,
+                      decoration: BoxDecoration(
+                        image: DecorationImage(
+                          image: FileImage(
+                            frontImage!,
                           ),
+                          fit: BoxFit.contain,
                         ),
                       ),
-                    ),
-                    Text(
-                      'please upload id front picture',
-                      style: GoogleFonts.getFont(
-                        "Poppins",
-                        textStyle: const TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.w400,
-                          color: AppColor.blackColor,
-                        ),
+                    )
+                  : Center(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          InkWell(
+                            onTap: () {
+                              idFrontPic();
+                            },
+                            child: Container(
+                              height: 56,
+                              width: 56,
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(28),
+                                  color: AppColor.primaryColor),
+                              child: const Center(
+                                child: Icon(
+                                  Icons.image,
+                                  color: AppColor.whiteColor,
+                                ),
+                              ),
+                            ),
+                          ),
+                          Text(
+                            'please upload id front picture',
+                            style: GoogleFonts.getFont(
+                              "Poppins",
+                              textStyle: const TextStyle(
+                                fontSize: 18,
+                                fontWeight: FontWeight.w400,
+                                color: AppColor.blackColor,
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
                     ),
-                  ],
-                ),
-              ),
             ),
             const VerticalSpeacing(20.0),
             Container(
@@ -174,61 +177,61 @@ class _UploadIdFamilyState extends State<UploadIdFamily> {
               ),
               child: backImage != null
                   ? Container(
-                height: 130,
-                width: 120,
-                decoration: BoxDecoration(
-                  image: DecorationImage(
-                    image: FileImage(
-                      backImage!,
-                    ),
-                    fit: BoxFit.contain,
-                  ),
-                ),
-              )
+                      height: 130,
+                      width: 120,
+                      decoration: BoxDecoration(
+                        image: DecorationImage(
+                          image: FileImage(
+                            backImage!,
+                          ),
+                          fit: BoxFit.contain,
+                        ),
+                      ),
+                    )
                   : Center(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    InkWell(
-                      child: InkWell(
-                        onTap: () {
-                          idBackPic();
-                        },
-                        child: Container(
-                          height: 56,
-                          width: 56,
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(28),
-                              color: AppColor.primaryColor),
-                          child: const Center(
-                            child: Icon(
-                              Icons.image,
-                              color: AppColor.whiteColor,
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          InkWell(
+                            child: InkWell(
+                              onTap: () {
+                                idBackPic();
+                              },
+                              child: Container(
+                                height: 56,
+                                width: 56,
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(28),
+                                    color: AppColor.primaryColor),
+                                child: const Center(
+                                  child: Icon(
+                                    Icons.image,
+                                    color: AppColor.whiteColor,
+                                  ),
+                                ),
+                              ),
                             ),
                           ),
-                        ),
+                          Text(
+                            'please upload id back picture',
+                            style: GoogleFonts.getFont(
+                              "Poppins",
+                              textStyle: const TextStyle(
+                                fontSize: 18,
+                                fontWeight: FontWeight.w400,
+                                color: AppColor.blackColor,
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
                     ),
-                    Text(
-                      'please upload id back picture',
-                      style: GoogleFonts.getFont(
-                        "Poppins",
-                        textStyle: const TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.w400,
-                          color: AppColor.blackColor,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
             ),
             const VerticalSpeacing(46.0),
             RoundedButton(
                 title: 'Continue',
                 onpress: () {
-                  Navigator.pushNamed(context, RoutesName.uploadImgFamily);
+                  authController.saveIdImages(context, frontImage, backImage);
                 }),
           ],
         ),
