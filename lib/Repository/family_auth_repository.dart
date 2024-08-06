@@ -160,8 +160,10 @@ class AuthRepositoryFamily {
         throw Exception('User not authenticated');
       }
 
-      final userRef =
-          databaseReference.child('Providers').child(userId).child('Passions');
+      final userRef = databaseReference
+          .child('Family')
+          .child(userId)
+          .child('FamilyPassions');
 
       await userRef.set(passionList);
 
@@ -171,7 +173,7 @@ class AuthRepositoryFamily {
       Utils.toastMessage('Passions saved successfully!');
       Navigator.pushNamedAndRemoveUntil(
         context,
-        RoutesName.availabilityView,
+        RoutesName.uploadIdFamily,
         (route) => false,
       );
     } catch (e) {
@@ -196,7 +198,7 @@ class AuthRepositoryFamily {
     );
     try {
       final userId = _firebaseAuth.currentUser!.uid;
-      final userRef = databaseReference.child('Providers').child(userId);
+      final userRef = databaseReference.child('Family').child(userId);
       userRef.update({
         "education": education,
         "hoursrate": hourRate,
@@ -206,7 +208,7 @@ class AuthRepositoryFamily {
       Utils.toastMessage('Education and Hours Rate saved successfully!');
       Navigator.pushNamedAndRemoveUntil(
         context,
-        RoutesName.selectPreference,
+        RoutesName.selectPassionFamily,
         (route) => false,
       );
     } catch (e) {
@@ -233,13 +235,13 @@ class AuthRepositoryFamily {
     try {
       final userId = _firebaseAuth.currentUser!.uid;
 
-      databaseReference.child('Providers').child(userId).child('Refernce');
+      databaseReference.child('Family').child(userId).child('FamilyReference');
       Navigator.of(context).pop();
-      Utils.toastMessage('Refenrence saved successfully!');
+      Utils.toastMessage('Reference saved successfully!');
 
       Navigator.pushNamedAndRemoveUntil(
         context,
-        RoutesName.uploadId,
+        RoutesName.uploadIdFamily,
         (route) => false,
       );
     } catch (e) {
