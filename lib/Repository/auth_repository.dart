@@ -226,6 +226,8 @@ class AuthRepository {
 
       databaseReference.child('Providers').child(userId).child('Refernce');
       Navigator.of(context).pop();
+      print('Refenrence saved successfully!');
+
       Utils.toastMessage('Refenrence saved successfully!');
 
       Navigator.pushNamedAndRemoveUntil(
