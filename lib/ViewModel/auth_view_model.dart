@@ -73,6 +73,24 @@ class AuthViewModel extends ChangeNotifier {
     }
   }
 
+  Future<void> saveEducationandHoursRate(
+      {required BuildContext context,
+      required String education,
+      required String hoursRate}) async {
+    _setLoading(true);
+    try {
+      await _authRepository.saveEducationAndHoursrate(
+        education,
+        hoursRate,
+        context,
+      );
+    } catch (e) {
+      debugPrint('Error saving details: ${e.toString()}');
+    } finally {
+      _setLoading(false);
+    }
+  }
+
   void _setLoading(bool value) {
     _isLoading = value;
     notifyListeners();

@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:nanny_fairy/ViewModel/auth_view_model.dart';
 import 'package:nanny_fairy/res/components/rounded_button.dart';
 import 'package:nanny_fairy/res/components/widgets/custom_text_field.dart';
 import 'package:nanny_fairy/res/components/widgets/vertical_spacing.dart';
 import 'package:nanny_fairy/utils/routes/routes_name.dart';
+import 'package:nanny_fairy/utils/utils.dart';
+import 'package:provider/provider.dart';
 import '../../../res/components/colors.dart';
 
 class EducationHorlyView extends StatefulWidget {
@@ -19,6 +22,8 @@ class _EducationHorlyViewState extends State<EducationHorlyView> {
 
   @override
   Widget build(BuildContext context) {
+    final authViewModel = Provider.of<AuthViewModel>(context);
+
     return Scaffold(
       backgroundColor: AppColor.primaryColor,
       appBar: PreferredSize(
@@ -174,7 +179,17 @@ class _EducationHorlyViewState extends State<EducationHorlyView> {
                 RoundedButton(
                     title: 'Register',
                     onpress: () {
-                      Navigator.pushNamed(context, RoutesName.selectPreference);
+                      if (educationController.text.isNotEmpty ||
+                          hoursRateController.text.isNotEmpty) {
+                        authViewModel.saveEducationandHoursRate(
+                          context: context,
+                          education: educationController.text,
+                          hoursRate: hoursRateController.text,
+                        );
+                      } else {
+                        Utils.flushBarErrorMessage(
+                            'Please Fill all the Fields', context);
+                      }
                     }),
               ],
             ),
