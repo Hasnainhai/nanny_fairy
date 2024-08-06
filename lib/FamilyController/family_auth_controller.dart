@@ -101,6 +101,21 @@ class FamilyAuthController extends ChangeNotifier {
     }
   }
 
+  Future<void> saveProfileAndBio(
+      BuildContext context,
+      File? profile,
+      String bio,
+      ) async {
+    _setLoading(true);
+    try {
+      await _authRepository.saveProfileAndBio(context, profile, bio);
+    } catch (e) {
+      debugPrint('Error saving details: ${e.toString()}');
+    } finally {
+      _setLoading(false);
+    }
+  }
+
   void _setLoading(bool value) {
     _isLoading = value;
     notifyListeners();
