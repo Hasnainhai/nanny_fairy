@@ -94,6 +94,7 @@ class AuthRepository {
 
     try {
       final userId = _firebaseAuth.currentUser?.uid;
+      final email = _firebaseAuth.currentUser?.email;
 
       if (userId == null) {
         throw Exception('User not authenticated');
@@ -110,6 +111,7 @@ class AuthRepository {
         'phoneNumber': phoneNumber,
         'dob': dob,
         "uid": userId,
+        "email": email,
       });
 
       // Remove the loading indicator
@@ -160,10 +162,10 @@ class AuthRepository {
       Navigator.of(context).pop();
 
       Utils.toastMessage('Passions saved successfully!');
-      Navigator.pushNamedAndRemoveUntil(
+
+      Navigator.pushNamed(
         context,
         RoutesName.availabilityView,
-        (route) => false,
       );
     } catch (e) {
       // Close the loading indicator
@@ -195,10 +197,9 @@ class AuthRepository {
       Navigator.of(context).pop();
 
       Utils.toastMessage('Education and Hours Rate saved successfully!');
-      Navigator.pushNamedAndRemoveUntil(
+      Navigator.pushNamed(
         context,
         RoutesName.selectPreference,
-        (route) => false,
       );
     } catch (e) {
       Navigator.of(context).pop();
@@ -224,14 +225,20 @@ class AuthRepository {
     try {
       final userId = _firebaseAuth.currentUser!.uid;
 
-      databaseReference.child('Providers').child(userId).child('Refernce');
+      databaseReference.child('Providers').child(userId).child('Refernce').set({
+        "experince": experince,
+        "job": job,
+        "skill": skill,
+        "land": land,
+        "phoneNumber": phone,
+      });
       Navigator.of(context).pop();
-      Utils.toastMessage('Refenrence saved successfully!');
+      print('Refenrence saved successfully!');
 
-      Navigator.pushNamedAndRemoveUntil(
+      Utils.toastMessage('Refenrence saved successfully!');
+      Navigator.pushNamed(
         context,
         RoutesName.uploadId,
-        (route) => false,
       );
     } catch (e) {
       Navigator.of(context).pop();
