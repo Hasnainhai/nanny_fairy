@@ -189,10 +189,10 @@ class AuthRepositoryFamily {
   }
 
   saveIdImages(
-      BuildContext context,
-      File? frontPic,
-      File? backImage,
-      ) async {
+    BuildContext context,
+    File? frontPic,
+    File? backImage,
+  ) async {
     showDialog(
       context: context,
       barrierDismissible: false,
@@ -206,7 +206,7 @@ class AuthRepositoryFamily {
       var uuid = const Uuid().v1();
       final userId = _firebaseAuth.currentUser!.uid;
       final userRef =
-      databaseReference.child('Family').child(userId).child("IdPicsFamily");
+          databaseReference.child('Family').child(userId).child("IdPicsFamily");
 
       String frontUrl = "";
       String backUrl = "";
@@ -250,6 +250,61 @@ class AuthRepositoryFamily {
 
       // Handle any errors that occur during save
       print('Error saving images: $e');
+      Utils.flushBarErrorMessage('Failed to save Images', context);
+    }
+  }
+
+  saveProfileAndBio(
+    BuildContext context,
+    File? profile,
+    String bio,
+  ) async {
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) {
+        return const Center(
+          child: CircularProgressIndicator(),
+        );
+      },
+    );
+    try {
+      var uuid = const Uuid().v1();
+      final userId = _firebaseAuth.currentUser!.uid;
+      final userRef = databaseReference.child('Family').child(userId);
+
+      String profileUrl =
+          'https://nakedsecurity.sophos.com/wp-content/uploads/sites/2/2013/08/facebook-silhouette_thumb.jpg';
+
+      if (profile != null) {
+        CommonFirebaseStorage commonStorage = CommonFirebaseStorage();
+        profileUrl = await commonStorage.storeFileFileToFirebase(
+          'Profile/$uuid',
+          profile,
+        );
+      } else {
+        Utils.flushBarErrorMessage("Please pick The Profile Pic", context);
+        Navigator.pop(context);
+        return;
+      }
+
+      userRef.update({
+        "profile": profileUrl,
+        "bio": bio,
+      });
+      Navigator.of(context).pop();
+      Utils.toastMessage('Images saved successfully!');
+      debugPrint(userId);
+      Navigator.pushNamedAndRemoveUntil(
+        context,
+        RoutesName.dashboardFamily,
+        (route) => false,
+      );
+    } catch (e) {
+      Navigator.of(context).pop();
+
+      // Handle any errors that occur during save
+      debugPrint('Error saving images: $e');
       Utils.flushBarErrorMessage('Failed to save Images', context);
     }
   }
