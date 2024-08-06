@@ -6,8 +6,16 @@ import 'package:nanny_fairy/res/components/widgets/vertical_spacing.dart';
 import 'package:nanny_fairy/utils/routes/routes_name.dart';
 import '../../../res/components/colors.dart';
 
-class EducationHorlyView extends StatelessWidget {
+class EducationHorlyView extends StatefulWidget {
   const EducationHorlyView({super.key});
+
+  @override
+  State<EducationHorlyView> createState() => _EducationHorlyViewState();
+}
+
+class _EducationHorlyViewState extends State<EducationHorlyView> {
+  TextEditingController educationController = TextEditingController();
+  TextEditingController hoursRateController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -99,8 +107,9 @@ class EducationHorlyView extends StatelessWidget {
                           ),
                         ),
                         const VerticalSpeacing(16.0),
-                        const TextFieldCustom(
-                          prefixIcon: Icon(Icons.school_outlined),
+                        TextFieldCustom(
+                          controller: educationController,
+                          prefixIcon: const Icon(Icons.school_outlined),
                           maxLines: 1,
                           hintText: 'Enter your education',
                         ),
@@ -151,8 +160,9 @@ class EducationHorlyView extends StatelessWidget {
                           ),
                         ),
                         const VerticalSpeacing(16.0),
-                        const TextFieldCustom(
-                          prefixIcon: Icon(Icons.euro_outlined),
+                        TextFieldCustom(
+                          controller: hoursRateController,
+                          prefixIcon: const Icon(Icons.euro_outlined),
                           maxLines: 1,
                           hintText: 'Enter your rate',
                         ),
@@ -161,9 +171,11 @@ class EducationHorlyView extends StatelessWidget {
                   ),
                 ),
                 const VerticalSpeacing(46.0),
-                RoundedButton(title: 'Register', onpress: () {
-                  Navigator.pushNamed(context, RoutesName.selectPreference);
-                }),
+                RoundedButton(
+                    title: 'Register',
+                    onpress: () {
+                      Navigator.pushNamed(context, RoutesName.selectPreference);
+                    }),
               ],
             ),
           ),
