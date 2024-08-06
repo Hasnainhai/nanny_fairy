@@ -1,14 +1,44 @@
-import 'package:flutter/cupertino.dart';
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:nanny_fairy/res/components/rounded_button.dart';
 import 'package:nanny_fairy/res/components/widgets/vertical_spacing.dart';
-
 import '../../../res/components/colors.dart';
 import '../../../utils/routes/routes_name.dart';
+import '../../res/components/widgets/image_picker.dart';
 
-class UploadIdFamily extends StatelessWidget {
+class UploadIdFamily extends StatefulWidget {
   const UploadIdFamily({super.key});
+
+  @override
+  State<UploadIdFamily> createState() => _UploadIdFamilyState();
+}
+
+class _UploadIdFamilyState extends State<UploadIdFamily> {
+  File? frontImage;
+  void idFrontPic() async {
+    File? img = await pickFrontImg(
+      context,
+    );
+    setState(
+          () {
+        frontImage = img;
+      },
+    );
+  }
+
+  File? backImage;
+
+  void idBackPic() async {
+    File? img = await pickFrontImg(
+      context,
+    );
+    setState(
+          () {
+        backImage = img;
+      },
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -69,20 +99,38 @@ class UploadIdFamily extends StatelessWidget {
                   ),
                 ],
               ),
-              child: Center(
+              child: frontImage != null
+                  ? Container(
+                height: 130,
+                width: 120,
+                decoration: BoxDecoration(
+                  image: DecorationImage(
+                    image: FileImage(
+                      frontImage!,
+                    ),
+                    fit: BoxFit.contain,
+                  ),
+                ),
+              )
+                  : Center(
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Container(
-                      height: 56,
-                      width: 56,
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(28),
-                          color: AppColor.primaryColor),
-                      child: const Center(
-                        child: Icon(
-                          Icons.image,
-                          color: AppColor.whiteColor,
+                    InkWell(
+                      onTap: () {
+                        idFrontPic();
+                      },
+                      child: Container(
+                        height: 56,
+                        width: 56,
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(28),
+                            color: AppColor.primaryColor),
+                        child: const Center(
+                          child: Icon(
+                            Icons.image,
+                            color: AppColor.whiteColor,
+                          ),
                         ),
                       ),
                     ),
@@ -106,8 +154,8 @@ class UploadIdFamily extends StatelessWidget {
               height: 193,
               width: double.infinity,
               decoration: BoxDecoration(
-                color: AppColor.whiteColor,
                 borderRadius: BorderRadius.circular(6),
+                color: AppColor.whiteColor,
                 border: Border.all(
                   strokeAlign: BorderSide.strokeAlignCenter,
                   color: const Color(0xff1B81BC)
@@ -124,20 +172,40 @@ class UploadIdFamily extends StatelessWidget {
                   ),
                 ],
               ),
-              child: Center(
+              child: backImage != null
+                  ? Container(
+                height: 130,
+                width: 120,
+                decoration: BoxDecoration(
+                  image: DecorationImage(
+                    image: FileImage(
+                      backImage!,
+                    ),
+                    fit: BoxFit.contain,
+                  ),
+                ),
+              )
+                  : Center(
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Container(
-                      height: 56,
-                      width: 56,
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(28),
-                          color: AppColor.primaryColor),
-                      child: const Center(
-                        child: Icon(
-                          Icons.image,
-                          color: AppColor.whiteColor,
+                    InkWell(
+                      child: InkWell(
+                        onTap: () {
+                          idBackPic();
+                        },
+                        child: Container(
+                          height: 56,
+                          width: 56,
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(28),
+                              color: AppColor.primaryColor),
+                          child: const Center(
+                            child: Icon(
+                              Icons.image,
+                              color: AppColor.whiteColor,
+                            ),
+                          ),
                         ),
                       ),
                     ),
