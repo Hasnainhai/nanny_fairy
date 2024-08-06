@@ -1,3 +1,5 @@
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:nanny_fairy/res/components/rounded_button.dart';
@@ -163,37 +165,47 @@ class _AvailabilityViewState extends State<AvailabilityView> {
                           ],
                         ),
                         const SizedBox(height: 16),
-                        const AvailabilityRow(label: 'Morning', availability: [
-                          true,
-                          true,
-                          false,
-                          false,
-                          false,
-                          false,
-                          false
-                        ]),
-                        const Divider(),
-                        const AvailabilityRow(label: 'Evening', availability: [
-                          false,
-                          false,
-                          false,
-                          true,
-                          false,
-                          false,
-                          false
-                        ]),
+                        const AvailabilityRow(
+                          label: 'Morning',
+                          availability: [
+                            true,
+                            true,
+                            false,
+                            false,
+                            false,
+                            false,
+                            false
+                          ],
+                          timePeriod: 'morning',
+                        ),
                         const Divider(),
                         const AvailabilityRow(
-                            label: 'Afternoon',
-                            availability: [
-                              false,
-                              false,
-                              false,
-                              false,
-                              false,
-                              true,
-                              false
-                            ]),
+                          label: 'Evening',
+                          availability: [
+                            false,
+                            false,
+                            false,
+                            true,
+                            false,
+                            false,
+                            false
+                          ],
+                          timePeriod: 'Evening',
+                        ),
+                        const Divider(),
+                        const AvailabilityRow(
+                          label: 'Afternoon',
+                          availability: [
+                            false,
+                            false,
+                            false,
+                            false,
+                            false,
+                            true,
+                            false
+                          ],
+                          timePeriod: 'Afternoon',
+                        ),
                         const VerticalSpeacing(10),
                       ],
                     ),
@@ -497,10 +509,13 @@ class _TimingContainerState extends State<TimingContainer> {
 class AvailabilityRow extends StatefulWidget {
   final String label;
   final List<bool> availability;
+  final String timePeriod; // morning, evening, or afternoon
 
   const AvailabilityRow({
+    super.key,
     required this.label,
     required this.availability,
+    required this.timePeriod,
   });
 
   @override
@@ -509,6 +524,7 @@ class AvailabilityRow extends StatefulWidget {
 
 class _AvailabilityRowState extends State<AvailabilityRow> {
   late List<bool> _availability;
+  final DatabaseReference _dbRef = FirebaseDatabase.instance.ref();
 
   @override
   void initState() {
@@ -520,7 +536,40 @@ class _AvailabilityRowState extends State<AvailabilityRow> {
   void _toggleAvailability(int index) {
     setState(() {
       _availability[index] = !_availability[index];
+      _storeAvailabilityInDatabase(index);
     });
+  }
+
+  void _storeAvailabilityInDatabase(int index) {
+    final firebaseAuth = FirebaseAuth.instance;
+    final userId = firebaseAuth.currentUser!.uid;
+    String day = _getDayName(index);
+    _dbRef
+        .child('Providers')
+        .child(userId).child('Availability')
+        .child('${widget.timePeriod}/$day')
+        .set(_availability[index]);
+  }
+
+  String _getDayName(int index) {
+    switch (index) {
+      case 0:
+        return 'Monday';
+      case 1:
+        return 'Tuesday';
+      case 2:
+        return 'Wednesday';
+      case 3:
+        return 'Thursday';
+      case 4:
+        return 'Friday';
+      case 5:
+        return 'Saturday';
+      case 6:
+        return 'Sunday';
+      default:
+        return '';
+    }
   }
 
   @override
@@ -556,6 +605,7 @@ class AvailabilityCheckBox extends StatelessWidget {
   final bool isAvailable;
 
   const AvailabilityCheckBox({
+    super.key,
     required this.isAvailable,
   });
 
