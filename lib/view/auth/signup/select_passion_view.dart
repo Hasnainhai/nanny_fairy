@@ -172,7 +172,7 @@ class _SelectPassionViewState extends State<SelectPassionView> {
                 onpress: () {
                   if (labels.isNotEmpty) {
                     authViewModel.savePassion(
-                        passionList: labels, context: context);
+                        passionList: selectedLabels, context: context);
                   } else {
                     Utils.flushBarErrorMessage(
                         "Please Select the Passion", context);
