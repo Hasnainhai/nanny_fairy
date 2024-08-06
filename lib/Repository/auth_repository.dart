@@ -174,4 +174,71 @@ class AuthRepository {
       Utils.flushBarErrorMessage('Failed to save passions', context);
     }
   }
+
+  saveEducationAndHoursrate(String education, hourRate, BuildContext context) {
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) {
+        return const Center(
+          child: CircularProgressIndicator(),
+        );
+      },
+    );
+    try {
+      final userId = _firebaseAuth.currentUser!.uid;
+      final userRef = databaseReference.child('Providers').child(userId);
+      userRef.update({
+        "education": education,
+        "hoursrate": hourRate,
+      });
+      Navigator.of(context).pop();
+
+      Utils.toastMessage('Education and Hours Rate saved successfully!');
+      Navigator.pushNamedAndRemoveUntil(
+        context,
+        RoutesName.selectPreference,
+        (route) => false,
+      );
+    } catch (e) {
+      Navigator.of(context).pop();
+
+      // Handle any errors that occur during save
+      print('Error saving passions: $e');
+      Utils.flushBarErrorMessage(
+          'Failed to save education and hours Rate', context);
+    }
+  }
+
+  saveRefernce(
+      String experince, job, skill, land, phone, BuildContext context) {
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) {
+        return const Center(
+          child: CircularProgressIndicator(),
+        );
+      },
+    );
+    try {
+      final userId = _firebaseAuth.currentUser!.uid;
+
+      databaseReference.child('Providers').child(userId).child('Refernce');
+      Navigator.of(context).pop();
+      Utils.toastMessage('Refenrence saved successfully!');
+
+      Navigator.pushNamedAndRemoveUntil(
+        context,
+        RoutesName.uploadId,
+        (route) => false,
+      );
+    } catch (e) {
+      Navigator.of(context).pop();
+
+      // Handle any errors that occur during save
+      print('Error saving refernce: $e');
+      Utils.flushBarErrorMessage('Failed to save Refernce', context);
+    }
+  }
 }
