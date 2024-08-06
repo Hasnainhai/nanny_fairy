@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:nanny_fairy/ViewModel/auth_view_model.dart';
 import 'package:nanny_fairy/res/components/rounded_button.dart';
 import 'package:nanny_fairy/res/components/widgets/custom_text_field.dart';
 import 'package:nanny_fairy/res/components/widgets/vertical_spacing.dart';
 import 'package:nanny_fairy/utils/routes/routes_name.dart';
+import 'package:nanny_fairy/utils/utils.dart';
+import 'package:provider/provider.dart';
 import '../../../res/components/colors.dart';
 
 class SelectPreference extends StatefulWidget {
@@ -14,6 +18,13 @@ class SelectPreference extends StatefulWidget {
 }
 
 class _SelectPreferenceState extends State<SelectPreference> {
+  TextEditingController experinceController = TextEditingController();
+  TextEditingController jobController = TextEditingController();
+
+  TextEditingController landController = TextEditingController();
+
+  TextEditingController phoneController = TextEditingController();
+
   String _btn2SelectedVal = "Animal care";
   static const menuItems = <String>[
     'Animal care',
@@ -34,9 +45,19 @@ class _SelectPreferenceState extends State<SelectPreference> {
         ),
       )
       .toList();
-  String dropvalve = "Animal care";
+  @override
+  void dispose() {
+    super.dispose();
+    experinceController.dispose();
+    jobController.dispose();
+    landController.dispose();
+    phoneController.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
+    final authViewModel = Provider.of<AuthViewModel>(context);
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.transparent,
@@ -72,8 +93,9 @@ class _SelectPreferenceState extends State<SelectPreference> {
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const TextFieldCustom(
-                    prefixIcon: Icon(Icons.school_outlined),
+                  TextFieldCustom(
+                    controller: experinceController,
+                    prefixIcon: const Icon(Icons.school_outlined),
                     maxLines: 1,
                     hintText: 'Enter your experience',
                   ),
@@ -101,7 +123,8 @@ class _SelectPreferenceState extends State<SelectPreference> {
                       ),
                     ),
                   ),
-                  const TextFieldCustom(
+                  TextFieldCustom(
+                    controller: jobController,
                     maxLines: 1,
                     hintText: 'Job',
                   ),
@@ -156,17 +179,19 @@ class _SelectPreferenceState extends State<SelectPreference> {
                     ),
                   ),
                   const VerticalSpeacing(16),
-                  const Row(
+                  Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Expanded(
                           child: TextFieldCustom(
                         maxLines: 1,
+                        controller: landController,
                         hintText: 'Land',
                       )),
-                      SizedBox(width: 10.0),
+                      const SizedBox(width: 10.0),
                       Expanded(
                           child: TextFieldCustom(
+                        controller: phoneController,
                         maxLines: 1,
                         hintText: 'Mobile Number',
                       )),
@@ -176,7 +201,22 @@ class _SelectPreferenceState extends State<SelectPreference> {
                   RoundedButton(
                       title: 'Continue',
                       onpress: () {
-                        Navigator.pushNamed(context, RoutesName.uploadId);
+                        if (experinceController.text.isNotEmpty ||
+                            jobController.text.isNotEmpty ||
+                            landController.text.isNotEmpty ||
+                            phoneController.text.isNotEmpty) {
+                          authViewModel.savePrefernce(
+                            context: context,
+                            experince: experinceController.text,
+                            job: jobController.text,
+                            skill: _btn2SelectedVal,
+                            land: landController.text,
+                            phoneNumber: phoneController.text,
+                          );
+                        } else {
+                          Utils.flushBarErrorMessage(
+                              'Please Fill all the Fields', context);
+                        }
                       }),
                 ],
               ),
