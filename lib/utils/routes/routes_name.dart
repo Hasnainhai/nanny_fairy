@@ -44,4 +44,5 @@ class RoutesName {
   static const String settingsFamily = '/setting_family';
   static const String myProfileFamily = '/my_profile_family';
   static const String editProfileFamily = '/edit_profile_family';
+  static const String loginFamily = '/login_family';
 }

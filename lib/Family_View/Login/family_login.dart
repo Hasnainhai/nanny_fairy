@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:nanny_fairy/res/components/rounded_button.dart';
+import 'package:nanny_fairy/res/components/widgets/custom_text_field.dart';
 import 'package:nanny_fairy/res/components/widgets/vertical_spacing.dart';
 import 'package:nanny_fairy/utils/routes/routes_name.dart';
-import 'package:nanny_fairy/view/auth/signup/select_passion_view.dart';
-import 'package:nanny_fairy/view/auth/signup/select_preference.dart';
-import '../../res/components/colors.dart';
 
-class LoginOrSignupView extends StatelessWidget {
-  const LoginOrSignupView({super.key});
+import '../../../res/components/colors.dart';
+
+class LoginViewFamily extends StatelessWidget {
+  const LoginViewFamily({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -58,33 +58,37 @@ class LoginOrSignupView extends StatelessWidget {
                       ],
                     ),
                   ]),
-              const VerticalSpeacing(60.0),
-              RoundedButton(
-                  title: 'Login as family',
-                  onpress: () {
-                    Navigator.pushNamed(context, RoutesName.loginFamily);
-                  }),
-              const VerticalSpeacing(20.0),
-              RoundedButton(
-                  title: 'Login as provider',
-                  onpress: () {
-                    Navigator.pushNamed(context, RoutesName.loginView);
-                  }),
-              const VerticalSpeacing(20.0),
-              RoundedButton(
-                  title: 'register as a family',
-                  onpress: () {
-                    Navigator.pushNamed(
-                        context, RoutesName.createAccountFamily);
-                  }),
-              const VerticalSpeacing(20.0),
-              RoundedButton(
-                title: 'register as a provider',
-                onpress: () {
-                  Navigator.pushNamed(context, RoutesName.createAccount);
-                },
+              const VerticalSpeacing(30.0),
+              const TextFieldCustom(
+                  maxLines: 1,
+                  hintText: 'hasnainDev@gmail.com'),
+              const TextFieldCustom(
+                  maxLines: 1, hintText: '*********'),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  InkWell(
+                    onTap: (){
+                      Navigator.pushNamed(context, RoutesName.forgetPass);
+                    },
+                    child: Text(
+                      'Forget Password?',
+                      style: GoogleFonts.getFont(
+                        "Poppins",
+                        textStyle: const TextStyle(
+                          fontSize: 14,
+                          fontWeight: FontWeight.w400,
+                          color: AppColor.blackColor,
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
               ),
-              const VerticalSpeacing(20.0),
+              const VerticalSpeacing(60.0),
+              RoundedButton(title: 'Login', onpress: () {
+                Navigator.pushNamed(context, RoutesName.dashboardFamily);
+              }),
             ],
           ),
         ),

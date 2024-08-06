@@ -28,6 +28,22 @@ class AuthViewModel extends ChangeNotifier {
       _setLoading(false);
     }
   }
+  Future<void> loginAccount({
+    required String email,
+    required String password,
+    required BuildContext context,
+  }) async {
+    _setLoading(true);
+    try {
+      await _authRepository.loginAccount(
+        email: email,
+        password: password,
+        context: context,
+      );
+    } finally {
+      _setLoading(false);
+    }
+  }
 
   Future<void> saveDetails({
     required String firstName,
