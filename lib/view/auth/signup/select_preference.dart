@@ -34,7 +34,7 @@ class _SelectPreferenceState extends State<SelectPreference> {
         ),
       )
       .toList();
-
+  String dropvalve = "Animal care";
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -63,123 +63,125 @@ class _SelectPreferenceState extends State<SelectPreference> {
         ),
         centerTitle: true,
       ),
-      body: Padding(
-        padding: const EdgeInsets.only(left: 16.0, right: 16.0),
-        child: Column(
-          children: [
-            const VerticalSpeacing(30.0),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const TextFieldCustom(
-                  prefixIcon: Icon(Icons.school_outlined),
-                  maxLines: 1,
-                  hintText: 'Enter your experience',
-                ),
-                const VerticalSpeacing(16.0),
-                Text(
-                  'Referance',
-                  style: GoogleFonts.getFont(
-                    "Poppins",
-                    textStyle: const TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.w400,
-                      color: AppColor.blackColor,
-                    ),
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.only(left: 16.0, right: 16.0),
+          child: Column(
+            children: [
+              const VerticalSpeacing(30.0),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const TextFieldCustom(
+                    prefixIcon: Icon(Icons.school_outlined),
+                    maxLines: 1,
+                    hintText: 'Enter your experience',
                   ),
-                ),
-                const VerticalSpeacing(16.0),
-                Text(
-                  'Name',
-                  style: GoogleFonts.getFont(
-                    "Poppins",
-                    textStyle: const TextStyle(
-                      fontSize: 14,
-                      fontWeight: FontWeight.w400,
-                      color: AppColor.blackColor,
-                    ),
-                  ),
-                ),
-                const TextFieldCustom(
-                  maxLines: 1,
-                  hintText: 'Job',
-                ),
-                Text(
-                  'Which Skill You are provided',
-                  style: GoogleFonts.getFont(
-                    "Poppins",
-                    textStyle: const TextStyle(
-                      fontSize: 14,
-                      fontWeight: FontWeight.w400,
-                      color: AppColor.blackColor,
-                    ),
-                  ),
-                ),
-                const VerticalSpeacing(10),
-                Container(
-                  decoration: BoxDecoration(
-                    color: AppColor.whiteColor,
-                    border: Border.all(
-                      strokeAlign: BorderSide.strokeAlignCenter,
-                      color: const Color(0xff1B81BC)
-                          .withOpacity(0.10), // Stroke color with 10% opacity
-                      width: 1,
-                    ),
-                    boxShadow: [
-                      BoxShadow(
-                        color: const Color(0xff1B81BC).withOpacity(
-                            0.1), // Drop shadow color with 4% opacity
-                        blurRadius: 2,
-                        offset: const Offset(1, 2),
-                        spreadRadius: 1,
+                  const VerticalSpeacing(16.0),
+                  Text(
+                    'Referance',
+                    style: GoogleFonts.getFont(
+                      "Poppins",
+                      textStyle: const TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w400,
+                        color: AppColor.blackColor,
                       ),
+                    ),
+                  ),
+                  const VerticalSpeacing(16.0),
+                  Text(
+                    'Name',
+                    style: GoogleFonts.getFont(
+                      "Poppins",
+                      textStyle: const TextStyle(
+                        fontSize: 14,
+                        fontWeight: FontWeight.w400,
+                        color: AppColor.blackColor,
+                      ),
+                    ),
+                  ),
+                  const TextFieldCustom(
+                    maxLines: 1,
+                    hintText: 'Job',
+                  ),
+                  Text(
+                    'Which Skill You are provided',
+                    style: GoogleFonts.getFont(
+                      "Poppins",
+                      textStyle: const TextStyle(
+                        fontSize: 14,
+                        fontWeight: FontWeight.w400,
+                        color: AppColor.blackColor,
+                      ),
+                    ),
+                  ),
+                  const VerticalSpeacing(10),
+                  Container(
+                    decoration: BoxDecoration(
+                      color: AppColor.whiteColor,
+                      border: Border.all(
+                        strokeAlign: BorderSide.strokeAlignCenter,
+                        color: const Color(0xff1B81BC)
+                            .withOpacity(0.10), // Stroke color with 10% opacity
+                        width: 1,
+                      ),
+                      boxShadow: [
+                        BoxShadow(
+                          color: const Color(0xff1B81BC).withOpacity(
+                              0.1), // Drop shadow color with 4% opacity
+                          blurRadius: 2,
+                          offset: const Offset(1, 2),
+                          spreadRadius: 1,
+                        ),
+                      ],
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.only(left: 8, right: 8.0),
+                      child: DropdownButton(
+                        dropdownColor: AppColor.whiteColor,
+                        isExpanded: true,
+                        icon: const Icon(Icons.expand_more),
+                        underline: const SizedBox(),
+                        value: _btn2SelectedVal,
+                        onChanged: (String? newValue) {
+                          if (newValue != null) {
+                            setState(() {
+                              _btn2SelectedVal = newValue;
+                            });
+                          }
+                        },
+                        items: _dropDownMenuItems,
+                      ),
+                    ),
+                  ),
+                  const VerticalSpeacing(16),
+                  const Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Expanded(
+                          child: TextFieldCustom(
+                        maxLines: 1,
+                        hintText: 'Land',
+                      )),
+                      SizedBox(width: 10.0),
+                      Expanded(
+                          child: TextFieldCustom(
+                        maxLines: 1,
+                        hintText: 'Mobile Number',
+                      )),
                     ],
                   ),
-                  child: Padding(
-                    padding: const EdgeInsets.only(left: 8, right: 8.0),
-                    child: DropdownButton(
-                      dropdownColor: AppColor.whiteColor,
-                      isExpanded: true,
-                      icon: const Icon(Icons.expand_more),
-                      underline: const SizedBox(),
-                      value: _btn2SelectedVal,
-                      onChanged: (String? newValue) {
-                        if (newValue != null) {
-                          setState(() {
-                            _btn2SelectedVal = newValue;
-                          });
-                        }
-                      },
-                      items: _dropDownMenuItems,
-                    ),
-                  ),
-                ),
-                const VerticalSpeacing(16),
-                const Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Expanded(
-                        child: TextFieldCustom(
-                      maxLines: 1,
-                      hintText: 'Land',
-                    )),
-                    SizedBox(width: 10.0),
-                    Expanded(
-                        child: TextFieldCustom(
-                      maxLines: 1,
-                      hintText: 'Mobile Number',
-                    )),
-                  ],
-                ),
-                const VerticalSpeacing(60.0),
-                RoundedButton(
-                    title: 'Continue',
-                    onpress: () {
-                      Navigator.pushNamed(context, RoutesName.uploadId);
-                    }),
-              ],
-            ),
-          ],
+                  const VerticalSpeacing(60.0),
+                  RoundedButton(
+                      title: 'Continue',
+                      onpress: () {
+                        Navigator.pushNamed(context, RoutesName.uploadId);
+                      }),
+                ],
+              ),
+            ],
+          ),
         ),
       ),
     );

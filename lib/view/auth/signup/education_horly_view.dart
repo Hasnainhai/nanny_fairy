@@ -4,7 +4,6 @@ import 'package:nanny_fairy/ViewModel/auth_view_model.dart';
 import 'package:nanny_fairy/res/components/rounded_button.dart';
 import 'package:nanny_fairy/res/components/widgets/custom_text_field.dart';
 import 'package:nanny_fairy/res/components/widgets/vertical_spacing.dart';
-import 'package:nanny_fairy/utils/routes/routes_name.dart';
 import 'package:nanny_fairy/utils/utils.dart';
 import 'package:provider/provider.dart';
 import '../../../res/components/colors.dart';
@@ -19,6 +18,12 @@ class EducationHorlyView extends StatefulWidget {
 class _EducationHorlyViewState extends State<EducationHorlyView> {
   TextEditingController educationController = TextEditingController();
   TextEditingController hoursRateController = TextEditingController();
+  @override
+  void dispose() {
+    super.dispose();
+    educationController.dispose();
+    hoursRateController.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
