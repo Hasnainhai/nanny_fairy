@@ -6,8 +6,8 @@ import 'package:image_picker/image_picker.dart';
 
 Future<File?> pickImageFromGallery(
   BuildContext context,
+  File? image,
 ) async {
-  File? image;
   try {
     final pickedImage =
         await ImagePicker().pickImage(source: ImageSource.gallery);

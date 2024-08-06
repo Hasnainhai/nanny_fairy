@@ -18,13 +18,28 @@ class UploadId extends StatefulWidget {
 
 class _UploadIdState extends State<UploadId> {
   File? image;
+  File? image2;
+
   void pickImage() async {
     final img = await pickImageFromGallery(
       context,
+      image,
     );
     setState(
       () {
         image = img;
+      },
+    );
+  }
+
+  void backPic() async {
+    final img = await pickImageFromGallery(
+      context,
+      image2,
+    );
+    setState(
+      () {
+        image2 = img;
       },
     );
   }
@@ -107,7 +122,9 @@ class _UploadIdState extends State<UploadId> {
                         children: [
                           InkWell(
                             onTap: () async {
-                              image = await pickImageFromGallery(context);
+                              setState(() {
+                                //  image = await pickImageFromGallery(context);
+                              });
                             },
                             child: Container(
                               height: 56,
@@ -161,39 +178,52 @@ class _UploadIdState extends State<UploadId> {
                   ),
                 ],
               ),
-              child: Center(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    InkWell(
-                      child: Container(
-                        height: 56,
-                        width: 56,
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(28),
-                            color: AppColor.primaryColor),
-                        child: const Center(
-                          child: Icon(
-                            Icons.image,
-                            color: AppColor.whiteColor,
+              child: image2 != null
+                  ? Container(
+                      height: 130,
+                      width: 120,
+                      decoration: BoxDecoration(
+                        image: DecorationImage(
+                          image: FileImage(
+                            image2!,
                           ),
+                          fit: BoxFit.fill,
                         ),
                       ),
-                    ),
-                    Text(
-                      'please upload id back picture',
-                      style: GoogleFonts.getFont(
-                        "Poppins",
-                        textStyle: const TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.w400,
-                          color: AppColor.blackColor,
-                        ),
+                    )
+                  : Center(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          InkWell(
+                            child: Container(
+                              height: 56,
+                              width: 56,
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(28),
+                                  color: AppColor.primaryColor),
+                              child: const Center(
+                                child: Icon(
+                                  Icons.image,
+                                  color: AppColor.whiteColor,
+                                ),
+                              ),
+                            ),
+                          ),
+                          Text(
+                            'please upload id back picture',
+                            style: GoogleFonts.getFont(
+                              "Poppins",
+                              textStyle: const TextStyle(
+                                fontSize: 18,
+                                fontWeight: FontWeight.w400,
+                                color: AppColor.blackColor,
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
                     ),
-                  ],
-                ),
-              ),
             ),
             const VerticalSpeacing(46.0),
             RoundedButton(
