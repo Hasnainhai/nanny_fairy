@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:nanny_fairy/Repository/auth_repository.dart';
 
@@ -108,6 +110,21 @@ class AuthViewModel extends ChangeNotifier {
         phoneNumber,
         context,
       );
+    } catch (e) {
+      debugPrint('Error saving details: ${e.toString()}');
+    } finally {
+      _setLoading(false);
+    }
+  }
+
+  Future<void> SaveIdImages(
+    BuildContext context,
+    File? frontPic,
+    File? backPic,
+  ) async {
+    _setLoading(true);
+    try {
+      await _authRepository.saveIdImages(context, frontPic, backPic);
     } catch (e) {
       debugPrint('Error saving details: ${e.toString()}');
     } finally {

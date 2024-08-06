@@ -1,10 +1,14 @@
 // ignore_for_file: use_build_context_synchronously
 
+import 'dart:io';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:nanny_fairy/res/components/common_firebase_storge.dart';
 import 'package:nanny_fairy/utils/routes/routes_name.dart';
 import 'package:nanny_fairy/utils/utils.dart';
 import 'package:firebase_database/firebase_database.dart';
+import 'package:uuid/uuid.dart';
 
 class AuthRepository {
   final FirebaseAuth _firebaseAuth;
@@ -246,6 +250,72 @@ class AuthRepository {
       // Handle any errors that occur during save
       print('Error saving refernce: $e');
       Utils.flushBarErrorMessage('Failed to save Refernce', context);
+    }
+  }
+
+  saveIdImages(
+    BuildContext context,
+    File? frontPic,
+    File? backImage,
+  ) async {
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) {
+        return const Center(
+          child: CircularProgressIndicator(),
+        );
+      },
+    );
+    try {
+      var uuid = const Uuid().v1();
+      final userId = _firebaseAuth.currentUser!.uid;
+      final userRef =
+          databaseReference.child('Providers').child(userId).child("IdPics");
+
+      String frontUrl = "";
+      String backUrl = "";
+
+      if (frontPic != null) {
+        CommonFirebaseStorage commonStorage = CommonFirebaseStorage();
+        frontUrl = await commonStorage.storeFileFileToFirebase(
+          'Id/$uuid+1',
+          frontPic,
+        );
+      } else {
+        Utils.flushBarErrorMessage("Please pick The Id Front Pic", context);
+        Navigator.pop(context);
+        return;
+      }
+      if (backImage != null) {
+        CommonFirebaseStorage commonStorage = CommonFirebaseStorage();
+        backUrl = await commonStorage.storeFileFileToFirebase(
+          'Id/$uuid',
+          backImage,
+        );
+      } else {
+        Utils.flushBarErrorMessage("Please pick The Id Back Pic", context);
+        Navigator.pop(context);
+        return;
+      }
+
+      userRef.set({
+        "frontPic": frontUrl,
+        "backPic": backUrl,
+      });
+      Navigator.of(context).pop();
+      Utils.toastMessage('Images saved successfully!');
+      debugPrint(userId);
+      Navigator.pushNamed(
+        context,
+        RoutesName.uploadImg,
+      );
+    } catch (e) {
+      Navigator.of(context).pop();
+
+      // Handle any errors that occur during save
+      print('Error saving images: $e');
+      Utils.flushBarErrorMessage('Failed to save Images', context);
     }
   }
 }
