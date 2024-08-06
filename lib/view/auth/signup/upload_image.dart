@@ -1,15 +1,42 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:nanny_fairy/ViewModel/auth_view_model.dart';
 import 'package:nanny_fairy/res/components/rounded_button.dart';
+import 'package:nanny_fairy/res/components/widgets/image_picker.dart';
 import 'package:nanny_fairy/res/components/widgets/vertical_spacing.dart';
 import 'package:nanny_fairy/utils/routes/routes_name.dart';
+import 'package:nanny_fairy/utils/utils.dart';
+import 'package:provider/provider.dart';
 import '../../../res/components/colors.dart';
 
-class UploadImage extends StatelessWidget {
+class UploadImage extends StatefulWidget {
   const UploadImage({super.key});
 
   @override
+  State<UploadImage> createState() => _UploadImageState();
+}
+
+class _UploadImageState extends State<UploadImage> {
+  TextEditingController bioController = TextEditingController();
+  File? profilePic;
+  void pickProfile() async {
+    File? img = await pickFrontImg(
+      context,
+    );
+    setState(
+      () {
+        profilePic = img;
+      },
+    );
+  }
+
+  @override
   Widget build(BuildContext context) {
+    final authViewModel = Provider.of<AuthViewModel>(context);
+
     return Scaffold(
       backgroundColor: AppColor.primaryColor,
       body: Stack(
@@ -25,7 +52,7 @@ class UploadImage extends StatelessWidget {
             ),
             child: SingleChildScrollView(
               child: Padding(
-                padding: EdgeInsets.only(left: 16.0, right: 16.0),
+                padding: const EdgeInsets.only(left: 16.0, right: 16.0),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -65,10 +92,12 @@ class UploadImage extends StatelessWidget {
                           ),
                         ],
                       ),
-                      child: const Padding(
-                        padding: EdgeInsets.only(left: 10.0),
+                      child: Padding(
+                        padding: const EdgeInsets.only(left: 10.0),
                         child: TextField(
-                          decoration: InputDecoration(
+                          maxLines: 10,
+                          controller: bioController,
+                          decoration: const InputDecoration(
                             hintText: 'Type...',
                             border: InputBorder.none,
                           ),
@@ -79,7 +108,13 @@ class UploadImage extends StatelessWidget {
                     RoundedButton(
                         title: 'Continue',
                         onpress: () {
-                          Navigator.pushNamed(context, RoutesName.dashboard);
+                          if (bioController.text.isNotEmpty) {
+                            authViewModel.saveProfileAndBio(
+                                context, profilePic, bioController.text);
+                          } else {
+                            Utils.flushBarErrorMessage(
+                                "Please Enter Image", context);
+                          }
                         }),
                   ],
                 ),
@@ -104,7 +139,7 @@ class UploadImage extends StatelessWidget {
                         Navigator.pop(context);
                       },
                     ),
-                    SizedBox(width: 50),
+                    const SizedBox(width: 50),
                     Text(
                       'Upload Image',
                       style: GoogleFonts.getFont(
@@ -135,14 +170,25 @@ class UploadImage extends StatelessWidget {
                   borderRadius: BorderRadius.circular(60),
                   border: Border.all(width: 4, color: AppColor.whiteColor)),
               child: Center(
-                child: Padding(
-                  padding: const EdgeInsets.all(12.0),
-                  child: Image.asset(
-                    'images/profile.png',
-                    fit: BoxFit.cover,
-                    color: AppColor.whiteColor,
-                  ),
-                ),
+                child: profilePic == null
+                    ? Image.asset(
+                        'images/profile.png',
+                        fit: BoxFit.cover,
+                        color: AppColor.whiteColor,
+                      )
+                    : Container(
+                        height: 120,
+                        width: 120,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(60),
+                          image: DecorationImage(
+                            image: FileImage(
+                              profilePic!,
+                            ),
+                            fit: BoxFit.fill,
+                          ),
+                        ),
+                      ),
               ),
             ),
           ),
@@ -160,7 +206,9 @@ class UploadImage extends StatelessWidget {
                       color: AppColor.primaryColor),
                   child: Center(
                     child: IconButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        pickProfile();
+                      },
                       icon: const Icon(
                         Icons.camera_alt_outlined,
                         size: 18,
@@ -178,7 +226,9 @@ class UploadImage extends StatelessWidget {
                       color: AppColor.primaryColor),
                   child: Center(
                     child: IconButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        pickProfile();
+                      },
                       icon: const Icon(
                         Icons.save_as_outlined,
                         size: 18,
