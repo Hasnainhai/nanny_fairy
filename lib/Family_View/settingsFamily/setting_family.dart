@@ -163,35 +163,47 @@ class SettingsFamilyView extends StatelessWidget {
                         ],
                       ),
                       const SizedBox(height: 16),
-                      const AvailabilityRow(label: 'Morning', availability: [
-                        true,
-                        true,
-                        false,
-                        false,
-                        false,
-                        false,
-                        false
-                      ]),
+                      const AvailabilityRow(
+                        label: 'Morning',
+                        availability: [
+                          true,
+                          true,
+                          false,
+                          false,
+                          false,
+                          false,
+                          false
+                        ],
+                        timePeriod: 'Morning',
+                      ),
                       const Divider(),
-                      const AvailabilityRow(label: 'Afternoon', availability: [
-                        false,
-                        false,
-                        false,
-                        true,
-                        false,
-                        false,
-                        false
-                      ]),
+                      const AvailabilityRow(
+                        label: 'Afternoon',
+                        availability: [
+                          false,
+                          false,
+                          false,
+                          true,
+                          false,
+                          false,
+                          false
+                        ],
+                        timePeriod: 'Afternoon',
+                      ),
                       const Divider(),
-                      const AvailabilityRow(label: 'Evening', availability: [
-                        false,
-                        false,
-                        false,
-                        false,
-                        false,
-                        true,
-                        false
-                      ]),
+                      const AvailabilityRow(
+                        label: 'Evening',
+                        availability: [
+                          false,
+                          false,
+                          false,
+                          false,
+                          false,
+                          true,
+                          false
+                        ],
+                        timePeriod: 'Evening',
+                      ),
                       const VerticalSpeacing(10),
                     ],
                   ),
@@ -212,21 +224,19 @@ class SettingsFamilyView extends StatelessWidget {
                   ),
                   boxShadow: [
                     BoxShadow(
-                      color: const Color(0xff1B81BC)
-                          .withOpacity(0.1), // Drop shadow color with 4% opacity
+                      color: const Color(0xff1B81BC).withOpacity(
+                          0.1), // Drop shadow color with 4% opacity
                       blurRadius: 2,
                       offset: const Offset(1, 2),
                       spreadRadius: 1,
                     ),
                   ],
-
                 ),
                 child: Padding(
                   padding: const EdgeInsets.all(10.0),
                   child: Column(
                     children: [
-                      const SizedBox(
-                          height: 16),
+                      const SizedBox(height: 16),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
@@ -285,8 +295,6 @@ class SettingsFamilyView extends StatelessWidget {
                               ),
                             ),
                           ),
-
-
                         ],
                       ),
                       Divider(),
@@ -316,8 +324,6 @@ class SettingsFamilyView extends StatelessWidget {
                               ),
                             ),
                           ),
-
-
                         ],
                       ),
                       Divider(),
@@ -347,20 +353,13 @@ class SettingsFamilyView extends StatelessWidget {
                               ),
                             ),
                           ),
-
-
                         ],
                       ),
-
-
-
                     ],
                   ),
                 ),
-
               ),
               const VerticalSpeacing(16.0),
-
               Text(
                 'Notification',
                 style: GoogleFonts.getFont(
