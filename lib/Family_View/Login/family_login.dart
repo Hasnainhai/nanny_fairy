@@ -1,17 +1,29 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:nanny_fairy/FamilyController/family_auth_controller.dart';
 import 'package:nanny_fairy/res/components/rounded_button.dart';
 import 'package:nanny_fairy/res/components/widgets/custom_text_field.dart';
 import 'package:nanny_fairy/res/components/widgets/vertical_spacing.dart';
 import 'package:nanny_fairy/utils/routes/routes_name.dart';
+import 'package:provider/provider.dart';
 
 import '../../../res/components/colors.dart';
+import '../../utils/utils.dart';
 
-class LoginViewFamily extends StatelessWidget {
+class LoginViewFamily extends StatefulWidget {
   const LoginViewFamily({super.key});
 
   @override
+  State<LoginViewFamily> createState() => _LoginViewFamilyState();
+}
+
+class _LoginViewFamilyState extends State<LoginViewFamily> {
+  final TextEditingController emailController = TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
+
+  @override
   Widget build(BuildContext context) {
+    final authController = Provider.of<FamilyAuthController>(context);
     return Scaffold(
       body: SafeArea(
         child: Padding(
@@ -59,16 +71,19 @@ class LoginViewFamily extends StatelessWidget {
                     ),
                   ]),
               const VerticalSpeacing(30.0),
-              const TextFieldCustom(
+              TextFieldCustom(
+                  controller: emailController,
                   maxLines: 1,
                   hintText: 'hasnainDev@gmail.com'),
-              const TextFieldCustom(
-                  maxLines: 1, hintText: '*********'),
+              TextFieldCustom(
+                  controller: passwordController,
+                  maxLines: 1,
+                  hintText: '*********'),
               Row(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
                   InkWell(
-                    onTap: (){
+                    onTap: () {
                       Navigator.pushNamed(context, RoutesName.forgetPass);
                     },
                     child: Text(
@@ -86,9 +101,19 @@ class LoginViewFamily extends StatelessWidget {
                 ],
               ),
               const VerticalSpeacing(60.0),
-              RoundedButton(title: 'Login', onpress: () {
-                Navigator.pushNamed(context, RoutesName.dashboardFamily);
-              }),
+              RoundedButton(
+                  title: 'Login',
+                  onpress: () {
+                    if (passwordController.text.isNotEmpty ||
+                        emailController.text.isNotEmpty) {
+                      authController.loginAccount(
+                          email: emailController.text,
+                          password: passwordController.text,
+                          context: context);
+                    } else {
+                      Utils.toastMessage("Login Failed!");
+                    }
+                  }),
             ],
           ),
         ),

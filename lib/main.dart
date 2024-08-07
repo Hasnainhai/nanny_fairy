@@ -21,30 +21,32 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
-        providers: [
-          Provider<AuthRepository>(
-            create: (_) => AuthRepository(),
-          ),
-          ChangeNotifierProvider<AuthViewModel>(
-            create: (context) => AuthViewModel(context.read<AuthRepository>()),
-          ),
-          Provider<AuthRepositoryFamily>(
-            create: (_) => AuthRepositoryFamily(),
-          ),
-          ChangeNotifierProvider<FamilyAuthController>(
-            create: (context) => FamilyAuthController(context.read<AuthRepositoryFamily>()),
-          ),
-        ],
-        child: MaterialApp(
-          initialRoute: RoutesName.splash,
-          onGenerateRoute: Routes.generateRoute,
-          debugShowCheckedModeBanner: false,
-          theme: ThemeData(
-            scaffoldBackgroundColor: AppColor.whiteColor,
-            colorScheme: ColorScheme.fromSeed(seedColor: AppColor.primaryColor),
-            useMaterial3: true,
-          ),
-          home: const SplashScreen(),
-        ));
+      providers: [
+        Provider<AuthRepository>(
+          create: (_) => AuthRepository(),
+        ),
+        ChangeNotifierProvider<AuthViewModel>(
+          create: (context) => AuthViewModel(context.read<AuthRepository>()),
+        ),
+        Provider<AuthRepositoryFamily>(
+          create: (_) => AuthRepositoryFamily(),
+        ),
+        ChangeNotifierProvider<FamilyAuthController>(
+          create: (context) =>
+              FamilyAuthController(context.read<AuthRepositoryFamily>()),
+        ),
+      ],
+      child: MaterialApp(
+        initialRoute: RoutesName.splash,
+        onGenerateRoute: Routes.generateRoute,
+        debugShowCheckedModeBanner: false,
+        theme: ThemeData(
+          scaffoldBackgroundColor: AppColor.whiteColor,
+          colorScheme: ColorScheme.fromSeed(seedColor: AppColor.primaryColor),
+          useMaterial3: true,
+        ),
+        home: const SplashScreen(),
+      ),
+    );
   }
 }
