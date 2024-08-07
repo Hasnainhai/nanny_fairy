@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:nanny_fairy/FamilyController/family_home_controller.dart';
+import 'package:nanny_fairy/Family_View/findJobFamily/provider_detail.dart';
 import 'package:nanny_fairy/Family_View/homeFamily/widgets/bookCart_home_widget.dart';
 import 'package:nanny_fairy/Family_View/homeFamily/widgets/home_Family_feature_widget.dart';
 import 'package:nanny_fairy/res/components/colors.dart';
@@ -237,8 +238,20 @@ class _HomeViewFamilyState extends State<HomeViewFamily> {
                                   primaryButtonColor: AppColor.primaryColor,
                                   primaryButtonTxt: 'View',
                                   ontapView: () {
-                                    Navigator.pushNamed(
-                                        context, RoutesName.providerDetails);
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (c) => ProviderDetails(
+                                              profile: value['profile'],
+                                              name:
+                                                  "${value['firstName']} ${value['lastName']}",
+                                              bio: value['bio'],
+                                              horseRate: value['hoursrate'],
+                                              experience: value['Refernce']
+                                                  ['experince'],
+                                              degree: value['education'],
+                                              dayButtons: dayButtons)),
+                                    );
                                   },
                                   profile: value['profile'],
                                   name:

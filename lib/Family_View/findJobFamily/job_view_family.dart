@@ -116,8 +116,7 @@ class _JobViewFamilyState extends State<JobViewFamily> {
                               primaryButtonColor: AppColor.primaryColor,
                               primaryButtonTxt: 'View',
                               ontapView: () {
-                                Navigator.pushNamed(
-                                    context, RoutesName.providerDetails);
+
                               },
                               profile: value['profile'],
                               name:

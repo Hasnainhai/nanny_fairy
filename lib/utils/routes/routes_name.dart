@@ -39,7 +39,7 @@ class RoutesName {
   static const String educationHorlyView = '/education_horly_view';
   static const String createAccountFamily = '/create_account_family';
   static const String homeViewFamily = '/home_view_family';
-  static const String providerDetails = '/providerDetails';
+  // static const String providerDetails = '/providerDetails';
   static const String filterPopUpFamily = '/filter_popup_family';
   static const String settingsFamily = '/setting_family';
   static const String myProfileFamily = '/my_profile_family';
