@@ -151,9 +151,7 @@ class Routes {
       case RoutesName.communityDetailView:
         return MaterialPageRoute(
             builder: (BuildContext context) => const CommunityDetailView());
-      case RoutesName.familyDetail:
-        return MaterialPageRoute(
-            builder: (BuildContext context) => const FamilyDetailProvider());
+
       case RoutesName.jobViewFamily:
         return MaterialPageRoute(
             builder: (BuildContext context) => const JobViewFamily());
