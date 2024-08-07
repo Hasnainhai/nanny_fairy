@@ -3,7 +3,6 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:nanny_fairy/res/components/searchBar.dart';
 import 'package:nanny_fairy/res/components/widgets/vertical_spacing.dart';
 import 'package:nanny_fairy/utils/routes/routes_name.dart';
-import 'package:nanny_fairy/view/booked/widgets/booking_widget.dart';
 import '../../res/components/colors.dart';
 
 class JobView extends StatefulWidget {
