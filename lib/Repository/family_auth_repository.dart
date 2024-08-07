@@ -68,6 +68,50 @@ class AuthRepositoryFamily {
     }
   }
 
+// login account family
+  Future<void> loginAccount({
+    required String email,
+    required String password,
+    required BuildContext context,
+  }) async {
+    // Show loading indicator
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) {
+        return const Center(
+          child: CircularProgressIndicator(),
+        );
+      },
+    );
+
+    try {
+      await _firebaseAuth.signInWithEmailAndPassword(
+        email: email,
+        password: password,
+      );
+      // Remove the loading indicator
+      Navigator.of(context).pop();
+      // Show success message or navigate to another screen
+      Utils.toastMessage('successfully LogIn!');
+      Navigator.pushNamedAndRemoveUntil(
+        context,
+        RoutesName.dashboardFamily,
+        (route) => false,
+      );
+    } on FirebaseAuthException catch (e) {
+      // Remove the loading indicator
+      Navigator.of(context).pop();
+      // Show error message
+      debugPrint(e.message);
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Failed to login account: ${e.message}'),
+        ),
+      );
+    }
+  }
+
   Future<void> saveDetails({
     required String firstName,
     required String lastName,

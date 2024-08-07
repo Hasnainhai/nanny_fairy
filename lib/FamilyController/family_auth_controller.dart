@@ -36,6 +36,23 @@ class FamilyAuthController extends ChangeNotifier {
     }
   }
 
+  Future<void> loginAccount({
+    required String email,
+    required String password,
+    required BuildContext context,
+  }) async {
+    _setLoading(true);
+    try {
+      await _authRepository.loginAccount(
+        email: email,
+        password: password,
+        context: context,
+      );
+    } finally {
+      _setLoading(false);
+    }
+  }
+
   Future<void> saveDetails({
     required String firstName,
     required String lastName,
@@ -102,10 +119,10 @@ class FamilyAuthController extends ChangeNotifier {
   }
 
   Future<void> saveProfileAndBio(
-      BuildContext context,
-      File? profile,
-      String bio,
-      ) async {
+    BuildContext context,
+    File? profile,
+    String bio,
+  ) async {
     _setLoading(true);
     try {
       await _authRepository.saveProfileAndBio(context, profile, bio);

@@ -8,14 +8,14 @@ import '../../../res/components/colors.dart';
 import '../../../utils/routes/routes_name.dart';
 import '../../../utils/utils.dart';
 
-class ForgetPass extends StatefulWidget {
-  const ForgetPass({super.key});
+class ForgetPassFamily extends StatefulWidget {
+  const ForgetPassFamily({super.key});
 
   @override
-  State<ForgetPass> createState() => _ForgetPassState();
+  State<ForgetPassFamily> createState() => _ForgetPassFamilyState();
 }
 
-class _ForgetPassState extends State<ForgetPass> {
+class _ForgetPassFamilyState extends State<ForgetPassFamily> {
   TextEditingController emailController = TextEditingController();
 
   @override
@@ -128,7 +128,7 @@ class _ForgetPassState extends State<ForgetPass> {
             email: emailController.text.toLowerCase());
         Utils.snackBar("An email has been sent to your email address", context);
 
-        Navigator.pushNamed(context, RoutesName.loginView);
+        Navigator.pushNamed(context, RoutesName.loginFamily);
       } on FirebaseException catch (error) {
         Utils.flushBarErrorMessage('${error.message}', context);
 
