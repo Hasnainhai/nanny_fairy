@@ -33,18 +33,18 @@ class BookedView extends StatelessWidget {
       body: Padding(
         padding: const EdgeInsets.only(left: 2.0, right: 1.0),
         child: ListView(
-          children:  [
+          children: [
             Column(
               children: [
                 const VerticalSpeacing(20.0),
-                BookingCartWidget(ontapView: () {  },primaryButtonTxt: 'Completed',),
-                BookingCartWidget(ontapView: () {  },primaryButtonTxt: 'Completed',),
-                BookingCartWidget(ontapView: () {  },primaryButtonTxt: 'Completed',),
-                BookingCartWidget(ontapView: () {  },primaryButtonTxt: 'Completed',),
-                BookingCartWidget(ontapView: () {  },primaryButtonTxt: 'Completed',),
-                BookingCartWidget(ontapView: () {  },primaryButtonTxt: 'Completed',),
-                BookingCartWidget(ontapView: () {  },primaryButtonTxt: 'Completed',),
-                BookingCartWidget(ontapView: () {  },primaryButtonTxt: 'Completed',),
+                // BookingCartWidget(ontapView: () {  },primaryButtonTxt: 'Completed',),
+                // BookingCartWidget(ontapView: () {  },primaryButtonTxt: 'Completed',),
+                // BookingCartWidget(ontapView: () {  },primaryButtonTxt: 'Completed',),
+                // BookingCartWidget(ontapView: () {  },primaryButtonTxt: 'Completed',),
+                // BookingCartWidget(ontapView: () {  },primaryButtonTxt: 'Completed',),
+                // BookingCartWidget(ontapView: () {  },primaryButtonTxt: 'Completed',),
+                // BookingCartWidget(ontapView: () {  },primaryButtonTxt: 'Completed',),
+                // BookingCartWidget(ontapView: () {  },primaryButtonTxt: 'Completed',),
               ],
             ),
           ],

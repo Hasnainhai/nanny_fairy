@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:nanny_fairy/ViewModel/provider_home_view_model.dart';
 import 'package:nanny_fairy/res/components/colors.dart';
 import 'package:nanny_fairy/res/components/searchBar.dart';
 import 'package:nanny_fairy/res/components/widgets/vertical_spacing.dart';
 import 'package:nanny_fairy/utils/routes/routes_name.dart';
 import 'package:nanny_fairy/view/home/widgets/home_feature_widget.dart';
+import 'package:provider/provider.dart';
 import '../booked/widgets/booking_widget.dart';
 
 class HomeView extends StatefulWidget {
@@ -17,6 +19,8 @@ class HomeView extends StatefulWidget {
 class _HomeViewState extends State<HomeView> {
   @override
   Widget build(BuildContext context) {
+    final homeViewModel = Provider.of<ProviderHomeViewModel>(context);
+
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: SingleChildScrollView(
@@ -69,10 +73,9 @@ class _HomeViewState extends State<HomeView> {
                 ),
                 Positioned(
                   top: 150,
-                  left: (MediaQuery.of(context).size.width - 320) /
-                      2,
-                  child:SearchBarProvider(
-                    onTapFilter: (){
+                  left: (MediaQuery.of(context).size.width - 320) / 2,
+                  child: SearchBarProvider(
+                    onTapFilter: () {
                       Navigator.pushNamed(context, RoutesName.filterPopup);
                     },
                   ),
@@ -186,40 +189,55 @@ class _HomeViewState extends State<HomeView> {
                   const VerticalSpeacing(16.0),
                   SizedBox(
                     height: MediaQuery.of(context).size.height * 0.3,
-                    child: SingleChildScrollView(
-                      scrollDirection: Axis.vertical,
-                      child: Column(
-                        children: [
-                          BookingCartWidget(
-                            primaryButtonTxt: 'View',
-                            ontapView: () {
-                              Navigator.pushNamed(
-                                  context, RoutesName.familyDetail);
-                            },
-                          ),
-                          BookingCartWidget(
-                            ontapView: () {
-                              Navigator.pushNamed(
-                                  context, RoutesName.familyDetail);
-                            },
-                            primaryButtonTxt: 'View',
-                          ),
-                          BookingCartWidget(
-                            ontapView: () {
-                              Navigator.pushNamed(
-                                  context, RoutesName.familyDetail);
-                            },
-                            primaryButtonTxt: 'View',
-                          ),
-                          BookingCartWidget(
-                            ontapView: () {
-                              Navigator.pushNamed(
-                                  context, RoutesName.familyDetail);
-                            },
-                            primaryButtonTxt: 'View',
-                          ),
-                        ],
-                      ),
+                    child: FutureBuilder(
+                      future: homeViewModel.getPopularJobs(),
+                      builder: (context, snapshot) {
+                        if (snapshot.connectionState ==
+                            ConnectionState.waiting) {
+                          return const Center(
+                            child: CircularProgressIndicator(),
+                          );
+                        } else if (snapshot.hasError) {
+                          return Center(
+                              child: Text('Error: ${snapshot.error}'));
+                        } else if (snapshot.hasData) {
+                          Map<dynamic, dynamic> bookings =
+                              snapshot.data as Map<dynamic, dynamic>;
+                          List<Widget> bookingWidgets = [];
+
+                          bookings.forEach((key, value) {
+                            List<String> passions =
+                                (value['FamilyPassions'] as List<dynamic>)
+                                    .cast<String>();
+
+                            bookingWidgets.add(
+                              BookingCartWidget(
+                                primaryButtonTxt: 'View',
+                                ontapView: () {
+                                  debugPrint("this is familydata :${bookings}");
+                                  Navigator.pushNamed(
+                                      context, RoutesName.familyDetail,
+                                      arguments: value);
+                                },
+                                name:
+                                    "${value['firstName']} ${value['lastName']}", // Replace with actual data if needed
+                                profilePic: value['profile'],
+                                passion:
+                                    passions, // Replace with actual data if needed
+                              ),
+                            );
+                          });
+
+                          return SingleChildScrollView(
+                            scrollDirection: Axis.vertical,
+                            child: Column(
+                              children: bookingWidgets,
+                            ),
+                          );
+                        } else {
+                          return const Center(child: Text('No data available'));
+                        }
+                      },
                     ),
                   ),
                 ],
@@ -231,4 +249,3 @@ class _HomeViewState extends State<HomeView> {
     );
   }
 }
-
