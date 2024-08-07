@@ -211,8 +211,6 @@ class _HomeViewFamilyState extends State<HomeViewFamily> {
                               Map<String, dynamic> availabilityMap =
                                   Map<String, dynamic>.from(
                                       value['Availability']);
-
-                              // Extract days from 'Morning', 'Evening', and 'Afternoon' categories
                               Set<String> daysSet = {};
 
                               availabilityMap.forEach((timeOfDay, daysMap) {
