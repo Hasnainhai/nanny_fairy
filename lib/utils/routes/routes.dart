@@ -170,9 +170,9 @@ class Routes {
       case RoutesName.homeViewFamily:
         return MaterialPageRoute(
             builder: (BuildContext context) => const HomeViewFamily());
-      case RoutesName.providerDetails:
-        return MaterialPageRoute(
-            builder: (BuildContext context) => const ProviderDetails());
+      // case RoutesName.providerDetails:
+      //   return MaterialPageRoute(
+      //       builder: (BuildContext context) => const ProviderDetails());
       case RoutesName.filterPopUpFamily:
         return MaterialPageRoute(
             builder: (BuildContext context) => const FilterPopUpFamily());
