@@ -7,10 +7,20 @@ import '../../../res/components/colors.dart';
 import '../../../res/components/widgets/card_button.dart';
 
 class BookingCartWidget extends StatefulWidget {
-  const BookingCartWidget(
-      {super.key, required this.primaryButtonTxt, required this.ontapView});
+  final String name;
+  final String? profilePic;
+  final List<String> passion;
   final Function() ontapView;
   final String primaryButtonTxt;
+
+  BookingCartWidget({
+    super.key,
+    required this.primaryButtonTxt,
+    required this.ontapView,
+    required this.name,
+    this.profilePic,
+    required this.passion,
+  });
 
   @override
   State<BookingCartWidget> createState() => _BookingCartWidgetState();
@@ -66,7 +76,7 @@ class _BookingCartWidgetState extends State<BookingCartWidget> {
     return Padding(
       padding: const EdgeInsets.only(bottom: 16),
       child: Container(
-        height: 99,
+        height: 106,
         width: double.infinity,
         decoration: BoxDecoration(
           color: AppColor.whiteColor,
@@ -94,66 +104,80 @@ class _BookingCartWidgetState extends State<BookingCartWidget> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Container(
-                    height: 79,
-                    width: 79,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(12.0),
-                      image: const DecorationImage(
-                        image: AssetImage('images/post.png'),
-                        fit: BoxFit.fill,
-                      ),
-                    ),
-                  ),
+                  widget.profilePic == null
+                      ? Container(
+                          height: 79,
+                          width: 79,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(12.0),
+                            image: const DecorationImage(
+                              image: AssetImage('images/post.png'),
+                              fit: BoxFit.fill,
+                            ),
+                          ),
+                        )
+                      : Container(
+                          height: 79,
+                          width: 79,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(12.0),
+                            image: DecorationImage(
+                              image: NetworkImage(widget.profilePic!),
+                              fit: BoxFit.fill,
+                            ),
+                          ),
+                        ),
                   const SizedBox(width: 10),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        'Hassnain\nFamily',
-                        style: GoogleFonts.getFont(
-                          "Poppins",
-                          textStyle: const TextStyle(
-                            fontSize: 12,
-                            fontWeight: FontWeight.w500,
-                            color: AppColor.blackColor,
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          '${widget.name}\nFamily',
+                          style: GoogleFonts.getFont(
+                            "Poppins",
+                            textStyle: const TextStyle(
+                              fontSize: 12,
+                              fontWeight: FontWeight.w500,
+                              color: AppColor.blackColor,
+                            ),
                           ),
                         ),
-                      ),
-                      Text(
-                        '⭐4.8(45 Reviews)',
-                        style: GoogleFonts.getFont(
-                          "Poppins",
-                          textStyle: const TextStyle(
-                            fontSize: 11,
-                            fontWeight: FontWeight.w500,
-                            color: AppColor.blackColor,
+                        Text(
+                          '⭐4.8(45 Reviews)',
+                          style: GoogleFonts.getFont(
+                            "Poppins",
+                            textStyle: const TextStyle(
+                              fontSize: 11,
+                              fontWeight: FontWeight.w500,
+                              color: AppColor.blackColor,
+                            ),
                           ),
                         ),
-                      ),
-                      const VerticalSpeacing(10),
-                      Row(
-                        children: [
-                          CardButton(
-                            title: 'Clenining',
-                            color: AppColor.avatarColor,
-                            onTap: () {},
+                        const VerticalSpeacing(10),
+                        SizedBox(
+                          height: 30,
+                          width: MediaQuery.of(context).size.width /
+                              2.2, // Adjust the height as needed
+                          child: ListView.builder(
+                            scrollDirection: Axis.horizontal,
+                            itemCount: widget.passion.length,
+                            itemBuilder: (context, index) {
+                              return Padding(
+                                padding: const EdgeInsets.only(left: 4),
+                                child: CardButton(
+                                  title: widget.passion[index],
+                                  color: AppColor.avatarColor,
+                                  onTap: () {
+                                    // Add your onTap functionality here
+                                  },
+                                ),
+                              );
+                            },
                           ),
-                          const SizedBox(width: 6),
-                          CardButton(
-                            title: 'Care',
-                            color: AppColor.avatarColor,
-                            onTap: () {},
-                          ),
-                          // const SizedBox(width: 6),
-                          // CardButton(
-                          //   title: 'Home',
-                          //   color: AppColor.avatarColor,
-                          //   onTap: () {},
-                          // ),
-                        ],
-                      ),
-                    ],
+                        ),
+                      ],
+                    ),
                   ),
                   InkWell(
                     onTap: () {
@@ -171,7 +195,7 @@ class _BookingCartWidgetState extends State<BookingCartWidget> {
                             vertical: 6, horizontal: 12),
                         child: Center(
                           child: Text(
-                          widget.primaryButtonTxt,
+                            widget.primaryButtonTxt,
                             style: GoogleFonts.getFont(
                               "Poppins",
                               textStyle: const TextStyle(

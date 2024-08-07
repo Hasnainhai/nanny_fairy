@@ -73,16 +73,16 @@ class _JobViewState extends State<JobView> {
                   padding: const EdgeInsets.only(left: 16.0, right: 16.0),
                   child: Column(
                     children: [
-                      BookingCartWidget(
-                          ontapView: () {}, primaryButtonTxt: 'Completed'),
-                      BookingCartWidget(
-                          ontapView: () {}, primaryButtonTxt: 'Completed'),
-                      BookingCartWidget(
-                          ontapView: () {}, primaryButtonTxt: 'Completed'),
-                      BookingCartWidget(
-                          ontapView: () {}, primaryButtonTxt: 'Completed'),
-                      BookingCartWidget(
-                          ontapView: () {}, primaryButtonTxt: 'Completed'),
+                      // BookingCartWidget(
+                      //     ontapView: () {}, primaryButtonTxt: 'Completed'),
+                      // BookingCartWidget(
+                      //     ontapView: () {}, primaryButtonTxt: 'Completed'),
+                      // BookingCartWidget(
+                      //     ontapView: () {}, primaryButtonTxt: 'Completed'),
+                      // BookingCartWidget(
+                      //     ontapView: () {}, primaryButtonTxt: 'Completed'),
+                      // BookingCartWidget(
+                      //     ontapView: () {}, primaryButtonTxt: 'Completed'),
                     ],
                   ),
                 ),

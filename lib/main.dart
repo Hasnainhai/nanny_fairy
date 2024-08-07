@@ -3,7 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:nanny_fairy/FamilyController/family_auth_controller.dart';
 import 'package:nanny_fairy/Repository/auth_repository.dart';
 import 'package:nanny_fairy/Repository/family_auth_repository.dart';
+import 'package:nanny_fairy/Repository/provider_home_repository.dart';
 import 'package:nanny_fairy/ViewModel/auth_view_model.dart';
+import 'package:nanny_fairy/ViewModel/provider_home_view_model.dart';
 import 'package:nanny_fairy/res/components/colors.dart';
 import 'package:nanny_fairy/utils/routes/routes.dart';
 import 'package:nanny_fairy/utils/routes/routes_name.dart';
@@ -32,7 +34,15 @@ class MyApp extends StatelessWidget {
             create: (_) => AuthRepositoryFamily(),
           ),
           ChangeNotifierProvider<FamilyAuthController>(
-            create: (context) => FamilyAuthController(context.read<AuthRepositoryFamily>()),
+            create: (context) =>
+                FamilyAuthController(context.read<AuthRepositoryFamily>()),
+          ),
+          Provider<ProviderHomeRepository>(
+            create: (_) => ProviderHomeRepository(),
+          ),
+          ChangeNotifierProvider<ProviderHomeViewModel>(
+            create: (context) =>
+                ProviderHomeViewModel(context.read<ProviderHomeRepository>()),
           ),
         ],
         child: MaterialApp(
