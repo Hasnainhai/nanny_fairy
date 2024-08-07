@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:nanny_fairy/Repository/family_home_repo.dart';
 import 'package:nanny_fairy/Repository/provider_home_repository.dart';
 
-class ProviderHomeViewModel extends ChangeNotifier {
-  final ProviderHomeRepository _providerHomeRepository;
+class FamilyHomeController extends ChangeNotifier {
+  final FamilyHomeRepository _familyHomeRepository;
 
-  ProviderHomeViewModel(this._providerHomeRepository);
+  FamilyHomeController(this._familyHomeRepository);
 
   bool _isLoading = false;
 
@@ -13,7 +14,7 @@ class ProviderHomeViewModel extends ChangeNotifier {
   Future<Map<dynamic, dynamic>> getPopularJobs() async {
 
     try {
-      return await _providerHomeRepository.getPopularJobs();
+      return await _familyHomeRepository.getPopularJobs();
     } finally {
     }
   }

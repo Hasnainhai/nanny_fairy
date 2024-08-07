@@ -10,14 +10,25 @@ class BookingCartWidgetHome extends StatefulWidget {
       {super.key,
       required this.primaryButtonTxt,
       required this.ontapView,
-      required this.primaryButtonColor});
+      required this.primaryButtonColor,
+      required this.profile,
+      required this.name,
+      required this.degree,
+      required this.skill,
+      required this.dayButtons,
+      required this.hoursRate});
   final Function() ontapView;
   final String primaryButtonTxt;
   final Color primaryButtonColor;
+  final String profile;
+  final String name;
+  final String degree;
+  final String skill;
+  final String hoursRate;
+  final List<Widget> dayButtons;
 
   @override
-  State<BookingCartWidgetHome> createState() =>
-      _BookingCartWidgetHomeState();
+  State<BookingCartWidgetHome> createState() => _BookingCartWidgetHomeState();
 }
 
 class _BookingCartWidgetHomeState extends State<BookingCartWidgetHome> {
@@ -103,8 +114,8 @@ class _BookingCartWidgetHomeState extends State<BookingCartWidgetHome> {
                   width: 79,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(12.0),
-                    image: const DecorationImage(
-                      image: AssetImage('images/post.png'),
+                    image: DecorationImage(
+                      image: NetworkImage(widget.profile),
                       fit: BoxFit.fill,
                     ),
                   ),
@@ -114,7 +125,7 @@ class _BookingCartWidgetHomeState extends State<BookingCartWidgetHome> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'Hassnain Haider',
+                      widget.name,
                       style: GoogleFonts.getFont(
                         "Poppins",
                         textStyle: const TextStyle(
@@ -146,7 +157,7 @@ class _BookingCartWidgetHomeState extends State<BookingCartWidgetHome> {
                               size: 16,
                             ),
                             Text(
-                              'MBBS',
+                              widget.degree,
                               style: GoogleFonts.getFont(
                                 "Poppins",
                                 textStyle: const TextStyle(
@@ -185,7 +196,7 @@ class _BookingCartWidgetHomeState extends State<BookingCartWidgetHome> {
                             Row(
                               children: [
                                 Text(
-                                  '23',
+                                  widget.hoursRate,
                                   style: GoogleFonts.getFont(
                                     "Poppins",
                                     textStyle: const TextStyle(
@@ -270,49 +281,7 @@ class _BookingCartWidgetHomeState extends State<BookingCartWidgetHome> {
                     ),
                   ),
                   Row(
-                    children: [
-                      DayButtonFamily(
-                        day: 'M',
-                        isSelected: false,
-                        onTap: (bool isSelected) {},
-                      ),
-                      const SizedBox(width: 4),
-                      DayButtonFamily(
-                        day: 'T',
-                        isSelected: false,
-                        onTap: (bool isSelected) {},
-                      ),
-                      const SizedBox(width: 4),
-                      DayButtonFamily(
-                        day: 'W',
-                        isSelected: false,
-                        onTap: (bool isSelected) {},
-                      ),
-                      const SizedBox(width: 4),
-                      DayButtonFamily(
-                        day: 'T',
-                        isSelected: false,
-                        onTap: (bool isSelected) {},
-                      ),
-                      const SizedBox(width: 4),
-                      DayButtonFamily(
-                        day: 'F',
-                        isSelected: false,
-                        onTap: (bool isSelected) {},
-                      ),
-                      const SizedBox(width: 4),
-                      DayButtonFamily(
-                        day: 'S',
-                        isSelected: false,
-                        onTap: (bool isSelected) {},
-                      ),
-                      const SizedBox(width: 4),
-                      DayButtonFamily(
-                        day: 'S',
-                        isSelected: false,
-                        onTap: (bool isSelected) {},
-                      ),
-                    ],
+                    children: widget.dayButtons,  // Use the day buttons here
                   ),
                 ],
               ),
@@ -324,61 +293,3 @@ class _BookingCartWidgetHomeState extends State<BookingCartWidgetHome> {
   }
 }
 
-class DayButtonFamily extends StatefulWidget {
-  final String day;
-  final bool isSelected;
-  final Function(bool) onTap;
-
-  const DayButtonFamily({
-    required this.day,
-    required this.isSelected,
-    required this.onTap,
-  });
-
-  @override
-  _DayButtonFamilyState createState() => _DayButtonFamilyState();
-}
-
-class _DayButtonFamilyState extends State<DayButtonFamily> {
-  late bool _isSelected;
-
-  @override
-  void initState() {
-    super.initState();
-    _isSelected = widget.isSelected;
-  }
-
-  void _handleTap() {
-    setState(() {
-      _isSelected = !_isSelected;
-      widget.onTap(_isSelected);
-    });
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: _handleTap,
-      child: Container(
-        height: 15,
-        width: 15,
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(2),
-          color: _isSelected ? Colors.blue : Colors.transparent,
-          border: Border.all(color: _isSelected ? Colors.blue : Colors.grey),
-        ),
-        // padding: const EdgeInsets.only(left: 4, right: 4, top: 2, bottom: 2),
-        child: Center(
-          child: Text(
-            widget.day,
-            style: TextStyle(
-              fontSize: 8,
-              color: _isSelected ? Colors.white : AppColor.blackColor,
-              fontWeight: FontWeight.w500,
-            ),
-          ),
-        ),
-      ),
-    );
-  }
-}

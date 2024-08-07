@@ -1,8 +1,10 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:nanny_fairy/FamilyController/family_auth_controller.dart';
+import 'package:nanny_fairy/FamilyController/family_home_controller.dart';
 import 'package:nanny_fairy/Repository/auth_repository.dart';
 import 'package:nanny_fairy/Repository/family_auth_repository.dart';
+import 'package:nanny_fairy/Repository/family_home_repo.dart';
 import 'package:nanny_fairy/Repository/provider_home_repository.dart';
 import 'package:nanny_fairy/ViewModel/auth_view_model.dart';
 import 'package:nanny_fairy/ViewModel/provider_home_view_model.dart';
@@ -44,6 +46,13 @@ class MyApp extends StatelessWidget {
             create: (context) =>
                 ProviderHomeViewModel(context.read<ProviderHomeRepository>()),
           ),
+          Provider<FamilyHomeRepository>(
+            create: (_) => FamilyHomeRepository(),
+          ),
+          ChangeNotifierProvider<FamilyHomeController>(
+            create: (context) =>
+                FamilyHomeController(context.read<FamilyHomeRepository>()),
+          ),
         ],
         child: MaterialApp(
           initialRoute: RoutesName.splash,
@@ -56,6 +65,5 @@ class MyApp extends StatelessWidget {
           ),
           home: const SplashScreen(),
         ));
-
   }
 }
