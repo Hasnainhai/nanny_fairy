@@ -83,7 +83,7 @@ class _LoginViewFamilyState extends State<LoginViewFamily> {
                 children: [
                   InkWell(
                     onTap: () {
-                      Navigator.pushNamed(context, RoutesName.forgetPass);
+                      Navigator.pushNamed(context, RoutesName.forgetPassFamily);
                     },
                     child: Text(
                       'Forget Password?',

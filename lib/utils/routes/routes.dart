@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:nanny_fairy/Family_View/Login/family_login.dart';
+import 'package:nanny_fairy/Family_View/Login/forget_password_family.dart';
 import 'package:nanny_fairy/Family_View/filters/filter_family_popup.dart';
 import 'package:nanny_fairy/Family_View/findJobFamily/provider_detail.dart';
 import 'package:nanny_fairy/Family_View/homeFamily/home_view_family.dart';
@@ -189,6 +190,9 @@ class Routes {
       case RoutesName.loginFamily:
         return MaterialPageRoute(
             builder: (BuildContext context) => const LoginViewFamily());
+      case RoutesName.forgetPassFamily:
+        return MaterialPageRoute(
+            builder: (BuildContext context) => const ForgetPassFamily());
 
       default:
         return MaterialPageRoute(builder: (_) {
