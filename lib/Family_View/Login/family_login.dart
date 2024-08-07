@@ -6,7 +6,6 @@ import 'package:nanny_fairy/res/components/widgets/custom_text_field.dart';
 import 'package:nanny_fairy/res/components/widgets/vertical_spacing.dart';
 import 'package:nanny_fairy/utils/routes/routes_name.dart';
 import 'package:provider/provider.dart';
-
 import '../../../res/components/colors.dart';
 import '../../utils/utils.dart';
 
