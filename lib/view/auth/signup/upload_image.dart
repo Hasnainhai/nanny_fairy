@@ -1,7 +1,5 @@
 import 'dart:io';
-
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:nanny_fairy/ViewModel/auth_view_model.dart';
 import 'package:nanny_fairy/res/components/rounded_button.dart';

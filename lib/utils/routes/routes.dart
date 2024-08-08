@@ -176,10 +176,10 @@ class Routes {
         return MaterialPageRoute(
             builder: (BuildContext context) =>
                 const UploadComunityPostFamily());
-      case RoutesName.communityDetailViewFamily:
-        return MaterialPageRoute(
-            builder: (BuildContext context) =>
-                const CommunityDetailViewFamily());
+      // case RoutesName.communityDetailViewFamily:
+      //   return MaterialPageRoute(
+      //       builder: (BuildContext context) =>
+      //           const CommunityDetailViewFamily());
       // case RoutesName.providerDetails:
       //   return MaterialPageRoute(
       //       builder: (BuildContext context) => const ProviderDetails());
