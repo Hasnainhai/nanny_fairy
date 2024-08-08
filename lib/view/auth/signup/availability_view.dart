@@ -5,6 +5,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:nanny_fairy/res/components/rounded_button.dart';
 import 'package:nanny_fairy/res/components/widgets/vertical_spacing.dart';
 import 'package:nanny_fairy/utils/routes/routes_name.dart';
+import 'package:nanny_fairy/utils/utils.dart';
 import '../../../res/components/colors.dart';
 import '../../../res/components/day_button.dart';
 
@@ -16,7 +17,8 @@ class AvailabilityView extends StatefulWidget {
 }
 
 class _AvailabilityViewState extends State<AvailabilityView> {
-  String selectedDay = 'Monday';
+  final DatabaseReference _dbRef = FirebaseDatabase.instance.ref();
+  // String selectedDay = 'Monday';
   List<String> days = [
     'Sunday',
     'Monday',
@@ -26,7 +28,25 @@ class _AvailabilityViewState extends State<AvailabilityView> {
     'Friday',
     'Saturday'
   ];
-  Map<String, Map<String, String>> selectedTimes = {};
+  Map<String, String> selectedTimes = {};
+  void _storeTimeInDatabase() {
+    final firebaseAuth = FirebaseAuth.instance;
+    final userId = firebaseAuth.currentUser!.uid;
+
+    // Create a map to hold the times for each period
+    Map<String, String> times = {
+      'MorningStart': selectedTimes['MorningStart'] ?? '',
+      'MorningEnd': selectedTimes['MorningEnd'] ?? '',
+      'AfternoonStart': selectedTimes['AfternoonStart'] ?? '',
+      'AfternoonEnd': selectedTimes['AfternoonEnd'] ?? '',
+      'EveningStart': selectedTimes['EveningStart'] ?? '',
+      'EveningEnd': selectedTimes['EveningEnd'] ?? '',
+    };
+
+    // Store the map in Firebase under a user-specific path
+    _dbRef.child('Providers').child(userId).child('Time').set(times);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -68,449 +88,533 @@ class _AvailabilityViewState extends State<AvailabilityView> {
         ),
         child: Padding(
           padding: const EdgeInsets.only(left: 16, right: 16, top: 16),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Container(
-                decoration: BoxDecoration(
-                  color: AppColor.whiteColor,
-                  borderRadius: BorderRadius.circular(12),
-                  border: Border.all(
-                    strokeAlign: BorderSide.strokeAlignCenter,
-                    color: const Color(0xff1B81BC)
-                        .withOpacity(0.10), // Stroke color with 10% opacity
-                    width: 1,
-                  ),
-                  boxShadow: [
-                    BoxShadow(
-                      color: const Color(0xff1B81BC).withOpacity(
-                          0.1), // Drop shadow color with 4% opacity
-                      blurRadius: 2,
-                      offset: const Offset(1, 2),
-                      spreadRadius: 1,
+          child: SingleChildScrollView(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Container(
+                  decoration: BoxDecoration(
+                    color: AppColor.whiteColor,
+                    borderRadius: BorderRadius.circular(12),
+                    border: Border.all(
+                      strokeAlign: BorderSide.strokeAlignCenter,
+                      color: const Color(0xff1B81BC)
+                          .withOpacity(0.10), // Stroke color with 10% opacity
+                      width: 1,
                     ),
-                  ],
-                ),
-                child: Padding(
-                  padding: const EdgeInsets.all(12.0),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      const SizedBox(height: 16), // Added spacing from the top
-                      Text(
-                        'Availability',
-                        style: GoogleFonts.getFont(
-                          "Poppins",
-                          textStyle: const TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.w400,
-                            color: AppColor.blackColor,
-                          ),
-                        ),
+                    boxShadow: [
+                      BoxShadow(
+                        color: const Color(0xff1B81BC).withOpacity(
+                            0.1), // Drop shadow color with 4% opacity
+                        blurRadius: 2,
+                        offset: const Offset(1, 2),
+                        spreadRadius: 1,
                       ),
-                      const SizedBox(height: 8),
-                      const Text(
-                        'Officia irure irure an',
-                        style: TextStyle(
-                          fontSize: 16,
-                          color: AppColor.grayColor,
-                        ),
-                      ),
-                      const SizedBox(height: 16),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        children: [
-                          DayButton(
-                            day: 'M',
-                            isSelected: false,
-                            onTap: (bool isSelected) {},
-                          ),
-                          const SizedBox(width: 8),
-                          DayButton(
-                            day: 'T',
-                            isSelected: false,
-                            onTap: (bool isSelected) {},
-                          ),
-                          const SizedBox(width: 8),
-                          DayButton(
-                            day: 'W',
-                            isSelected: false,
-                            onTap: (bool isSelected) {},
-                          ),
-                          const SizedBox(width: 8),
-                          DayButton(
-                            day: 'T',
-                            isSelected: false,
-                            onTap: (bool isSelected) {},
-                          ),
-                          const SizedBox(width: 8),
-                          DayButton(
-                            day: 'F',
-                            isSelected: false,
-                            onTap: (bool isSelected) {},
-                          ),
-                          const SizedBox(width: 8),
-                          DayButton(
-                            day: 'S',
-                            isSelected: false,
-                            onTap: (bool isSelected) {},
-                          ),
-                          const SizedBox(width: 8),
-                          DayButton(
-                            day: 'S',
-                            isSelected: false,
-                            onTap: (bool isSelected) {},
-                          ),
-                          const SizedBox(width: 8),
-                        ],
-                      ),
-                      const SizedBox(height: 16),
-                      const AvailabilityRow(
-                        label: 'Morning',
-                        availability: [
-                          false,
-                          false,
-                          false,
-                          false,
-                          false,
-                          false,
-                          false
-                        ],
-                        timePeriod: 'morning',
-                      ),
-                      const Divider(),
-                      const AvailabilityRow(
-                        label: 'Evening',
-                        availability: [
-                          false,
-                          false,
-                          false,
-                          false,
-                          false,
-                          false,
-                          false
-                        ],
-                        timePeriod: 'Evening',
-                      ),
-                      const Divider(),
-                      const AvailabilityRow(
-                        label: 'Afternoon',
-                        availability: [
-                          false,
-                          false,
-                          false,
-                          false,
-                          false,
-                          false,
-                          false
-                        ],
-                        timePeriod: 'Afternoon',
-                      ),
-                      const VerticalSpeacing(10),
                     ],
                   ),
+                  child: Padding(
+                    padding: const EdgeInsets.all(12.0),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const SizedBox(
+                            height: 16), // Added spacing from the top
+                        Text(
+                          'Availability',
+                          style: GoogleFonts.getFont(
+                            "Poppins",
+                            textStyle: const TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.w400,
+                              color: AppColor.blackColor,
+                            ),
+                          ),
+                        ),
+                        const SizedBox(height: 8),
+                        const Text(
+                          'Officia irure irure an',
+                          style: TextStyle(
+                            fontSize: 16,
+                            color: AppColor.grayColor,
+                          ),
+                        ),
+                        const SizedBox(height: 16),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                            DayButton(
+                              day: 'M',
+                              isSelected: false,
+                              onTap: (bool isSelected) {},
+                            ),
+                            const SizedBox(width: 8),
+                            DayButton(
+                              day: 'T',
+                              isSelected: false,
+                              onTap: (bool isSelected) {},
+                            ),
+                            const SizedBox(width: 8),
+                            DayButton(
+                              day: 'W',
+                              isSelected: false,
+                              onTap: (bool isSelected) {},
+                            ),
+                            const SizedBox(width: 8),
+                            DayButton(
+                              day: 'T',
+                              isSelected: false,
+                              onTap: (bool isSelected) {},
+                            ),
+                            const SizedBox(width: 8),
+                            DayButton(
+                              day: 'F',
+                              isSelected: false,
+                              onTap: (bool isSelected) {},
+                            ),
+                            const SizedBox(width: 8),
+                            DayButton(
+                              day: 'S',
+                              isSelected: false,
+                              onTap: (bool isSelected) {},
+                            ),
+                            const SizedBox(width: 8),
+                            DayButton(
+                              day: 'S',
+                              isSelected: false,
+                              onTap: (bool isSelected) {},
+                            ),
+                            const SizedBox(width: 8),
+                          ],
+                        ),
+                        const SizedBox(height: 16),
+                        const AvailabilityRow(
+                          label: 'Morning',
+                          availability: [
+                            false,
+                            false,
+                            false,
+                            false,
+                            false,
+                            false,
+                            false
+                          ],
+                          timePeriod: 'morning',
+                        ),
+                        const Divider(),
+                        const AvailabilityRow(
+                          label: 'Evening',
+                          availability: [
+                            false,
+                            false,
+                            false,
+                            false,
+                            false,
+                            false,
+                            false
+                          ],
+                          timePeriod: 'Evening',
+                        ),
+                        const Divider(),
+                        const AvailabilityRow(
+                          label: 'Afternoon',
+                          availability: [
+                            false,
+                            false,
+                            false,
+                            false,
+                            false,
+                            false,
+                            false
+                          ],
+                          timePeriod: 'Afternoon',
+                        ),
+                        const VerticalSpeacing(10),
+                      ],
+                    ),
+                  ),
                 ),
-              ),
-              // const VerticalSpeacing(20.0),
-              // Container(
-              //   height: 216,
-              //   width: double.infinity,
-              //   decoration: BoxDecoration(
-              //     color: AppColor.whiteColor,
-              //     borderRadius: BorderRadius.circular(12.0),
-              //     border: Border.all(
-              //       strokeAlign: BorderSide.strokeAlignCenter,
-              //       color: const Color(0xff1B81BC)
-              //           .withOpacity(0.10), // Stroke color with 10% opacity
-              //       width: 1,
-              //     ),
-              //     boxShadow: [
-              //       BoxShadow(
-              //         color: const Color(0xff1B81BC).withOpacity(
-              //             0.1), // Drop shadow color with 4% opacity
-              //         blurRadius: 2,
-              //         offset: const Offset(1, 2),
-              //         spreadRadius: 1,
-              //       ),
-              //     ],
-              //   ),
-              //   child: Padding(
-              //     padding: const EdgeInsets.all(12.0),
-              //     child: Column(
-              //       children: [
-              //         Text(
-              //           '$days',
-              //           style: GoogleFonts.getFont(
-              //             "Poppins",
-              //             textStyle: const TextStyle(
-              //               fontSize: 16,
-              //               fontWeight: FontWeight.w400,
-              //               color: AppColor.blackColor,
-              //             ),
-              //           ),
-              //         ),
-              //         const SizedBox(height: 8),
-              //         Row(
-              //           mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              //           children: [
-              //             _timePicker(days.toString(), 'Start'),
-              //             const Text('to'),
-              //             _timePicker(days.toString(), 'End'),
-              //           ],
-              //         ),
+                const VerticalSpeacing(20.0),
+                Container(
+                  height: 216,
+                  width: double.infinity,
+                  decoration: BoxDecoration(
+                    color: AppColor.whiteColor,
+                    borderRadius: BorderRadius.circular(12.0),
+                    border: Border.all(
+                      strokeAlign: BorderSide.strokeAlignCenter,
+                      color: const Color(0xff1B81BC)
+                          .withOpacity(0.10), // Stroke color with 10% opacity
+                      width: 1,
+                    ),
+                    boxShadow: [
+                      BoxShadow(
+                        color: const Color(0xff1B81BC).withOpacity(
+                            0.1), // Drop shadow color with 4% opacity
+                        blurRadius: 2,
+                        offset: const Offset(1, 2),
+                        spreadRadius: 1,
+                      ),
+                    ],
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.all(12.0),
+                    child: Column(
+                      children: [
+                        // Text(
+                        //   '$days',
+                        //   style: GoogleFonts.getFont(
+                        //     "Poppins",
+                        //     textStyle: const TextStyle(
+                        //       fontSize: 16,
+                        //       fontWeight: FontWeight.w400,
+                        //       color: AppColor.blackColor,
+                        //     ),
+                        //   ),
+                        // ),
+                        const SizedBox(height: 8),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              'Select Time',
+                              style: GoogleFonts.getFont(
+                                "Poppins",
+                                textStyle: const TextStyle(
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w500,
+                                  color: AppColor.blackColor,
+                                ),
+                              ),
+                            ),
+                            const SizedBox(height: 20),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(
+                                  'Morning   ',
+                                  style: GoogleFonts.getFont(
+                                    "Poppins",
+                                    textStyle: const TextStyle(
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.w400,
+                                      color: AppColor.blackColor,
+                                    ),
+                                  ),
+                                ),
+                                const Text('from'),
+                                _timePicker('Morning', 'Start'),
+                                const Text('to'),
+                                _timePicker('Morning', 'End'),
+                              ],
+                            ),
+                            const SizedBox(height: 18),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(
+                                  'Afternoon',
+                                  style: GoogleFonts.getFont(
+                                    "Poppins",
+                                    textStyle: const TextStyle(
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.w400,
+                                      color: AppColor.blackColor,
+                                    ),
+                                  ),
+                                ),
+                                const Text('from'),
+                                _timePicker('Afternoon', 'Start'),
+                                const Text('to'),
+                                _timePicker('Afternoon', 'End'),
+                              ],
+                            ),
+                            const SizedBox(height: 18),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(
+                                  'Evening   ',
+                                  style: GoogleFonts.getFont(
+                                    "Poppins",
+                                    textStyle: const TextStyle(
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.w400,
+                                      color: AppColor.blackColor,
+                                    ),
+                                  ),
+                                ),
+                                const Text('from'),
+                                _timePicker('Evening', 'Start'),
+                                const Text('to'),
+                                _timePicker('Evening', 'End'),
+                              ],
+                            ),
+                          ],
+                        ),
 
-              // Row(
-              //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              //   children: [
-              //     Text(
-              //       'Time',
-              //       style: GoogleFonts.getFont(
-              //         "Poppins",
-              //         textStyle: const TextStyle(
-              //           fontSize: 14,
-              //           fontWeight: FontWeight.w400,
-              //           color: AppColor.blackColor,
-              //         ),
-              //       ),
-              //     ),
-              //     DropdownButtonHideUnderline(
-              //       child: DropdownButton<String>(
-              //         value: selectedDay,
-              //         icon: const Icon(
-              //           Icons.expand_more_outlined,
-              //           color: Colors.blue,
-              //         ),
-              //         onChanged: (String? newValue) {
-              //           setState(() {
-              //             selectedDay = newValue!;
-              //           });
-              //         },
-              //         items: days.map<DropdownMenuItem<String>>(
-              //             (String value) {
-              //           return DropdownMenuItem<String>(
-              //             value: value,
-              //             child: Text(
-              //               value,
-              //               style: GoogleFonts.getFont(
-              //                 "Poppins",
-              //                 textStyle: const TextStyle(
-              //                   fontSize: 14,
-              //                   fontWeight: FontWeight.w400,
-              //                   color: Colors.blue,
-              //                 ),
-              //               ),
-              //             ),
-              //           );
-              //         }).toList(),
-              //       ),
-              //     ),
-              //   ],
-              // ),
-              // const VerticalSpeacing(10.0),
-              // Row(
-              //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              //   children: [
-              //     Text(
-              //       'Morning',
-              //       style: GoogleFonts.getFont(
-              //         "Poppins",
-              //         textStyle: const TextStyle(
-              //           fontSize: 14,
-              //           fontWeight: FontWeight.w400,
-              //           color: AppColor.blackColor,
-              //         ),
-              //       ),
-              //     ),
-              //     const SizedBox(width: 20),
-              //     Row(
-              //       children: [
-              //         Text(
-              //           'From',
-              //           style: GoogleFonts.getFont(
-              //             "Poppins",
-              //             textStyle: const TextStyle(
-              //               fontSize: 14,
-              //               fontWeight: FontWeight.w400,
-              //               color: AppColor.blackColor,
-              //             ),
-              //           ),
-              //         ),
-              //         const SizedBox(width: 5),
-              //         const TimingContainer(time: '9:00Am'),
-              //         const SizedBox(width: 5),
-              //         Text(
-              //           'To',
-              //           style: GoogleFonts.getFont(
-              //             "Poppins",
-              //             textStyle: const TextStyle(
-              //               fontSize: 14,
-              //               fontWeight: FontWeight.w400,
-              //               color: AppColor.blackColor,
-              //             ),
-              //           ),
-              //         ),
-              //         const SizedBox(width: 5),
-              //         const TimingContainer(
-              //           time: '12:00Am',
-              //         )
-              //       ],
-              //     ),
-              //   ],
-              // ),
-              // const Divider(),
-              // const VerticalSpeacing(16),
-              // Row(
-              //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              //   children: [
-              //     Text(
-              //       'Evening',
-              //       style: GoogleFonts.getFont(
-              //         "Poppins",
-              //         textStyle: const TextStyle(
-              //           fontSize: 14,
-              //           fontWeight: FontWeight.w400,
-              //           color: AppColor.blackColor,
-              //         ),
-              //       ),
-              //     ),
-              //     const SizedBox(width: 20),
-              //     Row(
-              //       children: [
-              //         Text(
-              //           'From',
-              //           style: GoogleFonts.getFont(
-              //             "Poppins",
-              //             textStyle: const TextStyle(
-              //               fontSize: 14,
-              //               fontWeight: FontWeight.w400,
-              //               color: AppColor.blackColor,
-              //             ),
-              //           ),
-              //         ),
-              //         const SizedBox(width: 5),
-              //         const TimingContainer(time: '2:00Am'),
-              //         const SizedBox(width: 5),
-              //         Text(
-              //           'To',
-              //           style: GoogleFonts.getFont(
-              //             "Poppins",
-              //             textStyle: const TextStyle(
-              //               fontSize: 14,
-              //               fontWeight: FontWeight.w400,
-              //               color: AppColor.blackColor,
-              //             ),
-              //           ),
-              //         ),
-              //         const SizedBox(width: 5),
-              //         const TimingContainer(
-              //           time: '6:00Am',
-              //         )
-              //       ],
-              //     ),
-              //   ],
-              // ),
-              // const Divider(),
-              // const VerticalSpeacing(16),
-              // Row(
-              //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              //   children: [
-              //     Text(
-              //       'AfterNoon',
-              //       style: GoogleFonts.getFont(
-              //         "Poppins",
-              //         textStyle: const TextStyle(
-              //           fontSize: 14,
-              //           fontWeight: FontWeight.w400,
-              //           color: AppColor.blackColor,
-              //         ),
-              //       ),
-              //     ),
-              //     const SizedBox(width: 20),
-              //     Row(
-              //       children: [
-              //         Text(
-              //           'From',
-              //           style: GoogleFonts.getFont(
-              //             "Poppins",
-              //             textStyle: const TextStyle(
-              //               fontSize: 14,
-              //               fontWeight: FontWeight.w400,
-              //               color: AppColor.blackColor,
-              //             ),
-              //           ),
-              //         ),
-              //         const SizedBox(width: 5),
-              //         const TimingContainer(time: '7:00Am'),
-              //         const SizedBox(width: 5),
-              //         Text(
-              //           'To',
-              //           style: GoogleFonts.getFont(
-              //             "Poppins",
-              //             textStyle: const TextStyle(
-              //               fontSize: 14,
-              //               fontWeight: FontWeight.w400,
-              //               color: AppColor.blackColor,
-              //             ),
-              //           ),
-              //         ),
-              //         const SizedBox(width: 5),
-              //         const TimingContainer(
-              //           time: '12:00Am',
-              //         )
-              //       ],
-              //     ),
-              //   ],
-              // ),
-              //       ],
-              //     ),
-              //   ),
-              // ),
-              const VerticalSpeacing(46.0),
-              RoundedButton(
-                  title: 'Register',
-                  onpress: () {
-                    Navigator.pushNamed(context, RoutesName.educationHorlyView);
-                  }),
-              const VerticalSpeacing(40.0),
-            ],
+                        // Row(
+                        //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        //   children: [
+                        //     Text(
+                        //       'Time',
+                        //       style: GoogleFonts.getFont(
+                        //         "Poppins",
+                        //         textStyle: const TextStyle(
+                        //           fontSize: 14,
+                        //           fontWeight: FontWeight.w400,
+                        //           color: AppColor.blackColor,
+                        //         ),
+                        //       ),
+                        //     ),
+                        //     DropdownButtonHideUnderline(
+                        //       child: DropdownButton<String>(
+                        //         value: selectedDay,
+                        //         icon: const Icon(
+                        //           Icons.expand_more_outlined,
+                        //           color: Colors.blue,
+                        //         ),
+                        //         onChanged: (String? newValue) {
+                        //           setState(() {
+                        //             selectedDay = newValue!;
+                        //           });
+                        //         },
+                        //         items: days.map<DropdownMenuItem<String>>(
+                        //             (String value) {
+                        //           return DropdownMenuItem<String>(
+                        //             value: value,
+                        //             child: Text(
+                        //               value,
+                        //               style: GoogleFonts.getFont(
+                        //                 "Poppins",
+                        //                 textStyle: const TextStyle(
+                        //                   fontSize: 14,
+                        //                   fontWeight: FontWeight.w400,
+                        //                   color: Colors.blue,
+                        //                 ),
+                        //               ),
+                        //             ),
+                        //           );
+                        //         }).toList(),
+                        //       ),
+                        //     ),
+                        //   ],
+                        // ),
+                        // const VerticalSpeacing(10.0),
+                        // Row(
+                        //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        //   children: [
+                        //     Text(
+                        //       'Morning',
+                        //       style: GoogleFonts.getFont(
+                        //         "Poppins",
+                        //         textStyle: const TextStyle(
+                        //           fontSize: 14,
+                        //           fontWeight: FontWeight.w400,
+                        //           color: AppColor.blackColor,
+                        //         ),
+                        //       ),
+                        //     ),
+                        //     const SizedBox(width: 20),
+                        //     Row(
+                        //       children: [
+                        //         Text(
+                        //           'From',
+                        //           style: GoogleFonts.getFont(
+                        //             "Poppins",
+                        //             textStyle: const TextStyle(
+                        //               fontSize: 14,
+                        //               fontWeight: FontWeight.w400,
+                        //               color: AppColor.blackColor,
+                        //             ),
+                        //           ),
+                        //         ),
+                        //         const SizedBox(width: 5),
+                        //         const TimingContainer(time: '9:00Am'),
+                        //         const SizedBox(width: 5),
+                        //         Text(
+                        //           'To',
+                        //           style: GoogleFonts.getFont(
+                        //             "Poppins",
+                        //             textStyle: const TextStyle(
+                        //               fontSize: 14,
+                        //               fontWeight: FontWeight.w400,
+                        //               color: AppColor.blackColor,
+                        //             ),
+                        //           ),
+                        //         ),
+                        //         const SizedBox(width: 5),
+                        //         const TimingContainer(
+                        //           time: '12:00Am',
+                        //         )
+                        //       ],
+                        //     ),
+                        //   ],
+                        // ),
+                        // const Divider(),
+                        // const VerticalSpeacing(16),
+                        // Row(
+                        //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        //   children: [
+                        //     Text(
+                        //       'Evening',
+                        //       style: GoogleFonts.getFont(
+                        //         "Poppins",
+                        //         textStyle: const TextStyle(
+                        //           fontSize: 14,
+                        //           fontWeight: FontWeight.w400,
+                        //           color: AppColor.blackColor,
+                        //         ),
+                        //       ),
+                        //     ),
+                        //     const SizedBox(width: 20),
+                        //     Row(
+                        //       children: [
+                        //         Text(
+                        //           'From',
+                        //           style: GoogleFonts.getFont(
+                        //             "Poppins",
+                        //             textStyle: const TextStyle(
+                        //               fontSize: 14,
+                        //               fontWeight: FontWeight.w400,
+                        //               color: AppColor.blackColor,
+                        //             ),
+                        //           ),
+                        //         ),
+                        //         const SizedBox(width: 5),
+                        //         const TimingContainer(time: '2:00Am'),
+                        //         const SizedBox(width: 5),
+                        //         Text(
+                        //           'To',
+                        //           style: GoogleFonts.getFont(
+                        //             "Poppins",
+                        //             textStyle: const TextStyle(
+                        //               fontSize: 14,
+                        //               fontWeight: FontWeight.w400,
+                        //               color: AppColor.blackColor,
+                        //             ),
+                        //           ),
+                        //         ),
+                        //         const SizedBox(width: 5),
+                        //         const TimingContainer(
+                        //           time: '6:00Am',
+                        //         )
+                        //       ],
+                        //     ),
+                        //   ],
+                        // ),
+                        // const Divider(),
+                        // const VerticalSpeacing(16),
+                        // Row(
+                        //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        //   children: [
+                        //     Text(
+                        //       'AfterNoon',
+                        //       style: GoogleFonts.getFont(
+                        //         "Poppins",
+                        //         textStyle: const TextStyle(
+                        //           fontSize: 14,
+                        //           fontWeight: FontWeight.w400,
+                        //           color: AppColor.blackColor,
+                        //         ),
+                        //       ),
+                        //     ),
+                        //     const SizedBox(width: 20),
+                        //     Row(
+                        //       children: [
+                        //         Text(
+                        //           'From',
+                        //           style: GoogleFonts.getFont(
+                        //             "Poppins",
+                        //             textStyle: const TextStyle(
+                        //               fontSize: 14,
+                        //               fontWeight: FontWeight.w400,
+                        //               color: AppColor.blackColor,
+                        //             ),
+                        //           ),
+                        //         ),
+                        //         const SizedBox(width: 5),
+                        //         const TimingContainer(time: '7:00Am'),
+                        //         const SizedBox(width: 5),
+                        //         Text(
+                        //           'To',
+                        //           style: GoogleFonts.getFont(
+                        //             "Poppins",
+                        //             textStyle: const TextStyle(
+                        //               fontSize: 14,
+                        //               fontWeight: FontWeight.w400,
+                        //               color: AppColor.blackColor,
+                        //             ),
+                        //           ),
+                        //         ),
+                        //         const SizedBox(width: 5),
+                        //         const TimingContainer(
+                        //           time: '12:00Am',
+                        //         )
+                        //       ],
+                        //     ),
+                        //   ],
+                        // ),
+                      ],
+                    ),
+                  ),
+                ),
+                const VerticalSpeacing(46.0),
+                RoundedButton(
+                    title: 'Register',
+                    onpress: () {
+                      if (selectedTimes.isNotEmpty) {
+                        Navigator.pushNamed(
+                            context, RoutesName.educationHorlyView);
+                      } else {
+                        Utils.snackBar(
+                            'Please select the day and time', context);
+                      }
+                    }),
+                const VerticalSpeacing(40.0),
+              ],
+            ),
           ),
         ),
       ),
     );
   }
-  //
-  // Widget _timePicker(String day, String period) {
-  //   return GestureDetector(
-  //     onTap: () async {
-  //       TimeOfDay? selectedTime = await showTimePicker(
-  //         context: context,
-  //         initialTime: TimeOfDay.now(),
-  //       );
-  //       if (selectedTime != null) {
-  //         setState(() {
-  //           selectedTimes[day] ??= {};
-  //           selectedTimes[day]![period] = selectedTime.format(context);
-  //         });
-  //       }
-  //     },
-  //     child: Container(
-  //       padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
-  //       decoration: BoxDecoration(
-  //         color: AppColor.whiteColor,
-  //         borderRadius: BorderRadius.circular(8),
-  //         border: Border.all(
-  //           color: AppColor.grayColor.withOpacity(0.5),
-  //         ),
-  //       ),
-  //       child: Text(
-  //         selectedTimes[day]?[period] ?? 'Select Time',
-  //         style: const TextStyle(fontSize: 16, color: AppColor.blackColor),
-  //       ),
-  //     ),
-  //   );
-  // }
+
+  // time Picker
+  Widget _timePicker(String period, String type) {
+    return GestureDetector(
+      onTap: () async {
+        TimeOfDay? selectedTime = await showTimePicker(
+          context: context,
+          initialTime: TimeOfDay.now(),
+        );
+        if (selectedTime != null) {
+          setState(() {
+            selectedTimes['$period$type'] = selectedTime.format(context);
+            _storeTimeInDatabase();
+          });
+          // Navigate to another screen if required
+          // Navigator.pushNamed(context, RoutesName.educationHorlyView);
+        }
+      },
+      child: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 5.0, vertical: 3.0),
+        decoration: BoxDecoration(
+          color: AppColor.whiteColor,
+          borderRadius: BorderRadius.circular(8),
+          border: Border.all(
+            color: AppColor.grayColor.withOpacity(0.5),
+          ),
+        ),
+        child: Text(
+          selectedTimes['$period$type'] ?? 'Select Time',
+          style: const TextStyle(fontSize: 12, color: AppColor.blackColor),
+        ),
+      ),
+    );
+  }
 }
 //
 // class TimingContainer extends StatefulWidget {
