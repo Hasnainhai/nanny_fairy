@@ -4,7 +4,8 @@ import 'package:nanny_fairy/res/components/colors.dart';
 import 'package:nanny_fairy/res/components/searchBar.dart';
 import 'package:nanny_fairy/res/components/widgets/vertical_spacing.dart';
 import 'package:nanny_fairy/utils/routes/routes_name.dart';
-import 'package:nanny_fairy/view/home/widgets/home_default_view.dart';
+import 'package:nanny_fairy/view/home/widgets/home_filter_view.dart';
+import 'package:nanny_fairy/view/home/widgets/home_search_view.dart';
 
 class HomeView extends StatefulWidget {
   const HomeView({super.key});
@@ -78,7 +79,9 @@ class _HomeViewState extends State<HomeView> {
               ],
             ),
             const VerticalSpeacing(50.0),
-            const HomeDefaultView(),
+            // const HomeDefaultView(),
+            // const HomeSearchView(),
+            const HomeFilterView(),
           ],
         ),
       ),
