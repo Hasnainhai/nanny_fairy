@@ -7,9 +7,12 @@ import 'package:nanny_fairy/Repository/auth_repository.dart';
 import 'package:nanny_fairy/Repository/community_repo_family.dart';
 import 'package:nanny_fairy/Repository/family_auth_repository.dart';
 import 'package:nanny_fairy/Repository/family_home_repo.dart';
+import 'package:nanny_fairy/Repository/home_ui_repostory.dart';
 import 'package:nanny_fairy/Repository/provider_home_repository.dart';
+import 'package:nanny_fairy/Repository/search_repository.dart';
 import 'package:nanny_fairy/ViewModel/auth_view_model.dart';
 import 'package:nanny_fairy/ViewModel/provider_home_view_model.dart';
+import 'package:nanny_fairy/ViewModel/search_view_model.dart'; // Import the SearchViewModel
 import 'package:nanny_fairy/res/components/colors.dart';
 import 'package:nanny_fairy/utils/routes/routes.dart';
 import 'package:nanny_fairy/utils/routes/routes_name.dart';
