@@ -1,7 +1,8 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:nanny_fairy/Models/search_model.dart';
 import 'package:nanny_fairy/Repository/search_repository.dart';
-import 'dart:async';
 
 class SearchViewModel extends ChangeNotifier {
   final SearchRepository _searchRepository;
@@ -17,7 +18,6 @@ class SearchViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  // Debounced search for users by passion
   void searchUsersByPassion(String passion) {
     if (_debounce?.isActive ?? false) _debounce!.cancel();
     _debounce = Timer(const Duration(milliseconds: 300), () {

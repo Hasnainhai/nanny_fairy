@@ -41,15 +41,24 @@ class SearchRepository extends ChangeNotifier {
 
   // Search users by passion from the list
   void searchUsersByPassion(String query) {
-    print(("this is the query : $query"));
+    print("This is the query : $query");
+
     if (query.isEmpty) {
       _filteredUsers = _users;
     } else {
       _filteredUsers = _users
-          .where((user) => user.passions.any((passion) =>
-              passion.toLowerCase().startsWith(query.toLowerCase())))
+          .where((user) => user.passions.any((passion) {
+                final passionLower = passion.toLowerCase();
+                final queryLower = query.toLowerCase();
+                final match = passionLower.contains(queryLower);
+                print(
+                    "Checking passion: $passionLower, Query: $queryLower, Match: $match");
+                return match;
+              }))
           .toList();
     }
+    print(
+        "Filtered Users: ${_filteredUsers.map((user) => user.passions).toList()}");
     notifyListeners();
   }
 }

@@ -4,7 +4,6 @@ import 'package:nanny_fairy/Repository/home_ui_repostory.dart';
 import 'package:nanny_fairy/ViewModel/search_view_model.dart';
 import 'package:nanny_fairy/res/components/colors.dart';
 import 'package:nanny_fairy/res/components/widgets/ui_enums.dart';
-import 'package:nanny_fairy/res/components/widgets/vertical_spacing.dart';
 import 'package:nanny_fairy/view/booked/widgets/booking_widget.dart';
 import 'package:nanny_fairy/view/job/family_detail_provider.dart';
 import 'package:provider/provider.dart';
@@ -22,26 +21,16 @@ class _HomeSearchViewState extends State<HomeSearchView> {
   @override
   void initState() {
     super.initState();
-    // Fetch users when the widget initializes
     WidgetsBinding.instance.addPostFrameCallback((_) {
       Provider.of<SearchViewModel>(context, listen: false).fetchUsers();
     });
 
-    // Add listener to search controller
     searchController.addListener(_onSearchChanged);
   }
 
   void _onSearchChanged() {
     final viewModel = Provider.of<SearchViewModel>(context, listen: false);
-    if (searchController.text.isNotEmpty) {
-      viewModel.searchUsersByPassion(searchController.text);
-      Provider.of<HomeUiSwithchRepository>(context, listen: false)
-          .switchToType(UIType.SearchSection);
-    } else {
-      Provider.of<HomeUiSwithchRepository>(context, listen: false)
-          .switchToType(UIType.DefaultSection);
-    }
-    // Notify listeners to rebuild UI with filtered results
+    viewModel.searchUsersByPassion(searchController.text);
   }
 
   @override
@@ -57,78 +46,86 @@ class _HomeSearchViewState extends State<HomeSearchView> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(
-                'Popular Jobs',
-                style: GoogleFonts.getFont(
-                  "Poppins",
-                  textStyle: const TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.w600,
-                    color: AppColor.blackColor,
-                  ),
-                ),
-              ),
-              InkWell(
-                onTap: () {
-                  searchController.clear();
-                  _onSearchChanged();
-                },
-                child: Text(
-                  'Clear Search',
-                  style: GoogleFonts.getFont(
-                    "Poppins",
-                    textStyle: const TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.w600,
-                      color: AppColor.primaryColor,
+          Padding(
+            padding: const EdgeInsets.only(
+              left: 16,
+              right: 16,
+            ),
+            child: Consumer<HomeUiSwithchRepository>(
+                builder: (context, uiState, child) {
+              return Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    'Find Jobs',
+                    style: GoogleFonts.getFont(
+                      "Poppins",
+                      textStyle: const TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w600,
+                        color: AppColor.blackColor,
+                      ),
                     ),
                   ),
-                ),
-              ),
-            ],
-          ),
-          const VerticalSpeacing(16.0),
-          Consumer<SearchViewModel>(
-            builder: (context, viewModel, child) {
-              return SizedBox(
-                height: MediaQuery.of(context).size.height / 1.6,
-                child: viewModel.isLoading
-                    ? const Center(child: CircularProgressIndicator())
-                    : viewModel.users.isEmpty
-                        ? const Center(child: Text('No results found'))
-                        : ListView.builder(
-                            itemCount: viewModel.users.length,
-                            itemBuilder: (context, index) {
-                              final user = viewModel.users[index];
-                              List<String> passions = user.passions;
-
-                              return BookingCartWidget(
-                                primaryButtonTxt: 'View',
-                                ontapView: () {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (c) => FamilyDetailProvider(
-                                        name:
-                                            "${user.firstName} ${user.lastName}",
-                                        bio: user.bio,
-                                        profile: user.profile,
-                                      ),
-                                    ),
-                                  );
-                                },
-                                name: "${user.firstName} ${user.lastName}",
-                                profilePic:
-                                    "https://firebasestorage.googleapis.com/v0/b/nanny-fairy.appspot.com/o/Id%2F1e3c98d0-53f7-11ef-8244-ff8013a36bbf%2B1?alt=media&token=890c9b2c-9389-4432-85fd-17a8743aa10a",
-                                passion: passions,
-                              );
-                            },
-                          ),
+                  InkWell(
+                    onTap: () {
+                      uiState.switchToType(UIType.DefaultSection);
+                    },
+                    child: Text(
+                      'Clear Jobs',
+                      style: GoogleFonts.getFont(
+                        "Poppins",
+                        textStyle: const TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.w600,
+                          color: AppColor.primaryColor,
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
               );
-            },
+            }),
+          ),
+          // SizedBox(height: 16.0),
+          SizedBox(
+            height: MediaQuery.of(context).size.height / 1.6,
+            child: Consumer<SearchViewModel>(
+              builder: (context, viewModel, child) {
+                if (viewModel.isLoading) {
+                  return const Center(child: CircularProgressIndicator());
+                } else if (viewModel.users.isEmpty) {
+                  return const Center(child: Text('No results found'));
+                } else {
+                  return ListView.builder(
+                    itemCount: viewModel.users.length,
+                    itemBuilder: (context, index) {
+                      final user = viewModel.users[index];
+                      List<String> passions = user.passions;
+
+                      return BookingCartWidget(
+                        primaryButtonTxt: 'View',
+                        ontapView: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (c) => FamilyDetailProvider(
+                                name: "${user.firstName} ${user.lastName}",
+                                bio: user.bio,
+                                profile: user.profile,
+                              ),
+                            ),
+                          );
+                        },
+                        name: "${user.firstName} ${user.lastName}",
+                        profilePic: user.profile,
+                        passion: passions,
+                      );
+                    },
+                  );
+                }
+              },
+            ),
           ),
         ],
       ),
