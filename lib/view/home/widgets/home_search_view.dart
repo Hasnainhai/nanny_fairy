@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:nanny_fairy/ViewModel/provider_home_view_model.dart';
+import 'package:nanny_fairy/Repository/home_ui_repostory.dart';
+import 'package:nanny_fairy/ViewModel/search_view_model.dart';
 import 'package:nanny_fairy/res/components/colors.dart';
+import 'package:nanny_fairy/res/components/widgets/ui_enums.dart';
 import 'package:nanny_fairy/res/components/widgets/vertical_spacing.dart';
 import 'package:nanny_fairy/view/booked/widgets/booking_widget.dart';
 import 'package:nanny_fairy/view/job/family_detail_provider.dart';
@@ -15,19 +17,51 @@ class HomeSearchView extends StatefulWidget {
 }
 
 class _HomeSearchViewState extends State<HomeSearchView> {
+  TextEditingController searchController = TextEditingController();
+
+  @override
+  void initState() {
+    super.initState();
+    // Fetch users when the widget initializes
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      Provider.of<SearchViewModel>(context, listen: false).fetchUsers();
+    });
+
+    // Add listener to search controller
+    searchController.addListener(_onSearchChanged);
+  }
+
+  void _onSearchChanged() {
+    final viewModel = Provider.of<SearchViewModel>(context, listen: false);
+    if (searchController.text.isNotEmpty) {
+      viewModel.searchUsersByPassion(searchController.text);
+      Provider.of<HomeUiSwithchRepository>(context, listen: false)
+          .switchToType(UIType.SearchSection);
+    } else {
+      Provider.of<HomeUiSwithchRepository>(context, listen: false)
+          .switchToType(UIType.DefaultSection);
+    }
+    // Notify listeners to rebuild UI with filtered results
+  }
+
+  @override
+  void dispose() {
+    searchController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
-    final homeViewModel = Provider.of<ProviderHomeViewModel>(context);
-
     return Padding(
-      padding: const EdgeInsets.only(left: 16.0, right: 16.0),
+      padding: const EdgeInsets.symmetric(horizontal: 16.0),
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                'popular jobs',
+                'Popular Jobs',
                 style: GoogleFonts.getFont(
                   "Poppins",
                   textStyle: const TextStyle(
@@ -38,7 +72,10 @@ class _HomeSearchViewState extends State<HomeSearchView> {
                 ),
               ),
               InkWell(
-                onTap: () {},
+                onTap: () {
+                  searchController.clear();
+                  _onSearchChanged();
+                },
                 child: Text(
                   'Clear Search',
                   style: GoogleFonts.getFont(
@@ -54,63 +91,44 @@ class _HomeSearchViewState extends State<HomeSearchView> {
             ],
           ),
           const VerticalSpeacing(16.0),
-          SizedBox(
-            height: MediaQuery.of(context).size.height / 1.6,
-            child: FutureBuilder(
-              future: homeViewModel.getPopularJobs(),
-              builder: (context, snapshot) {
-                if (snapshot.connectionState == ConnectionState.waiting) {
-                  return const Center(
-                    child: CircularProgressIndicator(),
-                  );
-                } else if (snapshot.hasError) {
-                  return Center(child: Text('Error: ${snapshot.error}'));
-                } else if (snapshot.hasData) {
-                  Map<dynamic, dynamic> bookings =
-                      snapshot.data as Map<dynamic, dynamic>;
-                  List<Widget> bookingWidgets = [];
+          Consumer<SearchViewModel>(
+            builder: (context, viewModel, child) {
+              return SizedBox(
+                height: MediaQuery.of(context).size.height / 1.6,
+                child: viewModel.isLoading
+                    ? const Center(child: CircularProgressIndicator())
+                    : viewModel.users.isEmpty
+                        ? const Center(child: Text('No results found'))
+                        : ListView.builder(
+                            itemCount: viewModel.users.length,
+                            itemBuilder: (context, index) {
+                              final user = viewModel.users[index];
+                              List<String> passions = user.passions;
 
-                  bookings.forEach(
-                    (key, value) {
-                      List<String> passions =
-                          (value['FamilyPassions'] as List<dynamic>)
-                              .cast<String>();
-
-                      bookingWidgets.add(
-                        BookingCartWidget(
-                          primaryButtonTxt: 'View',
-                          ontapView: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (c) => FamilyDetailProvider(
-                                  name:
-                                      " ${value['firstName']} ${value['lastName']}",
-                                  bio: value['bio'] ?? '',
-                                  profile: value['profile'],
-                                ),
-                              ),
-                            );
-                          },
-                          name: "${value['firstName']} ${value['lastName']}",
-                          profilePic: value['profile'],
-                          passion: passions,
-                        ),
-                      );
-                    },
-                  );
-
-                  return SingleChildScrollView(
-                    scrollDirection: Axis.vertical,
-                    child: Column(
-                      children: bookingWidgets,
-                    ),
-                  );
-                } else {
-                  return const Center(child: Text('No data available'));
-                }
-              },
-            ),
+                              return BookingCartWidget(
+                                primaryButtonTxt: 'View',
+                                ontapView: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (c) => FamilyDetailProvider(
+                                        name:
+                                            "${user.firstName} ${user.lastName}",
+                                        bio: user.bio,
+                                        profile: user.profile,
+                                      ),
+                                    ),
+                                  );
+                                },
+                                name: "${user.firstName} ${user.lastName}",
+                                profilePic:
+                                    "https://firebasestorage.googleapis.com/v0/b/nanny-fairy.appspot.com/o/Id%2F1e3c98d0-53f7-11ef-8244-ff8013a36bbf%2B1?alt=media&token=890c9b2c-9389-4432-85fd-17a8743aa10a",
+                                passion: passions,
+                              );
+                            },
+                          ),
+              );
+            },
           ),
         ],
       ),

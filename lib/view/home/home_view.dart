@@ -1,11 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:nanny_fairy/Repository/home_ui_repostory.dart';
+import 'package:nanny_fairy/Repository/provider_home_repository.dart';
+import 'package:nanny_fairy/ViewModel/provider_home_view_model.dart';
 import 'package:nanny_fairy/res/components/colors.dart';
 import 'package:nanny_fairy/res/components/searchBar.dart';
+import 'package:nanny_fairy/res/components/widgets/ui_enums.dart';
 import 'package:nanny_fairy/res/components/widgets/vertical_spacing.dart';
 import 'package:nanny_fairy/utils/routes/routes_name.dart';
+import 'package:nanny_fairy/view/home/widgets/home_default_view.dart';
 import 'package:nanny_fairy/view/home/widgets/home_filter_view.dart';
 import 'package:nanny_fairy/view/home/widgets/home_search_view.dart';
+import 'package:provider/provider.dart';
 
 class HomeView extends StatefulWidget {
   const HomeView({super.key});
@@ -15,6 +21,17 @@ class HomeView extends StatefulWidget {
 }
 
 class _HomeViewState extends State<HomeView> {
+  final ProviderHomeRepository _repository = ProviderHomeRepository();
+
+  @override
+  void initState() {
+    super.initState();
+    // Fetch users when the widget initializes
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      Provider.of<ProviderHomeViewModel>(context, listen: false).fetchUsers();
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -81,7 +98,26 @@ class _HomeViewState extends State<HomeView> {
             const VerticalSpeacing(50.0),
             // const HomeDefaultView(),
             // const HomeSearchView(),
-            const HomeFilterView(),
+            Consumer<HomeUiSwithchRepository>(
+              builder: (context, uiState, _) {
+                Widget selectedWidget;
+
+                switch (uiState.selectedType) {
+                  case UIType.SearchSection:
+                    selectedWidget = const HomeSearchView();
+                    break;
+                  case UIType.DefaultSection:
+                    selectedWidget = const HomeDefaultView();
+                    break;
+                  case UIType.FilterSection:
+                    selectedWidget = const HomeFilterView();
+                    break;
+                }
+
+                return selectedWidget;
+              },
+            ),
+            // const HomeFilterView(),
           ],
         ),
       ),
