@@ -77,41 +77,41 @@ class _JobViewFamilyState extends State<JobViewFamily> {
                   padding: const EdgeInsets.only(left: 16.0, right: 16.0),
                   child: Column(
                     children: [
-                      BookingCartWidgetHome(
-                          primaryButtonColor: AppColor.primaryColor,
-                          ontapView: () {
-                            Navigator.pushNamed(
-                                context, RoutesName.providerDetails);
-                          },
-                          primaryButtonTxt: 'View'),
-                      BookingCartWidgetHome(
-                          primaryButtonColor: AppColor.primaryColor,
-                          ontapView: () {
-                            Navigator.pushNamed(
-                                context, RoutesName.providerDetails);
-                          },
-                          primaryButtonTxt: 'View'),
-                      BookingCartWidgetHome(
-                          primaryButtonColor: AppColor.primaryColor,
-                          ontapView: () {
-                            Navigator.pushNamed(
-                                context, RoutesName.providerDetails);
-                          },
-                          primaryButtonTxt: 'View'),
-                      BookingCartWidgetHome(
-                          primaryButtonColor: AppColor.primaryColor,
-                          ontapView: () {
-                            Navigator.pushNamed(
-                                context, RoutesName.providerDetails);
-                          },
-                          primaryButtonTxt: 'View'),
-                      BookingCartWidgetHome(
-                          primaryButtonColor: AppColor.primaryColor,
-                          ontapView: () {
-                            Navigator.pushNamed(
-                                context, RoutesName.providerDetails);
-                          },
-                          primaryButtonTxt: 'View'),
+                      // BookingCartWidgetHome(
+                      //     primaryButtonColor: AppColor.primaryColor,
+                      //     ontapView: () {
+                      //       Navigator.pushNamed(
+                      //           context, RoutesName.providerDetails);
+                      //     },
+                      //     primaryButtonTxt: 'View'),
+                      // BookingCartWidgetHome(
+                      //     primaryButtonColor: AppColor.primaryColor,
+                      //     ontapView: () {
+                      //       Navigator.pushNamed(
+                      //           context, RoutesName.providerDetails);
+                      //     },
+                      //     primaryButtonTxt: 'View'),
+                      // BookingCartWidgetHome(
+                      //     primaryButtonColor: AppColor.primaryColor,
+                      //     ontapView: () {
+                      //       Navigator.pushNamed(
+                      //           context, RoutesName.providerDetails);
+                      //     },
+                      //     primaryButtonTxt: 'View'),
+                      // BookingCartWidgetHome(
+                      //     primaryButtonColor: AppColor.primaryColor,
+                      //     ontapView: () {
+                      //       Navigator.pushNamed(
+                      //           context, RoutesName.providerDetails);
+                      //     },
+                      //     primaryButtonTxt: 'View'),
+                      // BookingCartWidgetHome(
+                      //     primaryButtonColor: AppColor.primaryColor,
+                      //     ontapView: () {
+                      //       Navigator.pushNamed(
+                      //           context, RoutesName.providerDetails);
+                      //     },
+                      //     primaryButtonTxt: 'View'),
                     ],
                   ),
                 ),
