@@ -276,8 +276,12 @@ class _HomeViewFamilyState extends State<HomeViewFamily> {
 
                           return SingleChildScrollView(
                             scrollDirection: Axis.vertical,
-                            child: Column(
-                              children: bookingWidgets,
+                            child: Padding(
+                              padding: const EdgeInsets.only(bottom: 50),
+                              child: Column(
+                                children: bookingWidgets,
+
+                              ),
                             ),
                           );
                         } else {

@@ -39,7 +39,7 @@ class _CommunityViewFamilyState extends State<CommunityViewFamily> {
           actions: [
             InkWell(
               onTap: () {
-                Navigator.pushNamed(context, RoutesName.uploadCommunityPost);
+                Navigator.pushNamed(context, RoutesName.uploadPostFamily);
               },
               child: Padding(
                 padding: const EdgeInsets.only(right: 10.0),
