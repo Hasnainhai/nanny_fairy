@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:nanny_fairy/Repository/home_ui_repostory.dart';
+import 'package:nanny_fairy/ViewModel/filter_view_model.dart';
 import 'package:nanny_fairy/ViewModel/provider_home_view_model.dart';
 import 'package:nanny_fairy/res/components/colors.dart';
+import 'package:nanny_fairy/res/components/widgets/ui_enums.dart';
 import 'package:nanny_fairy/res/components/widgets/vertical_spacing.dart';
 import 'package:nanny_fairy/view/booked/widgets/booking_widget.dart';
 import 'package:nanny_fairy/view/job/family_detail_provider.dart';
@@ -16,104 +19,100 @@ class HomeFilterView extends StatefulWidget {
 
 class _HomeFilterViewState extends State<HomeFilterView> {
   @override
+  @override
   Widget build(BuildContext context) {
-    final homeViewModel = Provider.of<ProviderHomeViewModel>(context);
-
-    return Padding(
-      padding: const EdgeInsets.only(left: 16.0, right: 16.0),
-      child: Column(
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(
-                'popular jobs',
-                style: GoogleFonts.getFont(
-                  "Poppins",
-                  textStyle: const TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.w600,
-                    color: AppColor.blackColor,
-                  ),
-                ),
-              ),
-              InkWell(
-                onTap: () {},
-                child: Text(
-                  'Clear Search',
+    return Column(
+      children: [
+        Padding(
+          padding: const EdgeInsets.only(
+            left: 16,
+            right: 16,
+          ),
+          child: Consumer<HomeUiSwithchRepository>(
+              builder: (context, uiState, child) {
+            return Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  'Filter Jobs',
                   style: GoogleFonts.getFont(
                     "Poppins",
                     textStyle: const TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.w600,
-                      color: AppColor.primaryColor,
+                      color: AppColor.blackColor,
                     ),
                   ),
                 ),
-              ),
-            ],
-          ),
-          const VerticalSpeacing(16.0),
-          SizedBox(
-            height: MediaQuery.of(context).size.height / 1.6,
-            child: FutureBuilder(
-              future: homeViewModel.getPopularJobs(),
-              builder: (context, snapshot) {
-                if (snapshot.connectionState == ConnectionState.waiting) {
-                  return const Center(
-                    child: CircularProgressIndicator(),
-                  );
-                } else if (snapshot.hasError) {
-                  return Center(child: Text('Error: ${snapshot.error}'));
-                } else if (snapshot.hasData) {
-                  Map<dynamic, dynamic> bookings =
-                      snapshot.data as Map<dynamic, dynamic>;
-                  List<Widget> bookingWidgets = [];
+                InkWell(
+                  onTap: () {
+                    uiState.switchToType(UIType.DefaultSection);
 
-                  bookings.forEach(
-                    (key, value) {
-                      List<String> passions =
-                          (value['FamilyPassions'] as List<dynamic>)
-                              .cast<String>();
-
-                      bookingWidgets.add(
-                        BookingCartWidget(
-                          primaryButtonTxt: 'View',
-                          ontapView: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (c) => FamilyDetailProvider(
-                                  name:
-                                      " ${value['firstName']} ${value['lastName']}",
-                                  bio: value['bio'] ?? '',
-                                  profile: value['profile'],
-                                ),
-                              ),
-                            );
-                          },
-                          name: "${value['firstName']} ${value['lastName']}",
-                          profilePic: value['profile'],
-                          passion: passions,
-                        ),
-                      );
-                    },
-                  );
-
-                  return SingleChildScrollView(
-                    scrollDirection: Axis.vertical,
-                    child: Column(
-                      children: bookingWidgets,
+                    // Handle Clear Search functionality here
+                    // filteredViewModel.filterUsersByPassions([]);
+                  },
+                  child: Text(
+                    'Clear Filter',
+                    style: GoogleFonts.getFont(
+                      "Poppins",
+                      textStyle: const TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w600,
+                        color: AppColor.primaryColor,
+                      ),
                     ),
-                  );
-                } else {
-                  return const Center(child: Text('No data available'));
-                }
-              },
-            ),
-          ),
-        ],
-      ),
+                  ),
+                ),
+              ],
+            );
+          }),
+        ),
+        Consumer<FilteredViewModel>(
+          builder: (context, filteredViewModel, child) {
+            return Padding(
+              padding: const EdgeInsets.only(left: 16.0, right: 16.0),
+              child: Column(
+                children: [
+                  const VerticalSpeacing(16.0),
+                  SizedBox(
+                    height: MediaQuery.of(context).size.height / 1.6,
+                    child: filteredViewModel.filteredUsers.isEmpty
+                        ? Center(child: Text('No results found'))
+                        : ListView.builder(
+                            itemCount: filteredViewModel.filteredUsers.length,
+                            itemBuilder: (context, index) {
+                              final user =
+                                  filteredViewModel.filteredUsers[index];
+                              List<String> passions = user.passions;
+
+                              return BookingCartWidget(
+                                primaryButtonTxt: 'View',
+                                ontapView: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (c) => FamilyDetailProvider(
+                                        name:
+                                            "${user.firstName} ${user.lastName}",
+                                        bio: user.bio,
+                                        profile: user.profile,
+                                      ),
+                                    ),
+                                  );
+                                },
+                                name: "${user.firstName} ${user.lastName}",
+                                profilePic: user.profile,
+                                passion: passions,
+                              );
+                            },
+                          ),
+                  ),
+                ],
+              ),
+            );
+          },
+        ),
+      ],
     );
   }
 }

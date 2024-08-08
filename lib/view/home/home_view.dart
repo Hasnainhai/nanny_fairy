@@ -21,14 +21,13 @@ class HomeView extends StatefulWidget {
 }
 
 class _HomeViewState extends State<HomeView> {
-  final ProviderHomeRepository _repository = ProviderHomeRepository();
-
   @override
   void initState() {
     super.initState();
     // Fetch users when the widget initializes
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      Provider.of<ProviderHomeViewModel>(context, listen: false).fetchUsers();
+      Provider.of<ProviderHomeViewModel>(context, listen: false)
+          .getPopularJobs();
     });
   }
 
