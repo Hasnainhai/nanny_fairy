@@ -14,7 +14,8 @@ class ProviderDetails extends StatefulWidget {
       required this.horseRate,
       required this.experience,
       required this.degree,
-      required this.dayButtons});
+      required this.dayButtons,
+      required this.timeData});
   final String profile;
   final String name;
   final String bio;
@@ -22,6 +23,7 @@ class ProviderDetails extends StatefulWidget {
   final String experience;
   final String degree;
   final List<Widget> dayButtons;
+  final Map<String, String> timeData;
 
   @override
   State<ProviderDetails> createState() => _ProviderDetailsState();
@@ -470,7 +472,7 @@ class _ProviderDetailsState extends State<ProviderDetails> {
                                             ),
                                           ),
                                           Text(
-                                            '6:am to 7:am',
+                                            '${widget.timeData['MorningStart']} to ${widget.timeData['MorningEnd']}',
                                             style: GoogleFonts.getFont(
                                               "Poppins",
                                               textStyle: const TextStyle(
@@ -500,7 +502,7 @@ class _ProviderDetailsState extends State<ProviderDetails> {
                                             ),
                                           ),
                                           Text(
-                                            '10:pm to 11:pm',
+                                            '${widget.timeData['AfternoonStart']} to ${widget.timeData['AfternoonEnd']}',
                                             style: GoogleFonts.getFont(
                                               "Poppins",
                                               textStyle: const TextStyle(
@@ -530,7 +532,7 @@ class _ProviderDetailsState extends State<ProviderDetails> {
                                             ),
                                           ),
                                           Text(
-                                            '1:pm to 2:am',
+                                            '${widget.timeData['EveningStart']} to ${widget.timeData['EveningEnd']}',
                                             style: GoogleFonts.getFont(
                                               "Poppins",
                                               textStyle: const TextStyle(

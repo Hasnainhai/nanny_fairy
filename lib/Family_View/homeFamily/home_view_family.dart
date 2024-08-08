@@ -238,19 +238,23 @@ class _HomeViewFamilyState extends State<HomeViewFamily> {
                                   primaryButtonColor: AppColor.primaryColor,
                                   primaryButtonTxt: 'View',
                                   ontapView: () {
+                                    Map<String, String> timeData = (value['Time'] as Map<dynamic, dynamic>).map((key, value) => MapEntry(key.toString(), value.toString()));
+
                                     Navigator.push(
                                       context,
                                       MaterialPageRoute(
                                           builder: (c) => ProviderDetails(
-                                              profile: value['profile'],
-                                              name:
-                                                  "${value['firstName']} ${value['lastName']}",
-                                              bio: value['bio'],
-                                              horseRate: value['hoursrate'],
-                                              experience: value['Refernce']
-                                                  ['experince'],
-                                              degree: value['education'],
-                                              dayButtons: dayButtons)),
+                                                profile: value['profile'],
+                                                name:
+                                                    "${value['firstName']} ${value['lastName']}",
+                                                bio: value['bio'],
+                                                horseRate: value['hoursrate'],
+                                                experience: value['Refernce']
+                                                    ['experince'],
+                                                degree: value['education'],
+                                                dayButtons: dayButtons,
+                                                timeData: timeData,
+                                              )),
                                     );
                                   },
                                   profile: value['profile'],
