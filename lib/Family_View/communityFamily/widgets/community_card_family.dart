@@ -11,7 +11,7 @@ class CommunituCartWidgetFamily extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        Navigator.pushNamed(context, RoutesName.communityDetailView);
+        Navigator.pushNamed(context, RoutesName.communityDetailViewFamily);
       },
       child: Container(
         decoration: BoxDecoration(

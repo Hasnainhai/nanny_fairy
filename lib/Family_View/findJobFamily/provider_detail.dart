@@ -1,13 +1,29 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:nanny_fairy/Family_View/bookFamily/widgets/book_cart_widget_family.dart';
 import 'package:nanny_fairy/res/components/rounded_button.dart';
 import 'package:nanny_fairy/res/components/widgets/vertical_spacing.dart';
 import '../../res/components/colors.dart';
 import '../../utils/routes/routes_name.dart';
 
 class ProviderDetails extends StatefulWidget {
-  const ProviderDetails({super.key});
+  const ProviderDetails(
+      {super.key,
+      required this.profile,
+      required this.name,
+      required this.bio,
+      required this.horseRate,
+      required this.experience,
+      required this.degree,
+      required this.dayButtons,
+      required this.timeData});
+  final String profile;
+  final String name;
+  final String bio;
+  final String horseRate;
+  final String experience;
+  final String degree;
+  final List<Widget> dayButtons;
+  final Map<String, String> timeData;
 
   @override
   State<ProviderDetails> createState() => _ProviderDetailsState();
@@ -30,7 +46,7 @@ class _ProviderDetailsState extends State<ProviderDetails> {
             ),
           ),
           contentPadding: EdgeInsets.zero,
-          content: Container(
+          content: SizedBox(
             width: MediaQuery.of(context).size.width *
                 0.8, // Set width to 80% of screen width
             child: Column(
@@ -126,7 +142,6 @@ class _ProviderDetailsState extends State<ProviderDetails> {
       body: Stack(
         clipBehavior: Clip.none,
         children: [
-
           Padding(
             padding: const EdgeInsets.only(top: 90),
             child: Container(
@@ -153,7 +168,7 @@ class _ProviderDetailsState extends State<ProviderDetails> {
                       children: [
                         const SizedBox(height: 40),
                         Text(
-                          'Rayees khan(34)',
+                          widget.name,
                           style: GoogleFonts.getFont(
                             "Poppins",
                             textStyle: const TextStyle(
@@ -182,7 +197,7 @@ class _ProviderDetailsState extends State<ProviderDetails> {
                         ),
                         const SizedBox(height: 16),
                         Text(
-                          'Officia irure irure anim nisi exercitation velit cupidatat qui Lorem id ad. Officia irure irure anim nisi exercitation velit cupidatat qui Lorem id ad. Officia irure irure anim nisi exercitation velit cupidatat qui Officia irure irure anim nisi exercitation velit cupidatat qui Lorem id ad. Officia irure irure anim nisi exercitation velit cupidatat qui Lorem id ad. Officia irure irure anim nisi exercitation velit cupidatat qui Officia irure irure anim nisi exercitation velit cupidatat qui Lorem id ad.',
+                          widget.bio,
                           style: GoogleFonts.getFont(
                             "Poppins",
                             textStyle: const TextStyle(
@@ -300,11 +315,13 @@ class _ProviderDetailsState extends State<ProviderDetails> {
                             const VerticalSpeacing(10),
                             Row(
                               children: [
-                                const SkillContainerWidget(
-                                    title: '12\$', subTitle: 'Hours'),
+                                SkillContainerWidget(
+                                    title: '${widget.horseRate}€',
+                                    subTitle: 'Hours'),
                                 const SizedBox(width: 16),
-                                const SkillContainerWidget(
-                                    title: '20+', subTitle: 'Experience'),
+                                SkillContainerWidget(
+                                    title: widget.experience,
+                                    subTitle: 'Experience'),
                                 const SizedBox(width: 16),
                                 Container(
                                   height: 39,
@@ -317,7 +334,7 @@ class _ProviderDetailsState extends State<ProviderDetails> {
                                       const Icon(Icons.school_outlined,
                                           color: AppColor.whiteColor),
                                       Text(
-                                        'MBBS',
+                                        widget.degree,
                                         style: GoogleFonts.getFont(
                                           "Poppins",
                                           textStyle: const TextStyle(
@@ -359,89 +376,9 @@ class _ProviderDetailsState extends State<ProviderDetails> {
                                 ),
                                 const SizedBox(height: 16),
                                 Row(
-                                  mainAxisAlignment: MainAxisAlignment.end,
-                                  children: [
-                                    DayButtonFamily(
-                                      day: 'M',
-                                      isSelected: false,
-                                      onTap: (bool isSelected) {},
-                                    ),
-                                    const SizedBox(width: 5),
-                                    DayButtonFamily(
-                                      day: 'T',
-                                      isSelected: false,
-                                      onTap: (bool isSelected) {},
-                                    ),
-                                    const SizedBox(width: 5),
-                                    DayButtonFamily(
-                                      day: 'W',
-                                      isSelected: false,
-                                      onTap: (bool isSelected) {},
-                                    ),
-                                    const SizedBox(width: 5),
-                                    DayButtonFamily(
-                                      day: 'T',
-                                      isSelected: false,
-                                      onTap: (bool isSelected) {},
-                                    ),
-                                    const SizedBox(width: 5),
-                                    DayButtonFamily(
-                                      day: 'F',
-                                      isSelected: false,
-                                      onTap: (bool isSelected) {},
-                                    ),
-                                    const SizedBox(width: 5),
-                                    DayButtonFamily(
-                                      day: 'S',
-                                      isSelected: false,
-                                      onTap: (bool isSelected) {},
-                                    ),
-                                    const SizedBox(width: 5),
-                                    DayButtonFamily(
-                                      day: 'S',
-                                      isSelected: false,
-                                      onTap: (bool isSelected) {},
-                                    ),
-                                    const SizedBox(width: 10),
-                                  ],
+                                  children: widget
+                                      .dayButtons, // Use the day buttons here
                                 ),
-                                const SizedBox(height: 16),
-                                const AvailabilityRow(
-                                    label: 'Morning',
-                                    availability: [
-                                      true,
-                                      true,
-                                      false,
-                                      false,
-                                      false,
-                                      false,
-                                      false
-                                    ]),
-                                const Divider(),
-                                const AvailabilityRow(
-                                    label: 'Evening',
-                                    availability: [
-                                      false,
-                                      false,
-                                      false,
-                                      true,
-                                      false,
-                                      false,
-                                      false
-                                    ]),
-                                const Divider(),
-                                const AvailabilityRow(
-                                    label: 'Afternoon',
-                                    availability: [
-                                      false,
-                                      false,
-                                      false,
-                                      false,
-                                      false,
-                                      true,
-                                      false
-                                    ]),
-                                const VerticalSpeacing(10),
                               ],
                             ),
                             const VerticalSpeacing(10),
@@ -500,7 +437,7 @@ class _ProviderDetailsState extends State<ProviderDetails> {
                                             ),
                                           ),
                                           Text(
-                                            '6:am to 7:am',
+                                            '${widget.timeData['MorningStart']} to ${widget.timeData['MorningEnd']}',
                                             style: GoogleFonts.getFont(
                                               "Poppins",
                                               textStyle: const TextStyle(
@@ -530,7 +467,7 @@ class _ProviderDetailsState extends State<ProviderDetails> {
                                             ),
                                           ),
                                           Text(
-                                            '10:pm to 11:pm',
+                                            '${widget.timeData['AfternoonStart']} to ${widget.timeData['AfternoonEnd']}',
                                             style: GoogleFonts.getFont(
                                               "Poppins",
                                               textStyle: const TextStyle(
@@ -560,7 +497,7 @@ class _ProviderDetailsState extends State<ProviderDetails> {
                                             ),
                                           ),
                                           Text(
-                                            '1:pm to 2:am',
+                                            '${widget.timeData['EveningStart']} to ${widget.timeData['EveningEnd']}',
                                             style: GoogleFonts.getFont(
                                               "Poppins",
                                               textStyle: const TextStyle(
@@ -816,10 +753,10 @@ class _ProviderDetailsState extends State<ProviderDetails> {
           Positioned(
             top: 50,
             left: MediaQuery.of(context).size.width / 2 - 40,
-            child: const CircleAvatar(
+            child: CircleAvatar(
               radius: 40,
               backgroundImage: NetworkImage(
-                'https://play-lh.googleusercontent.com/jInS55DYPnTZq8GpylyLmK2L2cDmUoahVacfN_Js_TsOkBEoizKmAl5-p8iFeLiNjtE=w526-h296-rw',
+                widget.profile,
               ),
             ),
           ),
@@ -868,93 +805,6 @@ class SkillContainerWidget extends StatelessWidget {
           ],
         ),
       ),
-    );
-  }
-}
-
-class AvailabilityRow extends StatefulWidget {
-  final String label;
-  final List<bool> availability;
-
-  const AvailabilityRow({
-    required this.label,
-    required this.availability,
-  });
-
-  @override
-  _AvailabilityRowState createState() => _AvailabilityRowState();
-}
-
-class _AvailabilityRowState extends State<AvailabilityRow> {
-  late List<bool> _availability;
-
-  @override
-  void initState() {
-    super.initState();
-    _availability =
-        List.from(widget.availability); // Initialize with widget's availability
-  }
-
-  void _toggleAvailability(int index) {
-    setState(() {
-      _availability[index] = !_availability[index];
-    });
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(5),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Text(
-            widget.label,
-            style: const TextStyle(
-              fontSize: 16,
-            ),
-          ),
-          Row(
-            children: _availability
-                .asMap()
-                .entries
-                .map((entry) => GestureDetector(
-                      onTap: () => _toggleAvailability(entry.key),
-                      child: AvailabilityCheckBox(isAvailable: entry.value),
-                    ))
-                .toList(),
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-class AvailabilityCheckBox extends StatelessWidget {
-  final bool isAvailable;
-
-  const AvailabilityCheckBox({
-    required this.isAvailable,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      margin: const EdgeInsets.symmetric(horizontal: 3),
-      decoration: BoxDecoration(
-        color: isAvailable ? Colors.blue : Colors.transparent,
-        borderRadius: BorderRadius.circular(4),
-        border: Border.all(color: Colors.grey),
-      ),
-      width: 15,
-      height: 15,
-      child: isAvailable
-          ? const Icon(
-              Icons.check,
-              size: 12,
-              color: Colors.white,
-            )
-          : null,
     );
   }
 }
