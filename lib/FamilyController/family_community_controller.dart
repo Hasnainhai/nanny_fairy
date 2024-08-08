@@ -13,6 +13,8 @@ class FamilyCommunityController extends ChangeNotifier {
   bool _isLoading = false;
 
   bool get isLoading => _isLoading;
+  List<Map<String, dynamic>> _posts = [];
+  List<Map<String, dynamic>> get posts => _posts;
 
   Future<void> uploadPostFamily(
     BuildContext context,
@@ -33,6 +35,22 @@ class FamilyCommunityController extends ChangeNotifier {
 
   void _setLoading(bool value) {
     _isLoading = value;
+    notifyListeners();
+  }
+
+  Future<void> fetchFamilyPosts() async {
+    _setLoading(true);
+    try {
+      List<Map<String, dynamic>> posts = await _communityRepoFamily.getFamilyPosts();
+      _setPosts(posts);
+    } catch (e) {
+      debugPrint('Error fetching posts: ${e.toString()}');
+    } finally {
+      _setLoading(false);
+    }
+  }
+  void _setPosts(List<Map<String, dynamic>> posts) {
+    _posts = posts;
     notifyListeners();
   }
 }

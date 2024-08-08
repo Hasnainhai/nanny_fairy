@@ -188,7 +188,7 @@ class _UploadComunityPostFamilyState extends State<UploadComunityPostFamily> {
                       height: 140,
                       child: TextFieldCustom(
                           controller: contentController,
-                          maxLines: 1,
+                          maxLines: 10,
                           hintText: 'Your content...'),
                     ),
                     const VerticalSpeacing(30.0),

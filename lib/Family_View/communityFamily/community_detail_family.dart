@@ -7,7 +7,10 @@ import 'package:nanny_fairy/res/components/widgets/vertical_spacing.dart';
 import '../../../res/components/colors.dart';
 
 class CommunityDetailViewFamily extends StatelessWidget {
-  const CommunityDetailViewFamily({super.key});
+  const CommunityDetailViewFamily({super.key, required this.img, required this.title, required this.subtitle});
+  final String img;
+  final String title;
+  final String subtitle;
 
   @override
   Widget build(BuildContext context) {
@@ -45,17 +48,17 @@ class CommunityDetailViewFamily extends StatelessWidget {
               Container(
                 height: 300,
                 width: double.infinity,
-                decoration: const BoxDecoration(
+                decoration:  BoxDecoration(
                   image: DecorationImage(
                     image: NetworkImage(
-                        'https://blog.adoptuskids.org/wp-content/uploads/2019/08/ausk-family-profile-pic-2-620x405.jpg'),
+                        img),
                     fit: BoxFit.fill,
                   ),
                 ),
               ),
               const VerticalSpeacing(20.0),
-              const Text(
-                'Fassion Shirt',
+               Text(
+                title,
                 style: TextStyle(
                   fontFamily: 'CenturyGothic',
                   fontSize: 18,
@@ -64,7 +67,7 @@ class CommunityDetailViewFamily extends StatelessWidget {
                 ),
               ),
               Text(
-                'Welcome to www.saydulmoon.info. Officia irure irure anim nisi exercitation velit cupidatat qui Lorem id ad. Amet quis occaecat quis voluptate cupidatat quis irure irure consequat irure',
+                subtitle,
                 style: GoogleFonts.getFont(
                   "Poppins",
                   textStyle: const TextStyle(

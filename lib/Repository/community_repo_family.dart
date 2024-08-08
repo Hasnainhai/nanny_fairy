@@ -14,7 +14,7 @@ class CommunityRepoFamily {
     FirebaseAuth? firebaseAuth,
   }) : _firebaseAuth = firebaseAuth ?? FirebaseAuth.instance;
   var databaseReference = FirebaseDatabase.instance.ref();
-
+// upload family post
   uploadFamilyPost(
     BuildContext context,
     File? post,
@@ -71,6 +71,29 @@ class CommunityRepoFamily {
       // Handle any errors that occur during save
       debugPrint('Error saving images: $e');
       Utils.flushBarErrorMessage('Failed to save Images', context);
+    }
+  }
+  // get family posts
+  Future<List<Map<String, dynamic>>> getFamilyPosts() async {
+    try {
+      final snapshot = await databaseReference.child('FamilyCommunityPosts').get();
+      if (snapshot.exists) {
+        List<Map<String, dynamic>> posts = [];
+        for (var post in snapshot.children) {
+          posts.add({
+            "post": post.child('post').value ?? '',
+            "title": post.child('title').value ?? '',
+            "content": post.child('content').value ?? '',
+            "userId": post.child('userId').value ?? '',
+          });
+        }
+        return posts;
+      } else {
+        return [];
+      }
+    } catch (e) {
+      debugPrint('Error fetching posts: $e');
+      return [];
     }
   }
 }
