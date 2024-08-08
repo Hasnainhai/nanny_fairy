@@ -379,41 +379,6 @@ class _ProviderDetailsState extends State<ProviderDetails> {
                                   children: widget
                                       .dayButtons, // Use the day buttons here
                                 ),
-                                // const AvailabilityRow(
-                                //     label: 'Morning',
-                                //     availability: [
-                                //       true,
-                                //       true,
-                                //       false,
-                                //       false,
-                                //       false,
-                                //       false,
-                                //       false
-                                //     ]),
-                                // const Divider(),
-                                // const AvailabilityRow(
-                                //     label: 'Evening',
-                                //     availability: [
-                                //       false,
-                                //       false,
-                                //       false,
-                                //       true,
-                                //       false,
-                                //       false,
-                                //       false
-                                //     ]),
-                                // const Divider(),
-                                // const AvailabilityRow(
-                                //     label: 'Afternoon',
-                                //     availability: [
-                                //       false,
-                                //       false,
-                                //       false,
-                                //       false,
-                                //       false,
-                                //       true,
-                                //       false
-                                //     ]),
                               ],
                             ),
                             const VerticalSpeacing(10),
@@ -614,7 +579,7 @@ class _ProviderDetailsState extends State<ProviderDetails> {
                                               decoration: BoxDecoration(
                                                 borderRadius:
                                                     BorderRadius.circular(12),
-                                                image: DecorationImage(
+                                                image: const DecorationImage(
                                                     image: NetworkImage(
                                                         'https://newprofilepic.photo-cdn.net//assets/images/article/profile.jpg?90af0c8')),
                                               ),
@@ -843,90 +808,3 @@ class SkillContainerWidget extends StatelessWidget {
     );
   }
 }
-//
-// class AvailabilityRow extends StatefulWidget {
-//   final String label;
-//   final List<bool> availability;
-//
-//   const AvailabilityRow({
-//     required this.label,
-//     required this.availability,
-//   });
-//
-//   @override
-//   _AvailabilityRowState createState() => _AvailabilityRowState();
-// }
-//
-// class _AvailabilityRowState extends State<AvailabilityRow> {
-//   late List<bool> _availability;
-//
-//   @override
-//   void initState() {
-//     super.initState();
-//     _availability =
-//         List.from(widget.availability); // Initialize with widget's availability
-//   }
-//
-//   void _toggleAvailability(int index) {
-//     setState(() {
-//       _availability[index] = !_availability[index];
-//     });
-//   }
-//
-//   @override
-//   Widget build(BuildContext context) {
-//     return Padding(
-//       padding: const EdgeInsets.all(5),
-//       child: Row(
-//         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-//         children: [
-//           Text(
-//             widget.label,
-//             style: const TextStyle(
-//               fontSize: 16,
-//             ),
-//           ),
-//           Row(
-//             children: _availability
-//                 .asMap()
-//                 .entries
-//                 .map((entry) => GestureDetector(
-//                       onTap: () => _toggleAvailability(entry.key),
-//                       child: AvailabilityCheckBox(isAvailable: entry.value),
-//                     ))
-//                 .toList(),
-//           ),
-//         ],
-//       ),
-//     );
-//   }
-// }
-//
-// class AvailabilityCheckBox extends StatelessWidget {
-//   final bool isAvailable;
-//
-//   const AvailabilityCheckBox({
-//     required this.isAvailable,
-//   });
-//
-//   @override
-//   Widget build(BuildContext context) {
-//     return Container(
-//       margin: const EdgeInsets.symmetric(horizontal: 3),
-//       decoration: BoxDecoration(
-//         color: isAvailable ? Colors.blue : Colors.transparent,
-//         borderRadius: BorderRadius.circular(4),
-//         border: Border.all(color: Colors.grey),
-//       ),
-//       width: 15,
-//       height: 15,
-//       child: isAvailable
-//           ? const Icon(
-//               Icons.check,
-//               size: 12,
-//               color: Colors.white,
-//             )
-//           : null,
-//     );
-//   }
-// }
