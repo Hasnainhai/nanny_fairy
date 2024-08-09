@@ -7,7 +7,11 @@ import 'package:nanny_fairy/res/components/widgets/vertical_spacing.dart';
 import '../../../res/components/colors.dart';
 
 class CommunityDetailViewFamily extends StatelessWidget {
-  const CommunityDetailViewFamily({super.key, required this.img, required this.title, required this.subtitle});
+  const CommunityDetailViewFamily(
+      {super.key,
+      required this.img,
+      required this.title,
+      required this.subtitle});
   final String img;
   final String title;
   final String subtitle;
@@ -48,18 +52,17 @@ class CommunityDetailViewFamily extends StatelessWidget {
               Container(
                 height: 300,
                 width: double.infinity,
-                decoration:  BoxDecoration(
+                decoration: BoxDecoration(
                   image: DecorationImage(
-                    image: NetworkImage(
-                        img),
+                    image: NetworkImage(img),
                     fit: BoxFit.fill,
                   ),
                 ),
               ),
               const VerticalSpeacing(20.0),
-               Text(
+              Text(
                 title,
-                style: TextStyle(
+                style: const TextStyle(
                   fontFamily: 'CenturyGothic',
                   fontSize: 18,
                   fontWeight: FontWeight.w400,
@@ -87,8 +90,7 @@ class CommunityDetailViewFamily extends StatelessWidget {
                   color: AppColor.blackColor,
                 ),
               ),
-              const TextFieldCustom(
-                  maxLines: 1, hintText: 'type comment'),
+              const TextFieldCustom(maxLines: 1, hintText: 'type comment'),
               const VerticalSpeacing(16),
               RoundedButton(
                   title: 'Post',
