@@ -79,6 +79,13 @@ class MyApp extends StatelessWidget {
           create: (context) =>
               SearchViewModel(context.read<SearchRepository>()),
         ),
+        Provider<CommunityRepoFamily>(
+          create: (_) => CommunityRepoFamily(),
+        ),
+        ChangeNotifierProvider<FamilyCommunityController>(
+          create: (context) =>
+              FamilyCommunityController(context.read<CommunityRepoFamily>()),
+        ),
       ],
       child: MaterialApp(
         initialRoute: RoutesName.splash,
@@ -92,53 +99,5 @@ class MyApp extends StatelessWidget {
         home: const SplashScreen(),
       ),
     );
-// =======
-//         providers: [
-//           Provider<AuthRepository>(
-//             create: (_) => AuthRepository(),
-//           ),
-//           ChangeNotifierProvider<AuthViewModel>(
-//             create: (context) => AuthViewModel(context.read<AuthRepository>()),
-//           ),
-//           Provider<AuthRepositoryFamily>(
-//             create: (_) => AuthRepositoryFamily(),
-//           ),
-//           ChangeNotifierProvider<FamilyAuthController>(
-//             create: (context) =>
-//                 FamilyAuthController(context.read<AuthRepositoryFamily>()),
-//           ),
-//           Provider<ProviderHomeRepository>(
-//             create: (_) => ProviderHomeRepository(),
-//           ),
-//           ChangeNotifierProvider<ProviderHomeViewModel>(
-//             create: (context) =>
-//                 ProviderHomeViewModel(context.read<ProviderHomeRepository>()),
-//           ),
-//           Provider<FamilyHomeRepository>(
-//             create: (_) => FamilyHomeRepository(),
-//           ),
-//           ChangeNotifierProvider<FamilyHomeController>(
-//             create: (context) =>
-//                 FamilyHomeController(context.read<FamilyHomeRepository>()),
-//           ),
-//           Provider<CommunityRepoFamily>(
-//             create: (_) => CommunityRepoFamily(),
-//           ),
-//           ChangeNotifierProvider<FamilyCommunityController>(
-//             create: (context) =>
-//                 FamilyCommunityController(context.read<CommunityRepoFamily>()),
-//           ),
-//         ],
-//         child: MaterialApp(
-//           initialRoute: RoutesName.splash,
-//           onGenerateRoute: Routes.generateRoute,
-//           debugShowCheckedModeBanner: false,
-//           theme: ThemeData(
-//             scaffoldBackgroundColor: AppColor.whiteColor,
-//             colorScheme: ColorScheme.fromSeed(seedColor: AppColor.primaryColor),
-//             useMaterial3: true,
-//           ),
-//           home: const SplashScreen(),
-//         ));
   }
 }
