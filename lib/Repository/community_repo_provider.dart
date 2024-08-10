@@ -2,20 +2,21 @@ import 'dart:io';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
+import 'package:nanny_fairy/view/home/dashboard/dashboard.dart';
 import 'package:uuid/uuid.dart';
 import '../res/components/common_firebase_storge.dart';
 import '../utils/routes/routes_name.dart';
 import '../utils/utils.dart';
 
-class CommunityRepoFamily {
+class CommunityRepoProvider {
   final FirebaseAuth _firebaseAuth;
 
-  CommunityRepoFamily({
+  CommunityRepoProvider({
     FirebaseAuth? firebaseAuth,
   }) : _firebaseAuth = firebaseAuth ?? FirebaseAuth.instance;
   var databaseReference = FirebaseDatabase.instance.ref();
 // upload family post
-  uploadFamilyPost(
+  uploadCommunityPost(
     BuildContext context,
     File? post,
     String title,
@@ -35,7 +36,7 @@ class CommunityRepoFamily {
       var uuid = const Uuid().v1();
       final userId = _firebaseAuth.currentUser!.uid;
       final userRef =
-          databaseReference.child('FamilyCommunityPosts').child(uuid);
+          databaseReference.child('ProviderCommunityPosts').child(uuid);
 
       String postUrl =
           'https://nakedsecurity.sophos.com/wp-content/uploads/sites/2/2013/08/facebook-silhouette_thumb.jpg';
@@ -43,7 +44,7 @@ class CommunityRepoFamily {
       if (post != null) {
         CommonFirebaseStorage commonStorage = CommonFirebaseStorage();
         postUrl = await commonStorage.storeFileFileToFirebase(
-          'CommunityFamilyPost/$uuid',
+          'ProviderCommunityPosts/$uuid',
           post,
         );
       } else {
@@ -62,11 +63,13 @@ class CommunityRepoFamily {
       Navigator.of(context).pop();
       Utils.toastMessage('Images saved successfully!');
       debugPrint(userId);
-      Navigator.pushNamedAndRemoveUntil(
-        context,
-        RoutesName.dashboardFamily,
-        (route) => false,
-      );
+
+      Navigator.push(context, MaterialPageRoute(builder: (context)=>const DashBoardScreen()));
+      // Navigator.pushNamedAndRemoveUntil(
+      //   context,
+      //   RoutesName.dashboard,
+      //   (route) => false,
+      // );
     } catch (e) {
       Navigator.of(context).pop();
 
@@ -79,7 +82,7 @@ class CommunityRepoFamily {
   Future<void> addComment(String postId, String comment, String userId) async {
     try {
       final commentsRef = databaseReference
-          .child('FamilyCommunityPosts')
+          .child('ProviderCommunityPosts')
           .child(postId)
           .child('comments');
 
@@ -101,7 +104,7 @@ class CommunityRepoFamily {
     try {
       final commentsRef = FirebaseDatabase.instance
           .ref()
-          .child('FamilyCommunityPosts')
+          .child('ProviderCommunityPosts')
           .child(postId)
           .child('comments');
 
@@ -127,10 +130,10 @@ class CommunityRepoFamily {
   }
 
   // get family posts
-  Future<List<Map<String, dynamic>>> getFamilyPosts() async {
+  Future<List<Map<String, dynamic>>> getCommunityPosts() async {
     try {
       final snapshot =
-          await databaseReference.child('FamilyCommunityPosts').get();
+          await databaseReference.child('ProviderCommunityPosts').get();
       if (snapshot.exists) {
         List<Map<String, dynamic>> posts = [];
         for (var post in snapshot.children) {
@@ -155,7 +158,7 @@ class CommunityRepoFamily {
   Future<int> getTotalComments(String postId) async {
     try {
       final commentsRef = databaseReference
-          .child('FamilyCommunityPosts')
+          .child('ProviderCommunityPosts')
           .child(postId)
           .child('comments');
 

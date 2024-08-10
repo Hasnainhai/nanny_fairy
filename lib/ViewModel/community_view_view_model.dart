@@ -1,14 +1,11 @@
 import 'dart:io';
-
 import 'package:flutter/material.dart';
-import 'package:nanny_fairy/Repository/auth_repository.dart';
+import 'package:nanny_fairy/Repository/community_repo_provider.dart';
 
-import '../Repository/community_repo_family.dart';
+class CommunityViewViewModel extends ChangeNotifier {
+  final CommunityRepoProvider _communityRepoProvider;
 
-class FamilyCommunityController extends ChangeNotifier {
-  final CommunityRepoFamily _communityRepoFamily;
-
-  FamilyCommunityController(this._communityRepoFamily);
+  CommunityViewViewModel(this._communityRepoProvider);
 
   bool _isLoading = false;
 
@@ -16,7 +13,7 @@ class FamilyCommunityController extends ChangeNotifier {
   List<Map<String, dynamic>> _posts = [];
   List<Map<String, dynamic>> get posts => _posts;
 
-  Future<void> uploadPostFamily(
+  Future<void> uploadPostProvider(
     BuildContext context,
     File? post,
     String title,
@@ -25,7 +22,7 @@ class FamilyCommunityController extends ChangeNotifier {
   ) async {
     _setLoading(true);
     try {
-      await _communityRepoFamily.uploadFamilyPost(
+      await _communityRepoProvider.uploadCommunityPost(
           context, post, title, content);
     } catch (e) {
       debugPrint('Error uploading Post: ${e.toString()}');
@@ -39,11 +36,11 @@ class FamilyCommunityController extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> fetchFamilyPosts() async {
+  Future<void> fetchProviderPosts() async {
     _setLoading(true);
     try {
       List<Map<String, dynamic>> posts =
-          await _communityRepoFamily.getFamilyPosts();
+          await _communityRepoProvider.getCommunityPosts();
       _setPosts(posts);
     } catch (e) {
       debugPrint('Error fetching posts: ${e.toString()}');
@@ -56,7 +53,8 @@ class FamilyCommunityController extends ChangeNotifier {
     _posts = posts;
     notifyListeners();
   }
+
   Future<int> fetchTotalComments(String postId) async {
-    return await _communityRepoFamily.getTotalComments(postId);
+    return await _communityRepoProvider.getTotalComments(postId);
   }
 }

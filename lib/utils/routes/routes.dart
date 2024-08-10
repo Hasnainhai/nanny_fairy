@@ -150,9 +150,9 @@ class Routes {
       case RoutesName.dashboardFamily:
         return MaterialPageRoute(
             builder: (BuildContext context) => const DashBoardFamilyScreen());
-      case RoutesName.communityDetailView:
-        return MaterialPageRoute(
-            builder: (BuildContext context) => const CommunityDetailView());
+      // case RoutesName.communityDetailView:
+      //   return MaterialPageRoute(
+      //       builder: (BuildContext context) => const CommunityDetailView());
 
       case RoutesName.jobViewFamily:
         return MaterialPageRoute(
