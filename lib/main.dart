@@ -74,7 +74,7 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider<HomeUiSwithchRepository>(
           create: (_) => HomeUiSwithchRepository(),
         ),
-        ChangeNotifierProvider<FamilyHomeUiRepository>(
+        ChangeNotifierProvider(
           create: (_) => FamilyHomeUiRepository(),
         ),
         ChangeNotifierProvider<FilteredViewModel>(
@@ -85,9 +85,8 @@ class MyApp extends StatelessWidget {
           create: (context) =>
               SearchViewModel(context.read<SearchRepository>()),
         ),
-        ChangeNotifierProvider<FamilySearchViewModel>(
-          create: (context) =>
-              FamilySearchViewModel(context.read<FamilySearchRepository>()),
+        ChangeNotifierProvider(
+          create: (_) => FamilySearchViewModel(FamilySearchRepository()),
         ),
         Provider<CommunityRepoFamily>(
           create: (_) => CommunityRepoFamily(),

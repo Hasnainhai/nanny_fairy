@@ -7,6 +7,7 @@ import 'package:nanny_fairy/Family_View/homeFamily/widgets/family_search__view.d
 import 'package:nanny_fairy/Repository/family_home_ui_repository.dart';
 import 'package:nanny_fairy/res/components/colors.dart';
 import 'package:nanny_fairy/res/components/searchBar.dart';
+import 'package:nanny_fairy/res/components/widgets/Family_search_bar.dart';
 import 'package:nanny_fairy/res/components/widgets/family_home_ui_enums.dart';
 import 'package:nanny_fairy/res/components/widgets/vertical_spacing.dart';
 import 'package:provider/provider.dart';
@@ -76,7 +77,7 @@ class _HomeViewFamilyState extends State<HomeViewFamily> {
                   top: 159, // Adjust this value as needed
                   left: (MediaQuery.of(context).size.width - 320) /
                       2, // Center horizontally
-                  child: SearchBarProvider(
+                  child: FamilySearchBarProvider(
                     onTapFilter: () {
                       Navigator.pushNamed(
                           context, RoutesName.filterPopUpFamily);
