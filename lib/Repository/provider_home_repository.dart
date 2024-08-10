@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 
@@ -7,7 +8,15 @@ class ProviderHomeRepository {
 
   Future<Map<dynamic, dynamic>> getPopularJobs() async {
     DatabaseEvent snapshot = await _bookingRef.once();
-    debugPrint(snapshot.snapshot.value.toString());
+    return snapshot.snapshot.value as Map<dynamic, dynamic>;
+  }
+
+  final DatabaseReference _providerRef =
+      FirebaseDatabase.instance.ref().child('Providers');
+
+  Future<Map<dynamic, dynamic>> getCurrentUser() async {
+    DatabaseEvent snapshot =
+        await _providerRef.child(FirebaseAuth.instance.currentUser!.uid).once();
     return snapshot.snapshot.value as Map<dynamic, dynamic>;
   }
 }
