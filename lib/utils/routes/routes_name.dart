@@ -31,7 +31,7 @@ class RoutesName {
   static const String uploadIdFamily = '/upload_id_family';
   static const String paymentFamily = '/payment_family';
   static const String dashboardFamily = '/dashboard_family';
-  static const String communityDetailView = '/community_detail_view';
+  // static const String communityDetailView = '/community_detail_view';
   static const String familyDetail = '/family_detail';
   static const String jobViewFamily = '/job_view_family';
   static const String createAccount = '/create_account';

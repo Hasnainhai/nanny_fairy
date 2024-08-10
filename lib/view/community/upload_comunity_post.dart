@@ -1,11 +1,14 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:nanny_fairy/ViewModel/community_view_view_model.dart';
 import 'package:nanny_fairy/res/components/rounded_button.dart';
 import 'package:nanny_fairy/res/components/widgets/custom_text_field.dart';
 import 'package:nanny_fairy/res/components/widgets/vertical_spacing.dart';
-import 'package:nanny_fairy/utils/routes/routes_name.dart';
-
+import 'package:provider/provider.dart';
 import '../../res/components/colors.dart';
+import '../../res/components/widgets/image_picker.dart';
+import '../../utils/utils.dart';
 
 class UploadComunityPost extends StatefulWidget {
   const UploadComunityPost({super.key});
@@ -25,7 +28,7 @@ class _UploadComunityPostState extends State<UploadComunityPost> {
           icon: const Icon(Icons.check_circle,
               color: AppColor.primaryColor, size: 120),
           title: Text(
-            'Congratulation you\nupload your product',
+            'Congratulation you\nupload your Post',
             style: GoogleFonts.getFont(
               "Poppins",
               textStyle: const TextStyle(
@@ -46,8 +49,23 @@ class _UploadComunityPostState extends State<UploadComunityPost> {
     );
   }
 
+  TextEditingController titleController = TextEditingController();
+  TextEditingController contentController = TextEditingController();
+  File? post;
+  void pickPost() async {
+    File? img = await pickFrontImg(
+      context,
+    );
+    setState(
+      () {
+        post = img;
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
+    final communityController = Provider.of<CommunityViewViewModel>(context);
     return Scaffold(
       backgroundColor: AppColor.primaryColor,
       appBar: AppBar(
@@ -100,41 +118,115 @@ class _UploadComunityPostState extends State<UploadComunityPost> {
                 child: Column(
                   children: [
                     const VerticalSpeacing(25),
-                    Container(
-                      height: 192,
-                      width: double.infinity,
-                      decoration: const BoxDecoration(
-                        image: DecorationImage(
-                          image: AssetImage('images/community.png'),
-                          fit: BoxFit.fill,
-                        ),
-                      ),
-                      child: const Center(
-                        child: CircleAvatar(
-                          backgroundColor: AppColor.primaryColor,
-                          child: Padding(
-                            padding: EdgeInsets.all(8.0),
-                            child: Icon(
-                              Icons.photo_camera,
-                              color: AppColor.whiteColor,
+                    post == null
+                        ? Container(
+                            height: 192,
+                            width: double.infinity,
+                            decoration: const BoxDecoration(
+                              image: DecorationImage(
+                                image: AssetImage('images/community.png'),
+                                fit: BoxFit.fill,
+                              ),
                             ),
+                            child: Center(
+                              child: InkWell(
+                                onTap: () {
+                                  pickPost();
+                                },
+                                child: const CircleAvatar(
+                                  backgroundColor: AppColor.primaryColor,
+                                  child: Padding(
+                                    padding: EdgeInsets.all(8.0),
+                                    child: Icon(
+                                      Icons.photo_camera,
+                                      color: AppColor.whiteColor,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          )
+                        : Container(
+                            height: 192,
+                            width: double.infinity,
+                            decoration: BoxDecoration(
+                              image: DecorationImage(
+                                image: FileImage(
+                                  post!,
+                                ),
+                                fit: BoxFit.fill,
+                              ),
+                            ),
+                            child: Center(
+                              child: InkWell(
+                                onTap: () {
+                                  pickPost();
+                                },
+                                child: const CircleAvatar(
+                                  backgroundColor: AppColor.primaryColor,
+                                  child: Padding(
+                                    padding: EdgeInsets.all(8.0),
+                                    child: Icon(
+                                      Icons.photo_camera,
+                                      color: AppColor.whiteColor,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                    const VerticalSpeacing(16.0),
+                    TextFieldCustom(
+                        controller: titleController,
+                        maxLines: 1,
+                        hintText: 'Your title...'),
+                    Container(
+                      height: 200,
+                      width: double.infinity,
+                      decoration: BoxDecoration(
+                        color: AppColor.whiteColor,
+                        borderRadius: BorderRadius.circular(6),
+                        border: Border.all(
+                          strokeAlign: BorderSide.strokeAlignCenter,
+                          color: const Color(0xff1B81BC).withOpacity(
+                              0.10), // Stroke color with 10% opacity
+                          width: 1,
+                        ),
+                        boxShadow: [
+                          BoxShadow(
+                            color: const Color(0xff1B81BC).withOpacity(
+                                0.1), // Drop shadow color with 4% opacity
+                            blurRadius: 2,
+                            offset: const Offset(1, 2),
+                            spreadRadius: 1,
+                          ),
+                        ],
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.only(left: 10.0),
+                        child: TextField(
+                          maxLines: 10,
+                          controller: contentController,
+                          decoration: const InputDecoration(
+                            hintText: 'Your Content...',
+                            border: InputBorder.none,
                           ),
                         ),
                       ),
-                    ),
-                    const VerticalSpeacing(16.0),
-                    const TextFieldCustom(
-                        maxLines: 1, hintText: 'Your title...'),
-                    const SizedBox(
-                      height: 140,
-                      child: TextFieldCustom(
-                          maxLines: 1, hintText: 'Your content...'),
                     ),
                     const VerticalSpeacing(30.0),
                     RoundedButton(
                       title: 'Continue',
                       onpress: () {
-                        showCommunityDialog(context);
+                        if (titleController.text.isNotEmpty ||
+                            contentController.text.isNotEmpty) {
+                          communityController.uploadPostProvider(context, post,
+                              titleController.text, contentController.text);
+                        } else {
+                          Utils.flushBarErrorMessage(
+                              "Please upload post", context);
+                        }
+                        // showCommunityDialog(context);
                       },
                     )
                   ],
