@@ -67,7 +67,6 @@ class _HomeViewState extends State<HomeView> {
                       } else if (snapshot.hasData) {
                         Map<dynamic, dynamic> provider =
                             snapshot.data as Map<dynamic, dynamic>;
-                        debugPrint("this is user data: $provider");
                         return Center(
                           child: ListTile(
                             leading: CircleAvatar(

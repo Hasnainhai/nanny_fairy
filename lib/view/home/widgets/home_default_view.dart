@@ -87,16 +87,16 @@ class _HomeDefaultViewState extends State<HomeDefaultView> {
                         );
                       }
                     }),
-                SizedBox(width: 16),
-                HomeFeatureContainer(
+                const SizedBox(width: 16),
+                const HomeFeatureContainer(
                   txColor: AppColor.blackColor,
                   bgColor: AppColor.whiteColor,
                   img: 'images/chats.png',
                   title: '10',
                   subTitle: 'Total Chats',
                 ),
-                SizedBox(width: 16),
-                HomeFeatureContainer(
+                const SizedBox(width: 16),
+                const HomeFeatureContainer(
                   txColor: AppColor.blackColor,
                   bgColor: AppColor.whiteColor,
                   img: 'images/families.png',
