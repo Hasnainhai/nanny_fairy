@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:nanny_fairy/utils/routes/routes_name.dart';
 import '../../../res/components/colors.dart';
 import '../../../res/components/widgets/vertical_spacing.dart';
 
