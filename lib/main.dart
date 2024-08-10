@@ -7,11 +7,14 @@ import 'package:nanny_fairy/Repository/auth_repository.dart';
 import 'package:nanny_fairy/Repository/community_repo_family.dart';
 import 'package:nanny_fairy/Repository/family_auth_repository.dart';
 import 'package:nanny_fairy/Repository/family_home_repo.dart';
+import 'package:nanny_fairy/Repository/family_home_ui_repository.dart';
+import 'package:nanny_fairy/Repository/family_search_repository.dart';
 import 'package:nanny_fairy/Repository/filter_repository.dart';
 import 'package:nanny_fairy/Repository/home_ui_repostory.dart';
 import 'package:nanny_fairy/Repository/provider_home_repository.dart';
 import 'package:nanny_fairy/Repository/search_repository.dart';
 import 'package:nanny_fairy/ViewModel/auth_view_model.dart';
+import 'package:nanny_fairy/ViewModel/family_search_view_model.dart';
 import 'package:nanny_fairy/ViewModel/filter_view_model.dart';
 import 'package:nanny_fairy/ViewModel/provider_home_view_model.dart';
 import 'package:nanny_fairy/ViewModel/search_view_model.dart';
@@ -71,6 +74,9 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider<HomeUiSwithchRepository>(
           create: (_) => HomeUiSwithchRepository(),
         ),
+        ChangeNotifierProvider<FamilyHomeUiRepository>(
+          create: (_) => FamilyHomeUiRepository(),
+        ),
         ChangeNotifierProvider<FilteredViewModel>(
           create: (context) =>
               FilteredViewModel(context.read<FilteredRepository>()),
@@ -78,6 +84,10 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider<SearchViewModel>(
           create: (context) =>
               SearchViewModel(context.read<SearchRepository>()),
+        ),
+        ChangeNotifierProvider<FamilySearchViewModel>(
+          create: (context) =>
+              FamilySearchViewModel(context.read<FamilySearchRepository>()),
         ),
         Provider<CommunityRepoFamily>(
           create: (_) => CommunityRepoFamily(),
