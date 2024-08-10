@@ -94,6 +94,36 @@ class CommunityRepoFamily {
       debugPrint('Error adding comment: $e');
     }
   }
+  Future<List<Map<String, dynamic>>> getComments(String postId) async {
+    List<Map<String, dynamic>> commentsList = [];
+
+    try {
+      final commentsRef = FirebaseDatabase.instance
+          .ref()
+          .child('FamilyCommunityPosts')
+          .child(postId)
+          .child('comments');
+
+      DatabaseEvent event = await commentsRef.once();
+      DataSnapshot snapshot = event.snapshot;
+
+      if (snapshot.value != null) {
+        final commentsMap = snapshot.value as Map<dynamic, dynamic>;
+        commentsMap.forEach((key, value) {
+          commentsList.add({
+            'commentId': key,
+            'userId': value['userId'],
+            'comment': value['comment'],
+            'timestamp': value['timestamp'],
+          });
+        });
+      }
+    } catch (e) {
+      debugPrint('Error fetching comments: $e');
+    }
+
+    return commentsList;
+  }
 
   // get family posts
   Future<List<Map<String, dynamic>>> getFamilyPosts() async {
