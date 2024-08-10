@@ -54,31 +54,49 @@ class _HomeDefaultViewState extends State<HomeDefaultView> {
           ),
         ),
         const VerticalSpeacing(10),
-        const SizedBox(
+        SizedBox(
           height: 140,
           child: SingleChildScrollView(
             scrollDirection: Axis.horizontal,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                SizedBox(width: 16),
-                HomeFeatureContainer(
-                  txColor: AppColor.blackColor,
-                  img: 'images/families.png',
-                  title: '100k',
-                  subTitle: 'Total Families',
-                  bgColor: AppColor.whiteColor,
-                ),
-                SizedBox(width: 16),
-                HomeFeatureContainer(
+                const SizedBox(width: 16),
+                FutureBuilder(
+                    future: homeViewModel.getPopularJobs(),
+                    builder: (context, snapshot) {
+                      if (snapshot.connectionState == ConnectionState.waiting) {
+                        return const Center(
+                          child: CircularProgressIndicator(),
+                        );
+                      } else if (snapshot.hasData) {
+                        return HomeFeatureContainer(
+                          txColor: AppColor.blackColor,
+                          img: 'images/families.png',
+                          title: snapshot.data!.length.toString(),
+                          subTitle: 'Total Families',
+                          bgColor: AppColor.whiteColor,
+                        );
+                      } else {
+                        return const HomeFeatureContainer(
+                          txColor: AppColor.blackColor,
+                          img: 'images/families.png',
+                          title: '0',
+                          subTitle: 'Total Families',
+                          bgColor: AppColor.whiteColor,
+                        );
+                      }
+                    }),
+                const SizedBox(width: 16),
+                const HomeFeatureContainer(
                   txColor: AppColor.blackColor,
                   bgColor: AppColor.whiteColor,
                   img: 'images/chats.png',
                   title: '10',
                   subTitle: 'Total Chats',
                 ),
-                SizedBox(width: 16),
-                HomeFeatureContainer(
+                const SizedBox(width: 16),
+                const HomeFeatureContainer(
                   txColor: AppColor.blackColor,
                   bgColor: AppColor.whiteColor,
                   img: 'images/families.png',

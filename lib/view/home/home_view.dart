@@ -28,11 +28,15 @@ class _HomeViewState extends State<HomeView> {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       Provider.of<ProviderHomeViewModel>(context, listen: false)
           .getPopularJobs();
+      Provider.of<ProviderHomeViewModel>(context, listen: false)
+          .getCurrentUser();
     });
   }
 
   @override
   Widget build(BuildContext context) {
+    final homeViewModel = Provider.of<ProviderHomeViewModel>(context);
+
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: SingleChildScrollView(
@@ -51,36 +55,55 @@ class _HomeViewState extends State<HomeView> {
                       bottomRight: Radius.circular(20),
                     ),
                   ),
-                  child: Center(
-                    child: ListTile(
-                      leading: const CircleAvatar(
-                        radius: 40,
-                        backgroundImage: NetworkImage(
-                            'https://play-lh.googleusercontent.com/jInS55DYPnTZq8GpylyLmK2L2cDmUoahVacfN_Js_TsOkBEoizKmAl5-p8iFeLiNjtE=w526-h296-rw'),
-                      ),
-                      title: Text(
-                        'WellCome',
-                        style: GoogleFonts.getFont(
-                          "Poppins",
-                          textStyle: const TextStyle(
-                            fontSize: 12,
-                            fontWeight: FontWeight.w500,
-                            color: AppColor.whiteColor,
+                  child: FutureBuilder<Map<dynamic, dynamic>>(
+                    future: homeViewModel.getCurrentUser(),
+                    builder: (context, snapshot) {
+                      if (snapshot.connectionState == ConnectionState.waiting) {
+                        return const Center(
+                          child: CircularProgressIndicator(),
+                        );
+                      } else if (snapshot.hasError) {
+                        return Center(child: Text('Error: ${snapshot.error}'));
+                      } else if (snapshot.hasData) {
+                        Map<dynamic, dynamic> provider =
+                            snapshot.data as Map<dynamic, dynamic>;
+                        return Center(
+                          child: ListTile(
+                            leading: CircleAvatar(
+                              radius: 40,
+                              foregroundImage:
+                                  NetworkImage(provider['profile']),
+                              backgroundImage: const NetworkImage(
+                                  'https://play-lh.googleusercontent.com/jInS55DYPnTZq8GpylyLmK2L2cDmUoahVacfN_Js_TsOkBEoizKmAl5-p8iFeLiNjtE=w526-h296-rw'),
+                            ),
+                            title: Text(
+                              'WellCome',
+                              style: GoogleFonts.getFont(
+                                "Poppins",
+                                textStyle: const TextStyle(
+                                  fontSize: 12,
+                                  fontWeight: FontWeight.w500,
+                                  color: AppColor.whiteColor,
+                                ),
+                              ),
+                            ),
+                            subtitle: Text(
+                              "${provider['firstName']} ${provider['lastName']}",
+                              style: GoogleFonts.getFont(
+                                "Poppins",
+                                textStyle: const TextStyle(
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.w500,
+                                  color: AppColor.whiteColor,
+                                ),
+                              ),
+                            ),
                           ),
-                        ),
-                      ),
-                      subtitle: Text(
-                        'Aliza Zehra',
-                        style: GoogleFonts.getFont(
-                          "Poppins",
-                          textStyle: const TextStyle(
-                            fontSize: 14,
-                            fontWeight: FontWeight.w500,
-                            color: AppColor.whiteColor,
-                          ),
-                        ),
-                      ),
-                    ),
+                        );
+                      } else {
+                        return const Center(child: Text('No data available'));
+                      }
+                    },
                   ),
                 ),
                 Positioned(

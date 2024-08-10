@@ -16,6 +16,12 @@ class ProviderHomeViewModel extends ChangeNotifier {
     } finally {}
   }
 
+  Future<Map<dynamic, dynamic>> getCurrentUser() async {
+    try {
+      return await _providerHomeRepository.getCurrentUser();
+    } finally {}
+  }
+
   void _setLoading(bool value) {
     _isLoading = value;
     notifyListeners();
