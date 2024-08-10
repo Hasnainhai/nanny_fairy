@@ -51,7 +51,7 @@ class MyApp extends StatelessWidget {
         ),
         ChangeNotifierProvider<FilteredRepository>(
           create: (context) => FilteredRepository(
-              context.read<SearchRepository>()), // Pass SearchRepository here
+              context.read<SearchRepository>()),
         ),
         ChangeNotifierProvider<AuthViewModel>(
           create: (context) => AuthViewModel(context.read<AuthRepository>()),

@@ -20,6 +20,7 @@ class CommunityRepoFamily {
     File? post,
     String title,
     String content,
+    // String postId,
   ) async {
     showDialog(
       context: context,
@@ -52,6 +53,7 @@ class CommunityRepoFamily {
       }
 
       userRef.update({
+        "postId": uuid,
         "post": postUrl,
         "title": title,
         "content": content,
@@ -73,10 +75,31 @@ class CommunityRepoFamily {
       Utils.flushBarErrorMessage('Failed to save Images', context);
     }
   }
+
+  Future<void> addComment(String postId, String comment, String userId) async {
+    try {
+      final commentsRef = databaseReference
+          .child('FamilyCommunityPosts')
+          .child(postId)
+          .child('comments');
+
+      final newCommentRef = commentsRef.push();
+      await newCommentRef.set({
+        'commentId': newCommentRef.key,
+        'userId': userId,
+        'comment': comment,
+        'timestamp': DateTime.now().toIso8601String(),
+      });
+    } catch (e) {
+      debugPrint('Error adding comment: $e');
+    }
+  }
+
   // get family posts
   Future<List<Map<String, dynamic>>> getFamilyPosts() async {
     try {
-      final snapshot = await databaseReference.child('FamilyCommunityPosts').get();
+      final snapshot =
+          await databaseReference.child('FamilyCommunityPosts').get();
       if (snapshot.exists) {
         List<Map<String, dynamic>> posts = [];
         for (var post in snapshot.children) {
@@ -85,6 +108,7 @@ class CommunityRepoFamily {
             "title": post.child('title').value ?? '',
             "content": post.child('content').value ?? '',
             "userId": post.child('userId').value ?? '',
+            "postId": post.child('postId').value ?? '',
           });
         }
         return posts;

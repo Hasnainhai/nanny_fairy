@@ -21,6 +21,7 @@ class FamilyCommunityController extends ChangeNotifier {
     File? post,
     String title,
     String content,
+    // String postId,
   ) async {
     _setLoading(true);
     try {
@@ -41,7 +42,8 @@ class FamilyCommunityController extends ChangeNotifier {
   Future<void> fetchFamilyPosts() async {
     _setLoading(true);
     try {
-      List<Map<String, dynamic>> posts = await _communityRepoFamily.getFamilyPosts();
+      List<Map<String, dynamic>> posts =
+          await _communityRepoFamily.getFamilyPosts();
       _setPosts(posts);
     } catch (e) {
       debugPrint('Error fetching posts: ${e.toString()}');
@@ -49,6 +51,7 @@ class FamilyCommunityController extends ChangeNotifier {
       _setLoading(false);
     }
   }
+
   void _setPosts(List<Map<String, dynamic>> posts) {
     _posts = posts;
     notifyListeners();

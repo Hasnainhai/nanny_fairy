@@ -32,6 +32,9 @@ class _CommunityViewFamilyState extends State<CommunityViewFamily> {
         Provider.of<FamilyCommunityController>(context);
     final currentUserId = FirebaseAuth.instance.currentUser!.uid;
 
+
+
+
     return DefaultTabController(
       length: 2,
       child: Scaffold(
@@ -111,6 +114,8 @@ class _CommunityViewFamilyState extends State<CommunityViewFamily> {
                     else
                       Column(
                         children: familyCommunityController.posts.map((post) {
+                          debugPrint('........................User Id : ${post['userId']}...............');
+
                           return Padding(
                             padding: const EdgeInsets.only(bottom: 16),
                             child: InkWell(
@@ -120,7 +125,9 @@ class _CommunityViewFamilyState extends State<CommunityViewFamily> {
                                   return CommunityDetailViewFamily(
                                       img: post['post'],
                                       title: post['title'],
-                                      subtitle: post['content']);
+                                      subtitle: post['content'],
+                                      postId: post['postId'], userId: currentUserId,
+                                  );
                                 }));
                               },
                               child: CommunituCartWidgetFamily(
@@ -164,7 +171,10 @@ class _CommunityViewFamilyState extends State<CommunityViewFamily> {
                                   return CommunityDetailViewFamily(
                                       img: post['post'],
                                       title: post['title'],
-                                      subtitle: post['content']);
+                                      subtitle: post['content'],
+                                    postId: post['postId'],
+                                      userId: currentUserId,
+                                  );
                                 }));
                               },
                               child: CommunituCartWidgetFamily(
