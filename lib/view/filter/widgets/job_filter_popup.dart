@@ -2,21 +2,21 @@ import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:nanny_fairy/Repository/home_ui_repostory.dart';
 import 'package:nanny_fairy/ViewModel/filter_view_model.dart';
+import 'package:nanny_fairy/res/components/colors.dart';
 import 'package:nanny_fairy/res/components/rounded_button.dart';
-import 'package:nanny_fairy/res/components/widgets/ui_enums.dart';
+import 'package:nanny_fairy/res/components/widgets/job_enum.dart';
+import 'package:nanny_fairy/res/components/widgets/vertical_spacing.dart';
 import 'package:nanny_fairy/utils/utils.dart';
 import 'package:provider/provider.dart';
-import '../../res/components/colors.dart';
-import '../../res/components/widgets/vertical_spacing.dart';
 
-class FilterPopUp extends StatefulWidget {
-  const FilterPopUp({super.key});
+class JobFilterPopup extends StatefulWidget {
+  const JobFilterPopup({super.key});
 
   @override
-  State<FilterPopUp> createState() => _FilterPopUpState();
+  State<JobFilterPopup> createState() => _JobFilterPopUpState();
 }
 
-class _FilterPopUpState extends State<FilterPopUp> {
+class _JobFilterPopUpState extends State<JobFilterPopup> {
   final Map<String, bool> filters = {
     "Cleaning": false,
     "Home": false,
@@ -157,7 +157,7 @@ class _FilterPopUpState extends State<FilterPopUp> {
                           filteredViewModel.filterUsersByPassions(query);
                           Navigator.pop(context);
 
-                          uiState.switchToType(UIType
+                          uiState.switchToJobType(JobUIType
                               .FilterSection); // Switch to FilterSection after applying filters
                         } else {
                           Utils.flushBarErrorMessage(
