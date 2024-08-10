@@ -29,7 +29,7 @@ class _FamilySearchViewState extends State<FamilySearchView> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                'What are you looking for',
+                'Searched Providers',
                 style: GoogleFonts.getFont(
                   "Poppins",
                   textStyle: const TextStyle(
@@ -44,7 +44,7 @@ class _FamilySearchViewState extends State<FamilySearchView> {
                   Navigator.pushNamed(context, RoutesName.jobViewFamily);
                 },
                 child: Text(
-                  'see all',
+                  'Clear all',
                   style: GoogleFonts.getFont(
                     "Poppins",
                     textStyle: const TextStyle(

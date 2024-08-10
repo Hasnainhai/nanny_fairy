@@ -1,21 +1,25 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:nanny_fairy/Repository/family_home_ui_repository.dart';
 import 'package:nanny_fairy/Repository/home_ui_repostory.dart';
+import 'package:nanny_fairy/ViewModel/family_search_view_model.dart';
 import 'package:nanny_fairy/ViewModel/provider_home_view_model.dart';
 import 'package:nanny_fairy/ViewModel/search_view_model.dart';
+import 'package:nanny_fairy/res/components/colors.dart';
+import 'package:nanny_fairy/res/components/widgets/family_home_ui_enums.dart';
 import 'package:nanny_fairy/res/components/widgets/ui_enums.dart';
 import 'package:provider/provider.dart';
-import 'colors.dart';
 
-class SearchBarProvider extends StatefulWidget {
-  const SearchBarProvider({super.key, required this.onTapFilter});
+class FamilySearchBarProvider extends StatefulWidget {
+  const FamilySearchBarProvider({super.key, required this.onTapFilter});
   final Function() onTapFilter;
 
   @override
-  State<SearchBarProvider> createState() => _SearchBarProviderState();
+  State<FamilySearchBarProvider> createState() =>
+      _FamilySearchBarProviderState();
 }
 
-class _SearchBarProviderState extends State<SearchBarProvider> {
+class _FamilySearchBarProviderState extends State<FamilySearchBarProvider> {
   String selectedKM = '2';
   final List<String> kM = [
     '2',
@@ -86,16 +90,18 @@ class _SearchBarProviderState extends State<SearchBarProvider> {
                     padding: const EdgeInsets.only(top: 2),
                     child: Focus(
                       focusNode: _searchFocusNode,
-                      child:
-                          Consumer2<SearchViewModel, HomeUiSwithchRepository>(
+                      child: Consumer2<FamilySearchViewModel,
+                          FamilyHomeUiRepository>(
                         builder: (context, viewModel, uiState, child) {
                           searchController.addListener(() {
                             if (searchController.text.isNotEmpty) {
                               viewModel
                                   .searchUsersByPassion(searchController.text);
-                              uiState.switchToType(UIType.SearchSection);
+                              uiState.switchToType(
+                                  FamilyHomeUiEnums.SearchSection);
                             } else {
-                              uiState.switchToType(UIType.DefaultSection);
+                              uiState.switchToType(
+                                  FamilyHomeUiEnums.DefaultSection);
                             }
                           });
                           return TextFormField(

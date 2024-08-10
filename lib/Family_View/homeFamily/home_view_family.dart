@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:nanny_fairy/FamilyController/family_home_controller.dart';
-import 'package:nanny_fairy/Family_View/findJobFamily/provider_detail.dart';
-import 'package:nanny_fairy/Family_View/homeFamily/widgets/bookCart_home_widget.dart';
+
 import 'package:nanny_fairy/Family_View/homeFamily/widgets/family_default_view.dart';
-import 'package:nanny_fairy/Family_View/homeFamily/widgets/home_Family_feature_widget.dart';
+import 'package:nanny_fairy/Family_View/homeFamily/widgets/family_filter_view.dart';
+import 'package:nanny_fairy/Family_View/homeFamily/widgets/family_search__view.dart';
+import 'package:nanny_fairy/Repository/family_home_ui_repository.dart';
 import 'package:nanny_fairy/res/components/colors.dart';
 import 'package:nanny_fairy/res/components/searchBar.dart';
+import 'package:nanny_fairy/res/components/widgets/Family_search_bar.dart';
+import 'package:nanny_fairy/res/components/widgets/family_home_ui_enums.dart';
 import 'package:nanny_fairy/res/components/widgets/vertical_spacing.dart';
 import 'package:provider/provider.dart';
 import '../../utils/routes/routes_name.dart';
@@ -75,7 +77,7 @@ class _HomeViewFamilyState extends State<HomeViewFamily> {
                   top: 159, // Adjust this value as needed
                   left: (MediaQuery.of(context).size.width - 320) /
                       2, // Center horizontally
-                  child: SearchBarProvider(
+                  child: FamilySearchBarProvider(
                     onTapFilter: () {
                       Navigator.pushNamed(
                           context, RoutesName.filterPopUpFamily);
@@ -85,7 +87,26 @@ class _HomeViewFamilyState extends State<HomeViewFamily> {
               ],
             ),
             const VerticalSpeacing(50.0),
-            FamilyDefaultView(),
+            Consumer<FamilyHomeUiRepository>(
+              builder: (context, uiState, _) {
+                Widget selectedWidget;
+
+                switch (uiState.selectedType) {
+                  case FamilyHomeUiEnums.SearchSection:
+                    selectedWidget = const FamilySearchView();
+                    break;
+                  case FamilyHomeUiEnums.DefaultSection:
+                    selectedWidget = const FamilyDefaultView();
+                    break;
+                  case FamilyHomeUiEnums.FilterSection:
+                    selectedWidget = const FamilyFilterView();
+                    break;
+                }
+
+                return selectedWidget;
+              },
+            ),
+            // FamilyDefaultView(),
           ],
         ),
       ),
