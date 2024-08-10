@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:intl/intl.dart';
 import 'package:nanny_fairy/res/components/rounded_button.dart';
 import 'package:nanny_fairy/res/components/widgets/custom_text_field.dart';
 import 'package:nanny_fairy/res/components/widgets/vertical_spacing.dart';
@@ -31,6 +32,31 @@ class _CommunityDetailViewFamilyState extends State<CommunityDetailViewFamily> {
   final TextEditingController _commentController = TextEditingController();
   final CommunityRepoFamily _communityRepoFamily = CommunityRepoFamily();
 
+  List<Map<String, dynamic>> comments = [];
+  bool isLoading = true;
+
+  @override
+  void initState() {
+    super.initState();
+    _fetchComments(); // Fetch comments when the widget is built
+  }
+
+  Future<void> _fetchComments() async {
+    try {
+      List<Map<String, dynamic>> fetchedComments =
+          await _communityRepoFamily.getComments(widget.postId);
+      setState(() {
+        comments = fetchedComments;
+        isLoading = false;
+      });
+    } catch (e) {
+      debugPrint('Error fetching comments: $e');
+      setState(() {
+        isLoading = false;
+      });
+    }
+  }
+
   void _addComment() async {
     if (_commentController.text.isNotEmpty) {
       String comment = _commentController.text;
@@ -39,7 +65,7 @@ class _CommunityDetailViewFamilyState extends State<CommunityDetailViewFamily> {
         await _communityRepoFamily.addComment(
             widget.postId, comment, widget.userId);
         _commentController.clear();
-        setState(() {});
+        _fetchComments(); // Refresh comments after adding a new one
       } catch (e) {
         debugPrint('Error adding comment: $e');
       }
@@ -111,6 +137,55 @@ class _CommunityDetailViewFamilyState extends State<CommunityDetailViewFamily> {
                   ),
                 ),
               ),
+              const VerticalSpeacing(16),
+              const Text(
+                'Comments',
+                style: TextStyle(
+                  fontFamily: 'CenturyGothic',
+                  fontSize: 18,
+                  fontWeight: FontWeight.w400,
+                  color: AppColor.blackColor,
+                ),
+              ),
+              const VerticalSpeacing(10),
+              isLoading
+                  ? const Center(child: CircularProgressIndicator())
+                  : comments.isEmpty
+                      ? const Text('No comments yet.')
+                      : ListView.builder(
+                          shrinkWrap: true,
+                          physics: const NeverScrollableScrollPhysics(),
+                          itemCount: comments.length,
+                          itemBuilder: (context, index) {
+                            final comment = comments[index];
+                            String formattedDate =
+                                DateFormat('yyyy-MM-dd – kk:mm').format(
+                                    DateTime.parse(comment['timestamp']));
+                            return Padding(
+                              padding: const EdgeInsets.only(bottom: 5.0),
+                              child: ListTile(
+                                title: Text(
+                                  comment['comment'] ?? '',
+                                  style: const TextStyle(
+                                    fontFamily: 'CenturyGothic',
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.w400,
+                                    color: AppColor.blackColor,
+                                  ),
+                                ),
+                                subtitle: Text(
+                                  formattedDate,
+                                  style: const TextStyle(
+                                    fontFamily: 'CenturyGothic',
+                                    fontSize: 10,
+                                    fontWeight: FontWeight.w400,
+                                    color: AppColor.blackColor,
+                                  ),
+                                ),
+                              ),
+                            );
+                          },
+                        ),
               const VerticalSpeacing(16),
               const Text(
                 'Leave a comment',
