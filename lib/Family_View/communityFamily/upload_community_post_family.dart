@@ -184,12 +184,39 @@ class _UploadComunityPostFamilyState extends State<UploadComunityPostFamily> {
                         controller: titleController,
                         maxLines: 1,
                         hintText: 'Your title...'),
-                    SizedBox(
-                      height: 140,
-                      child: TextFieldCustom(
-                          controller: contentController,
+                    Container(
+                      height: 200,
+                      width: double.infinity,
+                      decoration: BoxDecoration(
+                        color: AppColor.whiteColor,
+                        borderRadius: BorderRadius.circular(6),
+                        border: Border.all(
+                          strokeAlign: BorderSide.strokeAlignCenter,
+                          color: const Color(0xff1B81BC).withOpacity(
+                              0.10), // Stroke color with 10% opacity
+                          width: 1,
+                        ),
+                        boxShadow: [
+                          BoxShadow(
+                            color: const Color(0xff1B81BC).withOpacity(
+                                0.1), // Drop shadow color with 4% opacity
+                            blurRadius: 2,
+                            offset: const Offset(1, 2),
+                            spreadRadius: 1,
+                          ),
+                        ],
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.only(left: 10.0),
+                        child: TextField(
                           maxLines: 10,
-                          hintText: 'Your content...'),
+                          controller: contentController,
+                          decoration: const InputDecoration(
+                            hintText: 'Your Content...',
+                            border: InputBorder.none,
+                          ),
+                        ),
+                      ),
                     ),
                     const VerticalSpeacing(30.0),
                     RoundedButton(
