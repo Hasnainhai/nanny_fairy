@@ -56,4 +56,7 @@ class FamilyCommunityController extends ChangeNotifier {
     _posts = posts;
     notifyListeners();
   }
+  Future<int> fetchTotalComments(String postId) async {
+    return await _communityRepoFamily.getTotalComments(postId);
+  }
 }

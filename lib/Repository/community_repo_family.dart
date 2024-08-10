@@ -94,6 +94,7 @@ class CommunityRepoFamily {
       debugPrint('Error adding comment: $e');
     }
   }
+
   Future<List<Map<String, dynamic>>> getComments(String postId) async {
     List<Map<String, dynamic>> commentsList = [];
 
@@ -148,6 +149,27 @@ class CommunityRepoFamily {
     } catch (e) {
       debugPrint('Error fetching posts: $e');
       return [];
+    }
+  }
+
+  Future<int> getTotalComments(String postId) async {
+    try {
+      final commentsRef = databaseReference
+          .child('FamilyCommunityPosts')
+          .child(postId)
+          .child('comments');
+
+      DatabaseEvent event = await commentsRef.once();
+      DataSnapshot snapshot = event.snapshot;
+
+      if (snapshot.exists) {
+        return snapshot.children.length;
+      } else {
+        return 0;
+      }
+    } catch (e) {
+      debugPrint('Error fetching total comments: $e');
+      return 0;
     }
   }
 }

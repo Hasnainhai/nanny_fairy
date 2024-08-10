@@ -32,9 +32,6 @@ class _CommunityViewFamilyState extends State<CommunityViewFamily> {
         Provider.of<FamilyCommunityController>(context);
     final currentUserId = FirebaseAuth.instance.currentUser!.uid;
 
-
-
-
     return DefaultTabController(
       length: 2,
       child: Scaffold(
@@ -114,28 +111,35 @@ class _CommunityViewFamilyState extends State<CommunityViewFamily> {
                     else
                       Column(
                         children: familyCommunityController.posts.map((post) {
-                          debugPrint('........................User Id : ${post['userId']}...............');
-
-                          return Padding(
-                            padding: const EdgeInsets.only(bottom: 16),
-                            child: InkWell(
-                              onTap: () {
-                                Navigator.push(context,
-                                    MaterialPageRoute(builder: (context) {
-                                  return CommunityDetailViewFamily(
-                                      img: post['post'],
-                                      title: post['title'],
-                                      subtitle: post['content'],
-                                      postId: post['postId'], userId: currentUserId,
-                                  );
-                                }));
-                              },
-                              child: CommunituCartWidgetFamily(
-                                post: post['post'],
-                                title: post['title'],
-                                content: post['content'],
-                              ),
-                            ),
+                          return FutureBuilder<int>(
+                            future: familyCommunityController
+                                .fetchTotalComments(post['postId']),
+                            builder: (context, snapshot) {
+                              final totalComments = snapshot.data ?? 0;
+                              return Padding(
+                                padding: const EdgeInsets.only(bottom: 16),
+                                child: InkWell(
+                                  onTap: () {
+                                    Navigator.push(context,
+                                        MaterialPageRoute(builder: (context) {
+                                      return CommunityDetailViewFamily(
+                                        img: post['post'],
+                                        title: post['title'],
+                                        subtitle: post['content'],
+                                        postId: post['postId'],
+                                        userId: currentUserId,
+                                      );
+                                    }));
+                                  },
+                                  child: CommunituCartWidgetFamily(
+                                    post: post['post'],
+                                    title: post['title'],
+                                    content: post['content'],
+                                    totalComments: totalComments,
+                                  ),
+                                ),
+                              );
+                            },
                           );
                         }).toList(),
                       ),
@@ -162,27 +166,35 @@ class _CommunityViewFamilyState extends State<CommunityViewFamily> {
                         children: familyCommunityController.posts
                             .where((post) => post['userId'] == currentUserId)
                             .map((post) {
-                          return Padding(
-                            padding: const EdgeInsets.only(bottom: 16),
-                            child: InkWell(
-                              onTap: () {
-                                Navigator.push(context,
-                                    MaterialPageRoute(builder: (context) {
-                                  return CommunityDetailViewFamily(
-                                      img: post['post'],
-                                      title: post['title'],
-                                      subtitle: post['content'],
-                                    postId: post['postId'],
-                                      userId: currentUserId,
-                                  );
-                                }));
-                              },
-                              child: CommunituCartWidgetFamily(
-                                post: post['post'],
-                                title: post['title'],
-                                content: post['content'],
-                              ),
-                            ),
+                          return FutureBuilder<int>(
+                            future: familyCommunityController
+                                .fetchTotalComments(post['postId']),
+                            builder: (context, snapshot) {
+                              final totalComments = snapshot.data ?? 0;
+                              return Padding(
+                                padding: const EdgeInsets.only(bottom: 16),
+                                child: InkWell(
+                                  onTap: () {
+                                    Navigator.push(context,
+                                        MaterialPageRoute(builder: (context) {
+                                      return CommunityDetailViewFamily(
+                                        img: post['post'],
+                                        title: post['title'],
+                                        subtitle: post['content'],
+                                        postId: post['postId'],
+                                        userId: currentUserId,
+                                      );
+                                    }));
+                                  },
+                                  child: CommunituCartWidgetFamily(
+                                    post: post['post'],
+                                    title: post['title'],
+                                    content: post['content'],
+                                    totalComments: totalComments,
+                                  ),
+                                ),
+                              );
+                            },
                           );
                         }).toList(),
                       ),
