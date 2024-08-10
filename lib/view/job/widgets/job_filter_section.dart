@@ -3,20 +3,20 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:nanny_fairy/Repository/home_ui_repostory.dart';
 import 'package:nanny_fairy/ViewModel/filter_view_model.dart';
 import 'package:nanny_fairy/res/components/colors.dart';
-import 'package:nanny_fairy/res/components/widgets/ui_enums.dart';
+import 'package:nanny_fairy/res/components/widgets/job_enum.dart';
 import 'package:nanny_fairy/res/components/widgets/vertical_spacing.dart';
 import 'package:nanny_fairy/view/booked/widgets/booking_widget.dart';
 import 'package:nanny_fairy/view/job/family_detail_provider.dart';
 import 'package:provider/provider.dart';
 
-class HomeFilterView extends StatefulWidget {
-  const HomeFilterView({super.key});
+class JobFilterSection extends StatefulWidget {
+  const JobFilterSection({super.key});
 
   @override
-  State<HomeFilterView> createState() => _HomeFilterViewState();
+  State<JobFilterSection> createState() => _JobFilterSectionState();
 }
 
-class _HomeFilterViewState extends State<HomeFilterView> {
+class _JobFilterSectionState extends State<JobFilterSection> {
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -44,10 +44,7 @@ class _HomeFilterViewState extends State<HomeFilterView> {
                 ),
                 InkWell(
                   onTap: () {
-                    uiState.switchToType(UIType.DefaultSection);
-
-                    // Handle Clear Search functionality here
-                    // filteredViewModel.filterUsersByPassions([]);
+                    uiState.switchToJobType(JobUIType.DefaultSection);
                   },
                   child: Text(
                     'Clear Filter',
@@ -75,8 +72,9 @@ class _HomeFilterViewState extends State<HomeFilterView> {
                   SizedBox(
                     height: MediaQuery.of(context).size.height / 1.6,
                     child: filteredViewModel.filteredUsers.isEmpty
-                        ? Center(child: Text('No results found'))
+                        ? const Center(child: Text('No results found'))
                         : ListView.builder(
+                            shrinkWrap: true,
                             itemCount: filteredViewModel.filteredUsers.length,
                             itemBuilder: (context, index) {
                               final user =
