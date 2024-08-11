@@ -56,8 +56,8 @@ class MyApp extends StatelessWidget {
           create: (_) => SearchRepository(),
         ),
         ChangeNotifierProvider<FilteredRepository>(
-          create: (context) => FilteredRepository(
-              context.read<SearchRepository>()),
+          create: (context) =>
+              FilteredRepository(context.read<SearchRepository>()),
         ),
         ChangeNotifierProvider<AuthViewModel>(
           create: (context) => AuthViewModel(context.read<AuthRepository>()),
@@ -102,9 +102,8 @@ class MyApp extends StatelessWidget {
           create: (_) => CommunityRepoProvider(),
         ),
         ChangeNotifierProvider<CommunityViewViewModel>(
-          create: (context) =>
-              CommunityViewViewModel(context.read<CommunityRepoProvider>()),
-        ),
+            create: (context) =>
+                CommunityViewViewModel(context.read<CommunityRepoProvider>())),
       ],
       child: MaterialApp(
         initialRoute: RoutesName.splash,
