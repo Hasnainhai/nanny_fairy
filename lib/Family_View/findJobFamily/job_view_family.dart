@@ -1,7 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:nanny_fairy/Family_View/findJobFamily/widgets/famil_job_default_section.dart';
+import 'package:nanny_fairy/Family_View/findJobFamily/widgets/family_job_filter_section.dart';
+import 'package:nanny_fairy/Family_View/findJobFamily/widgets/family_job_search_seaction.dart';
 import 'package:nanny_fairy/Family_View/homeFamily/widgets/bookCart_home_widget.dart';
+import 'package:nanny_fairy/Repository/family_home_ui_repository.dart';
 import 'package:nanny_fairy/res/components/searchBar.dart';
+import 'package:nanny_fairy/res/components/widgets/family_job_enums.dart';
+import 'package:nanny_fairy/res/components/widgets/family_job_search_bar.dart';
+import 'package:nanny_fairy/res/components/widgets/job_enum.dart';
 import 'package:nanny_fairy/res/components/widgets/vertical_spacing.dart';
 import 'package:nanny_fairy/utils/routes/routes_name.dart';
 import 'package:provider/provider.dart';
@@ -61,7 +68,7 @@ class _JobViewFamilyState extends State<JobViewFamily> {
                   top: 125, // Adjust this value as needed
                   left: (MediaQuery.of(context).size.width - 320) /
                       2, // Center horizontally
-                  child: SearchBarProvider(
+                  child: FamilySearchBar(
                     onTapFilter: () {
                       Navigator.pushNamed(
                           context, RoutesName.filterPopUpFamily);
@@ -71,6 +78,25 @@ class _JobViewFamilyState extends State<JobViewFamily> {
               ],
             ),
             const VerticalSpeacing(50),
+            Consumer<FamilyHomeUiRepository>(
+              builder: (context, uiState, _) {
+                Widget selectedWidget;
+
+                switch (uiState.selectedJobType) {
+                  case FamilyJobEnums.DefaultSection:
+                    selectedWidget = const FamilyJobDefaultSection();
+                    break;
+                  case FamilyJobEnums.FilterSection:
+                    selectedWidget = const FamilyJobFilterSection();
+                    break;
+                  case FamilyJobEnums.SearchSection:
+                    selectedWidget = const FamilyJobSearchSeaction();
+                    break;
+                }
+
+                return selectedWidget;
+              },
+            ),
             SizedBox(
               height: MediaQuery.of(context).size.height,
               child: Padding(
@@ -115,9 +141,7 @@ class _JobViewFamilyState extends State<JobViewFamily> {
                             BookingCartWidgetHome(
                               primaryButtonColor: AppColor.primaryColor,
                               primaryButtonTxt: 'View',
-                              ontapView: () {
-
-                              },
+                              ontapView: () {},
                               profile: value['profile'],
                               name:
                                   "${value['firstName']} ${value['lastName']}",
