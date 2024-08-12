@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_paypal_checkout/flutter_paypal_checkout.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:nanny_fairy/res/components/rounded_button.dart';
 import 'package:nanny_fairy/res/components/toggle_widget.dart';
@@ -20,6 +21,7 @@ class _PaymentViewState extends State<PaymentView> {
   bool firstButton = true;
   bool secondButton = false;
   bool thirdButton = false;
+
   void paymentDonePopup(BuildContext context) {
     showDialog(
       context: context,
@@ -60,6 +62,72 @@ class _PaymentViewState extends State<PaymentView> {
         );
       },
     );
+  }
+
+  void initiatePaypalCheckout(BuildContext context) {
+    Navigator.of(context).push(MaterialPageRoute(
+      builder: (BuildContext context) => PaypalCheckout(
+        sandboxMode: true,
+        clientId:
+            "AcdlPX5qScKqycqMVzxDYKxvg31yhOHPLSzx4_KeMCA-ofV2VRvWlKOuz-RjWR098YXESEX9YUloLBd8",
+        secretKey:
+            "EM-G9jSv4x5GAFEge8DRMD0figp3V68YifKmhK4enbGCKDHKq3jYlOwwk8Q8s7NQMsZ1oxg_5vJ2s3xn",
+        returnURL: "yourapp://payment-success",
+        cancelURL: "yourapp://payment-cancel",
+        transactions: const [
+          {
+            "amount": {
+              "total": '70',
+              "currency": "USD",
+              "details": {
+                "subtotal": '70',
+                "shipping": '0',
+                "shipping_discount": 0
+              }
+            },
+            "description": "The payment transaction description.",
+            "item_list": {
+              "items": [
+                {
+                  "name": "Apple",
+                  "quantity": 4,
+                  "price": '5',
+                  "currency": "USD"
+                },
+                {
+                  "name": "Pineapple",
+                  "quantity": 5,
+                  "price": '10',
+                  "currency": "USD"
+                }
+              ],
+              // shipping address is Optional
+              "shipping_address": {
+                "recipient_name": "Raman Singh",
+                "line1": "Delhi",
+                "line2": "",
+                "city": "Delhi",
+                "country_code": "IN",
+                "postal_code": "11001",
+                "phone": "+00000000",
+                "state": "Texas"
+              },
+            }
+          }
+        ],
+        note: "PAYMENT_NOTE",
+        onSuccess: (Map params) async {
+          print("onSuccess: $params");
+        },
+        onError: (error) {
+          print("onError: $error");
+          Navigator.pop(context);
+        },
+        onCancel: () {
+          print('cancelled:');
+        },
+      ),
+    ));
   }
 
   @override
@@ -276,7 +344,8 @@ class _PaymentViewState extends State<PaymentView> {
                 RoundedButton(
                     title: 'Pay',
                     onpress: () {
-                      paymentDonePopup(context);
+                      initiatePaypalCheckout(context);
+                      // paymentDonePopup(context);
                     }),
               ],
             ),
