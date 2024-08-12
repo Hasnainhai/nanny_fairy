@@ -9,29 +9,29 @@ import 'package:nanny_fairy/view/booked/widgets/booking_widget.dart';
 import 'package:nanny_fairy/view/job/family_detail_provider.dart';
 import 'package:provider/provider.dart';
 
-class JobSearchSection extends StatefulWidget {
-  const JobSearchSection({super.key});
+class FamilyJobSearchSeaction extends StatefulWidget {
+  const FamilyJobSearchSeaction({super.key});
 
   @override
-  State<JobSearchSection> createState() => _JobSearchViewState();
+  State<FamilyJobSearchSeaction> createState() =>
+      _FamilyJobSearchSeactionState();
 }
 
-class _JobSearchViewState extends State<JobSearchSection> {
+class _FamilyJobSearchSeactionState extends State<FamilyJobSearchSeaction> {
   TextEditingController searchController = TextEditingController();
 
   @override
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      Provider.of<FamilySearchViewModel>(context, listen: false).fetchUsers();
+      Provider.of<SearchViewModel>(context, listen: false).fetchUsers();
     });
 
     searchController.addListener(_onSearchChanged);
   }
 
   void _onSearchChanged() {
-    final viewModel =
-        Provider.of<FamilySearchViewModel>(context, listen: false);
+    final viewModel = Provider.of<SearchViewModel>(context, listen: false);
     viewModel.searchUsersByPassion(searchController.text);
   }
 
@@ -92,7 +92,7 @@ class _JobSearchViewState extends State<JobSearchSection> {
           // SizedBox(height: 16.0),
           SizedBox(
             height: MediaQuery.of(context).size.height,
-            child: Consumer<SearchViewModel>(
+            child: Consumer<FamilySearchViewModel>(
               builder: (context, viewModel, child) {
                 if (viewModel.isLoading) {
                   return const Center(child: CircularProgressIndicator());
