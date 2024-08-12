@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:nanny_fairy/Repository/home_ui_repostory.dart';
+import 'package:nanny_fairy/ViewModel/family_search_view_model.dart';
 import 'package:nanny_fairy/ViewModel/search_view_model.dart';
 import 'package:nanny_fairy/res/components/colors.dart';
 import 'package:nanny_fairy/res/components/widgets/job_enum.dart';
@@ -90,8 +91,8 @@ class _FamilyJobSearchSeactionState extends State<FamilyJobSearchSeaction> {
           ),
           // SizedBox(height: 16.0),
           SizedBox(
-            height: MediaQuery.of(context).size.height / 1.6,
-            child: Consumer<SearchViewModel>(
+            height: MediaQuery.of(context).size.height,
+            child: Consumer<FamilySearchViewModel>(
               builder: (context, viewModel, child) {
                 if (viewModel.isLoading) {
                   return const Center(child: CircularProgressIndicator());

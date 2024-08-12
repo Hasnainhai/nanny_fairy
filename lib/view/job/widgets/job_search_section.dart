@@ -91,7 +91,7 @@ class _JobSearchViewState extends State<JobSearchSection> {
           ),
           // SizedBox(height: 16.0),
           SizedBox(
-            height: MediaQuery.of(context).size.height / 1.6,
+            height: MediaQuery.of(context).size.height,
             child: Consumer<SearchViewModel>(
               builder: (context, viewModel, child) {
                 if (viewModel.isLoading) {

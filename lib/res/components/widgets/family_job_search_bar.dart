@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:nanny_fairy/Repository/family_home_ui_repository.dart';
 import 'package:nanny_fairy/Repository/home_ui_repostory.dart';
+import 'package:nanny_fairy/ViewModel/family_search_view_model.dart';
 import 'package:nanny_fairy/ViewModel/search_view_model.dart';
 import 'package:nanny_fairy/res/components/colors.dart';
+import 'package:nanny_fairy/res/components/widgets/family_job_enums.dart';
 import 'package:nanny_fairy/res/components/widgets/job_enum.dart';
 import 'package:provider/provider.dart';
 
@@ -85,16 +88,18 @@ class _FamilySearchBarState extends State<FamilySearchBar> {
                     padding: const EdgeInsets.only(top: 2),
                     child: Focus(
                       focusNode: _searchFocusNode,
-                      child:
-                          Consumer2<SearchViewModel, HomeUiSwithchRepository>(
+                      child: Consumer2<FamilySearchViewModel,
+                          FamilyHomeUiRepository>(
                         builder: (context, viewModel, uiState, child) {
                           searchController.addListener(() {
                             if (searchController.text.isNotEmpty) {
                               viewModel
                                   .searchUsersByPassion(searchController.text);
-                              uiState.switchToJobType(JobUIType.SearchSection);
+                              uiState.switchToJobType(
+                                  FamilyJobEnums.SearchSection);
                             } else {
-                              uiState.switchToJobType(JobUIType.DefaultSection);
+                              uiState.switchToJobType(
+                                  FamilyJobEnums.DefaultSection);
                             }
                           });
                           return TextFormField(
