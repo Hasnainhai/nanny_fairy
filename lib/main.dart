@@ -5,6 +5,7 @@ import 'package:nanny_fairy/FamilyController/family_community_controller.dart';
 import 'package:nanny_fairy/FamilyController/family_home_controller.dart';
 import 'package:nanny_fairy/Repository/auth_repository.dart';
 import 'package:nanny_fairy/Repository/community_repo_family.dart';
+import 'package:nanny_fairy/Repository/community_repo_provider.dart';
 import 'package:nanny_fairy/Repository/family_auth_repository.dart';
 import 'package:nanny_fairy/Repository/family_home_repo.dart';
 import 'package:nanny_fairy/Repository/family_home_ui_repository.dart';
@@ -15,6 +16,8 @@ import 'package:nanny_fairy/Repository/provider_home_repository.dart';
 import 'package:nanny_fairy/Repository/search_repository.dart';
 import 'package:nanny_fairy/ViewModel/auth_view_model.dart';
 import 'package:nanny_fairy/ViewModel/family_search_view_model.dart';
+
+import 'package:nanny_fairy/ViewModel/community_view_view_model.dart';
 import 'package:nanny_fairy/ViewModel/filter_view_model.dart';
 import 'package:nanny_fairy/ViewModel/provider_home_view_model.dart';
 import 'package:nanny_fairy/ViewModel/search_view_model.dart';
@@ -54,7 +57,7 @@ class MyApp extends StatelessWidget {
         ),
         ChangeNotifierProvider<FilteredRepository>(
           create: (context) => FilteredRepository(
-              context.read<SearchRepository>()), // Pass SearchRepository here
+              context.read<SearchRepository>()),
         ),
         ChangeNotifierProvider<AuthViewModel>(
           create: (context) => AuthViewModel(context.read<AuthRepository>()),
@@ -94,6 +97,13 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider<FamilyCommunityController>(
           create: (context) =>
               FamilyCommunityController(context.read<CommunityRepoFamily>()),
+        ),
+        Provider<CommunityRepoProvider>(
+          create: (_) => CommunityRepoProvider(),
+        ),
+        ChangeNotifierProvider<CommunityViewViewModel>(
+          create: (context) =>
+              CommunityViewViewModel(context.read<CommunityRepoProvider>()),
         ),
       ],
       child: MaterialApp(

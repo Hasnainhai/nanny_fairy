@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:nanny_fairy/utils/routes/routes_name.dart';
 import '../../../res/components/colors.dart';
 import '../../../res/components/widgets/vertical_spacing.dart';
 
@@ -9,11 +8,13 @@ class CommunituCartWidgetFamily extends StatelessWidget {
       {super.key,
       required this.post,
       required this.title,
-      required this.content});
+      required this.content,
+      required this.totalComments});
 
   final String post;
   final String title;
   final String content;
+  final int totalComments;
 
   @override
   Widget build(BuildContext context) {
@@ -69,7 +70,7 @@ class CommunituCartWidgetFamily extends StatelessWidget {
                   ),
                 ),
                 Container(
-                  decoration: BoxDecoration(
+                  decoration: const BoxDecoration(
                     borderRadius: BorderRadius.only(
                         topRight: Radius.circular(12),
                         bottomLeft: Radius.circular(12)),
@@ -79,7 +80,7 @@ class CommunituCartWidgetFamily extends StatelessWidget {
                     padding: const EdgeInsets.all(4.0),
                     child: Center(
                       child: Text(
-                        '10 Comment',
+                        '$totalComments Comment',
                         style: GoogleFonts.getFont(
                           "Poppins",
                           textStyle: const TextStyle(
