@@ -77,45 +77,28 @@ class _PaymentViewState extends State<PaymentView> {
         transactions: const [
           {
             "amount": {
-              "total": '70',
-              "currency": "USD",
+              "total": '2', // Subscription charge
+              "currency": "EUR", // Currency set to Euro
               "details": {
-                "subtotal": '70',
+                "subtotal": '2',
                 "shipping": '0',
                 "shipping_discount": 0
               }
             },
-            "description": "The payment transaction description.",
+            "description": "1 Year Subscription",
             "item_list": {
               "items": [
                 {
-                  "name": "Apple",
-                  "quantity": 4,
-                  "price": '5',
-                  "currency": "USD"
-                },
-                {
-                  "name": "Pineapple",
-                  "quantity": 5,
-                  "price": '10',
-                  "currency": "USD"
+                  "name": "1 Year Subscription",
+                  "quantity": 1,
+                  "price": '2', // Charge for subscription
+                  "currency": "EUR"
                 }
               ],
-              // shipping address is Optional
-              "shipping_address": {
-                "recipient_name": "Raman Singh",
-                "line1": "Delhi",
-                "line2": "",
-                "city": "Delhi",
-                "country_code": "IN",
-                "postal_code": "11001",
-                "phone": "+00000000",
-                "state": "Texas"
-              },
             }
           }
         ],
-        note: "PAYMENT_NOTE",
+        note: "1 Year Subscription for 2 Euros",
         onSuccess: (Map params) async {
           print("onSuccess: $params");
         },
