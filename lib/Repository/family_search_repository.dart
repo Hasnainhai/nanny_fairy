@@ -20,7 +20,6 @@ class FamilySearchRepository extends ChangeNotifier {
 
     try {
       DatabaseEvent snapshot = await _providerRef.once();
-      debugPrint('Raw snapshot data: ${snapshot.snapshot.value}');
 
       if (snapshot.snapshot.value != null) {
         final Map<dynamic, dynamic> data =
@@ -41,7 +40,6 @@ class FamilySearchRepository extends ChangeNotifier {
                         v is bool ? v : false)); // Default to false if not bool
               }
 
-              debugPrint('Provider data before parsing: $providerData');
               fetchedProviders
                   .add(ProviderSearchModel.fromMap(providerData, key));
             } catch (e) {
@@ -54,7 +52,6 @@ class FamilySearchRepository extends ChangeNotifier {
 
         _providers = fetchedProviders;
         _filteredProviders = List.from(_providers);
-        debugPrint('Fetched providers: $_providers');
       } else {
         debugPrint('No data found');
       }
