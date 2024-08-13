@@ -18,6 +18,7 @@ class ProviderSearchModel {
   final Map<String, Map<String, bool>> availability;
   final IdPics idPics;
   final Reference reference;
+  final Time time;
 
   ProviderSearchModel({
     required this.uid,
@@ -37,6 +38,7 @@ class ProviderSearchModel {
     required this.availability,
     required this.idPics,
     required this.reference,
+    required this.time,
   });
 
   factory ProviderSearchModel.fromMap(Map<String, dynamic> data, String uid) {
@@ -45,6 +47,8 @@ class ProviderSearchModel {
           Map<String, dynamic>.from(data['Refernce'] ?? {});
       Map<String, dynamic> idPicsData =
           Map<String, dynamic>.from(data['IdPics'] ?? {});
+      Map<String, dynamic> timeData =
+          Map<String, dynamic>.from(data['Time'] ?? {});
 
       return ProviderSearchModel(
         uid: uid,
@@ -65,6 +69,7 @@ class ProviderSearchModel {
             Map<String, dynamic>.from(data['Availability'] ?? {})),
         idPics: IdPics.fromMap(idPicsData),
         reference: Reference.fromMap(referenceData),
+        time: Time.fromMap(timeData),
       );
     } catch (e) {
       debugPrint('Error processing provider $uid: $e');
@@ -126,6 +131,35 @@ class Reference {
       land: data['land'] ?? '',
       phoneNumber: data['phoneNumber'] ?? '',
       skill: data['skill'] ?? '',
+    );
+  }
+}
+
+class Time {
+  final String morningStart;
+  final String morningEnd;
+  final String afternoonStart;
+  final String afternoonEnd;
+  final String eveningStart;
+  final String eveningEnd;
+
+  Time({
+    required this.morningStart,
+    required this.morningEnd,
+    required this.afternoonStart,
+    required this.afternoonEnd,
+    required this.eveningStart,
+    required this.eveningEnd,
+  });
+
+  factory Time.fromMap(Map<String, dynamic> data) {
+    return Time(
+      morningStart: data['MorningStart'] ?? '',
+      morningEnd: data['MorningEnd'] ?? '',
+      afternoonStart: data['AfternoonStart'] ?? '',
+      afternoonEnd: data['AfternoonEnd'] ?? '',
+      eveningStart: data['EveningStart'] ?? '',
+      eveningEnd: data['EveningEnd'] ?? '',
     );
   }
 }
