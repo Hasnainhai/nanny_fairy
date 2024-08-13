@@ -59,7 +59,7 @@ class _FamilySearchViewState extends State<FamilySearchView> {
           ),
           const VerticalSpeacing(16.0),
           SizedBox(
-            height: MediaQuery.of(context).size.height * 0.4,
+            height: MediaQuery.of(context).size.height,
             child: FutureBuilder(
               future: familyhomeController.getPopularJobs(),
               builder: (context, snapshot) {

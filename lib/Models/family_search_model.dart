@@ -1,3 +1,5 @@
+import 'package:flutter/material.dart';
+
 class ProviderSearchModel {
   final String uid;
   final String firstName;
@@ -38,6 +40,31 @@ class ProviderSearchModel {
   });
 
   factory ProviderSearchModel.fromMap(Map<String, dynamic> data, String uid) {
+    // Safely parse the availability field
+    Map<String, Map<String, bool>> parsedAvailability = {};
+    if (data['Availability'] != null && data['Availability'] is Map) {
+      (data['Availability'] as Map).forEach((timeOfDay, daysMap) {
+        if (daysMap is Map) {
+          Map<String, bool> parsedDays = {};
+          daysMap.forEach((day, isAvailable) {
+            if (isAvailable is bool) {
+              parsedDays[day.toString()] = isAvailable;
+            } else {
+              debugPrint(
+                  'Invalid value for day $day in provider $uid: $isAvailable');
+            }
+          });
+          parsedAvailability[timeOfDay.toString()] = parsedDays;
+        } else {
+          debugPrint(
+              'Invalid daysMap for timeOfDay $timeOfDay in provider $uid: $daysMap');
+        }
+      });
+    } else {
+      debugPrint(
+          'Availability data is missing or not in the expected format for provider $uid');
+    }
+
     return ProviderSearchModel(
       uid: uid,
       firstName: data['firstName'] ?? '',
@@ -53,9 +80,7 @@ class ProviderSearchModel {
       hoursrate: data['hoursrate'] ?? '',
       profile: data['profile'] ?? '',
       passions: List<String>.from(data['Passions'] ?? []),
-      availability: Map<String, Map<String, bool>>.from(
-        data['Availability'] ?? {},
-      ),
+      availability: parsedAvailability,
       idPics: IdPics.fromMap(data['IdPics'] ?? {}),
       reference: Reference.fromMap(data['Refernce'] ?? {}),
     );

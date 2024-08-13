@@ -24,10 +24,34 @@ class FamilySearchRepository extends ChangeNotifier {
         final Map<dynamic, dynamic> data =
             snapshot.snapshot.value as Map<dynamic, dynamic>;
         List<ProviderSearchModel> fetchedProviders = [];
+
         data.forEach((key, value) {
-          fetchedProviders.add(ProviderSearchModel.fromMap(value, key));
+          if (value is Map<dynamic, dynamic>) {
+            try {
+              // Cast value to Map<String, dynamic>
+              final Map<String, dynamic> providerData =
+                  Map<String, dynamic>.from(value);
+
+              // Handle specific fields that may cause issues, for example, 'Availability'
+              if (providerData['Availability'] is Map<dynamic, dynamic>) {
+                providerData['Availability'] = (providerData['Availability']
+                        as Map<dynamic, dynamic>)
+                    .map((k, v) => MapEntry(k.toString(),
+                        v as bool)); // Assuming 'Availability' is Map<String, bool>
+              }
+
+              fetchedProviders
+                  .add(ProviderSearchModel.fromMap(providerData, key));
+            } catch (e) {
+              debugPrint('Error processing provider $key: $e');
+            }
+          } else {
+            debugPrint('Unexpected data format for provider $key: $value');
+          }
         });
+
         providers = fetchedProviders;
+        debugPrint('Fetched providers: $providers');
       } else {
         debugPrint('No data found');
       }
@@ -41,6 +65,7 @@ class FamilySearchRepository extends ChangeNotifier {
 
   // Search users by passion from the list
   void searchUsersByPassion(String query) {
+    fetchUsers();
     print("This is the query : $query");
 
     if (query.isEmpty) {
