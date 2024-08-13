@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:flutter/foundation.dart';
 
 class ProviderSearchModel {
   final String uid;
@@ -40,35 +40,12 @@ class ProviderSearchModel {
   });
 
   factory ProviderSearchModel.fromMap(Map<String, dynamic> data, String uid) {
-    // Safely parse the availability field
-    Map<String, Map<String, bool>> parsedAvailability = {};
-    if (data['Availability'] != null && data['Availability'] is Map) {
-      (data['Availability'] as Map<String, dynamic>)
-          .forEach((timeOfDay, daysMap) {
-        if (daysMap is Map<String, dynamic>) {
-          Map<String, bool> parsedDays = {};
-          daysMap.forEach((day, value) {
-            if (value is bool) {
-              parsedDays[day] = value;
-            } else {
-              debugPrint(
-                  'Invalid value for availability in provider $uid: $value (Expected bool, got ${value.runtimeType})');
-            }
-          });
-          parsedAvailability[timeOfDay] = parsedDays;
-        } else {
-          debugPrint(
-              'Invalid daysMap for timeOfDay $timeOfDay in provider $uid: $daysMap');
-        }
-      });
-    } else {
-      debugPrint(
-          'Availability data is missing or not in the expected format for provider $uid');
-    }
-
-    debugPrint('Parsed provider data: $data');
-
     try {
+      Map<String, dynamic> referenceData =
+          Map<String, dynamic>.from(data['Refernce'] ?? {});
+      Map<String, dynamic> idPicsData =
+          Map<String, dynamic>.from(data['IdPics'] ?? {});
+
       return ProviderSearchModel(
         uid: uid,
         firstName: data['firstName'] ?? '',
@@ -84,31 +61,45 @@ class ProviderSearchModel {
         hoursrate: data['hoursrate'] ?? '',
         profile: data['profile'] ?? '',
         passions: List<String>.from(data['Passions'] ?? []),
-        availability: parsedAvailability,
-        idPics: IdPics.fromMap(data['IdPics'] ?? {}),
-        reference: Reference.fromMap(data['Refernce'] ?? {}),
+        availability: _parseAvailability(
+            Map<String, dynamic>.from(data['Availability'] ?? {})),
+        idPics: IdPics.fromMap(idPicsData),
+        reference: Reference.fromMap(referenceData),
       );
     } catch (e) {
       debugPrint('Error processing provider $uid: $e');
-      throw e; // Rethrow the error to be caught by the caller
+      throw e; // Rethrow to handle the error higher up if necessary
     }
+  }
+
+  static Map<String, Map<String, bool>> _parseAvailability(
+      Map<String, dynamic> availability) {
+    Map<String, Map<String, bool>> parsedAvailability = {};
+    availability.forEach((timeOfDay, daysMap) {
+      if (daysMap is Map<String, dynamic>) {
+        Map<String, bool> parsedDays = {};
+        daysMap.forEach((day, value) {
+          if (value is bool) {
+            parsedDays[day] = value;
+          }
+        });
+        parsedAvailability[timeOfDay] = parsedDays;
+      }
+    });
+    return parsedAvailability;
   }
 }
 
 class IdPics {
-  final String frontPic;
   final String backPic;
+  final String frontPic;
 
-  IdPics({
-    required this.frontPic,
-    required this.backPic,
-  });
+  IdPics({required this.backPic, required this.frontPic});
 
   factory IdPics.fromMap(Map<String, dynamic> data) {
-    debugPrint('Parsing IdPics data: $data');
     return IdPics(
-      frontPic: data['frontPic'] ?? '',
       backPic: data['backPic'] ?? '',
+      frontPic: data['frontPic'] ?? '',
     );
   }
 }
@@ -129,7 +120,6 @@ class Reference {
   });
 
   factory Reference.fromMap(Map<String, dynamic> data) {
-    debugPrint('Parsing Reference data: $data');
     return Reference(
       experience: data['experince'] ?? '',
       job: data['job'] ?? '',
