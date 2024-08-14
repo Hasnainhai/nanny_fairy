@@ -10,13 +10,14 @@ import 'package:nanny_fairy/Repository/family_auth_repository.dart';
 import 'package:nanny_fairy/Repository/family_home_repo.dart';
 import 'package:nanny_fairy/Repository/family_home_ui_repository.dart';
 import 'package:nanny_fairy/Repository/family_search_repository.dart';
+import 'package:nanny_fairy/Repository/family_filter_repository.dart'; // Import the new repository
 import 'package:nanny_fairy/Repository/filter_repository.dart';
 import 'package:nanny_fairy/Repository/home_ui_repostory.dart';
 import 'package:nanny_fairy/Repository/provider_home_repository.dart';
 import 'package:nanny_fairy/Repository/search_repository.dart';
 import 'package:nanny_fairy/ViewModel/auth_view_model.dart';
+import 'package:nanny_fairy/ViewModel/family_filter_view_model.dart';
 import 'package:nanny_fairy/ViewModel/family_search_view_model.dart';
-
 import 'package:nanny_fairy/ViewModel/community_view_view_model.dart';
 import 'package:nanny_fairy/ViewModel/filter_view_model.dart';
 import 'package:nanny_fairy/ViewModel/provider_home_view_model.dart';
@@ -55,9 +56,9 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider<SearchRepository>(
           create: (_) => SearchRepository(),
         ),
-        ChangeNotifierProvider<FilteredRepository>(
-          create: (context) => FilteredRepository(
-              context.read<SearchRepository>()),
+        ChangeNotifierProvider<FamilyFilterRepository>(
+          // Use the new FamilyFilterRepository
+          create: (context) => FamilyFilterRepository(),
         ),
         ChangeNotifierProvider<AuthViewModel>(
           create: (context) => AuthViewModel(context.read<AuthRepository>()),
@@ -104,6 +105,11 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider<CommunityViewViewModel>(
           create: (context) =>
               CommunityViewViewModel(context.read<CommunityRepoProvider>()),
+        ),
+        ChangeNotifierProvider<FamilyFilterController>(
+          // Initialize FamilyFilterController
+          create: (context) =>
+              FamilyFilterController(context.read<FamilyFilterRepository>()),
         ),
       ],
       child: MaterialApp(

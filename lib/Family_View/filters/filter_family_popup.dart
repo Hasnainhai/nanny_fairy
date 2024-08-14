@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:nanny_fairy/ViewModel/family_filter_view_model.dart';
 import 'package:nanny_fairy/res/components/rounded_button.dart';
+import 'package:provider/provider.dart';
 import '../../res/components/colors.dart';
 import '../../res/components/widgets/vertical_spacing.dart';
 import '../../view/filter/widgets/slider_widget.dart';
@@ -30,9 +32,14 @@ class _FilterPopUpFamilyState extends State<FilterPopUpFamily> {
   bool button15 = false;
   bool button16 = false;
   bool button17 = false;
+  RangeValues _values = const RangeValues(5, 1000);
+  List<String> selectedPassions = [];
+  List<String> selecteDays = [];
 
   @override
   Widget build(BuildContext context) {
+    final familyFilterController = Provider.of<FamilyFilterController>(context);
+
     return Dialog.fullscreen(
       backgroundColor: AppColor.secondaryBgColor,
       child: ListView(
@@ -110,10 +117,46 @@ class _FilterPopUpFamilyState extends State<FilterPopUpFamily> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 const VerticalSpeacing(38),
-                const PriceRangeSlider(),
+                Container(
+                  height: 75, // Adjust the height as needed
+                  width: double.infinity,
+                  color: Colors.transparent, // Set the desired background color
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        'Hourly Rate: \$${_values.start.toInt()} - \$${_values.end.toInt()}',
+                        style: const TextStyle(
+                          fontFamily: 'CenturyGothic',
+                          fontSize: 18,
+                          fontWeight: FontWeight.w400,
+                          color: AppColor.blackColor,
+                        ),
+                      ),
+                      RangeSlider(
+                        activeColor: AppColor.primaryColor,
+                        inactiveColor: Colors.grey.shade300,
+                        values: _values,
+                        min: 5,
+                        max: 1000,
+                        divisions: 100,
+                        labels: RangeLabels(
+                          _values.start.round().toString(),
+                          _values.end.round().toString(),
+                        ),
+                        onChanged: (values) {
+                          setState(() {
+                            _values = values;
+                          });
+                        },
+                      ),
+                    ],
+                  ),
+                ),
                 const VerticalSpeacing(16),
                 const Text(
-                  " provider Categories",
+                  "provider Categories",
                   style: TextStyle(
                     fontFamily: 'CenturyGothic',
                     fontSize: 18,
@@ -127,29 +170,47 @@ class _FilterPopUpFamilyState extends State<FilterPopUpFamily> {
                   children: [
                     FilterButton(
                       label: "Cleaning",
-                      isSelected: button1,
+                      isSelected: selectedPassions.contains("Cleaning"),
                       onTap: () {
-                        setState(() {
-                          button1 = !button1;
-                        });
+                        if (selectedPassions.contains("Cleaning")) {
+                          setState(() {
+                            selectedPassions.remove("Cleaning");
+                          });
+                        } else {
+                          setState(() {
+                            selectedPassions.add("Cleaning");
+                          });
+                        }
                       },
                     ),
                     FilterButton(
                       label: "Home",
-                      isSelected: button2,
+                      isSelected: selectedPassions.contains("Home"),
                       onTap: () {
-                        setState(() {
-                          button2 = !button2;
-                        });
+                        if (selectedPassions.contains("Home")) {
+                          setState(() {
+                            selectedPassions.remove("Home");
+                          });
+                        } else {
+                          setState(() {
+                            selectedPassions.add("Home");
+                          });
+                        }
                       },
                     ),
                     FilterButton(
                       label: "Children Care",
-                      isSelected: button3,
+                      isSelected: selectedPassions.contains("Children Care"),
                       onTap: () {
-                        setState(() {
-                          button3 = !button3;
-                        });
+                        if (selectedPassions.contains("Children Care")) {
+                          setState(() {
+                            selectedPassions.remove("Children Care");
+                          });
+                        } else {
+                          setState(() {
+                            selectedPassions.add("Children Care");
+                          });
+                        }
                       },
                     ),
                   ],
@@ -162,29 +223,47 @@ class _FilterPopUpFamilyState extends State<FilterPopUpFamily> {
                   children: [
                     FilterButton(
                       label: "Music Lesson",
-                      isSelected: button4,
+                      isSelected: selectedPassions.contains("Music Lesson"),
                       onTap: () {
-                        setState(() {
-                          button4 = !button4;
-                        });
+                        if (selectedPassions.contains("Music Lesson")) {
+                          setState(() {
+                            selectedPassions.remove("Music Lesson");
+                          });
+                        } else {
+                          setState(() {
+                            selectedPassions.add("Music Lesson");
+                          });
+                        }
                       },
                     ),
                     FilterButton(
                       label: "House Setting",
-                      isSelected: button5,
+                      isSelected: selectedPassions.contains("House Setting"),
                       onTap: () {
-                        setState(() {
-                          button5 = !button5;
-                        });
+                        if (selectedPassions.contains("House Setting")) {
+                          setState(() {
+                            selectedPassions.remove("House Setting");
+                          });
+                        } else {
+                          setState(() {
+                            selectedPassions.add("House Setting");
+                          });
+                        }
                       },
                     ),
                     FilterButton(
                       label: "Elderly Care",
-                      isSelected: button6,
+                      isSelected: selectedPassions.contains("Elderly Care"),
                       onTap: () {
-                        setState(() {
-                          button6 = !button6;
-                        });
+                        if (selectedPassions.contains("Elderly Care")) {
+                          setState(() {
+                            selectedPassions.remove("Elderly Care");
+                          });
+                        } else {
+                          setState(() {
+                            selectedPassions.add("Elderly Care");
+                          });
+                        }
                       },
                     ),
                   ],
@@ -192,11 +271,17 @@ class _FilterPopUpFamilyState extends State<FilterPopUpFamily> {
                 const VerticalSpeacing(14),
                 FilterButton(
                   label: "Pet Care",
-                  isSelected: button7,
+                  isSelected: selectedPassions.contains("Pet Care"),
                   onTap: () {
-                    setState(() {
-                      button7 = !button7;
-                    });
+                    if (selectedPassions.contains("Pet Care")) {
+                      setState(() {
+                        selectedPassions.remove("Pet Care");
+                      });
+                    } else {
+                      setState(() {
+                        selectedPassions.add("Pet Care");
+                      });
+                    }
                   },
                 ),
                 const VerticalSpeacing(16),
@@ -260,30 +345,48 @@ class _FilterPopUpFamilyState extends State<FilterPopUpFamily> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     FilterButton(
-                      label: "M",
-                      isSelected: button11,
+                      label: "Mon",
+                      isSelected: selecteDays.contains("Monday"),
                       onTap: () {
-                        setState(() {
-                          button11 = !button11;
-                        });
+                        if (selecteDays.contains("Monday")) {
+                          setState(() {
+                            selecteDays.remove("Monday");
+                          });
+                        } else {
+                          setState(() {
+                            selecteDays.add("Monday");
+                          });
+                        }
                       },
                     ),
                     FilterButton(
-                      label: "T",
-                      isSelected: button12,
+                      label: "Tue",
+                      isSelected: selecteDays.contains("Tuesday"),
                       onTap: () {
-                        setState(() {
-                          button12 = !button12;
-                        });
+                        if (selecteDays.contains("Tuesday")) {
+                          setState(() {
+                            selecteDays.remove("Tuesday");
+                          });
+                        } else {
+                          setState(() {
+                            selecteDays.add("Tuesday");
+                          });
+                        }
                       },
                     ),
                     FilterButton(
-                      label: "W",
-                      isSelected: button13,
+                      label: "Wed",
+                      isSelected: selecteDays.contains("Wednesday"),
                       onTap: () {
-                        setState(() {
-                          button13 = !button13;
-                        });
+                        if (selecteDays.contains("Wednesday")) {
+                          setState(() {
+                            selecteDays.remove("Wednesday");
+                          });
+                        } else {
+                          setState(() {
+                            selecteDays.add("Wednesday");
+                          });
+                        }
                       },
                     ),
                   ],
@@ -293,42 +396,66 @@ class _FilterPopUpFamilyState extends State<FilterPopUpFamily> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     FilterButton(
-                      label: "T",
-                      isSelected: button14,
+                      label: "Thu",
+                      isSelected: selecteDays.contains("Thursday"),
                       onTap: () {
-                        setState(() {
-                          button14 = !button14;
-                        });
+                        if (selecteDays.contains("Thursday")) {
+                          setState(() {
+                            selecteDays.remove("Thursday");
+                          });
+                        } else {
+                          setState(() {
+                            selecteDays.add("Thursday");
+                          });
+                        }
                       },
                     ),
                     FilterButton(
-                      label: "F",
-                      isSelected: button15,
+                      label: "Fri",
+                      isSelected: selecteDays.contains("Friday"),
                       onTap: () {
-                        setState(() {
-                          button15 = !button15;
-                        });
+                        if (selecteDays.contains("Friday")) {
+                          setState(() {
+                            selecteDays.remove("Friday");
+                          });
+                        } else {
+                          setState(() {
+                            selecteDays.add("Friday");
+                          });
+                        }
                       },
                     ),
                     FilterButton(
-                      label: "S",
-                      isSelected: button16,
+                      label: "Sat",
+                      isSelected: selecteDays.contains("Saturday"),
                       onTap: () {
-                        setState(() {
-                          button16 = !button16;
-                        });
+                        if (selecteDays.contains("Saturday")) {
+                          setState(() {
+                            selecteDays.remove("Saturday");
+                          });
+                        } else {
+                          setState(() {
+                            selecteDays.add("Saturday");
+                          });
+                        }
                       },
                     ),
                   ],
                 ),
                 const VerticalSpeacing(16.0),
                 FilterButton(
-                  label: "S",
-                  isSelected: button17,
+                  label: "Sun",
+                  isSelected: selecteDays.contains("Sunday"),
                   onTap: () {
-                    setState(() {
-                      button17 = !button17;
-                    });
+                    if (selecteDays.contains("Sunday")) {
+                      setState(() {
+                        selecteDays.remove("Sunday");
+                      });
+                    } else {
+                      setState(() {
+                        selecteDays.add("Sunday");
+                      });
+                    }
                   },
                 ),
                 const VerticalSpeacing(
@@ -364,6 +491,12 @@ class _FilterPopUpFamilyState extends State<FilterPopUpFamily> {
                 RoundedButton(
                     title: 'Apply Filters',
                     onpress: () {
+                      // familyFilterController.filterProviders(
+                      //   minRate: _values.start,
+                      //   maxRate: _values.end,
+                      //   selectedPassions: selectedPassions,
+                      //   selectedAvailability: selecteDays,
+                      // );
                       Navigator.pop(context);
                     }),
                 const SizedBox(height: 40.0),
