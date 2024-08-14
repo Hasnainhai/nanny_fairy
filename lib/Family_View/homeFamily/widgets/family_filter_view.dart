@@ -70,38 +70,47 @@ class _FamilyFilterViewState extends State<FamilyFilterView> {
                     itemCount: viewModel.filteredProviders.length,
                     itemBuilder: (context, index) {
                       final user = viewModel.filteredProviders[index];
-                      // List<String> passions = user.passions;
-                      Set<String> daysSet = {};
+                      // Assuming `time` can be a Map or another type, handle it accordingly
+                      Map<String, String> timeData = {};
+                      if (user.time is Map) {
+                        timeData = (user.time as Map<dynamic, dynamic>).map(
+                            (key, value) =>
+                                MapEntry(key.toString(), value.toString()));
+                      } else {
+                        // Handle unexpected type for `time`
+                        debugPrint(
+                            'Unexpected type for time: ${user.time.runtimeType}');
+                        // You can provide default values or handle the error appropriately here
+                      }
 
+                      // Set of day buttons based on `user` information
+                      Set<String> daysSet =
+                          {}; // Populate this set based on your data
                       List<Widget> dayButtons = daysSet.map((dayAbbreviation) {
                         return Padding(
                           padding: const EdgeInsets.all(4.0),
                           child: DayButtonFamily(day: dayAbbreviation),
                         );
                       }).toList();
+
                       return BookingCartWidgetHome(
                         primaryButtonColor: AppColor.primaryColor,
                         primaryButtonTxt: 'View',
                         ontapView: () {
-                          Map<String, String> timeData = (user.time
-                                  as Map<dynamic, dynamic>)
-                              .map((key, value) =>
-                                  MapEntry(key.toString(), value.toString()));
-
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (c) => ProviderDetails(
-                                      profile: user.profile,
-                                      name:
-                                          "${user.firstName}} ${user.lastName}",
-                                      bio: user.bio,
-                                      horseRate: user.hoursrate,
-                                      experience: user.reference.experience,
-                                      degree: user.education,
-                                      dayButtons: dayButtons,
-                                      timeData: timeData,
-                                    )),
+                              builder: (c) => ProviderDetails(
+                                profile: user.profile,
+                                name: "${user.firstName} ${user.lastName}",
+                                bio: user.bio,
+                                horseRate: user.hoursrate,
+                                experience: user.reference.experience,
+                                degree: user.education,
+                                dayButtons: dayButtons,
+                                timeData: timeData,
+                              ),
+                            ),
                           );
                         },
                         profile: user.profile,
