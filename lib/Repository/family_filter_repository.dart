@@ -4,7 +4,7 @@ import 'package:nanny_fairy/Models/family_search_model.dart';
 
 class FamilyFilterRepository extends ChangeNotifier {
   final DatabaseReference _familyRef =
-      FirebaseDatabase.instance.ref().child('Provider');
+      FirebaseDatabase.instance.ref().child('Providers');
 
   List<ProviderSearchModel> _filteredProviders = [];
   bool _isLoading = false;
@@ -38,8 +38,9 @@ class FamilyFilterRepository extends ChangeNotifier {
     // Filter by passions
     if (selectedPassions.isNotEmpty) {
       _filteredProviders = _filteredProviders.where((provider) {
-        return provider.passions
-            .any((passion) => selectedPassions.contains(passion.toLowerCase()));
+        return provider.passions.any((passion) => selectedPassions
+            .map((e) => e.toLowerCase())
+            .contains(passion.toLowerCase()));
       }).toList();
     }
 
@@ -47,8 +48,12 @@ class FamilyFilterRepository extends ChangeNotifier {
     if (selectedAvailability.isNotEmpty) {
       _filteredProviders = _filteredProviders.where((provider) {
         return selectedAvailability.entries.every((entry) {
-          return provider.availability[entry.key]?.entries.any((dayEntry) {
-                return entry.value[dayEntry.key] == dayEntry.value;
+          // Check if provider has availability for each selected time of day
+          String timeOfDay = entry.key;
+          return provider.availability[timeOfDay]?.entries.any((dayEntry) {
+                String day = dayEntry.key;
+                bool isAvailable = dayEntry.value;
+                return entry.value[day] == isAvailable;
               }) ??
               false;
         });
