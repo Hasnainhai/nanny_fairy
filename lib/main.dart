@@ -101,8 +101,9 @@ class MyApp extends StatelessWidget {
           create: (_) => CommunityRepoProvider(),
         ),
         ChangeNotifierProvider<CommunityViewViewModel>(
-            create: (context) =>
-                CommunityViewViewModel(context.read<CommunityRepoProvider>())),
+          create: (context) =>
+              CommunityViewViewModel(context.read<CommunityRepoProvider>()),
+        ),
       ],
       child: MaterialApp(
         initialRoute: RoutesName.splash,
