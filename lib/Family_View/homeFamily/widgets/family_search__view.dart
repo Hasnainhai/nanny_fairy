@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:nanny_fairy/FamilyController/family_home_controller.dart';
 import 'package:nanny_fairy/Family_View/findJobFamily/provider_detail.dart';
 import 'package:nanny_fairy/Family_View/homeFamily/home_view_family.dart';
 import 'package:nanny_fairy/Family_View/homeFamily/widgets/bookCart_home_widget.dart';
@@ -8,7 +7,6 @@ import 'package:nanny_fairy/ViewModel/family_search_view_model.dart';
 import 'package:nanny_fairy/res/components/colors.dart';
 import 'package:nanny_fairy/res/components/widgets/shimmer_effect.dart';
 import 'package:nanny_fairy/res/components/widgets/vertical_spacing.dart';
-import 'package:nanny_fairy/utils/routes/routes_name.dart';
 import 'package:provider/provider.dart';
 
 class FamilySearchView extends StatefulWidget {
@@ -40,9 +38,7 @@ class _FamilySearchViewState extends State<FamilySearchView> {
                 ),
               ),
               InkWell(
-                onTap: () {
-                  Navigator.pushNamed(context, RoutesName.jobViewFamily);
-                },
+                onTap: () {},
                 child: Text(
                   'Clear all',
                   style: GoogleFonts.getFont(
