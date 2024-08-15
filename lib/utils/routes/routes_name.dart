@@ -31,7 +31,7 @@ class RoutesName {
   static const String uploadIdFamily = '/upload_id_family';
   static const String paymentFamily = '/payment_family';
   static const String dashboardFamily = '/dashboard_family';
-  static const String communityDetailView = '/community_detail_view';
+  // static const String communityDetailView = '/community_detail_view';
   static const String familyDetail = '/family_detail';
   static const String jobViewFamily = '/job_view_family';
   static const String createAccount = '/create_account';
@@ -39,9 +39,13 @@ class RoutesName {
   static const String educationHorlyView = '/education_horly_view';
   static const String createAccountFamily = '/create_account_family';
   static const String homeViewFamily = '/home_view_family';
-  static const String providerDetails = '/providerDetails';
+  // static const String providerDetails = '/providerDetails';
   static const String filterPopUpFamily = '/filter_popup_family';
   static const String settingsFamily = '/setting_family';
   static const String myProfileFamily = '/my_profile_family';
   static const String editProfileFamily = '/edit_profile_family';
+  static const String loginFamily = '/login_family';
+  static const String forgetPassFamily = '/forget_pass_family';
+  static const String uploadPostFamily = '/upload_post_family';
+  // static const String communityDetailViewFamily = '/community_detail_family';
 }

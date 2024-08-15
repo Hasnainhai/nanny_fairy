@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:nanny_fairy/Family_View/Login/family_login.dart';
+import 'package:nanny_fairy/Family_View/Login/forget_password_family.dart';
+import 'package:nanny_fairy/Family_View/communityFamily/community_detail_family.dart';
+import 'package:nanny_fairy/Family_View/communityFamily/upload_community_post_family.dart';
 import 'package:nanny_fairy/Family_View/filters/filter_family_popup.dart';
 import 'package:nanny_fairy/Family_View/findJobFamily/provider_detail.dart';
 import 'package:nanny_fairy/Family_View/homeFamily/home_view_family.dart';
@@ -146,12 +150,10 @@ class Routes {
       case RoutesName.dashboardFamily:
         return MaterialPageRoute(
             builder: (BuildContext context) => const DashBoardFamilyScreen());
-      case RoutesName.communityDetailView:
-        return MaterialPageRoute(
-            builder: (BuildContext context) => const CommunityDetailView());
-      case RoutesName.familyDetail:
-        return MaterialPageRoute(
-            builder: (BuildContext context) => const FamilyDetailProvider());
+      // case RoutesName.communityDetailView:
+      //   return MaterialPageRoute(
+      //       builder: (BuildContext context) => const CommunityDetailView());
+
       case RoutesName.jobViewFamily:
         return MaterialPageRoute(
             builder: (BuildContext context) => const JobViewFamily());
@@ -170,9 +172,17 @@ class Routes {
       case RoutesName.homeViewFamily:
         return MaterialPageRoute(
             builder: (BuildContext context) => const HomeViewFamily());
-      case RoutesName.providerDetails:
+      case RoutesName.uploadPostFamily:
         return MaterialPageRoute(
-            builder: (BuildContext context) => const ProviderDetails());
+            builder: (BuildContext context) =>
+                const UploadComunityPostFamily());
+      // case RoutesName.communityDetailViewFamily:
+      //   return MaterialPageRoute(
+      //       builder: (BuildContext context) =>
+      //           const CommunityDetailViewFamily());
+      // case RoutesName.providerDetails:
+      //   return MaterialPageRoute(
+      //       builder: (BuildContext context) => const ProviderDetails());
       case RoutesName.filterPopUpFamily:
         return MaterialPageRoute(
             builder: (BuildContext context) => const FilterPopUpFamily());
@@ -185,6 +195,12 @@ class Routes {
       case RoutesName.editProfileFamily:
         return MaterialPageRoute(
             builder: (BuildContext context) => const EditProfileFamily());
+      case RoutesName.loginFamily:
+        return MaterialPageRoute(
+            builder: (BuildContext context) => const LoginViewFamily());
+      case RoutesName.forgetPassFamily:
+        return MaterialPageRoute(
+            builder: (BuildContext context) => const ForgetPassFamily());
 
       default:
         return MaterialPageRoute(builder: (_) {

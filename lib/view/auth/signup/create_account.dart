@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:nanny_fairy/ViewModel/auth_view_model.dart';
 import 'package:nanny_fairy/res/components/rounded_button.dart';
 import 'package:nanny_fairy/res/components/widgets/custom_text_field.dart';
 import 'package:nanny_fairy/res/components/widgets/vertical_spacing.dart';
-import 'package:nanny_fairy/utils/routes/routes_name.dart';
+import 'package:nanny_fairy/utils/utils.dart';
+import 'package:provider/provider.dart';
 import '../../../res/components/colors.dart';
 
 class CreateAccount extends StatefulWidget {
@@ -29,6 +31,8 @@ class _CreateAccountState extends State<CreateAccount> {
 
   @override
   Widget build(BuildContext context) {
+    final authViewModel = Provider.of<AuthViewModel>(context);
+
     return Scaffold(
         backgroundColor: AppColor.primaryColor,
         body: SafeArea(
@@ -131,8 +135,16 @@ class _CreateAccountState extends State<CreateAccount> {
                         RoundedButton(
                             title: 'Confirm',
                             onpress: () {
-                              Navigator.pushNamed(
-                                  context, RoutesName.registerDetails);
+                              if (passwordController.text ==
+                                  confromPasswordController.text) {
+                                authViewModel.createAccount(
+                                    email: emailController.text,
+                                    password: passwordController.text,
+                                    context: context);
+                              } else {
+                                Utils.toastMessage(
+                                    "Your password did not match");
+                              }
                             }),
                       ],
                     ),

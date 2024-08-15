@@ -60,7 +60,13 @@ class LoginOrSignupView extends StatelessWidget {
                   ]),
               const VerticalSpeacing(60.0),
               RoundedButton(
-                  title: 'Login with Email',
+                  title: 'Login as family',
+                  onpress: () {
+                    Navigator.pushNamed(context, RoutesName.loginFamily);
+                  }),
+              const VerticalSpeacing(20.0),
+              RoundedButton(
+                  title: 'Login as provider',
                   onpress: () {
                     Navigator.pushNamed(context, RoutesName.loginView);
                   }),

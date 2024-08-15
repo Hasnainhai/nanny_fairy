@@ -1,9 +1,13 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:nanny_fairy/FamilyController/family_community_controller.dart';
+import 'package:nanny_fairy/Family_View/communityFamily/community_detail_family.dart';
 import 'package:nanny_fairy/Family_View/communityFamily/widgets/community_card_family.dart';
 import 'package:nanny_fairy/res/components/widgets/vertical_spacing.dart';
 import 'package:nanny_fairy/utils/routes/routes_name.dart';
-import 'package:nanny_fairy/view/community/widgets/community_widget.dart';
+import 'package:provider/provider.dart';
+import '../../FamilyController/family_home_controller.dart';
 import '../../res/components/colors.dart';
 
 class CommunityViewFamily extends StatefulWidget {
@@ -15,7 +19,19 @@ class CommunityViewFamily extends StatefulWidget {
 
 class _CommunityViewFamilyState extends State<CommunityViewFamily> {
   @override
+  void initState() {
+    super.initState();
+    final familyCommunityController =
+        Provider.of<FamilyCommunityController>(context, listen: false);
+    familyCommunityController.fetchFamilyPosts();
+  }
+
+  @override
   Widget build(BuildContext context) {
+    final familyCommunityController =
+        Provider.of<FamilyCommunityController>(context);
+    final currentUserId = FirebaseAuth.instance.currentUser!.uid;
+
     return DefaultTabController(
       length: 2,
       child: Scaffold(
@@ -39,7 +55,7 @@ class _CommunityViewFamilyState extends State<CommunityViewFamily> {
           actions: [
             InkWell(
               onTap: () {
-                Navigator.pushNamed(context, RoutesName.uploadCommunityPost);
+                Navigator.pushNamed(context, RoutesName.uploadPostFamily);
               },
               child: Padding(
                 padding: const EdgeInsets.only(right: 10.0),
@@ -77,41 +93,111 @@ class _CommunityViewFamilyState extends State<CommunityViewFamily> {
             ],
           ),
         ),
-        body: const TabBarView(
+        body: TabBarView(
           children: [
-            //Topics View
+            // Topics View
             Padding(
-              padding: EdgeInsets.only(top: 10, left: 16.0, right: 16.0),
+              padding: const EdgeInsets.only(top: 10, left: 16.0, right: 16.0),
               child: SingleChildScrollView(
                 scrollDirection: Axis.vertical,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    VerticalSpeacing(16.0),
-                    CommunituCartWidgetFamily(),
-                    VerticalSpeacing(16.0),
-                    CommunituCartWidgetFamily(),
-                    VerticalSpeacing(16.0),
-                    CommunituCartWidgetFamily(),
+                    const VerticalSpeacing(16.0),
+                    if (familyCommunityController.isLoading)
+                      const Center(child: CircularProgressIndicator())
+                    else if (familyCommunityController.posts.isEmpty)
+                      const Center(child: Text('No posts found'))
+                    else
+                      Column(
+                        children: familyCommunityController.posts.map((post) {
+                          return FutureBuilder<int>(
+                            future: familyCommunityController
+                                .fetchTotalComments(post['postId']),
+                            builder: (context, snapshot) {
+                              final totalComments = snapshot.data ?? 0;
+                              return Padding(
+                                padding: const EdgeInsets.only(bottom: 16),
+                                child: InkWell(
+                                  onTap: () {
+                                    Navigator.push(context,
+                                        MaterialPageRoute(builder: (context) {
+                                      return CommunityDetailViewFamily(
+                                        img: post['post'],
+                                        title: post['title'],
+                                        subtitle: post['content'],
+                                        postId: post['postId'],
+                                        userId: currentUserId,
+                                      );
+                                    }));
+                                  },
+                                  child: CommunituCartWidgetFamily(
+                                    post: post['post'],
+                                    title: post['title'],
+                                    content: post['content'],
+                                    totalComments: totalComments,
+                                  ),
+                                ),
+                              );
+                            },
+                          );
+                        }).toList(),
+                      ),
                   ],
                 ),
               ),
             ),
 
-            //Blog View
+            // My Posts View
             Padding(
-              padding: EdgeInsets.only(top: 10, left: 16.0, right: 16.0),
+              padding: const EdgeInsets.only(top: 10, left: 16.0, right: 16.0),
               child: SingleChildScrollView(
                 scrollDirection: Axis.vertical,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    VerticalSpeacing(16.0),
-                    CommunituCartWidgetFamily(),
-                    VerticalSpeacing(16.0),
-                    CommunituCartWidgetFamily(),
-                    VerticalSpeacing(16.0),
-                    CommunituCartWidgetFamily(),
+                    const VerticalSpeacing(16.0),
+                    if (familyCommunityController.isLoading)
+                      const Center(child: CircularProgressIndicator())
+                    else if (familyCommunityController.posts.isEmpty)
+                      const Center(child: Text('No posts found'))
+                    else
+                      Column(
+                        children: familyCommunityController.posts
+                            .where((post) => post['userId'] == currentUserId)
+                            .map((post) {
+                          return FutureBuilder<int>(
+                            future: familyCommunityController
+                                .fetchTotalComments(post['postId']),
+                            builder: (context, snapshot) {
+                              final totalComments = snapshot.data ?? 0;
+                              return Padding(
+                                padding: const EdgeInsets.only(bottom: 16),
+                                child: InkWell(
+                                  onTap: () {
+                                    Navigator.push(context,
+                                        MaterialPageRoute(builder: (context) {
+                                      return CommunityDetailViewFamily(
+                                        img: post['post'],
+                                        title: post['title'],
+                                        subtitle: post['content'],
+                                        postId: post['postId'],
+                                        userId: currentUserId,
+                                      );
+                                    }));
+                                  },
+                                  child: CommunituCartWidgetFamily(
+                                    post: post['post'],
+                                    title: post['title'],
+                                    content: post['content'],
+                                    totalComments: totalComments,
+                                  ),
+                                ),
+                              );
+                            },
+                          );
+                        }).toList(),
+                      ),
                   ],
                 ),
               ),

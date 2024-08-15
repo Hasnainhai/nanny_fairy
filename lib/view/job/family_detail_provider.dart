@@ -1,12 +1,23 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+
 import 'package:nanny_fairy/res/components/rounded_button.dart';
 import 'package:nanny_fairy/res/components/widgets/vertical_spacing.dart';
+
 import '../../res/components/colors.dart';
 import '../../utils/routes/routes_name.dart';
 
 class FamilyDetailProvider extends StatefulWidget {
-  const FamilyDetailProvider({super.key});
+  String? profile;
+  String name;
+  String bio;
+  FamilyDetailProvider({
+    Key? key,
+    this.profile,
+    required this.name,
+    required this.bio,
+  }) : super(key: key);
 
   @override
   State<FamilyDetailProvider> createState() => _FamilyDetailProviderState();
@@ -34,22 +45,39 @@ class _FamilyDetailProviderState extends State<FamilyDetailProvider> {
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                Container(
-                  height: 150,
-                  width:
-                      double.infinity, // Fill the width of the parent container
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(12),
-                    color: AppColor.primaryColor,
-                  ),
-                  child: Center(
-                    child: Image.asset(
-                      'images/popImg.png',
-                      width: 150,
-                      height: 150,
-                    ),
-                  ),
-                ),
+                widget.profile == null
+                    ? Container(
+                        height: 150,
+                        width: double
+                            .infinity, // Fill the width of the parent container
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(12),
+                          color: AppColor.primaryColor,
+                        ),
+                        child: Center(
+                          child: Image.asset(
+                            'images/popImg.png',
+                            width: 150,
+                            height: 150,
+                          ),
+                        ),
+                      )
+                    : Container(
+                        height: 150,
+                        width: double
+                            .infinity, // Fill the width of the parent container
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(12),
+                          color: AppColor.primaryColor,
+                        ),
+                        child: Center(
+                          child: Image.network(
+                            widget.profile!,
+                            width: 150,
+                            height: 150,
+                          ),
+                        ),
+                      ),
                 const VerticalSpeacing(16),
                 Text(
                   'Agree to Subscription of\n€2/month',
@@ -154,7 +182,7 @@ class _FamilyDetailProviderState extends State<FamilyDetailProvider> {
                             height:
                                 40), // Adjust this value to create space for the CircleAvatar
                         Text(
-                          'Rayees khan(34)',
+                          widget.name,
                           style: GoogleFonts.getFont(
                             "Poppins",
                             textStyle: const TextStyle(
@@ -185,7 +213,7 @@ class _FamilyDetailProviderState extends State<FamilyDetailProvider> {
                         ),
                         const SizedBox(height: 16),
                         Text(
-                          'Officia irure irure anim nisi exercitation velit cupidatat qui Lorem id ad. Officia irure irure anim nisi exercitation velit cupidatat qui Lorem id ad. Officia irure irure anim nisi exercitation velit cupidatat qui Officia irure irure anim nisi exercitation velit cupidatat qui Lorem id ad. Officia irure irure anim nisi exercitation velit cupidatat qui Lorem id ad. Officia irure irure anim nisi exercitation velit cupidatat qui Officia irure irure anim nisi exercitation velit cupidatat qui Lorem id ad.',
+                          widget.bio,
                           style: GoogleFonts.getFont(
                             "Poppins",
                             textStyle: const TextStyle(
@@ -298,12 +326,17 @@ class _FamilyDetailProviderState extends State<FamilyDetailProvider> {
                 Positioned(
                   top: 50,
                   left: MediaQuery.of(context).size.width / 2 - 40,
-                  child: const CircleAvatar(
-                    radius: 40,
-                    backgroundImage: NetworkImage(
-                      'https://play-lh.googleusercontent.com/jInS55DYPnTZq8GpylyLmK2L2cDmUoahVacfN_Js_TsOkBEoizKmAl5-p8iFeLiNjtE=w526-h296-rw',
-                    ),
-                  ),
+                  child: widget.profile == null
+                      ? const CircleAvatar(
+                          radius: 40,
+                          backgroundImage: NetworkImage(
+                            'https://play-lh.googleusercontent.com/jInS55DYPnTZq8GpylyLmK2L2cDmUoahVacfN_Js_TsOkBEoizKmAl5-p8iFeLiNjtE=w526-h296-rw',
+                          ),
+                        )
+                      : CircleAvatar(
+                          radius: 40,
+                          backgroundImage: NetworkImage(widget.profile!),
+                        ),
                 ),
               ],
             ),

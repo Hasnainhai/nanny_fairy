@@ -1,12 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:nanny_fairy/Family_View/homeFamily/widgets/bookCart_home_widget.dart';
-import 'package:nanny_fairy/Family_View/homeFamily/widgets/home_Family_feature_widget.dart';
+
+import 'package:nanny_fairy/Family_View/homeFamily/widgets/family_default_view.dart';
+import 'package:nanny_fairy/Family_View/homeFamily/widgets/family_filter_view.dart';
+import 'package:nanny_fairy/Family_View/homeFamily/widgets/family_search__view.dart';
+import 'package:nanny_fairy/Repository/family_home_ui_repository.dart';
 import 'package:nanny_fairy/res/components/colors.dart';
 import 'package:nanny_fairy/res/components/searchBar.dart';
+import 'package:nanny_fairy/res/components/widgets/Family_search_bar.dart';
+import 'package:nanny_fairy/res/components/widgets/family_home_ui_enums.dart';
 import 'package:nanny_fairy/res/components/widgets/vertical_spacing.dart';
+import 'package:provider/provider.dart';
 import '../../utils/routes/routes_name.dart';
-import '../bookFamily/widgets/book_cart_widget_family.dart';
 
 class HomeViewFamily extends StatefulWidget {
   const HomeViewFamily({super.key});
@@ -72,7 +77,7 @@ class _HomeViewFamilyState extends State<HomeViewFamily> {
                   top: 159, // Adjust this value as needed
                   left: (MediaQuery.of(context).size.width - 320) /
                       2, // Center horizontally
-                  child: SearchBarProvider(
+                  child: FamilySearchBarProvider(
                     onTapFilter: () {
                       Navigator.pushNamed(
                           context, RoutesName.filterPopUpFamily);
@@ -82,157 +87,64 @@ class _HomeViewFamilyState extends State<HomeViewFamily> {
               ],
             ),
             const VerticalSpeacing(50.0),
-            Padding(
-              padding: const EdgeInsets.only(left: 16.0, right: 16.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    'What are you looking for',
-                    style: GoogleFonts.getFont(
-                      "Poppins",
-                      textStyle: const TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.w600,
-                        color: AppColor.blackColor,
-                      ),
-                    ),
-                  ),
-                ],
-              ),
+            Consumer<FamilyHomeUiRepository>(
+              builder: (context, uiState, _) {
+                Widget selectedWidget;
+
+                switch (uiState.selectedType) {
+                  case FamilyHomeUiEnums.SearchSection:
+                    selectedWidget = const FamilySearchView();
+                    break;
+                  case FamilyHomeUiEnums.DefaultSection:
+                    selectedWidget = const FamilyDefaultView();
+                    break;
+                  case FamilyHomeUiEnums.FilterSection:
+                    selectedWidget = const FamilyFilterView();
+                    break;
+                }
+
+                return selectedWidget;
+              },
             ),
-            const VerticalSpeacing(10),
-            const SizedBox(
-              height: 120,
-              child: SingleChildScrollView(
-                scrollDirection: Axis.horizontal,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    SizedBox(width: 16),
-                    HomeFeatureContainerFamily(
-                      bgColor: Color(0xff51A1BA),
-                      img: 'images/cleaning.png',
-                      title: 'Cleaning',
-                      txColor: AppColor.whiteColor,
-                    ),
-                    SizedBox(width: 16),
-                    HomeFeatureContainerFamily(
-                      txColor: AppColor.whiteColor,
-                      bgColor: Color(0xffFEAA48),
-                      img: 'images/homeSitter.png',
-                      title: 'Sitter',
-                    ),
-                    SizedBox(width: 16),
-                    HomeFeatureContainerFamily(
-                      txColor: AppColor.whiteColor,
-                      bgColor: Color(0xffDDC912),
-                      img: 'images/cleaning.png',
-                      title: 'Eiderly',
-                    ),
-                    SizedBox(width: 16),
-                    HomeFeatureContainerFamily(
-                      txColor: AppColor.whiteColor,
-                      bgColor: Color(0xffFEAA48),
-                      img: 'images/homeSitter.png',
-                      title: 'Sitter',
-                    ),
-                    SizedBox(width: 16),
-                    HomeFeatureContainerFamily(
-                      txColor: AppColor.whiteColor,
-                      bgColor: Color(0xffDDC912),
-                      img: 'images/cleaning.png',
-                      title: 'Eiderly',
-                    ),
-                  ],
-                ),
-              ),
-            ),
-            const VerticalSpeacing(16.0),
-            Padding(
-              padding: const EdgeInsets.only(left: 16.0, right: 16.0),
-              child: Column(
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        'What are you looking for',
-                        style: GoogleFonts.getFont(
-                          "Poppins",
-                          textStyle: const TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.w600,
-                            color: AppColor.blackColor,
-                          ),
-                        ),
-                      ),
-                      InkWell(
-                        onTap: () {
-                          Navigator.pushNamed(
-                              context, RoutesName.jobViewFamily);
-                        },
-                        child: Text(
-                          'see all',
-                          style: GoogleFonts.getFont(
-                            "Poppins",
-                            textStyle: const TextStyle(
-                              fontSize: 16,
-                              fontWeight: FontWeight.w600,
-                              color: AppColor.primaryColor,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                  const VerticalSpeacing(16.0),
-                  SizedBox(
-                    height: MediaQuery.of(context).size.height * 0.4,
-                    child: SingleChildScrollView(
-                      scrollDirection: Axis.vertical,
-                      child: Column(
-                        children: [
-                          BookingCartWidgetHome(
-                            primaryButtonColor: AppColor.primaryColor,
-                            primaryButtonTxt: 'View',
-                            ontapView: () {
-                              Navigator.pushNamed(
-                                  context, RoutesName.providerDetails);
-                            },
-                          ),
-                          BookingCartWidgetHome(
-                            primaryButtonColor: AppColor.primaryColor,
-                            ontapView: () {
-                              Navigator.pushNamed(
-                                  context, RoutesName.providerDetails);
-                            },
-                            primaryButtonTxt: 'View',
-                          ),
-                          BookingCartWidgetHome(
-                            primaryButtonColor: AppColor.primaryColor,
-                            ontapView: () {
-                              Navigator.pushNamed(
-                                  context, RoutesName.providerDetails);
-                            },
-                            primaryButtonTxt: 'View',
-                          ),
-                          BookingCartWidgetHome(
-                            primaryButtonColor: AppColor.primaryColor,
-                            ontapView: () {
-                              Navigator.pushNamed(
-                                  context, RoutesName.providerDetails);
-                            },
-                            primaryButtonTxt: 'View',
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
+            // FamilyDefaultView(),
           ],
+        ),
+      ),
+    );
+  }
+}
+
+class DayButtonFamily extends StatefulWidget {
+  final String day;
+
+  const DayButtonFamily({
+    super.key,
+    required this.day,
+  });
+
+  @override
+  _DayButtonFamilyState createState() => _DayButtonFamilyState();
+}
+
+class _DayButtonFamilyState extends State<DayButtonFamily> {
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: 15,
+      width: 15,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(2),
+        color: Colors.transparent,
+        border: Border.all(color: Colors.grey),
+      ),
+      child: Center(
+        child: Text(
+          widget.day,
+          style: const TextStyle(
+            fontSize: 8,
+            color: AppColor.blackColor,
+            fontWeight: FontWeight.w500,
+          ),
         ),
       ),
     );

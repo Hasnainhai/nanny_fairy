@@ -1,5 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:nanny_fairy/Repository/home_ui_repostory.dart';
+import 'package:nanny_fairy/ViewModel/provider_home_view_model.dart';
+import 'package:nanny_fairy/ViewModel/search_view_model.dart';
+import 'package:nanny_fairy/res/components/widgets/ui_enums.dart';
+import 'package:provider/provider.dart';
 import 'colors.dart';
 
 class SearchBarProvider extends StatefulWidget {
@@ -26,17 +31,22 @@ class _SearchBarProviderState extends State<SearchBarProvider> {
   @override
   void initState() {
     super.initState();
-    // Ensure selectedKM is in kM list
     if (!kM.contains(selectedKM)) {
       selectedKM = kM.first;
     }
+    searchController.addListener(_onSearchChanged);
   }
 
   @override
   void dispose() {
     _searchFocusNode.dispose();
     _dropdownFocusNode.dispose();
+    searchController.dispose();
     super.dispose();
+  }
+
+  void _onSearchChanged() {
+    // The logic will be moved to the Consumer inside the build method
   }
 
   @override
@@ -76,16 +86,30 @@ class _SearchBarProviderState extends State<SearchBarProvider> {
                     padding: const EdgeInsets.only(top: 2),
                     child: Focus(
                       focusNode: _searchFocusNode,
-                      child: TextFormField(
-                        controller: searchController,
-                        decoration: const InputDecoration(
-                          border: InputBorder.none,
-                          hintText: 'Search Here',
-                          prefixIcon: Icon(
-                            Icons.search,
-                            color: AppColor.blackColor,
-                          ),
-                        ),
+                      child:
+                          Consumer2<SearchViewModel, HomeUiSwithchRepository>(
+                        builder: (context, viewModel, uiState, child) {
+                          searchController.addListener(() {
+                            if (searchController.text.isNotEmpty) {
+                              viewModel
+                                  .searchUsersByPassion(searchController.text);
+                              uiState.switchToType(UIType.SearchSection);
+                            } else {
+                              uiState.switchToType(UIType.DefaultSection);
+                            }
+                          });
+                          return TextFormField(
+                            controller: searchController,
+                            decoration: const InputDecoration(
+                              border: InputBorder.none,
+                              hintText: 'Search Here',
+                              prefixIcon: Icon(
+                                Icons.search,
+                                color: AppColor.blackColor,
+                              ),
+                            ),
+                          );
+                        },
                       ),
                     ),
                   ),
@@ -154,7 +178,7 @@ class _SearchBarProviderState extends State<SearchBarProvider> {
                 child: DropdownButtonHideUnderline(
                   child: DropdownButton<String>(
                     value: selectedKM,
-                    icon: const SizedBox.shrink(), // Remove default icon
+                    icon: const SizedBox.shrink(),
                     style: GoogleFonts.getFont(
                       "Poppins",
                       textStyle: const TextStyle(
