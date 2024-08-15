@@ -68,17 +68,17 @@ class _PaymentViewState extends State<PaymentView> {
     Navigator.of(context).push(MaterialPageRoute(
       builder: (BuildContext context) => PaypalCheckout(
         sandboxMode: true,
-        clientId:
-            "AcdlPX5qScKqycqMVzxDYKxvg31yhOHPLSzx4_KeMCA-ofV2VRvWlKOuz-RjWR098YXESEX9YUloLBd8",
         secretKey:
             "EM-G9jSv4x5GAFEge8DRMD0figp3V68YifKmhK4enbGCKDHKq3jYlOwwk8Q8s7NQMsZ1oxg_5vJ2s3xn",
-        returnURL: "yourapp://payment-success",
-        cancelURL: "yourapp://payment-cancel",
+        clientId:
+            "AcdlPX5qScKqycqMVzxDYKxvg31yhOHPLSzx4_KeMCA-ofV2VRvWlKOuz-RjWR098YXESEX9YUloLBd8",
+        returnURL: "http://api.sandbox.paypal.com",
+        cancelURL: "http://api.sandbox.paypal.com",
         transactions: const [
           {
             "amount": {
-              "total": '2', // Subscription charge
-              "currency": "EUR", // Currency set to Euro
+              "total": '2',
+              "currency": "EUR",
               "details": {
                 "subtotal": '2',
                 "shipping": '0',
