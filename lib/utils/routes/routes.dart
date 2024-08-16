@@ -187,9 +187,9 @@ class Routes {
       case RoutesName.myProfileFamily:
         return MaterialPageRoute(
             builder: (BuildContext context) => const MyProfileFamily());
-      case RoutesName.editProfileFamily:
-        return MaterialPageRoute(
-            builder: (BuildContext context) => const EditProfileFamily());
+      // case RoutesName.editProfileFamily:
+      //   return MaterialPageRoute(
+      //       builder: (BuildContext context) => const EditProfileFamily());
       case RoutesName.loginFamily:
         return MaterialPageRoute(
             builder: (BuildContext context) => const LoginViewFamily());
