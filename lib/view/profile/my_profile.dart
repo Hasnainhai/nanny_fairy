@@ -2,13 +2,31 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:nanny_fairy/res/components/widgets/vertical_spacing.dart';
 import 'package:nanny_fairy/utils/routes/routes_name.dart';
+import 'package:provider/provider.dart';
+import '../../ViewModel/get_provider_info_view_model.dart';
 import '../../res/components/colors.dart';
 
-class MyProfile extends StatelessWidget {
+class MyProfile extends StatefulWidget {
   const MyProfile({super.key});
 
   @override
+  State<MyProfile> createState() => _MyProfileState();
+}
+
+class _MyProfileState extends State<MyProfile> {
+  @override
+  void initState() {
+    super.initState();
+    // Fetch users when the widget initializes
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      Provider.of<GetProviderInfoViewModel>(context, listen: false)
+          .getProviderInfo();
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
+    final getProviderInfo = Provider.of<GetProviderInfoViewModel>(context);
     return Scaffold(
       backgroundColor: AppColor.primaryColor,
       appBar: AppBar(
@@ -56,84 +74,87 @@ class MyProfile extends StatelessWidget {
             topLeft: Radius.circular(30),
           ),
         ),
-        child: const Padding(
-          padding: EdgeInsets.all(16.0),
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
           child: SingleChildScrollView(
             scrollDirection: Axis.vertical,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                ProfileItem(
-                  icon: Icons.person,
-                  label: 'Name',
-                  value: 'Hassnain Haider',
-                ),
-                Divider(),
-                VerticalSpeacing(10.0),
-                ProfileItem(
-                  icon: Icons.location_on,
-                  label: 'Address',
-                  value: 'E-11 block Islamabad',
-                ),
-
-                Divider(),
-                VerticalSpeacing(10.0),
-                ProfileItem(
-                  icon: Icons.phone,
-                  label: 'Telephone Number',
-                  value: '+923129739152',
-                ),
-                Divider(),
-                VerticalSpeacing(10.0),
-                ProfileItem(
-                  icon: Icons.cake,
-                  label: 'Date of Birth',
-                  value: '12/11/2003',
-                ),
-                Divider(),
-                VerticalSpeacing(10.0),
-                ProfileItem(
-                  icon: Icons.email,
-                  label: 'Email Address',
-                  value: 'Hassnain@gmail.com',
-                ),
-                Divider(),
-                VerticalSpeacing(10.0),
-                ProfileItem(
-                  icon: Icons.lock,
-                  label: 'Password',
-                  value: '***********',
-                ),
-                Divider(),
-                VerticalSpeacing(10.0),
-                ProfileItem(
-                  icon: Icons.lock,
-                  label: 'Confirm Password',
-                  value: '*********',
-                ),
-                Divider(),
-                VerticalSpeacing(10.0),
-                ProfileItem(
-                  icon: Icons.description,
-                  label: 'Description',
-                  value: 'My name is Hasnain, I am a software engineer.',
-                ),
-                Divider(),
-                VerticalSpeacing(10.0),
-                ProfileItem(
-                  icon: Icons.euro_outlined,
-                  label: 'Hourly Rate',
-                  value: '\$50',
-                ),
-                Divider(),
-                VerticalSpeacing(10.0),
-                ProfileItem(
-                  icon: Icons.star_outline,
-                  label: 'Skills',
-                  value: 'Cleaning...',
-                ),
-                VerticalSpeacing(16.0),
-              ],
+            child: FutureBuilder<Map<dynamic, dynamic>>(
+              future: getProviderInfo.getProviderInfo(),
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return const Center(
+                    child: CircularProgressIndicator(),
+                  );
+                } else if (snapshot.hasError) {
+                  return Center(child: Text('Error: ${snapshot.error}'));
+                } else if (snapshot.hasData) {
+                  Map<dynamic, dynamic> provider =
+                      snapshot.data as Map<dynamic, dynamic>;
+                  return Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      ProfileItem(
+                        icon: Icons.person,
+                        label: 'Name',
+                        value:
+                            "${provider['firstName']} ${provider['lastName']}",
+                      ),
+                      const Divider(),
+                      const VerticalSpeacing(10.0),
+                      ProfileItem(
+                        icon: Icons.location_on,
+                        label: 'Address',
+                        value: provider['address'],
+                      ),
+                      const Divider(),
+                      const VerticalSpeacing(10.0),
+                      ProfileItem(
+                        icon: Icons.phone,
+                        label: 'Telephone Number',
+                        value: provider['phoneNumber'],
+                      ),
+                      const Divider(),
+                      const VerticalSpeacing(10.0),
+                      ProfileItem(
+                        icon: Icons.cake,
+                        label: 'Date of Birth',
+                        value: provider['dob'],
+                      ),
+                      const Divider(),
+                      const VerticalSpeacing(10.0),
+                      ProfileItem(
+                        icon: Icons.email,
+                        label: 'Email Address',
+                        value: provider['email'],
+                      ),
+                      const Divider(),
+                      const VerticalSpeacing(10.0),
+                      ProfileItem(
+                        icon: Icons.description,
+                        label: 'Description',
+                        value: provider['bio'],
+                      ),
+                      const Divider(),
+                      const VerticalSpeacing(10.0),
+                      ProfileItem(
+                        icon: Icons.euro_outlined,
+                        label: 'Hourly Rate',
+                        value: '€${provider['hoursrate']}',
+                      ),
+                      const Divider(),
+                      const VerticalSpeacing(10.0),
+                      ProfileItem(
+                        icon: Icons.star_outline,
+                        label: 'Skills',
+                        value: provider['Refernce']['skill'],
+                      ),
+                      const VerticalSpeacing(16.0),
+                    ],
+                  );
+                } else {
+                  return const Center(child: Text('No data available'));
+                }
+              },
             ),
           ),
         ),
@@ -160,7 +181,11 @@ class ProfileItem extends StatelessWidget {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Icon(icon, color: AppColor.primaryColor,size: 20,),
+          Icon(
+            icon,
+            color: AppColor.primaryColor,
+            size: 20,
+          ),
           const SizedBox(width: 10),
           Expanded(
             child: Column(
