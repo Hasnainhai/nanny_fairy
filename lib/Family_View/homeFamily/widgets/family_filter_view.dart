@@ -3,6 +3,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:nanny_fairy/Family_View/findJobFamily/provider_detail.dart';
 import 'package:nanny_fairy/Family_View/homeFamily/home_view_family.dart';
 import 'package:nanny_fairy/Family_View/homeFamily/widgets/bookCart_home_widget.dart';
+import 'package:nanny_fairy/Models/family_search_model.dart';
 import 'package:nanny_fairy/ViewModel/family_filter_view_model.dart';
 import 'package:nanny_fairy/res/components/colors.dart';
 import 'package:nanny_fairy/res/components/widgets/shimmer_effect.dart';
@@ -70,20 +71,40 @@ class _FamilyFilterViewState extends State<FamilyFilterView> {
                     itemCount: viewModel.filteredProviders.length,
                     itemBuilder: (context, index) {
                       final user = viewModel.filteredProviders[index];
-                      // Assuming `time` can be a Map or another type, handle it accordingly
+
+                      // Handle time field
                       Map<String, String> timeData = {};
+
                       if (user.time is Map) {
+                        // Convert Map to Map<String, String>
                         timeData = (user.time as Map<dynamic, dynamic>).map(
-                            (key, value) =>
-                                MapEntry(key.toString(), value.toString()));
+                          (key, value) =>
+                              MapEntry(key.toString(), value.toString()),
+                        );
+                      } else if (user.time is Time) {
+                        // Handle custom Time type
+                        final time = user.time;
+                        timeData = {
+                          "morningStart": time.morningStart,
+                          "morningEnd": time.morningEnd,
+                          "afternoonStart": time.afternoonStart,
+                          "afternoonEnd": time.afternoonEnd,
+                          "eveningStart": time.eveningStart,
+                          "eveningEnd": time.eveningEnd,
+                          // Add more fields if necessary
+                        };
                       } else {
-                        // Handle unexpected type for `time`
+                        // Handle unexpected types
                         debugPrint(
                             'Unexpected type for time: ${user.time.runtimeType}');
-                        // You can provide default values or handle the error appropriately here
+                        // Provide default values or handle error
+                        timeData = {
+                          "start": "N/A",
+                          "end": "N/A",
+                        };
                       }
 
-                      // Set of day buttons based on `user` information
+                      // Create day buttons based on the available days
                       Set<String> daysSet =
                           {}; // Populate this set based on your data
                       List<Widget> dayButtons = daysSet.map((dayAbbreviation) {

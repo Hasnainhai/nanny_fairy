@@ -63,23 +63,29 @@ class FamilySearchRepository extends ChangeNotifier {
     notifyListeners();
   }
 
+  // Normalize strings for case-insensitive matching
+  String _normalize(String input) {
+    return input.trim().toLowerCase();
+  }
+
   // Search users by passion from the list
   void searchUsersByPassion(String query) {
     if (_providers.isEmpty) {
       debugPrint('No providers available to search');
       _filteredProviders = [];
     } else {
-      if (query.isEmpty) {
+      final normalizedQuery = _normalize(query);
+
+      if (normalizedQuery.isEmpty) {
         _filteredProviders = List.from(_providers);
       } else {
         _filteredProviders = _providers.where((provider) {
           bool matchFound = provider.passions.any((passion) {
-            final passionLower = passion.toLowerCase();
-            final queryLower = query.toLowerCase();
-            final isMatch = passionLower.contains(queryLower);
+            final normalizedPassion = _normalize(passion);
+            final isMatch = normalizedPassion.contains(normalizedQuery);
 
             debugPrint(
-                "Checking passion: $passionLower, Query: $queryLower, Match: $isMatch");
+                "Checking passion: $normalizedPassion, Query: $normalizedQuery, Match: $isMatch");
             return isMatch;
           });
 

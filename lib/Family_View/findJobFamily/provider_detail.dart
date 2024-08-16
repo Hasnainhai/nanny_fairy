@@ -437,7 +437,7 @@ class _ProviderDetailsState extends State<ProviderDetails> {
                                             ),
                                           ),
                                           Text(
-                                            '${widget.timeData['MorningStart']} to ${widget.timeData['MorningEnd']}',
+                                            '${widget.timeData['morningStart']} to ${widget.timeData['morningEnd']}',
                                             style: GoogleFonts.getFont(
                                               "Poppins",
                                               textStyle: const TextStyle(
@@ -467,7 +467,7 @@ class _ProviderDetailsState extends State<ProviderDetails> {
                                             ),
                                           ),
                                           Text(
-                                            '${widget.timeData['AfternoonStart']} to ${widget.timeData['AfternoonEnd']}',
+                                            '${widget.timeData['afternoonStart']} to ${widget.timeData['afternoonEnd']}',
                                             style: GoogleFonts.getFont(
                                               "Poppins",
                                               textStyle: const TextStyle(
@@ -497,7 +497,7 @@ class _ProviderDetailsState extends State<ProviderDetails> {
                                             ),
                                           ),
                                           Text(
-                                            '${widget.timeData['EveningStart']} to ${widget.timeData['EveningEnd']}',
+                                            '${widget.timeData['eveningStart']} to ${widget.timeData['eveningStart']}',
                                             style: GoogleFonts.getFont(
                                               "Poppins",
                                               textStyle: const TextStyle(
