@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:nanny_fairy/FamilyController/get_family_info_controller.dart';
 import 'package:nanny_fairy/Family_View/profileFamily/widgets/profile_widget_family.dart';
 import 'package:nanny_fairy/utils/routes/routes_name.dart';
+import 'package:provider/provider.dart';
 import '../../res/components/colors.dart';
 import '../../res/components/widgets/vertical_spacing.dart';
 import '../../view/rating/rating.dart';
@@ -17,6 +20,15 @@ class _ProfileViewFamilyState extends State<ProfileViewFamily> {
   final double top = 130.0;
   String defaultProfile =
       'https://t4.ftcdn.net/jpg/03/64/21/11/360_F_364211147_1qgLVxv1Tcq0Ohz3FawUfrtONzz8nq3e.jpg';
+  @override
+  void initState() {
+    super.initState();
+    // Fetch users when the widget initializes
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      Provider.of<GetFamilyInfoController>(context, listen: false)
+          .getFamilyInfo();
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -51,7 +63,7 @@ class _ProfileViewFamilyState extends State<ProfileViewFamily> {
                 Container(
                   padding:
                       const EdgeInsets.only(top: 10, left: 24.0, right: 24.0),
-                  child: _buildProfile(),
+                  child: _buildProfile(context),
                 ),
               ],
             ),
@@ -77,34 +89,56 @@ class _ProfileViewFamilyState extends State<ProfileViewFamily> {
     );
   }
 
-  _buildProfile() {
+  _buildProfile(BuildContext context) {
+    final getProviderInfo = Provider.of<GetFamilyInfoController>(context);
     return Column(
       children: [
-        CircleAvatar(
-          radius: 40,
-          backgroundImage: NetworkImage(defaultProfile),
-        ),
-        const SizedBox(width: 20.0),
-        const Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            VerticalSpeacing(
-              8,
-            ),
-            Text(
-              'Hasnain haidr',
-              style: TextStyle(
-                fontFamily: 'CenturyGothic',
-                fontSize: 18,
-                fontWeight: FontWeight.w600,
-                color: AppColor.whiteColor,
-              ),
-            ),
-          ],
+        FutureBuilder<Map<dynamic, dynamic>>(
+          future: getProviderInfo.getFamilyInfo(),
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return const Center(
+                child: CircularProgressIndicator(),
+              );
+            } else if (snapshot.hasError) {
+              return Center(child: Text('Error: ${snapshot.error}'));
+            } else if (snapshot.hasData) {
+              Map<dynamic, dynamic> provider =
+              snapshot.data as Map<dynamic, dynamic>;
+              return Center(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      CircleAvatar(
+                        radius: 40,
+                        foregroundImage: NetworkImage(provider['profile']),
+                        backgroundImage: const NetworkImage(
+                            'https://play-lh.googleusercontent.com/jInS55DYPnTZq8GpylyLmK2L2cDmUoahVacfN_Js_TsOkBEoizKmAl5-p8iFeLiNjtE=w526-h296-rw'),
+                      ),
+                      const VerticalSpeacing(16),
+                      Text(
+                        "${provider['firstName']} ${provider['lastName']}",
+                        style: GoogleFonts.getFont(
+                          "Poppins",
+                          textStyle: const TextStyle(
+                            fontSize: 14,
+                            fontWeight: FontWeight.w500,
+                            color: AppColor.whiteColor,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ));
+            } else {
+              return const Center(child: Text('No data available'));
+            }
+          },
         ),
       ],
     );
   }
+
 
   _buildProfileFeatures() {
     return Container(

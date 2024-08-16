@@ -84,7 +84,6 @@ class _EditProfileState extends State<EditProfile> {
       Map<String, dynamic> updateSkill = {
         'skill': skillController.text,
       };
-
       // Update the user's profile information in the database
       await userDocument.update(updatedData);
       await userDocument.child('Refernce').update(updateSkill);

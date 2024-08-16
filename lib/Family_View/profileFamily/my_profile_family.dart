@@ -1,14 +1,33 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:nanny_fairy/FamilyController/get_family_info_controller.dart';
+import 'package:nanny_fairy/Family_View/profileFamily/widgets/edit_profile_family.dart';
 import 'package:nanny_fairy/res/components/widgets/vertical_spacing.dart';
 import 'package:nanny_fairy/utils/routes/routes_name.dart';
+import 'package:provider/provider.dart';
 import '../../res/components/colors.dart';
 
-class MyProfileFamily extends StatelessWidget {
+class MyProfileFamily extends StatefulWidget {
   const MyProfileFamily({super.key});
 
   @override
+  State<MyProfileFamily> createState() => _MyProfileFamilyState();
+}
+
+class _MyProfileFamilyState extends State<MyProfileFamily> {
+  @override
+  void initState() {
+    super.initState();
+    // Fetch users when the widget initializes
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      Provider.of<GetFamilyInfoController>(context, listen: false)
+          .getFamilyInfo();
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
+    final getFamilyInfo = Provider.of<GetFamilyInfoController>(context);
     return Scaffold(
       backgroundColor: AppColor.primaryColor,
       appBar: AppBar(
@@ -37,8 +56,19 @@ class MyProfileFamily extends StatelessWidget {
         ),
         actions: [
           IconButton(
-            onPressed: () {
-              Navigator.pushNamed(context, RoutesName.editProfileFamily);
+            onPressed: () async{
+              final familyData = await getFamilyInfo
+                  .getFamilyInfo(); // Await the Future to complete
+              if (familyData != null) {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => EditProfileFamily(
+                      familyData: familyData,
+                    ),
+                  ),
+                );
+              }
             },
             icon: const Icon(
               Icons.border_color_outlined,
@@ -56,73 +86,73 @@ class MyProfileFamily extends StatelessWidget {
             topLeft: Radius.circular(30),
           ),
         ),
-        child: const Padding(
+        child: Padding(
           padding: EdgeInsets.all(16.0),
           child: SingleChildScrollView(
-            scrollDirection: Axis.vertical,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                ProfileItem(
-                  icon: Icons.person,
-                  label: 'Name',
-                  value: 'Hassnain Haider',
-                ),
-                Divider(),
-                VerticalSpeacing(10.0),
-                ProfileItem(
-                  icon: Icons.location_on,
-                  label: 'Address',
-                  value: 'E-11 block Islamabad',
-                ),
-
-                Divider(),
-                VerticalSpeacing(10.0),
-                ProfileItem(
-                  icon: Icons.phone,
-                  label: 'Telephone Number',
-                  value: '+923129739152',
-                ),
-                Divider(),
-                VerticalSpeacing(10.0),
-                ProfileItem(
-                  icon: Icons.cake,
-                  label: 'Date of Birth',
-                  value: '12/11/2003',
-                ),
-                Divider(),
-                VerticalSpeacing(10.0),
-                ProfileItem(
-                  icon: Icons.email,
-                  label: 'Email Address',
-                  value: 'Hassnain@gmail.com',
-                ),
-                Divider(),
-                VerticalSpeacing(10.0),
-                ProfileItem(
-                  icon: Icons.lock,
-                  label: 'Password',
-                  value: '***********',
-                ),
-                Divider(),
-                VerticalSpeacing(10.0),
-                ProfileItem(
-                  icon: Icons.lock,
-                  label: 'Confirm Password',
-                  value: '*********',
-                ),
-                Divider(),
-                VerticalSpeacing(10.0),
-                ProfileItem(
-                  icon: Icons.description,
-                  label: 'Description',
-                  value: 'My name is Hasnain, I am a software engineer.',
-                ),
-
-                VerticalSpeacing(16.0),
-              ],
-            ),
-          ),
+              scrollDirection: Axis.vertical,
+              child: FutureBuilder<Map<dynamic, dynamic>>(
+                future: getFamilyInfo.getFamilyInfo(),
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return const Center(
+                      child: CircularProgressIndicator(),
+                    );
+                  } else if (snapshot.hasError) {
+                    return Center(child: Text('Error: ${snapshot.error}'));
+                  } else if (snapshot.hasData) {
+                    Map<dynamic, dynamic> family =
+                        snapshot.data as Map<dynamic, dynamic>;
+                    return Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        ProfileItem(
+                            icon: Icons.person,
+                            label: 'Name',
+                            value:
+                                "${family['firstName']} ${family['lastName']}"),
+                        Divider(),
+                        VerticalSpeacing(10.0),
+                        ProfileItem(
+                          icon: Icons.location_on,
+                          label: 'Address',
+                          value: family['address'],
+                        ),
+                        Divider(),
+                        VerticalSpeacing(10.0),
+                        ProfileItem(
+                          icon: Icons.phone,
+                          label: 'Telephone Number',
+                          value: family['phoneNumber'],
+                        ),
+                        Divider(),
+                        VerticalSpeacing(10.0),
+                        ProfileItem(
+                          icon: Icons.cake,
+                          label: 'Date of Birth',
+                          value: family['dob'],
+                        ),
+                        Divider(),
+                        VerticalSpeacing(10.0),
+                        ProfileItem(
+                          icon: Icons.email,
+                          label: 'Email Address',
+                          value: family['email'],
+                        ),
+                        Divider(),
+                        VerticalSpeacing(10.0),
+                        ProfileItem(
+                          icon: Icons.description,
+                          label: 'Description',
+                          value: family['bio'],
+                        ),
+                        VerticalSpeacing(16.0),
+                      ],
+                    );
+                  } else {
+                    return const Center(child: Text('No data available'));
+                  }
+                },
+              )),
         ),
       ),
     );
@@ -147,7 +177,11 @@ class ProfileItem extends StatelessWidget {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Icon(icon, color: AppColor.primaryColor,size: 20,),
+          Icon(
+            icon,
+            color: AppColor.primaryColor,
+            size: 20,
+          ),
           const SizedBox(width: 10),
           Expanded(
             child: Column(

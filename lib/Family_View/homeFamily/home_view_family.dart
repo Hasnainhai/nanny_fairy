@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:nanny_fairy/FamilyController/get_family_info_controller.dart';
 
 import 'package:nanny_fairy/Family_View/homeFamily/widgets/family_default_view.dart';
 import 'package:nanny_fairy/Family_View/homeFamily/widgets/family_filter_view.dart';
@@ -22,7 +23,18 @@ class HomeViewFamily extends StatefulWidget {
 
 class _HomeViewFamilyState extends State<HomeViewFamily> {
   @override
+  void initState() {
+    super.initState();
+    // Fetch users when the widget initializes
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      Provider.of<GetFamilyInfoController>(context, listen: false)
+          .getFamilyInfo();
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
+    final familyHomeView = Provider.of<GetFamilyInfoController>(context);
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: SingleChildScrollView(
@@ -41,36 +53,54 @@ class _HomeViewFamilyState extends State<HomeViewFamily> {
                       bottomRight: Radius.circular(20),
                     ),
                   ),
-                  child: Center(
-                    child: ListTile(
-                      leading: const CircleAvatar(
-                        radius: 40,
-                        backgroundImage: NetworkImage(
-                            'https://play-lh.googleusercontent.com/jInS55DYPnTZq8GpylyLmK2L2cDmUoahVacfN_Js_TsOkBEoizKmAl5-p8iFeLiNjtE=w526-h296-rw'),
-                      ),
-                      title: Text(
-                        'WellCome',
-                        style: GoogleFonts.getFont(
-                          "Poppins",
-                          textStyle: const TextStyle(
-                            fontSize: 12,
-                            fontWeight: FontWeight.w500,
-                            color: AppColor.whiteColor,
+                  child: FutureBuilder<Map<dynamic, dynamic>>(
+                    future: familyHomeView.getFamilyInfo(),
+                    builder: (context, snapshot) {
+                      if (snapshot.connectionState == ConnectionState.waiting) {
+                        return const Center(
+                          child: CircularProgressIndicator(),
+                        );
+                      } else if (snapshot.hasError) {
+                        return Center(child: Text('Error: ${snapshot.error}'));
+                      } else if (snapshot.hasData) {
+                        Map<dynamic, dynamic> family =
+                            snapshot.data as Map<dynamic, dynamic>;
+                        return Center(
+                          child: ListTile(
+                            leading: CircleAvatar(
+                              radius: 40,
+                              foregroundImage: NetworkImage(family['profile']),
+                              backgroundImage: const NetworkImage(
+                                  'https://play-lh.googleusercontent.com/jInS55DYPnTZq8GpylyLmK2L2cDmUoahVacfN_Js_TsOkBEoizKmAl5-p8iFeLiNjtE=w526-h296-rw'),
+                            ),
+                            title: Text(
+                              'WellCome',
+                              style: GoogleFonts.getFont(
+                                "Poppins",
+                                textStyle: const TextStyle(
+                                  fontSize: 12,
+                                  fontWeight: FontWeight.w500,
+                                  color: AppColor.whiteColor,
+                                ),
+                              ),
+                            ),
+                            subtitle: Text(
+                              "${family['firstName']} ${family['lastName']}",
+                              style: GoogleFonts.getFont(
+                                "Poppins",
+                                textStyle: const TextStyle(
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.w500,
+                                  color: AppColor.whiteColor,
+                                ),
+                              ),
+                            ),
                           ),
-                        ),
-                      ),
-                      subtitle: Text(
-                        'Aliza Zehra',
-                        style: GoogleFonts.getFont(
-                          "Poppins",
-                          textStyle: const TextStyle(
-                            fontSize: 14,
-                            fontWeight: FontWeight.w500,
-                            color: AppColor.whiteColor,
-                          ),
-                        ),
-                      ),
-                    ),
+                        );
+                      } else {
+                        return const Center(child: Text('No data available'));
+                      }
+                    },
                   ),
                 ),
                 Positioned(
