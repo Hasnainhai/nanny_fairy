@@ -12,6 +12,7 @@ import 'package:nanny_fairy/Repository/family_home_ui_repository.dart';
 import 'package:nanny_fairy/Repository/family_search_repository.dart';
 import 'package:nanny_fairy/Repository/family_filter_repository.dart'; // Import the new repository
 import 'package:nanny_fairy/Repository/filter_repository.dart';
+import 'package:nanny_fairy/Repository/get_provider_info.dart';
 import 'package:nanny_fairy/Repository/home_ui_repostory.dart';
 import 'package:nanny_fairy/Repository/provider_home_repository.dart';
 import 'package:nanny_fairy/Repository/search_repository.dart';
@@ -20,6 +21,7 @@ import 'package:nanny_fairy/ViewModel/family_filter_view_model.dart';
 import 'package:nanny_fairy/ViewModel/family_search_view_model.dart';
 import 'package:nanny_fairy/ViewModel/community_view_view_model.dart';
 import 'package:nanny_fairy/ViewModel/filter_view_model.dart';
+import 'package:nanny_fairy/ViewModel/get_provider_info_view_model.dart';
 import 'package:nanny_fairy/ViewModel/provider_home_view_model.dart';
 import 'package:nanny_fairy/ViewModel/search_view_model.dart';
 import 'package:nanny_fairy/res/components/colors.dart';
@@ -114,6 +116,13 @@ class MyApp extends StatelessWidget {
           // Initialize FamilyFilterController
           create: (context) =>
               FamilyFilterController(context.read<FamilyFilterRepository>()),
+        ),
+        Provider<GetProviderInfoRepo>(
+          create: (_) => GetProviderInfoRepo(),
+        ),
+        ChangeNotifierProvider<GetProviderInfoViewModel>(
+          create: (context) =>
+              GetProviderInfoViewModel(context.read<GetProviderInfoRepo>()),
         ),
       ],
       child: MaterialApp(
