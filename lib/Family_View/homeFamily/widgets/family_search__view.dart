@@ -107,12 +107,12 @@ class _FamilySearchViewState extends State<FamilySearchView> {
                             'Time Object: ${time.toString()}'); // Print time object
                         if (time != null) {
                           timeData = {
-                            "morningStart": time.morningStart,
-                            "morningEnd": time.morningEnd,
-                            "afternoonStart": time.afternoonStart,
-                            "afternoonEnd": time.afternoonEnd,
-                            "eveningStart": time.eveningStart,
-                            "eveningEnd": time.eveningEnd,
+                            "MorningStart": time.morningStart,
+                            "MorningEnd": time.morningEnd,
+                            "AfternoonStart": time.afternoonStart,
+                            "AfternoonEnd": time.afternoonEnd,
+                            "EveningStart": time.eveningStart,
+                            "EveningEnd": time.eveningEnd,
                           };
                         } else {
                           debugPrint('Time object is null');
