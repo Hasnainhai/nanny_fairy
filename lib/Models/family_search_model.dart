@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:flutter/foundation.dart';
 
 class ProviderSearchModel {
   final String uid;
@@ -18,6 +18,7 @@ class ProviderSearchModel {
   final Map<String, Map<String, bool>> availability;
   final IdPics idPics;
   final Reference reference;
+  final Time time;
 
   ProviderSearchModel({
     required this.uid,
@@ -37,69 +38,73 @@ class ProviderSearchModel {
     required this.availability,
     required this.idPics,
     required this.reference,
+    required this.time,
   });
 
   factory ProviderSearchModel.fromMap(Map<String, dynamic> data, String uid) {
-    // Safely parse the availability field
-    Map<String, Map<String, bool>> parsedAvailability = {};
-    if (data['Availability'] != null && data['Availability'] is Map) {
-      (data['Availability'] as Map).forEach((timeOfDay, daysMap) {
-        if (daysMap is Map) {
-          Map<String, bool> parsedDays = {};
-          daysMap.forEach((day, isAvailable) {
-            if (isAvailable is bool) {
-              parsedDays[day.toString()] = isAvailable;
-            } else {
-              debugPrint(
-                  'Invalid value for day $day in provider $uid: $isAvailable');
-            }
-          });
-          parsedAvailability[timeOfDay.toString()] = parsedDays;
-        } else {
-          debugPrint(
-              'Invalid daysMap for timeOfDay $timeOfDay in provider $uid: $daysMap');
-        }
-      });
-    } else {
-      debugPrint(
-          'Availability data is missing or not in the expected format for provider $uid');
-    }
+    try {
+      Map<String, dynamic> referenceData =
+          Map<String, dynamic>.from(data['Refernce'] ?? {});
+      Map<String, dynamic> idPicsData =
+          Map<String, dynamic>.from(data['IdPics'] ?? {});
+      Map<String, dynamic> timeData =
+          Map<String, dynamic>.from(data['Time'] ?? {});
 
-    return ProviderSearchModel(
-      uid: uid,
-      firstName: data['firstName'] ?? '',
-      lastName: data['lastName'] ?? '',
-      email: data['email'] ?? '',
-      bio: data['bio'] ?? '',
-      dob: data['dob'] ?? '',
-      education: data['education'] ?? '',
-      address: data['address'] ?? '',
-      houseNumber: data['houseNumber'] ?? '',
-      postCode: data['postCode'] ?? '',
-      phoneNumber: data['phoneNumber'] ?? '',
-      hoursrate: data['hoursrate'] ?? '',
-      profile: data['profile'] ?? '',
-      passions: List<String>.from(data['Passions'] ?? []),
-      availability: parsedAvailability,
-      idPics: IdPics.fromMap(data['IdPics'] ?? {}),
-      reference: Reference.fromMap(data['Refernce'] ?? {}),
-    );
+      return ProviderSearchModel(
+        uid: uid,
+        firstName: data['firstName'] ?? '',
+        lastName: data['lastName'] ?? '',
+        email: data['email'] ?? '',
+        bio: data['bio'] ?? '',
+        dob: data['dob'] ?? '',
+        education: data['education'] ?? '',
+        address: data['address'] ?? '',
+        houseNumber: data['houseNumber'] ?? '',
+        postCode: data['postCode'] ?? '',
+        phoneNumber: data['phoneNumber'] ?? '',
+        hoursrate: data['hoursrate'] ?? '',
+        profile: data['profile'] ?? '',
+        passions: List<String>.from(data['Passions'] ?? []),
+        availability: _parseAvailability(
+            Map<String, dynamic>.from(data['Availability'] ?? {})),
+        idPics: IdPics.fromMap(idPicsData),
+        reference: Reference.fromMap(referenceData),
+        time: Time.fromMap(timeData),
+      );
+    } catch (e) {
+      debugPrint('Error processing provider $uid: $e');
+      throw e; // Rethrow to handle the error higher up if necessary
+    }
+  }
+
+  static Map<String, Map<String, bool>> _parseAvailability(
+      Map<String, dynamic> availability) {
+    Map<String, Map<String, bool>> parsedAvailability = {};
+    availability.forEach((timeOfDay, daysMap) {
+      if (daysMap is Map<String, dynamic>) {
+        Map<String, bool> parsedDays = {};
+        daysMap.forEach((day, value) {
+          if (value is bool) {
+            parsedDays[day] = value;
+          }
+        });
+        parsedAvailability[timeOfDay] = parsedDays;
+      }
+    });
+    return parsedAvailability;
   }
 }
 
 class IdPics {
-  final String frontPic;
   final String backPic;
+  final String frontPic;
 
-  IdPics({
-    required this.frontPic,
-    required this.backPic,
-  });
+  IdPics({required this.backPic, required this.frontPic});
 
   factory IdPics.fromMap(Map<String, dynamic> data) {
     return IdPics(
-      frontPic: data['frontPic'] ?? '',
       backPic: data['backPic'] ?? '',
+      frontPic: data['frontPic'] ?? '',
     );
   }
 }
@@ -126,6 +131,35 @@ class Reference {
       land: data['land'] ?? '',
       phoneNumber: data['phoneNumber'] ?? '',
       skill: data['skill'] ?? '',
+    );
+  }
+}
+
+class Time {
+  final String morningStart;
+  final String morningEnd;
+  final String afternoonStart;
+  final String afternoonEnd;
+  final String eveningStart;
+  final String eveningEnd;
+
+  Time({
+    required this.morningStart,
+    required this.morningEnd,
+    required this.afternoonStart,
+    required this.afternoonEnd,
+    required this.eveningStart,
+    required this.eveningEnd,
+  });
+
+  factory Time.fromMap(Map<String, dynamic> data) {
+    return Time(
+      morningStart: data['MorningStart'] ?? '',
+      morningEnd: data['MorningEnd'] ?? '',
+      afternoonStart: data['AfternoonStart'] ?? '',
+      afternoonEnd: data['AfternoonEnd'] ?? '',
+      eveningStart: data['EveningStart'] ?? '',
+      eveningEnd: data['EveningEnd'] ?? '',
     );
   }
 }

@@ -5,12 +5,12 @@ import 'package:nanny_fairy/Models/family_search_model.dart';
 class FamilySearchRepository extends ChangeNotifier {
   final DatabaseReference _providerRef =
       FirebaseDatabase.instance.ref().child('Providers');
-  List<ProviderSearchModel> providers = [];
-  List<ProviderSearchModel> filteredProviders = [];
+  List<ProviderSearchModel> _providers = [];
+  List<ProviderSearchModel> _filteredProviders = [];
   bool _isLoading = true;
 
-  List<ProviderSearchModel> get users => providers;
-  List<ProviderSearchModel> get filteredUsers => filteredProviders;
+  List<ProviderSearchModel> get providers => _providers;
+  List<ProviderSearchModel> get filteredProviders => _filteredProviders;
   bool get isLoading => _isLoading;
 
   // Fetch users from Firebase and assign to the list
@@ -20,6 +20,7 @@ class FamilySearchRepository extends ChangeNotifier {
 
     try {
       DatabaseEvent snapshot = await _providerRef.once();
+
       if (snapshot.snapshot.value != null) {
         final Map<dynamic, dynamic> data =
             snapshot.snapshot.value as Map<dynamic, dynamic>;
@@ -28,16 +29,15 @@ class FamilySearchRepository extends ChangeNotifier {
         data.forEach((key, value) {
           if (value is Map<dynamic, dynamic>) {
             try {
-              // Cast value to Map<String, dynamic>
               final Map<String, dynamic> providerData =
                   Map<String, dynamic>.from(value);
 
-              // Handle specific fields that may cause issues, for example, 'Availability'
+              // Handle availability field
               if (providerData['Availability'] is Map<dynamic, dynamic>) {
                 providerData['Availability'] = (providerData['Availability']
                         as Map<dynamic, dynamic>)
                     .map((k, v) => MapEntry(k.toString(),
-                        v as bool)); // Assuming 'Availability' is Map<String, bool>
+                        v is bool ? v : false)); // Default to false if not bool
               }
 
               fetchedProviders
@@ -50,8 +50,8 @@ class FamilySearchRepository extends ChangeNotifier {
           }
         });
 
-        providers = fetchedProviders;
-        debugPrint('Fetched providers: $providers');
+        _providers = fetchedProviders;
+        _filteredProviders = List.from(_providers);
       } else {
         debugPrint('No data found');
       }
@@ -65,25 +65,33 @@ class FamilySearchRepository extends ChangeNotifier {
 
   // Search users by passion from the list
   void searchUsersByPassion(String query) {
-    fetchUsers();
-    print("This is the query : $query");
-
-    if (query.isEmpty) {
-      filteredProviders = providers;
+    if (_providers.isEmpty) {
+      debugPrint('No providers available to search');
+      _filteredProviders = [];
     } else {
-      filteredProviders = providers
-          .where((providers) => providers.passions.any((passion) {
-                final passionLower = passion.toLowerCase();
-                final queryLower = query.toLowerCase();
-                final match = passionLower.contains(queryLower);
-                print(
-                    "Checking passion: $passionLower, Query: $queryLower, Match: $match");
-                return match;
-              }))
-          .toList();
+      if (query.isEmpty) {
+        _filteredProviders = List.from(_providers);
+      } else {
+        _filteredProviders = _providers.where((provider) {
+          bool matchFound = provider.passions.any((passion) {
+            final passionLower = passion.toLowerCase();
+            final queryLower = query.toLowerCase();
+            final isMatch = passionLower.contains(queryLower);
+
+            debugPrint(
+                "Checking passion: $passionLower, Query: $queryLower, Match: $isMatch");
+            return isMatch;
+          });
+
+          debugPrint("Provider ${provider.uid} match found: $matchFound");
+          return matchFound;
+        }).toList();
+      }
+
+      debugPrint(
+          "Filtered Providers: ${_filteredProviders.map((user) => user.passions).toList()}");
     }
-    print(
-        "Filtered Users: ${filteredProviders.map((user) => user.passions).toList()}");
+
     notifyListeners();
   }
 }

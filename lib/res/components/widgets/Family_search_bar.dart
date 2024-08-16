@@ -7,7 +7,6 @@ import 'package:nanny_fairy/ViewModel/provider_home_view_model.dart';
 import 'package:nanny_fairy/ViewModel/search_view_model.dart';
 import 'package:nanny_fairy/res/components/colors.dart';
 import 'package:nanny_fairy/res/components/widgets/family_home_ui_enums.dart';
-import 'package:nanny_fairy/res/components/widgets/ui_enums.dart';
 import 'package:provider/provider.dart';
 
 class FamilySearchBarProvider extends StatefulWidget {
@@ -95,6 +94,7 @@ class _FamilySearchBarProviderState extends State<FamilySearchBarProvider> {
                         builder: (context, viewModel, uiState, child) {
                           searchController.addListener(() {
                             if (searchController.text.isNotEmpty) {
+                              viewModel.fetchUsers();
                               viewModel
                                   .searchUsersByPassion(searchController.text);
                               uiState.switchToType(
