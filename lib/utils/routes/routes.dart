@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:nanny_fairy/Family_View/Login/family_login.dart';
 import 'package:nanny_fairy/Family_View/Login/forget_password_family.dart';
-import 'package:nanny_fairy/Family_View/communityFamily/community_detail_family.dart';
 import 'package:nanny_fairy/Family_View/communityFamily/upload_community_post_family.dart';
 import 'package:nanny_fairy/Family_View/filters/filter_family_popup.dart';
-import 'package:nanny_fairy/Family_View/findJobFamily/provider_detail.dart';
 import 'package:nanny_fairy/Family_View/homeFamily/home_view_family.dart';
 import 'package:nanny_fairy/Family_View/findJobFamily/job_view_family.dart';
 import 'package:nanny_fairy/Family_View/homeFamily/dashboard_family/dashboard_family.dart';
@@ -31,11 +29,9 @@ import 'package:nanny_fairy/view/auth/signup/select_preference.dart';
 import 'package:nanny_fairy/view/auth/signup/upload_image.dart';
 import 'package:nanny_fairy/view/auth/uploadId/upload_id.dart';
 import 'package:nanny_fairy/view/booked/booked_view.dart';
-import 'package:nanny_fairy/view/job/family_detail_provider.dart';
 import 'package:nanny_fairy/view/chat/chat_view.dart';
 import 'package:nanny_fairy/view/community/community_view.dart';
 import 'package:nanny_fairy/view/community/upload_comunity_post.dart';
-import 'package:nanny_fairy/view/community/widgets/community_detail_view.dart';
 import 'package:nanny_fairy/view/filter/filter_popup.dart';
 import 'package:nanny_fairy/view/home/dashboard/dashboard.dart';
 import 'package:nanny_fairy/view/home/home_view.dart';
@@ -43,7 +39,6 @@ import 'package:nanny_fairy/view/job/job_view.dart';
 import 'package:nanny_fairy/view/notifications/notifications_view.dart';
 import 'package:nanny_fairy/view/onboarding/splash_view.dart';
 import 'package:nanny_fairy/view/payment/payment.dart';
-import 'package:nanny_fairy/view/profile/edit_profile.dart';
 import 'package:nanny_fairy/view/profile/my_profile.dart';
 import 'package:nanny_fairy/view/profile/profile_view.dart';
 import 'package:nanny_fairy/view/rating/add_rating.dart';
@@ -102,9 +97,9 @@ class Routes {
       case RoutesName.myProfile:
         return MaterialPageRoute(
             builder: (BuildContext context) => const MyProfile());
-      case RoutesName.editProfile:
-        return MaterialPageRoute(
-            builder: (BuildContext context) => const EditProfile());
+      // case RoutesName.editProfile:
+      //   return MaterialPageRoute(
+      //       builder: (BuildContext context) => const EditProfile());
       case RoutesName.notificationsView:
         return MaterialPageRoute(
             builder: (BuildContext context) => const NotificationsView());

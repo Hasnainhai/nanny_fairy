@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:nanny_fairy/res/components/widgets/vertical_spacing.dart';
-import 'package:nanny_fairy/utils/routes/routes_name.dart';
 import 'package:provider/provider.dart';
 import '../../ViewModel/get_provider_info_view_model.dart';
 import '../../res/components/colors.dart';
+import 'edit_profile.dart';
 
 class MyProfile extends StatefulWidget {
   const MyProfile({super.key});
@@ -55,8 +55,19 @@ class _MyProfileState extends State<MyProfile> {
         ),
         actions: [
           IconButton(
-            onPressed: () {
-              Navigator.pushNamed(context, RoutesName.editProfile);
+            onPressed: () async {
+              final providerData = await getProviderInfo
+                  .getProviderInfo(); // Await the Future to complete
+              if (providerData != null) {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => EditProfile(
+                      providerData: providerData,
+                    ),
+                  ),
+                );
+              }
             },
             icon: const Icon(
               Icons.border_color_outlined,
