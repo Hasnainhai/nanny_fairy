@@ -58,12 +58,12 @@ class MyApp extends StatelessWidget {
         ),
         ChangeNotifierProvider<FamilyFilterRepository>(
           // Use the new FamilyFilterRepository
-          create: (context) => FamilyFilterRepository(),),
+          create: (context) => FamilyFilterRepository(),
+        ),
         ChangeNotifierProvider<FilteredRepository>(
           create: (context) =>
               FilteredRepository(context.read<SearchRepository>()),
-
-        
+        ),
         ChangeNotifierProvider<AuthViewModel>(
           create: (context) => AuthViewModel(context.read<AuthRepository>()),
         ),
