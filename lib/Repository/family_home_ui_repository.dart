@@ -4,9 +4,9 @@ import 'package:nanny_fairy/res/components/widgets/family_job_enums.dart';
 
 class FamilyHomeUiRepository extends ChangeNotifier {
   FamilyHomeUiEnums _selectedType = FamilyHomeUiEnums.DefaultSection;
-  FamilyJobEnums _selectedJobType = FamilyJobEnums.DefaultSection;
+  FamilyJobEnums _selectedFamilyJobType = FamilyJobEnums.DefaultSection;
 
-  FamilyJobEnums get selectedJobType => _selectedJobType;
+  FamilyJobEnums get selectedFamilyJobType => _selectedFamilyJobType;
   FamilyHomeUiEnums get selectedType => _selectedType;
 
   void switchToType(FamilyHomeUiEnums type) {
@@ -15,7 +15,7 @@ class FamilyHomeUiRepository extends ChangeNotifier {
   }
 
   void switchToJobType(FamilyJobEnums type) {
-    _selectedJobType = type;
+    _selectedFamilyJobType = type;
     notifyListeners();
   }
 

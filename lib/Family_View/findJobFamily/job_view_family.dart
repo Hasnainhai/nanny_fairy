@@ -3,12 +3,9 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:nanny_fairy/Family_View/findJobFamily/widgets/famil_job_default_section.dart';
 import 'package:nanny_fairy/Family_View/findJobFamily/widgets/family_job_filter_section.dart';
 import 'package:nanny_fairy/Family_View/findJobFamily/widgets/family_job_search_seaction.dart';
-import 'package:nanny_fairy/Family_View/homeFamily/widgets/bookCart_home_widget.dart';
 import 'package:nanny_fairy/Repository/family_home_ui_repository.dart';
-import 'package:nanny_fairy/res/components/searchBar.dart';
 import 'package:nanny_fairy/res/components/widgets/family_job_enums.dart';
 import 'package:nanny_fairy/res/components/widgets/family_job_search_bar.dart';
-import 'package:nanny_fairy/res/components/widgets/job_enum.dart';
 import 'package:nanny_fairy/res/components/widgets/vertical_spacing.dart';
 import 'package:nanny_fairy/utils/routes/routes_name.dart';
 import 'package:provider/provider.dart';
@@ -82,7 +79,7 @@ class _JobViewFamilyState extends State<JobViewFamily> {
               builder: (context, uiState, _) {
                 Widget selectedWidget;
 
-                switch (uiState.selectedJobType) {
+                switch (uiState.selectedFamilyJobType) {
                   case FamilyJobEnums.DefaultSection:
                     selectedWidget = const FamilyJobDefaultSection();
                     break;
