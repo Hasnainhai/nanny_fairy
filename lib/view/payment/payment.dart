@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_paypal_checkout/flutter_paypal_checkout.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:nanny_fairy/res/components/rounded_button.dart';
@@ -66,60 +67,84 @@ class _PaymentViewState extends State<PaymentView> {
     );
   }
 
-  void initiatePaypalCheckout(BuildContext context) {
-    Navigator.of(context).push(MaterialPageRoute(
-      builder: (BuildContext context) => PaypalCheckout(
-        sandboxMode: true,
-        clientId:
-            "ARYGRC3LcGd2zaEJTN8Dman7ZZemJ2Q_Rw8VK_IZ3gPPmRl3XXHcUAgsI3QHhagrMufwfXjxrAegvq4Y",
-        secretKey:
-            "EIG_TvBPTVeNzFBmhpirGoVavcdxWhc7iiMI85-uFEn505KYJI5US5LN5JYXe0pehdexQqm9zYvUZ_KK",
-        returnURL: "https://sandbox.paypal.com",
-        cancelURL: "https://sandbox.paypal.com",
-        transactions: const [
-          {
-            "amount": {
-              "total": '2',
-              "currency": "USD",
-              "details": {
-                "subtotal": '2',
-                "shipping": '0',
-                "shipping_discount": 0
-              }
-            },
-            "description": "1 Year Subscription",
-            "item_list": {
-              "items": [
-                {
-                  "name": "1 Year Subscription",
-                  "quantity": 1,
-                  "price": '2', // Charge for subscription
-                  "currency": "USD"
+  void initiatePaypalCheckout(BuildContext context) async {
+    // Replace with your actual domain for successful payments
+    String successUrl =
+        "https://nanny-fairy-default-rtdb.firebaseio.com/success";
+
+    // Replace with a dedicated error handling page or redirect
+    String cancelUrl =
+        "https://nanny-fairy-default-rtdb.firebaseio.com/error";
+
+    try {
+      final result = await Navigator.of(context).push<Map<String, dynamic>>(
+        MaterialPageRoute(
+          builder: (BuildContext context) => PaypalCheckout(
+            sandboxMode: true,
+            clientId:
+                "ARYGRC3LcGd2zaEJTN8Dman7ZZemJ2Q_Rw8VK_IZ3gPPmRl3XXHcUAgsI3QHhagrMufwfXjxrAegvq4Y",
+            secretKey:
+                "EIG_TvBPTVeNzFBmhpirGoVavcdxWhc7iiMI85-uFEn505KYJI5US5LN5JYXe0pehdexQqm9zYvUZ_KK",
+            returnURL: successUrl, // Use your custom success URL
+            cancelURL: cancelUrl, // Redirect to error handling on cancel
+            transactions: const [
+              {
+                "amount": {
+                  "total": '2',
+                  "currency": "USD",
+                  "details": {
+                    "subtotal": '2',
+                    "shipping": '0',
+                    "shipping_discount": 0
+                  }
+                },
+                "description": "1 Year Subscription",
+                "item_list": {
+                  "items": [
+                    {
+                      "name": "1 Year Subscription",
+                      "quantity": 1,
+                      "price": '2',
+                      "currency": "USD"
+                    }
+                  ],
                 }
-              ],
-            }
-          }
-        ],
-        note: "en_US",
-        onSuccess: (Map params) async {
-          Utils.toastMessage('Pay Successfully Done');
-          print("onSuccess: $params");
-          Navigator.pushReplacement(
-            context,
-            MaterialPageRoute(builder: (context) => DashBoardScreen()),
-          );
-        },
-        onError: (error) {
-          print("onError: $error");
-          Utils.flushBarErrorMessage('$error', context);
-          Navigator.pop(context);
-        },
-        onCancel: () {
-          Utils.toastMessage('Pay cancelled');
-          print('cancelled:');
-        },
-      ),
-    ));
+              }
+            ],
+            note: "en_US",
+            onSuccess: (Map<String, dynamic> params) async {
+              Utils.toastMessage('Payment Successful!');
+              print("onSuccess: $params");
+              Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(builder: (context) => DashBoardScreen()),
+              );
+            },
+            onError: (error) {
+              print("onError: $error");
+              Utils.flushBarErrorMessage('$error', context);
+              Navigator.pop(context);
+            },
+            onCancel: () {
+              Utils.toastMessage('Payment Cancelled.');
+              print('cancelled:');
+            },
+          ),
+        ),
+      );
+
+      if (result != null) {
+        // Handle additional processing based on successful return from PayPal
+        print("Payment Result: $result");
+      }
+    } on PlatformException catch (error) {
+      print("Platform Exception: $error");
+      Utils.flushBarErrorMessage(
+          'An error occurred during PayPal checkout: $error', context);
+    } catch (error) {
+      print("Unexpected Error: $error");
+      Utils.flushBarErrorMessage('An unexpected error occurred.', context);
+    }
   }
 
   @override
