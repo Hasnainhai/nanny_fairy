@@ -8,6 +8,7 @@ import 'package:nanny_fairy/res/components/widgets/family_job_enums.dart';
 import 'package:nanny_fairy/res/components/widgets/family_job_search_bar.dart';
 import 'package:nanny_fairy/res/components/widgets/vertical_spacing.dart';
 import 'package:nanny_fairy/utils/routes/routes_name.dart';
+import 'package:nanny_fairy/view/filter/widgets/family_job_filter_popup.dart';
 import 'package:provider/provider.dart';
 import '../../FamilyController/family_home_controller.dart';
 import '../../res/components/colors.dart';
@@ -67,8 +68,12 @@ class _JobViewFamilyState extends State<JobViewFamily> {
                       2, // Center horizontally
                   child: FamilySearchBar(
                     onTapFilter: () {
-                      Navigator.pushNamed(
-                          context, RoutesName.filterPopUpFamily);
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (c) => const FamilyJobFilterPopup(),
+                        ),
+                      );
                     },
                   ),
                 ),
