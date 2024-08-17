@@ -4,9 +4,14 @@ import 'package:nanny_fairy/utils/routes/routes_name.dart';
 import 'package:nanny_fairy/view/chat/widgets/chatting_widget.dart';
 import '../../res/components/colors.dart';
 
-class ChatView extends StatelessWidget {
+class ChatView extends StatefulWidget {
   const ChatView({super.key});
 
+  @override
+  State<ChatView> createState() => _ChatViewState();
+}
+
+class _ChatViewState extends State<ChatView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -16,7 +21,6 @@ class ChatView extends StatelessWidget {
         backgroundColor: Colors.transparent,
         elevation: 0.0,
         automaticallyImplyLeading: false,
-
         title: Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
@@ -53,7 +57,7 @@ class ChatView extends StatelessWidget {
                                 width: 2,
                                 color: AppColor.primaryColor,
                               ) // Online status indicator color
-                          ),
+                              ),
                         ),
                       ),
                     ],
@@ -89,20 +93,22 @@ class ChatView extends StatelessWidget {
               ],
             ),
             InkWell(
-              onTap: (){
+              onTap: () {
                 Navigator.pushNamed(context, RoutesName.addRating);
-
               },
               child: Container(
                 height: 26,
                 width: 82,
                 color: AppColor.whiteColor,
-                child: const Center(child: Text('Write Review',style: TextStyle(
-                  fontSize: 10,
-                  color: AppColor.primaryColor,
-                  fontWeight: FontWeight.w500,
-                ),
-                ),
+                child: const Center(
+                  child: Text(
+                    'Write Review',
+                    style: TextStyle(
+                      fontSize: 10,
+                      color: AppColor.primaryColor,
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
                 ),
               ),
             ),
