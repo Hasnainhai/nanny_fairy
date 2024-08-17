@@ -2,20 +2,21 @@ import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:nanny_fairy/Repository/family_home_ui_repository.dart';
 import 'package:nanny_fairy/ViewModel/family_filter_view_model.dart';
+import 'package:nanny_fairy/res/components/colors.dart';
 import 'package:nanny_fairy/res/components/rounded_button.dart';
 import 'package:nanny_fairy/res/components/widgets/family_home_ui_enums.dart';
+import 'package:nanny_fairy/res/components/widgets/family_job_enums.dart';
+import 'package:nanny_fairy/res/components/widgets/vertical_spacing.dart';
 import 'package:provider/provider.dart';
-import '../../res/components/colors.dart';
-import '../../res/components/widgets/vertical_spacing.dart';
 
-class FilterPopUpFamily extends StatefulWidget {
-  const FilterPopUpFamily({super.key});
+class FamilyJobFilterPopup extends StatefulWidget {
+  const FamilyJobFilterPopup({super.key});
 
   @override
-  State<FilterPopUpFamily> createState() => _FilterPopUpFamilyState();
+  State<FamilyJobFilterPopup> createState() => _FamilyJobFilterPopupState();
 }
 
-class _FilterPopUpFamilyState extends State<FilterPopUpFamily> {
+class _FamilyJobFilterPopupState extends State<FamilyJobFilterPopup> {
   bool button1 = false;
   bool button2 = false;
   bool button3 = false;
@@ -551,8 +552,8 @@ class _FilterPopUpFamilyState extends State<FilterPopUpFamily> {
                                     "check the function:${viewModel.filteredProviders}");
                                 // Update UI based on the state
 
-                                uiState.switchToType(
-                                    FamilyHomeUiEnums.FilterSection);
+                                uiState.switchToJobType(
+                                    FamilyJobEnums.FilterSection);
                                 Navigator.pop(context);
                               } catch (e) {
                                 debugPrint("Error applying filters: $e");

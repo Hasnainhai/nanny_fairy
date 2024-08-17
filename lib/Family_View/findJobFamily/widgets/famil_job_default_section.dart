@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:nanny_fairy/FamilyController/family_home_controller.dart';
 import 'package:nanny_fairy/Family_View/homeFamily/widgets/bookCart_home_widget.dart';
 import 'package:nanny_fairy/res/components/colors.dart';
+import 'package:nanny_fairy/res/components/widgets/shimmer_effect.dart';
 import 'package:provider/provider.dart';
 
 class FamilyJobDefaultSection extends StatefulWidget {
@@ -25,7 +26,7 @@ class _FamilyJobDefaultSectionState extends State<FamilyJobDefaultSection> {
           future: familyhomeController.getPopularJobs(),
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
-              return const Center(child: CircularProgressIndicator());
+              return const ShimmerUi();
             } else if (snapshot.hasError) {
               return Center(child: Text('Error: ${snapshot.error}'));
             } else if (snapshot.hasData) {
