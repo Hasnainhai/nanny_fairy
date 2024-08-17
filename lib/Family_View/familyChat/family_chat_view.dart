@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:nanny_fairy/Family_View/familyChat/widgets/family_chat_screen_widget.dart';
 import 'package:nanny_fairy/utils/routes/routes_name.dart';
-import 'package:nanny_fairy/view/chat/widgets/chatting_widget.dart';
 import '../../res/components/colors.dart';
 
 class FamilyChatView extends StatelessWidget {
