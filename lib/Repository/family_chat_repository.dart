@@ -49,6 +49,7 @@ class FamilyChatRepository {
     String userId = auth.currentUser!.uid;
     DatabaseReference familyChatRef =
         firestore.child("Family").child(userId).child("chats");
-    return familyChatRef.onValue;
+
+    return familyChatRef.orderByChild("timeSent").onValue;
   }
 }
