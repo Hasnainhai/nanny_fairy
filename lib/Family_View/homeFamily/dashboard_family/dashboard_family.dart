@@ -4,14 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:nanny_fairy/Family_View/bookFamily/book_view_family.dart';
 import 'package:nanny_fairy/Family_View/familyChat/family_chat_list.dart';
 import 'package:nanny_fairy/Family_View/homeFamily/home_view_family.dart';
-import 'package:nanny_fairy/view/booked/booked_view.dart';
-import 'package:nanny_fairy/view/chat/chat_view.dart';
-import 'package:nanny_fairy/view/community/community_view.dart';
-import 'package:nanny_fairy/view/job/job_view.dart';
-import 'package:nanny_fairy/view/profile/profile_view.dart';
 
 import '../../../res/components/colors.dart';
-import '../../../utils/routes/routes_name.dart';
 import '../../communityFamily/community_family.dart';
 import '../../profileFamily/profile_family.dart';
 
@@ -112,8 +106,8 @@ class _DashBoardFamilyScreenState extends State<DashBoardFamilyScreen>
           ProfileViewFamily(),
         ],
       ),
-      bottomNavigationBar:  BottomNavigationBar(
-        items:  const [
+      bottomNavigationBar: BottomNavigationBar(
+        items: const [
           BottomNavigationBarItem(
             icon: ImageIcon(
               AssetImage('images/home.png'),
@@ -121,7 +115,7 @@ class _DashBoardFamilyScreenState extends State<DashBoardFamilyScreen>
             label: 'Home',
           ),
           BottomNavigationBarItem(
-            icon:ImageIcon(
+            icon: ImageIcon(
               AssetImage('images/chatting.png'),
             ),
             label: ('chat'),

@@ -1,27 +1,28 @@
-
-
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:nanny_fairy/utils/routes/routes_name.dart';
 
 import '../../../res/components/colors.dart';
 
-class FamilyChatWidget extends StatelessWidget {
+class FamilyChatWidget extends StatefulWidget {
   const FamilyChatWidget({super.key});
 
+  @override
+  State<FamilyChatWidget> createState() => _FamilyChatWidgetState();
+}
+
+class _FamilyChatWidgetState extends State<FamilyChatWidget> {
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.only(bottom: 16.0),
       child: InkWell(
-        onTap: (){
+        onTap: () {
           Navigator.pushNamed(context, RoutesName.chatView);
         },
         child: Container(
           height: 93,
           width: double.infinity,
-
           decoration: BoxDecoration(
             color: AppColor.whiteColor,
             borderRadius: BorderRadius.circular(12),
@@ -42,7 +43,6 @@ class FamilyChatWidget extends StatelessWidget {
             ],
           ),
           child: ListTile(
-
             leading: const CircleAvatar(
               radius: 25,
               backgroundImage: NetworkImage(
@@ -90,24 +90,26 @@ class FamilyChatWidget extends StatelessWidget {
                 Container(
                   height: 20,
                   width: 20,
-                  decoration: BoxDecoration(borderRadius:BorderRadius.circular(10.0),color: AppColor.primaryColor),
-                  child: Center(child:  Text(
-                    '2',
-                    style: GoogleFonts.getFont(
-                      "Poppins",
-                      textStyle: const TextStyle(
-                        fontSize: 12,
-                        fontWeight: FontWeight.w400,
-                        color: AppColor.whiteColor,
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(10.0),
+                      color: AppColor.primaryColor),
+                  child: Center(
+                    child: Text(
+                      '2',
+                      style: GoogleFonts.getFont(
+                        "Poppins",
+                        textStyle: const TextStyle(
+                          fontSize: 12,
+                          fontWeight: FontWeight.w400,
+                          color: AppColor.whiteColor,
+                        ),
                       ),
                     ),
-                  ),),
+                  ),
                 ),
               ],
             ),
           ),
-
-
         ),
       ),
     );

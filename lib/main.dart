@@ -8,6 +8,7 @@ import 'package:nanny_fairy/Repository/auth_repository.dart';
 import 'package:nanny_fairy/Repository/community_repo_family.dart';
 import 'package:nanny_fairy/Repository/community_repo_provider.dart';
 import 'package:nanny_fairy/Repository/family_auth_repository.dart';
+import 'package:nanny_fairy/Repository/family_chat_repository.dart';
 import 'package:nanny_fairy/Repository/family_home_repo.dart';
 import 'package:nanny_fairy/Repository/family_home_ui_repository.dart';
 import 'package:nanny_fairy/Repository/family_search_repository.dart';
@@ -19,6 +20,7 @@ import 'package:nanny_fairy/Repository/home_ui_repostory.dart';
 import 'package:nanny_fairy/Repository/provider_home_repository.dart';
 import 'package:nanny_fairy/Repository/search_repository.dart';
 import 'package:nanny_fairy/ViewModel/auth_view_model.dart';
+import 'package:nanny_fairy/ViewModel/family_chat_view_model.dart';
 import 'package:nanny_fairy/ViewModel/family_filter_view_model.dart';
 import 'package:nanny_fairy/ViewModel/family_search_view_model.dart';
 import 'package:nanny_fairy/ViewModel/community_view_view_model.dart';
@@ -132,6 +134,11 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider<GetFamilyInfoController>(
           create: (context) =>
               GetFamilyInfoController(context.read<GetFamilyInfoRepo>()),
+        ),
+        ChangeNotifierProvider(
+          create: (_) => FamilyChatController(
+            familyChatRepository: FamilyChatRepository(),
+          )..loadChats(),
         ),
       ],
       child: MaterialApp(

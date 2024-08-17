@@ -1,9 +1,6 @@
-
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:nanny_fairy/Family_View/familyChat/widgets/family_chat_widget.dart';
-import 'package:nanny_fairy/view/chat/widgets/chat_widget.dart';
 
 import '../../res/components/colors.dart';
 
@@ -39,12 +36,11 @@ class FamilyChatList extends StatelessWidget {
           scrollDirection: Axis.vertical,
           child: Column(
             children: [
-             FamilyChatWidget(),
               FamilyChatWidget(),
               FamilyChatWidget(),
               FamilyChatWidget(),
               FamilyChatWidget(),
-
+              FamilyChatWidget(),
             ],
           ),
         ),
@@ -52,6 +48,3 @@ class FamilyChatList extends StatelessWidget {
     );
   }
 }
-
-
-
