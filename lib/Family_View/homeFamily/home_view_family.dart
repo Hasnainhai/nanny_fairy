@@ -1,13 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:nanny_fairy/FamilyController/get_family_info_controller.dart';
-
 import 'package:nanny_fairy/Family_View/homeFamily/widgets/family_default_view.dart';
 import 'package:nanny_fairy/Family_View/homeFamily/widgets/family_filter_view.dart';
 import 'package:nanny_fairy/Family_View/homeFamily/widgets/family_search__view.dart';
 import 'package:nanny_fairy/Repository/family_home_ui_repository.dart';
 import 'package:nanny_fairy/res/components/colors.dart';
-import 'package:nanny_fairy/res/components/searchBar.dart';
 import 'package:nanny_fairy/res/components/widgets/Family_search_bar.dart';
 import 'package:nanny_fairy/res/components/widgets/family_home_ui_enums.dart';
 import 'package:nanny_fairy/res/components/widgets/vertical_spacing.dart';

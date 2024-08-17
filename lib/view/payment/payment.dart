@@ -5,6 +5,8 @@ import 'package:nanny_fairy/res/components/rounded_button.dart';
 import 'package:nanny_fairy/res/components/toggle_widget.dart';
 import 'package:nanny_fairy/res/components/widgets/custom_text_field.dart';
 import 'package:nanny_fairy/utils/routes/routes_name.dart';
+import 'package:nanny_fairy/utils/utils.dart';
+import 'package:nanny_fairy/view/home/dashboard/dashboard.dart';
 import '../../res/components/colors.dart';
 import '../../res/components/widgets/vertical_spacing.dart';
 
@@ -68,17 +70,17 @@ class _PaymentViewState extends State<PaymentView> {
     Navigator.of(context).push(MaterialPageRoute(
       builder: (BuildContext context) => PaypalCheckout(
         sandboxMode: true,
-        secretKey:
-            "EM-G9jSv4x5GAFEge8DRMD0figp3V68YifKmhK4enbGCKDHKq3jYlOwwk8Q8s7NQMsZ1oxg_5vJ2s3xn",
         clientId:
-            "AcdlPX5qScKqycqMVzxDYKxvg31yhOHPLSzx4_KeMCA-ofV2VRvWlKOuz-RjWR098YXESEX9YUloLBd8",
-        returnURL: "http://api.sandbox.paypal.com",
-        cancelURL: "http://api.sandbox.paypal.com",
+            "ARYGRC3LcGd2zaEJTN8Dman7ZZemJ2Q_Rw8VK_IZ3gPPmRl3XXHcUAgsI3QHhagrMufwfXjxrAegvq4Y",
+        secretKey:
+            "EIG_TvBPTVeNzFBmhpirGoVavcdxWhc7iiMI85-uFEn505KYJI5US5LN5JYXe0pehdexQqm9zYvUZ_KK",
+        returnURL: "https://sandbox.paypal.com",
+        cancelURL: "https://sandbox.paypal.com",
         transactions: const [
           {
             "amount": {
               "total": '2',
-              "currency": "EUR",
+              "currency": "USD",
               "details": {
                 "subtotal": '2',
                 "shipping": '0',
@@ -92,21 +94,28 @@ class _PaymentViewState extends State<PaymentView> {
                   "name": "1 Year Subscription",
                   "quantity": 1,
                   "price": '2', // Charge for subscription
-                  "currency": "EUR"
+                  "currency": "USD"
                 }
               ],
             }
           }
         ],
-        note: "1 Year Subscription for 2 Euros",
+        note: "en_US",
         onSuccess: (Map params) async {
+          Utils.toastMessage('Pay Successfully Done');
           print("onSuccess: $params");
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(builder: (context) => DashBoardScreen()),
+          );
         },
         onError: (error) {
           print("onError: $error");
+          Utils.flushBarErrorMessage('$error', context);
           Navigator.pop(context);
         },
         onCancel: () {
+          Utils.toastMessage('Pay cancelled');
           print('cancelled:');
         },
       ),
