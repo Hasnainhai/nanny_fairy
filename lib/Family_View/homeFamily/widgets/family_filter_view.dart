@@ -4,11 +4,12 @@ import 'package:nanny_fairy/Family_View/findJobFamily/provider_detail.dart';
 import 'package:nanny_fairy/Family_View/homeFamily/home_view_family.dart';
 import 'package:nanny_fairy/Family_View/homeFamily/widgets/bookCart_home_widget.dart';
 import 'package:nanny_fairy/Models/family_search_model.dart';
+import 'package:nanny_fairy/Repository/family_home_ui_repository.dart';
 import 'package:nanny_fairy/ViewModel/family_filter_view_model.dart';
 import 'package:nanny_fairy/res/components/colors.dart';
+import 'package:nanny_fairy/res/components/widgets/family_home_ui_enums.dart';
 import 'package:nanny_fairy/res/components/widgets/shimmer_effect.dart';
 import 'package:nanny_fairy/res/components/widgets/vertical_spacing.dart';
-import 'package:nanny_fairy/utils/routes/routes_name.dart';
 import 'package:provider/provider.dart';
 
 class FamilyFilterView extends StatefulWidget {
@@ -25,38 +26,40 @@ class _FamilyFilterViewState extends State<FamilyFilterView> {
       padding: const EdgeInsets.only(left: 16.0, right: 16.0),
       child: Column(
         children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(
-                'What are you looking for',
-                style: GoogleFonts.getFont(
-                  "Poppins",
-                  textStyle: const TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.w600,
-                    color: AppColor.blackColor,
-                  ),
-                ),
-              ),
-              InkWell(
-                onTap: () {
-                  Navigator.pushNamed(context, RoutesName.jobViewFamily);
-                },
-                child: Text(
-                  'see all',
+          Consumer<FamilyHomeUiRepository>(builder: (context, uiState, child) {
+            return Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  'Filtered Providers',
                   style: GoogleFonts.getFont(
                     "Poppins",
                     textStyle: const TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.w600,
-                      color: AppColor.primaryColor,
+                      color: AppColor.blackColor,
                     ),
                   ),
                 ),
-              ),
-            ],
-          ),
+                InkWell(
+                  onTap: () {
+                    uiState.switchToType((FamilyHomeUiEnums.DefaultSection));
+                  },
+                  child: Text(
+                    'Clear all',
+                    style: GoogleFonts.getFont(
+                      "Poppins",
+                      textStyle: const TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w600,
+                        color: AppColor.primaryColor,
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            );
+          }),
           const VerticalSpeacing(16.0),
           SizedBox(
             height: MediaQuery.of(context).size.height / 1.6,
