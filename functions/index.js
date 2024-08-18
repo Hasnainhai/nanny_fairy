@@ -2,8 +2,8 @@ const functions = require('firebase-functions');
 
 exports.generatePaymentLinks = functions.https.onRequest((req, res) => {
   const paymentLinks = {
-    returnURL: 'https://nanny-fairy/paymentSuccess',
-    cancelURL: 'https://nanny-fairy/paymentFailed'
+    returnURL: 'https://com.example.nanny_fairy/paymentSuccess',
+    cancelURL: 'https://com.example.nanny_fairy/paymentFailed'
   };
   
   res.json(paymentLinks);

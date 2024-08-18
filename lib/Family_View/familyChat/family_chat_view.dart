@@ -1,11 +1,22 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+
 import 'package:nanny_fairy/Family_View/familyChat/widgets/family_chat_screen_widget.dart';
 import 'package:nanny_fairy/utils/routes/routes_name.dart';
+
 import '../../res/components/colors.dart';
 
 class FamilyChatView extends StatelessWidget {
-  const FamilyChatView({super.key});
+  final String name;
+  final String id;
+  final String profilePic;
+  const FamilyChatView({
+    super.key,
+    required this.name,
+    required this.id,
+    required this.profilePic,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -33,11 +44,13 @@ class FamilyChatView extends StatelessWidget {
                   ),
                   child: Stack(
                     children: [
-                      const CircleAvatar(
+                      CircleAvatar(
                         radius: 24,
-                        backgroundImage: NetworkImage(
+                        backgroundImage: const NetworkImage(
                           'https://user-images.githubusercontent.com/22866157/40578885-e3bf4e8e-6139-11e8-8be4-92fc3149f6f0.jpg',
-                        ), // Set your profile image path here
+                        ),
+                        foregroundImage: NetworkImage(
+                            profilePic), // Set your profile image path here
                       ),
                       Positioned(
                         bottom: 0,
@@ -61,7 +74,7 @@ class FamilyChatView extends StatelessWidget {
                 const SizedBox(width: 12.0),
                 Text.rich(
                   TextSpan(
-                    text: 'User Name\n',
+                    text: '$name\n',
                     style: GoogleFonts.getFont(
                       "Poppins",
                       textStyle: const TextStyle(
@@ -119,7 +132,9 @@ class FamilyChatView extends StatelessWidget {
             topLeft: Radius.circular(30.0),
           ),
         ),
-        child: const FamilyChatScreenWidget(),
+        child: FamilyChatScreenWidget(
+          id: id,
+        ),
       ),
     );
   }

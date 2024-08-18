@@ -1,6 +1,7 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:nanny_fairy/Family_View/familyChat/family_chat_view.dart';
 
 import 'package:nanny_fairy/utils/routes/routes_name.dart';
 
@@ -32,7 +33,16 @@ class _FamilyChatWidgetState extends State<FamilyChatWidget> {
       padding: const EdgeInsets.only(bottom: 16.0),
       child: InkWell(
         onTap: () {
-          Navigator.pushNamed(context, RoutesName.chatView);
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (c) => FamilyChatView(
+                name: widget.senderName,
+                id: widget.providerId,
+                profilePic: widget.senderProfiel,
+              ),
+            ),
+          );
         },
         child: Container(
           height: 93,

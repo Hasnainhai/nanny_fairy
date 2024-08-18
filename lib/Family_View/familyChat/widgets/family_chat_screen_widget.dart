@@ -4,9 +4,9 @@ import 'package:flutter/material.dart';
 
 import '../../../res/components/colors.dart';
 
-
 class FamilyChatScreenWidget extends StatefulWidget {
-  const FamilyChatScreenWidget({super.key});
+  final String id;
+  const FamilyChatScreenWidget({super.key, required this.id});
 
   @override
   State createState() => ChatScreenState();
@@ -38,14 +38,13 @@ class ChatScreenState extends State<FamilyChatScreenWidget> {
       padding: const EdgeInsets.only(left: 20.0, right: 20.0, top: 20.0),
       child: Container(
         alignment:
-        message.isSender ? Alignment.centerRight : Alignment.centerLeft,
+            message.isSender ? Alignment.centerRight : Alignment.centerLeft,
         margin: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 16.0),
         child: Container(
           padding: const EdgeInsets.all(16.0),
           decoration: BoxDecoration(
-            color: message.isSender
-                ? AppColor.primaryColor
-                : AppColor.blackColor,
+            color:
+                message.isSender ? AppColor.primaryColor : AppColor.blackColor,
             borderRadius: BorderRadius.circular(12.0),
           ),
           child: Text(
