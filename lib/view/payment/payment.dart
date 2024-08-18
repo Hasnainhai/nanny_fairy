@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_paypal_checkout/flutter_paypal_checkout.dart';
@@ -10,6 +12,7 @@ import 'package:nanny_fairy/utils/utils.dart';
 import 'package:nanny_fairy/view/home/dashboard/dashboard.dart';
 import '../../res/components/colors.dart';
 import '../../res/components/widgets/vertical_spacing.dart';
+import 'package:http/http.dart' as http;
 
 class PaymentView extends StatefulWidget {
   const PaymentView({
@@ -67,17 +70,30 @@ class _PaymentViewState extends State<PaymentView> {
     );
   }
 
+  Future<Map<String, String>> getPaymentUrls() async {
+    final response = await http.get(Uri.parse(
+        'https://us-central1-nanny-fairy.cloudfunctions.net/generatePaymentLinks'));
+
+    if (response.statusCode == 200) {
+      return json.decode(response.body);
+    } else {
+      throw Exception('Failed to load payment URLs');
+    }
+  }
+
   void initiatePaypalCheckout(BuildContext context) async {
     // Replace with your actual domain for successful payments
-    String successUrl =
-        "https://nanny-fairy-default-rtdb.firebaseio.com/success";
-
-    // Replace with a dedicated error handling page or redirect
-    String cancelUrl =
-        "https://nanny-fairy-default-rtdb.firebaseio.com/error";
+    // String successUrl =
+    //     "https://nanny-fairy-default-rtdb.firebaseio.com/success";
+    //
+    // // Replace with a dedicated error handling page or redirect
+    // String cancelUrl = "https://nanny-fairy-default-rtdb.firebaseio.com/error";
 
     try {
-      final result = await Navigator.of(context).push<Map<String, dynamic>>(
+      final urls = await getPaymentUrls();
+      final returnUrl = urls['returnUrl'];
+      final cancelUrl = urls['cancelUrl'];
+      await Navigator.of(context).push<Map<String, dynamic>>(
         MaterialPageRoute(
           builder: (BuildContext context) => PaypalCheckout(
             sandboxMode: true,
@@ -85,7 +101,7 @@ class _PaymentViewState extends State<PaymentView> {
                 "ARYGRC3LcGd2zaEJTN8Dman7ZZemJ2Q_Rw8VK_IZ3gPPmRl3XXHcUAgsI3QHhagrMufwfXjxrAegvq4Y",
             secretKey:
                 "EIG_TvBPTVeNzFBmhpirGoVavcdxWhc7iiMI85-uFEn505KYJI5US5LN5JYXe0pehdexQqm9zYvUZ_KK",
-            returnURL: successUrl, // Use your custom success URL
+            returnURL: returnUrl, // Use your custom success URL
             cancelURL: cancelUrl, // Redirect to error handling on cancel
             transactions: const [
               {
@@ -133,14 +149,14 @@ class _PaymentViewState extends State<PaymentView> {
         ),
       );
 
-      if (result != null) {
-        // Handle additional processing based on successful return from PayPal
-        print("Payment Result: $result");
-      }
-    } on PlatformException catch (error) {
-      print("Platform Exception: $error");
-      Utils.flushBarErrorMessage(
-          'An error occurred during PayPal checkout: $error', context);
+      //   if (result != null) {
+      //     // Handle additional processing based on successful return from PayPal
+      //     print("Payment Result: $result");
+      //   }
+      // } on PlatformException catch (error) {
+      //   print("Platform Exception: $error");
+      //   Utils.flushBarErrorMessage(
+      //       'An error occurred during PayPal checkout: $error', context);
     } catch (error) {
       print("Unexpected Error: $error");
       Utils.flushBarErrorMessage('An unexpected error occurred.', context);

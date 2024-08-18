@@ -43,6 +43,7 @@ dependencies:
   percent_indicator: ^4.2.3
   flutter_paypal_checkout: ^1.0.1
   flutter_stripe: ^11.0.0
+  http: ^0.13.5
 
 
 
