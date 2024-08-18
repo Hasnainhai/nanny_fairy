@@ -1,11 +1,25 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+
 import 'package:nanny_fairy/utils/routes/routes_name.dart';
 
 import '../../../res/components/colors.dart';
 
 class FamilyChatWidget extends StatefulWidget {
-  const FamilyChatWidget({super.key});
+  String senderName;
+  String senderProfiel;
+  String providerId;
+  String timesend;
+  String text;
+  FamilyChatWidget({
+    super.key,
+    required this.senderName,
+    required this.senderProfiel,
+    required this.providerId,
+    required this.timesend,
+    required this.text,
+  });
 
   @override
   State<FamilyChatWidget> createState() => _FamilyChatWidgetState();
@@ -43,13 +57,12 @@ class _FamilyChatWidgetState extends State<FamilyChatWidget> {
             ],
           ),
           child: ListTile(
-            leading: const CircleAvatar(
+            leading: CircleAvatar(
               radius: 25,
-              backgroundImage: NetworkImage(
-                  'https://t4.ftcdn.net/jpg/03/64/21/11/360_F_364211147_1qgLVxv1Tcq0Ohz3FawUfrtONzz8nq3e.jpg'),
+              backgroundImage: NetworkImage(widget.senderProfiel),
             ),
             title: Text(
-              'Hassnian',
+              widget.senderName,
               style: GoogleFonts.getFont(
                 "Poppins",
                 textStyle: const TextStyle(
@@ -62,7 +75,7 @@ class _FamilyChatWidgetState extends State<FamilyChatWidget> {
             subtitle: SizedBox(
               width: 30,
               child: Text(
-                'i am hasnain haider a software engineer',
+                widget.text,
                 style: GoogleFonts.getFont(
                   "Poppins",
                   textStyle: const TextStyle(
@@ -77,7 +90,7 @@ class _FamilyChatWidgetState extends State<FamilyChatWidget> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  '12.50',
+                  widget.timesend,
                   style: GoogleFonts.getFont(
                     "Poppins",
                     textStyle: const TextStyle(
