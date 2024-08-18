@@ -8,7 +8,6 @@ import 'package:nanny_fairy/Family_View/findJobFamily/job_view_family.dart';
 import 'package:nanny_fairy/Family_View/homeFamily/dashboard_family/dashboard_family.dart';
 import 'package:nanny_fairy/Family_View/payment_family/payment_family.dart';
 import 'package:nanny_fairy/Family_View/profileFamily/my_profile_family.dart';
-import 'package:nanny_fairy/Family_View/profileFamily/widgets/edit_profile_family.dart';
 import 'package:nanny_fairy/Family_View/settingsFamily/setting_family.dart';
 import 'package:nanny_fairy/Family_View/signup/create_account_family.dart';
 import 'package:nanny_fairy/Family_View/signup/register_details_family.dart';
@@ -29,7 +28,6 @@ import 'package:nanny_fairy/view/auth/signup/select_preference.dart';
 import 'package:nanny_fairy/view/auth/signup/upload_image.dart';
 import 'package:nanny_fairy/view/auth/uploadId/upload_id.dart';
 import 'package:nanny_fairy/view/booked/booked_view.dart';
-import 'package:nanny_fairy/view/chat/chat_view.dart';
 import 'package:nanny_fairy/view/community/community_view.dart';
 import 'package:nanny_fairy/view/community/upload_comunity_post.dart';
 import 'package:nanny_fairy/view/filter/filter_popup.dart';
@@ -76,9 +74,7 @@ class Routes {
       case RoutesName.jobView:
         return MaterialPageRoute(
             builder: (BuildContext context) => const JobView());
-      case RoutesName.chatView:
-        return MaterialPageRoute(
-            builder: (BuildContext context) => const ChatView());
+
       case RoutesName.bookedView:
         return MaterialPageRoute(
             builder: (BuildContext context) => const BookedView());

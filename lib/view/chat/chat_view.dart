@@ -1,11 +1,22 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+
 import 'package:nanny_fairy/utils/routes/routes_name.dart';
 import 'package:nanny_fairy/view/chat/widgets/chatting_widget.dart';
+
 import '../../res/components/colors.dart';
 
 class ChatView extends StatefulWidget {
-  const ChatView({super.key});
+  final String profilePic;
+  final String userName;
+  final String familyId;
+  const ChatView({
+    super.key,
+    required this.profilePic,
+    required this.userName,
+    required this.familyId,
+  });
 
   @override
   State<ChatView> createState() => _ChatViewState();
@@ -38,11 +49,14 @@ class _ChatViewState extends State<ChatView> {
                   ),
                   child: Stack(
                     children: [
-                      const CircleAvatar(
+                      CircleAvatar(
                         radius: 24,
-                        backgroundImage: NetworkImage(
+                        backgroundImage: const NetworkImage(
                           'https://user-images.githubusercontent.com/22866157/40578885-e3bf4e8e-6139-11e8-8be4-92fc3149f6f0.jpg',
                         ), // Set your profile image path here
+                        foregroundImage: NetworkImage(
+                          widget.profilePic,
+                        ),
                       ),
                       Positioned(
                         bottom: 0,
@@ -66,7 +80,7 @@ class _ChatViewState extends State<ChatView> {
                 const SizedBox(width: 12.0),
                 Text.rich(
                   TextSpan(
-                    text: 'User Name\n',
+                    text: '${widget.userName}\n',
                     style: GoogleFonts.getFont(
                       "Poppins",
                       textStyle: const TextStyle(
@@ -124,7 +138,9 @@ class _ChatViewState extends State<ChatView> {
             topLeft: Radius.circular(30.0),
           ),
         ),
-        child: const ChatScreenWidget(),
+        child: ChatScreenWidget(
+          fimalyId: widget.familyId,
+        ),
       ),
     );
   }
