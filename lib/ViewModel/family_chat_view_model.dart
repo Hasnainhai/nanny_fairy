@@ -7,9 +7,13 @@ class FamilyChatController with ChangeNotifier {
   FamilyChatController({required this.familyChatRepository});
 
   List<Map<dynamic, dynamic>> _chats = [];
+  List<Map<dynamic, dynamic>> _chatsList = [];
+
   bool _isLoading = false;
 
   List<Map<dynamic, dynamic>> get chats => _chats;
+  List<Map<dynamic, dynamic>> get chatsList => _chatsList;
+
   bool get isLoading => _isLoading;
 
   void loadChats() {
@@ -23,6 +27,24 @@ class FamilyChatController with ChangeNotifier {
             event.snapshot.value as Map<dynamic, dynamic>;
         chatData.forEach((key, value) {
           _chats.add(value);
+        });
+      }
+      _isLoading = false;
+      notifyListeners();
+    });
+  }
+
+  void loadChatsList() {
+    _isLoading = true;
+    notifyListeners();
+
+    familyChatRepository.getFamilyChatStream().listen((event) {
+      _chatsList = [];
+      if (event.snapshot.value != null) {
+        Map<dynamic, dynamic> chatData =
+            event.snapshot.value as Map<dynamic, dynamic>;
+        chatData.forEach((key, value) {
+          _chatsList.add(value);
         });
       }
       _isLoading = false;
