@@ -18,6 +18,7 @@ class FamilyChatRepository {
     try {
       int timestamp = timeSent.millisecondsSinceEpoch;
 
+      // Update the last message and time in both the Providers and Family nodes
       Map<String, dynamic> receiverChatContact = {
         "name": senderName,
         "profilePic": senderProfilePic,
@@ -25,28 +26,35 @@ class FamilyChatRepository {
         "lastMessage": text,
         "familyId": auth.currentUser!.uid,
       };
+
+      Map<String, dynamic> senderChatContact = {
+        "name": receiverName,
+        "profilePic": receiverProfilePic,
+        "timeSent": timestamp,
+        "lastMessage": text,
+        "providerId": providerId,
+      };
+
+      // Use update instead of set to avoid overwriting the entire node
       await firestore
           .child("Providers")
           .child(providerId)
           .child("chats")
           .child(auth.currentUser!.uid)
-          .set(receiverChatContact);
+          .update(receiverChatContact);
 
-      Map<String, dynamic> senderChatContact = {
-        "name": receiverName,
-        "receiverProfilePic": receiverProfilePic,
-        "timeSent": timestamp,
-        "lastMessage": text,
-        "providerId": providerId,
-      };
       await firestore
           .child("Family")
           .child(auth.currentUser!.uid)
           .child("chats")
           .child(providerId)
-          .set(senderChatContact);
-      saveMessageToDatabase(text, timestamp, providerId);
-    } catch (e) {}
+          .update(senderChatContact);
+
+      // Now save the message to the messages node
+      await saveMessageToDatabase(text, timestamp, providerId);
+    } catch (e) {
+      print("Failed to save contact: $e");
+    }
   }
 
   Stream<DatabaseEvent> getFamilyChatStream() {
@@ -66,6 +74,7 @@ class FamilyChatRepository {
       var uuid = const Uuid().v1();
       print("Generated UUID: $uuid");
 
+      // Save the message to the messages node for both the Providers and Family nodes
       await firestore
           .child("Providers")
           .child(providerId)
