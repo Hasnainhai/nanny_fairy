@@ -67,6 +67,18 @@ class FamilyChatRepository {
     return familyChatRef.orderByChild("timeSent").onValue;
   }
 
+  Stream<DatabaseEvent> getFamilyChatStreamList(String providerId) {
+    String userId = auth.currentUser!.uid;
+    DatabaseReference familyChatRef = firestore
+        .child("Family")
+        .child(userId)
+        .child("chats")
+        .child(providerId)
+        .child("messages");
+
+    return familyChatRef.orderByChild("timeSent").onValue;
+  }
+
   Future<void> saveMessageToDatabase(
       String text, int timeSent, String providerId, String familyId) async {
     try {

@@ -3,17 +3,15 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:nanny_fairy/Family_View/familyChat/family_chat_view.dart';
 
-import 'package:nanny_fairy/utils/routes/routes_name.dart';
-
 import '../../../res/components/colors.dart';
 
 class FamilyChatWidget extends StatefulWidget {
-  String senderName;
-  String senderProfiel;
-  String providerId;
-  String timesend;
-  String text;
-  FamilyChatWidget({
+  final String senderName;
+  final String senderProfiel;
+  final String providerId;
+  final String timesend;
+  final String text;
+  const FamilyChatWidget({
     super.key,
     required this.senderName,
     required this.senderProfiel,
