@@ -2,23 +2,26 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:nanny_fairy/Family_View/familyChat/family_chat_view.dart';
+import 'package:intl/intl.dart';
 
 import '../../../res/components/colors.dart';
 
 class FamilyChatWidget extends StatefulWidget {
+  final bool isSeen;
+
   final String senderName;
   final String senderProfiel;
   final String providerId;
-  final String timesend;
+  final int timesend;
   final String text;
-  const FamilyChatWidget({
-    super.key,
-    required this.senderName,
-    required this.senderProfiel,
-    required this.providerId,
-    required this.timesend,
-    required this.text,
-  });
+  const FamilyChatWidget(
+      {super.key,
+      required this.senderName,
+      required this.senderProfiel,
+      required this.providerId,
+      required this.timesend,
+      required this.text,
+      required this.isSeen});
 
   @override
   State<FamilyChatWidget> createState() => _FamilyChatWidgetState();
@@ -80,17 +83,16 @@ class _FamilyChatWidgetState extends State<FamilyChatWidget> {
                 ),
               ),
             ),
-            subtitle: SizedBox(
-              width: 30,
-              child: Text(
-                widget.text,
-                style: GoogleFonts.getFont(
-                  "Poppins",
-                  textStyle: const TextStyle(
-                    fontSize: 12,
-                    fontWeight: FontWeight.w400,
-                    color: AppColor.grayColor,
-                  ),
+            subtitle: Text(
+              widget.text.length > 30
+                  ? '${widget.text.substring(0, 35)}...'
+                  : widget.text,
+              style: GoogleFonts.getFont(
+                "Poppins",
+                textStyle: const TextStyle(
+                  fontSize: 12,
+                  fontWeight: FontWeight.w400,
+                  color: AppColor.grayColor,
                 ),
               ),
             ),
@@ -98,7 +100,8 @@ class _FamilyChatWidgetState extends State<FamilyChatWidget> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  widget.timesend,
+                  DateFormat('hh:mm a').format(
+                      DateTime.fromMillisecondsSinceEpoch(widget.timesend)),
                   style: GoogleFonts.getFont(
                     "Poppins",
                     textStyle: const TextStyle(
@@ -108,21 +111,24 @@ class _FamilyChatWidgetState extends State<FamilyChatWidget> {
                     ),
                   ),
                 ),
-                Container(
-                  height: 20,
-                  width: 20,
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10.0),
-                      color: AppColor.primaryColor),
-                  child: Center(
-                    child: Text(
-                      '2',
-                      style: GoogleFonts.getFont(
-                        "Poppins",
-                        textStyle: const TextStyle(
-                          fontSize: 12,
-                          fontWeight: FontWeight.w400,
-                          color: AppColor.whiteColor,
+                Visibility(
+                  visible: widget.isSeen,
+                  child: Container(
+                    height: 20,
+                    width: 20,
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10.0),
+                        color: AppColor.primaryColor),
+                    child: Center(
+                      child: Text(
+                        '2',
+                        style: GoogleFonts.getFont(
+                          "Poppins",
+                          textStyle: const TextStyle(
+                            fontSize: 12,
+                            fontWeight: FontWeight.w400,
+                            color: AppColor.whiteColor,
+                          ),
                         ),
                       ),
                     ),
