@@ -7,6 +7,7 @@ import 'package:nanny_fairy/res/components/toggle_widget.dart';
 import 'package:nanny_fairy/res/components/widgets/custom_text_field.dart';
 import 'package:nanny_fairy/utils/routes/routes_name.dart';
 import 'package:nanny_fairy/utils/utils.dart';
+import 'package:nanny_fairy/view/chat/chat_view.dart';
 import '../../res/components/colors.dart';
 import '../../res/components/widgets/vertical_spacing.dart';
 import 'package:http/http.dart' as http;
@@ -25,7 +26,7 @@ class _PaymentViewState extends State<PaymentView> {
   bool secondButton = false;
   bool thirdButton = false;
 
-  void paymentDonePopup(BuildContext context) {
+  void paymentDonePopup() {
     showDialog(
       context: context,
       builder: (BuildContext context) {
@@ -56,7 +57,7 @@ class _PaymentViewState extends State<PaymentView> {
               RoundedButton(
                 title: 'Continue to Chat',
                 onpress: () {
-                  Navigator.pushNamed(context, RoutesName.chatView);
+                  Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context)=>ChatView(profilePic: profilePic, userName: userName, familyId: familyId, isSeen: isSeen)), )
                 },
               ),
               const VerticalSpeacing(16),
@@ -66,26 +67,6 @@ class _PaymentViewState extends State<PaymentView> {
       },
     );
   }
-
-  // @override
-  // void initState() {
-  //   super.initState();
-  //   handleIncomingLinks();
-  // }
-  //
-  // void handleIncomingLinks() {
-  //   uriLinkStream.listen((Uri? uri) {
-  //     if (uri != null) {
-  //       if (uri.path == 'returnURL') {
-  //         Utils.toastMessage('Payment successful');
-  //         Navigator.pushReplacementNamed(context, RoutesName.chatView);
-  //       } else if (uri.path == 'cancelURL') {
-  //         Utils.toastMessage('Payment cancelled');
-  //         Navigator.pushReplacementNamed(context, RoutesName.dashboard);
-  //       }
-  //     }
-  //   });
-  // }
 
   Future<Map<String, String>> getPaymentUrls() async {
     final response = await http.get(Uri.parse(
@@ -124,48 +105,33 @@ class _PaymentViewState extends State<PaymentView> {
         transactions: const [
           {
             "amount": {
-              "total": '70',
-              "currency": "USD",
+              "total": '2',
+              "currency": "EUR",
               "details": {
-                "subtotal": '70',
+                "subtotal": '2',
                 "shipping": '0',
                 "shipping_discount": 0
               }
             },
-            "description": "The payment transaction description.",
+            "description": "1 Year Subscription",
             "item_list": {
               "items": [
                 {
-                  "name": "Apple",
-                  "quantity": 4,
-                  "price": '5',
-                  "currency": "USD"
-                },
-                {
-                  "name": "Pineapple",
-                  "quantity": 5,
-                  "price": '10',
-                  "currency": "USD"
+                  "name": "1 Year Subscription",
+                  "quantity": 1,
+                  "price": '2',
+                  "currency": "EUR"
                 }
               ],
-              // shipping address is Optional
-              "shipping_address": {
-                "recipient_name": "Raman Singh",
-                "line1": "Delhi",
-                "line2": "",
-                "city": "Delhi",
-                "country_code": "IN",
-                "postal_code": "11001",
-                "phone": "+00000000",
-                "state": "Texas"
-              },
             }
           }
         ],
-        note: "PAYMENT_NOTE",
-        onSuccess: (Map params) async {
-          Utils.toastMessage('SuccessFully done payment onSuccess: $params');
-          print("onSuccess: $params");
+        note: "EUR",
+        onSuccess: (Map params) {
+          setState(() {
+            print("onSuccess: $params");
+            paymentDonePopup();
+          });
         },
         onError: (error) {
           print("onError: $error");
