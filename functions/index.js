@@ -30,7 +30,7 @@ exports.stripePaymentIntentRequest = functions.https.onRequest(async (req, res) 
           postal_code: req.body.postal_code,
           city: req.body.city,
           state: req.body.state,
-          country: "IND",
+          country: "NLD",
         },
       });
       customerId = customer.id;
