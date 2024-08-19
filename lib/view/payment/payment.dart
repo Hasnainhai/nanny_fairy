@@ -1,4 +1,4 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
+// ignore_for_file: public_member_api_docs, sort_constructors_first, use_build_context_synchronously
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
@@ -224,17 +224,17 @@ class _PaymentViewState extends State<PaymentView> {
         note: "EUR",
         onSuccess: (Map params) {
           setState(() {
-            print("onSuccess: $params");
+            debugPrint("onSuccess: $params");
             paymentDonePopup();
           });
         },
         onError: (error) {
-          print("onError: $error");
+          debugPrint("onError: $error");
           Utils.toastMessage('onError: $error');
           Navigator.pop(context);
         },
         onCancel: () {
-          print('cancelled:');
+          debugPrint('cancelled:');
           // Utils.toastMessage('cancelled');
         },
       ),
