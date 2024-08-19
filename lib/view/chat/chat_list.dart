@@ -66,7 +66,7 @@ class ChatList extends StatelessWidget {
                 itemBuilder: (context, index) {
                   final chat = chats[index];
                   bool isSeen =
-                      chat.containsValue("isSeen") ? chat['isSeen'] : false;
+                      chat.containsKey("isSeen") ? chat['isSeen'] : true;
 
                   return ChatWidget(
                     text: chat['lastMessage'],
