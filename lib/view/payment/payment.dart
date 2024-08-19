@@ -1,11 +1,13 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_paypal_checkout/flutter_paypal_checkout.dart';
+import 'package:flutter_stripe/flutter_stripe.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:nanny_fairy/res/components/rounded_button.dart';
 import 'package:nanny_fairy/res/components/toggle_widget.dart';
 import 'package:nanny_fairy/res/components/widgets/custom_text_field.dart';
 import 'package:nanny_fairy/utils/utils.dart';
+import 'package:nanny_fairy/view/home/dashboard/dashboard.dart';
 import '../../res/components/colors.dart';
 import '../../res/components/widgets/vertical_spacing.dart';
 import 'package:http/http.dart' as http;
@@ -64,6 +66,7 @@ class _PaymentViewState extends State<PaymentView> {
     );
   }
 
+  bool _isLoading = false;
   Future<Map<String, String>> getPaymentUrls() async {
     final response = await http.get(Uri.parse(
         'https://us-central1-nanny-fairy.cloudfunctions.net/generatePaymentLinks'));
@@ -84,7 +87,63 @@ class _PaymentViewState extends State<PaymentView> {
       throw Exception('Failed to load payment URLs');
     }
   }
+// Stripe payment
+  Future<void> initPayment() async {
+    setState(() {
+      _isLoading = true;
+    });
+    try {
+      final response = await http.post(
+          Uri.parse(
+              "https://us-central1-citta-23-2b5be.cloudfunctions.net/stripePaymentIntentRequest"),
+          body: {
+            'email': 'email',
+            'amount': 2,
+            'address': 'address',
+            'postal_code': 'postalCode',
+            'city': 'city',
+            'state': 'state',
+            'name': 'name',
+          });
+      final jsonRespone = jsonDecode(
+        response.body,
+      );
+      await Stripe.instance.initPaymentSheet(
+          paymentSheetParameters: SetupPaymentSheetParameters(
+        paymentIntentClientSecret: jsonRespone['paymentIntent'],
+        merchantDisplayName: 'Groccery',
+        customerId: jsonRespone['customer'],
+        customerEphemeralKeySecret: jsonRespone['ephemeralKey'],
+      ));
+      await Stripe.instance.presentPaymentSheet();
+      Utils.snackBar("Payment is successful", context);
 
+      // removeCartItems();
+
+      // saveDetail();
+      Navigator.pushAndRemoveUntil(
+          context,
+          MaterialPageRoute(builder: (c) => const DashBoardScreen()),
+          (route) => false);
+    } catch (e) {
+      if (e is StripeException) {
+        Utils.flushBarErrorMessage("Payment  Cancelled", context);
+        // Utils.flushBarErrorMessage(e.toString(), context);
+
+        setState(() {
+          _isLoading = false;
+        });
+      } else {
+        Utils.flushBarErrorMessage("Problem in Payment", context);
+        // Utils.flushBarErrorMessage(e.toString(), context);
+      }
+    } finally {
+      setState(() {
+        _isLoading = false;
+      });
+    }
+  }
+// Paypal payment
   void initiatePaypalCheckout(BuildContext context) async {
     final urls = await getPaymentUrls();
     final returnUrl = urls['returnURL'];
@@ -432,7 +491,7 @@ class _PaymentViewState extends State<PaymentView> {
                 RoundedButton(
                     title: 'Pay',
                     onpress: () {
-                      initiatePaypalCheckout(context);
+                      initPayment();
                       // paymentDonePopup(context);
                     }),
               ],
