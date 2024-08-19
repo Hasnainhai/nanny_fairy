@@ -1,20 +1,37 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first, use_build_context_synchronously
 import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_paypal_checkout/flutter_paypal_checkout.dart';
 import 'package:flutter_stripe/flutter_stripe.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:http/http.dart' as http;
+
+import 'package:nanny_fairy/Family_View/familyChat/widgets/family_chat_screen_widget.dart';
+import 'package:nanny_fairy/Repository/get_family_info_repo.dart';
 import 'package:nanny_fairy/res/components/rounded_button.dart';
 import 'package:nanny_fairy/res/components/toggle_widget.dart';
 import 'package:nanny_fairy/res/components/widgets/custom_text_field.dart';
 import 'package:nanny_fairy/utils/utils.dart';
 import 'package:nanny_fairy/view/home/dashboard/dashboard.dart';
+
 import '../../res/components/colors.dart';
 import '../../res/components/widgets/vertical_spacing.dart';
-import 'package:http/http.dart' as http;
 
 class PaymentView extends StatefulWidget {
+  final String profile;
+  final String userName;
+  final String familyId;
+  final String currentUserName;
+  final String currentUserProfile;
+
   const PaymentView({
     super.key,
+    required this.profile,
+    required this.userName,
+    required this.familyId,
+    required this.currentUserName,
+    required this.currentUserProfile,
   });
 
   @override
@@ -25,6 +42,13 @@ class _PaymentViewState extends State<PaymentView> {
   bool firstButton = true;
   bool secondButton = false;
   bool thirdButton = false;
+  GetFamilyInfoRepo familyInfoRepo = GetFamilyInfoRepo();
+  @override
+  void initState() {
+    // TODO: implement initState
+    familyInfoRepo.fetchCurrentFamilyInfo();
+    super.initState();
+  }
 
   void paymentDonePopup() {
     showDialog(
@@ -56,7 +80,21 @@ class _PaymentViewState extends State<PaymentView> {
               const VerticalSpeacing(30),
               RoundedButton(
                 title: 'Continue to Chat',
-                onpress: () {},
+                onpress: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (c) => FamilyChatScreenWidget(
+                        id: widget.familyId,
+                        isSeen: false,
+                        currentUserName: widget.currentUserName,
+                        currentUserProfile: widget.currentUserProfile,
+                        providerName: widget.userName,
+                        providerProfilePic: widget.profile,
+                      ),
+                    ),
+                  );
+                },
               ),
               const VerticalSpeacing(16),
             ],
@@ -87,6 +125,7 @@ class _PaymentViewState extends State<PaymentView> {
       throw Exception('Failed to load payment URLs');
     }
   }
+
 // Stripe payment
   Future<void> initPayment() async {
     setState(() {
@@ -143,6 +182,7 @@ class _PaymentViewState extends State<PaymentView> {
       });
     }
   }
+
 // Paypal payment
   void initiatePaypalCheckout(BuildContext context) async {
     final urls = await getPaymentUrls();
@@ -184,17 +224,17 @@ class _PaymentViewState extends State<PaymentView> {
         note: "EUR",
         onSuccess: (Map params) {
           setState(() {
-            print("onSuccess: $params");
+            debugPrint("onSuccess: $params");
             paymentDonePopup();
           });
         },
         onError: (error) {
-          print("onError: $error");
+          debugPrint("onError: $error");
           Utils.toastMessage('onError: $error');
           Navigator.pop(context);
         },
         onCancel: () {
-          print('cancelled:');
+          debugPrint('cancelled:');
           // Utils.toastMessage('cancelled');
         },
       ),

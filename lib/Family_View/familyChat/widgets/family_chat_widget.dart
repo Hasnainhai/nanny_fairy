@@ -1,8 +1,9 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:nanny_fairy/Family_View/familyChat/family_chat_view.dart';
 import 'package:intl/intl.dart';
+
+import 'package:nanny_fairy/Family_View/familyChat/family_chat_view.dart';
 
 import '../../../res/components/colors.dart';
 
@@ -14,14 +15,19 @@ class FamilyChatWidget extends StatefulWidget {
   final String providerId;
   final int timesend;
   final String text;
-  const FamilyChatWidget(
-      {super.key,
-      required this.senderName,
-      required this.senderProfiel,
-      required this.providerId,
-      required this.timesend,
-      required this.text,
-      required this.isSeen});
+  final String currentUserName;
+  final String currentUserProfile;
+  const FamilyChatWidget({
+    super.key,
+    required this.isSeen,
+    required this.senderName,
+    required this.senderProfiel,
+    required this.providerId,
+    required this.timesend,
+    required this.text,
+    required this.currentUserName,
+    required this.currentUserProfile,
+  });
 
   @override
   State<FamilyChatWidget> createState() => _FamilyChatWidgetState();
@@ -42,6 +48,8 @@ class _FamilyChatWidgetState extends State<FamilyChatWidget> {
                 id: widget.providerId,
                 profilePic: widget.senderProfiel,
                 isSeen: widget.isSeen,
+                currentUserName: widget.currentUserName,
+                currentUserProfilePic: widget.currentUserProfile,
               ),
             ),
           );

@@ -3,22 +3,39 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import 'package:nanny_fairy/Family_View/familyChat/widgets/family_chat_screen_widget.dart';
+import 'package:nanny_fairy/Repository/get_family_info_repo.dart';
 import 'package:nanny_fairy/utils/routes/routes_name.dart';
 
 import '../../res/components/colors.dart';
 
-class FamilyChatView extends StatelessWidget {
+class FamilyChatView extends StatefulWidget {
   final String name;
   final String id;
   final String profilePic;
   final bool isSeen;
+  final String currentUserName;
+  final String currentUserProfilePic;
   const FamilyChatView({
-    super.key,
+    Key? key,
     required this.name,
     required this.id,
     required this.profilePic,
     required this.isSeen,
-  });
+    required this.currentUserName,
+    required this.currentUserProfilePic,
+  }) : super(key: key);
+
+  @override
+  State<FamilyChatView> createState() => _FamilyChatViewState();
+}
+
+class _FamilyChatViewState extends State<FamilyChatView> {
+  @override
+  GetFamilyInfoRepo getFamilyInfoRepo = GetFamilyInfoRepo();
+  void initState() {
+    getFamilyInfoRepo.fetchCurrentFamilyInfo();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -51,8 +68,8 @@ class FamilyChatView extends StatelessWidget {
                         backgroundImage: const NetworkImage(
                           'https://user-images.githubusercontent.com/22866157/40578885-e3bf4e8e-6139-11e8-8be4-92fc3149f6f0.jpg',
                         ),
-                        foregroundImage: NetworkImage(
-                            profilePic), // Set your profile image path here
+                        foregroundImage: NetworkImage(widget
+                            .profilePic), // Set your profile image path here
                       ),
                       Positioned(
                         bottom: 0,
@@ -76,7 +93,7 @@ class FamilyChatView extends StatelessWidget {
                 const SizedBox(width: 12.0),
                 Text.rich(
                   TextSpan(
-                    text: '$name\n',
+                    text: '${widget.name}\n',
                     style: GoogleFonts.getFont(
                       "Poppins",
                       textStyle: const TextStyle(
@@ -135,8 +152,12 @@ class FamilyChatView extends StatelessWidget {
           ),
         ),
         child: FamilyChatScreenWidget(
-          id: id,
-          isSeen: isSeen,
+          id: widget.id,
+          isSeen: widget.isSeen,
+          currentUserName: getFamilyInfoRepo.familyName!,
+          currentUserProfile: getFamilyInfoRepo.familyProfile!,
+          providerName: widget.name,
+          providerProfilePic: widget.profilePic,
         ),
       ),
     );

@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:nanny_fairy/Repository/get_family_info_repo.dart';
 import 'package:nanny_fairy/res/components/rounded_button.dart';
 import 'package:nanny_fairy/res/components/widgets/vertical_spacing.dart';
+import 'package:nanny_fairy/view/payment/payment.dart';
 import '../../res/components/colors.dart';
 import '../../utils/routes/routes_name.dart';
 
@@ -15,7 +17,8 @@ class ProviderDetails extends StatefulWidget {
       required this.experience,
       required this.degree,
       required this.dayButtons,
-      required this.timeData});
+      required this.timeData,
+      required this.familyId});
   final String profile;
   final String name;
   final String bio;
@@ -24,12 +27,20 @@ class ProviderDetails extends StatefulWidget {
   final String degree;
   final List<Widget> dayButtons;
   final Map<String, String> timeData;
+  final String familyId;
 
   @override
   State<ProviderDetails> createState() => _ProviderDetailsState();
 }
 
 class _ProviderDetailsState extends State<ProviderDetails> {
+  GetFamilyInfoRepo getFamilyInfoRepo = GetFamilyInfoRepo();
+  @override
+  void initState() {
+    getFamilyInfoRepo.fetchCurrentFamilyInfo();
+    super.initState();
+  }
+
   // popUp
   void showSubscribtionDialog(BuildContext context) {
     showDialog(
@@ -89,7 +100,19 @@ class _ProviderDetailsState extends State<ProviderDetails> {
                   child: RoundedButton(
                     title: 'Subscribe and Chat',
                     onpress: () {
-                      Navigator.pushNamed(context, RoutesName.paymentView);
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (c) => PaymentView(
+                            profile: widget.profile,
+                            userName: widget.name,
+                            familyId: widget.familyId,
+                            currentUserName: getFamilyInfoRepo.familyName!,
+                            currentUserProfile:
+                                getFamilyInfoRepo.familyProfile!,
+                          ),
+                        ),
+                      );
                     },
                   ),
                 ),

@@ -177,6 +177,7 @@ class _FamilySearchViewState extends State<FamilySearchView> {
                             context,
                             MaterialPageRoute(
                               builder: (c) => ProviderDetails(
+                                familyId: user.uid,
                                 profile: user.profile,
                                 name: "${user.firstName} ${user.lastName}",
                                 bio: user.bio,

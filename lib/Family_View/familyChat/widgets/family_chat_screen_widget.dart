@@ -1,19 +1,33 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 // ignore_for_file: file_names
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
 import 'package:nanny_fairy/Repository/family_chat_repository.dart';
 import 'package:nanny_fairy/ViewModel/family_chat_view_model.dart';
 import 'package:nanny_fairy/res/components/widgets/shimmer_effect.dart';
-import 'package:provider/provider.dart';
 
 import '../../../res/components/colors.dart';
 
 class FamilyChatScreenWidget extends StatefulWidget {
   final String id;
   final bool isSeen;
-  const FamilyChatScreenWidget(
-      {super.key, required this.id, required this.isSeen});
+  final String currentUserName;
+  final String currentUserProfile;
+  final String providerName;
+  final String providerProfilePic;
+
+  const FamilyChatScreenWidget({
+    super.key,
+    required this.id,
+    required this.isSeen,
+    required this.currentUserName,
+    required this.currentUserProfile,
+    required this.providerName,
+    required this.providerProfilePic,
+  });
 
   @override
   State createState() => ChatScreenState();

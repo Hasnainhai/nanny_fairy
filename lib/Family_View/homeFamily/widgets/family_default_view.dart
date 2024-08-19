@@ -183,6 +183,7 @@ class _FamilyDefaultViewState extends State<FamilyDefaultView> {
                                   context,
                                   MaterialPageRoute(
                                       builder: (c) => ProviderDetails(
+                                            familyId: value['uid'],
                                             profile: value['profile'],
                                             name:
                                                 "${value['firstName']} ${value['lastName']}",
