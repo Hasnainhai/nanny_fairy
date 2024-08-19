@@ -5,9 +5,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:nanny_fairy/res/components/rounded_button.dart';
 import 'package:nanny_fairy/res/components/toggle_widget.dart';
 import 'package:nanny_fairy/res/components/widgets/custom_text_field.dart';
-import 'package:nanny_fairy/utils/routes/routes_name.dart';
 import 'package:nanny_fairy/utils/utils.dart';
-import 'package:nanny_fairy/view/chat/chat_view.dart';
 import '../../res/components/colors.dart';
 import '../../res/components/widgets/vertical_spacing.dart';
 import 'package:http/http.dart' as http;
@@ -56,9 +54,7 @@ class _PaymentViewState extends State<PaymentView> {
               const VerticalSpeacing(30),
               RoundedButton(
                 title: 'Continue to Chat',
-                onpress: () {
-                  Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context)=>ChatView(profilePic: profilePic, userName: userName, familyId: familyId, isSeen: isSeen)), )
-                },
+                onpress: () {},
               ),
               const VerticalSpeacing(16),
             ],
