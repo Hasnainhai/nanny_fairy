@@ -65,12 +65,15 @@ class ChatList extends StatelessWidget {
                 itemCount: chats.length,
                 itemBuilder: (context, index) {
                   final chat = chats[index];
+                  bool isSeen =
+                      chat.containsValue("isSeen") ? chat['isSeen'] : false;
+
                   return ChatWidget(
                     text: chat['lastMessage'],
                     profilePic: chat['profilePic'],
                     familyId: chat['familyId'],
                     time: chat['timeSent'],
-                    isSeen: chat['isSeen'],
+                    isSeen: isSeen,
                     username: chat['name'],
                   );
                 },

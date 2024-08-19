@@ -39,6 +39,7 @@ class ChatWidget extends StatelessWidget {
                 profilePic: profilePic,
                 userName: username,
                 familyId: familyId,
+                isSeen: isSeen,
               ),
             ),
           );

@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
+import 'package:flutter/foundation.dart';
 import 'package:uuid/uuid.dart';
 
 class ProviderChatRepository {
@@ -25,7 +26,6 @@ class ProviderChatRepository {
         "timeSent": timestamp,
         "lastMessage": text,
         "familyId": familyId,
-        "isSeen": false,
       };
 
       Map<String, dynamic> senderChatContact = {
@@ -34,6 +34,7 @@ class ProviderChatRepository {
         "timeSent": timestamp,
         "lastMessage": text,
         "providerId": auth.currentUser!.uid,
+        "isSeen": false,
       };
 
       // Use update instead of set to avoid overwriting the entire node
@@ -120,6 +121,23 @@ class ProviderChatRepository {
       print("Message saved successfully.");
     } catch (e) {
       print("Failed to save message: $e");
+    }
+  }
+
+  void updateSeenStatus(bool isSeen, String familyId) {
+    try {
+      if (isSeen == false) {
+        firestore
+            .child("Family")
+            .child(familyId)
+            .child("chats")
+            .child(auth.currentUser!.uid)
+            .update({"isSeen": true});
+      } else {
+        return;
+      }
+    } catch (e) {
+      debugPrint("this error is in is seen status : $e");
     }
   }
 }

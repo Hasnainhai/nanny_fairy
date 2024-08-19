@@ -11,11 +11,13 @@ class ChatView extends StatefulWidget {
   final String profilePic;
   final String userName;
   final String familyId;
+  final bool isSeen;
   const ChatView({
     super.key,
     required this.profilePic,
     required this.userName,
     required this.familyId,
+    required this.isSeen,
   });
 
   @override
@@ -140,6 +142,7 @@ class _ChatViewState extends State<ChatView> {
         ),
         child: ChatScreenWidget(
           fimalyId: widget.familyId,
+          isSeen: widget.isSeen,
         ),
       ),
     );

@@ -73,4 +73,8 @@ class ProvidersChatController with ChangeNotifier {
     );
     loadChats(); // Reload chats after saving
   }
+
+  updateIsSeenStatus(bool isSeen, String familyId) {
+    providerChatRepository.updateSeenStatus(isSeen, familyId);
+  }
 }

@@ -41,6 +41,7 @@ class _FamilyChatWidgetState extends State<FamilyChatWidget> {
                 name: widget.senderName,
                 id: widget.providerId,
                 profilePic: widget.senderProfiel,
+                isSeen: widget.isSeen,
               ),
             ),
           );
@@ -89,10 +90,13 @@ class _FamilyChatWidgetState extends State<FamilyChatWidget> {
                   : widget.text,
               style: GoogleFonts.getFont(
                 "Poppins",
-                textStyle: const TextStyle(
+                textStyle: TextStyle(
                   fontSize: 12,
-                  fontWeight: FontWeight.w400,
-                  color: AppColor.grayColor,
+                  fontWeight:
+                      widget.isSeen == true ? FontWeight.w400 : FontWeight.w600,
+                  color: widget.isSeen == true
+                      ? AppColor.grayColor
+                      : AppColor.blackColor,
                 ),
               ),
             ),
@@ -111,29 +115,15 @@ class _FamilyChatWidgetState extends State<FamilyChatWidget> {
                     ),
                   ),
                 ),
-                Visibility(
-                  visible: widget.isSeen,
-                  child: Container(
-                    height: 20,
-                    width: 20,
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10.0),
-                        color: AppColor.primaryColor),
-                    child: Center(
-                      child: Text(
-                        '2',
-                        style: GoogleFonts.getFont(
-                          "Poppins",
-                          textStyle: const TextStyle(
-                            fontSize: 12,
-                            fontWeight: FontWeight.w400,
-                            color: AppColor.whiteColor,
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
+                widget.isSeen == false
+                    ? Container(
+                        height: 20,
+                        width: 20,
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(10.0),
+                            color: AppColor.primaryColor),
+                      )
+                    : const SizedBox()
               ],
             ),
           ),

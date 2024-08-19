@@ -72,4 +72,8 @@ class FamilyChatController with ChangeNotifier {
     );
     loadChats(); // Reload chats after saving
   }
+
+  updateIsSeenStatus(bool isSeen, String providerId) {
+    familyChatRepository.updateSeenStatus(isSeen, providerId);
+  }
 }
