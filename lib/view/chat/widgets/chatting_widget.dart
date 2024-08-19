@@ -12,10 +12,9 @@ import '../../../res/components/colors.dart';
 
 class ChatScreenWidget extends StatefulWidget {
   final String fimalyId;
-  const ChatScreenWidget({
-    super.key,
-    required this.fimalyId,
-  });
+  final bool isSeen;
+  const ChatScreenWidget(
+      {super.key, required this.fimalyId, required this.isSeen});
 
   @override
   State createState() => ChatScreenState();
@@ -29,21 +28,14 @@ class ChatMessage {
 }
 
 class ChatScreenState extends State<ChatScreenWidget> {
-  final List<ChatMessage> _messages = <ChatMessage>[];
   final TextEditingController _textController = TextEditingController();
-
-  void _handleSubmitted(String text) {
-    _textController.clear();
-    ChatMessage message = ChatMessage(
-        text: text,
-        isSender: true); // You can modify this to determine sender/receiver.
-    setState(() {
-      _messages.insert(0, message);
-    });
-  }
 
   Widget _buildMessage(String message, String senderId) {
     var auth = FirebaseAuth.instance;
+    final chatController = Provider.of<ProvidersChatController>(context);
+
+    chatController.providerChatRepository
+        .updateSeenStatus(widget.isSeen, widget.fimalyId);
 
     return Padding(
       padding: const EdgeInsets.only(left: 20.0, right: 20.0, top: 20.0),
@@ -131,7 +123,6 @@ class ChatScreenState extends State<ChatScreenWidget> {
           Expanded(
             child: TextField(
               controller: _textController,
-              onSubmitted: _handleSubmitted,
               decoration: const InputDecoration(
                   hintText: 'Type a message...',
                   hintStyle: TextStyle(

@@ -11,11 +11,13 @@ class FamilyChatView extends StatelessWidget {
   final String name;
   final String id;
   final String profilePic;
+  final bool isSeen;
   const FamilyChatView({
     super.key,
     required this.name,
     required this.id,
     required this.profilePic,
+    required this.isSeen,
   });
 
   @override
@@ -134,6 +136,7 @@ class FamilyChatView extends StatelessWidget {
         ),
         child: FamilyChatScreenWidget(
           id: id,
+          isSeen: isSeen,
         ),
       ),
     );

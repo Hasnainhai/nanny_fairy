@@ -11,7 +11,9 @@ import '../../../res/components/colors.dart';
 
 class FamilyChatScreenWidget extends StatefulWidget {
   final String id;
-  const FamilyChatScreenWidget({super.key, required this.id});
+  final bool isSeen;
+  const FamilyChatScreenWidget(
+      {super.key, required this.id, required this.isSeen});
 
   @override
   State createState() => ChatScreenState();
@@ -39,6 +41,9 @@ class ChatScreenState extends State<FamilyChatScreenWidget> {
   }
 
   Widget _buildMessage(String message, String senderId) {
+    final chatController = Provider.of<FamilyChatController>(context);
+    chatController.familyChatRepository
+        .updateSeenStatus(widget.isSeen, widget.id);
     var auth = FirebaseAuth.instance;
     return Padding(
       padding: const EdgeInsets.only(left: 20.0, right: 20.0, top: 20.0),

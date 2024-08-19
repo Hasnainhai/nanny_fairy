@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
+import 'package:flutter/material.dart';
 import 'package:uuid/uuid.dart';
 
 class FamilyChatRepository {
@@ -117,6 +118,23 @@ class FamilyChatRepository {
       print("Message saved successfully.");
     } catch (e) {
       print("Failed to save message: $e");
+    }
+  }
+
+  void updateSeenStatus(bool isSeen, String providerId) {
+    try {
+      if (isSeen == false) {
+        firestore
+            .child("Family")
+            .child(auth.currentUser!.uid)
+            .child("chats")
+            .child(providerId)
+            .update({"isSeen": true});
+      } else {
+        return;
+      }
+    } catch (e) {
+      debugPrint("this error is in is seen status : $e");
     }
   }
 }
