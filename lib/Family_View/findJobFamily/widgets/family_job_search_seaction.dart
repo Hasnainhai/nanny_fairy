@@ -203,6 +203,7 @@ class _FamilyJobSearchSeactionState extends State<FamilyJobSearchSeaction> {
                             context,
                             MaterialPageRoute(
                               builder: (c) => ProviderDetails(
+                                familyId: user.uid,
                                 profile: user.profile,
                                 name: "${user.firstName} ${user.lastName}",
                                 bio: user.bio,

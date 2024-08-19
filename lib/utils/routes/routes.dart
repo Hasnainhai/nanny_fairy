@@ -36,7 +36,6 @@ import 'package:nanny_fairy/view/home/home_view.dart';
 import 'package:nanny_fairy/view/job/job_view.dart';
 import 'package:nanny_fairy/view/notifications/notifications_view.dart';
 import 'package:nanny_fairy/view/onboarding/splash_view.dart';
-import 'package:nanny_fairy/view/payment/payment.dart';
 import 'package:nanny_fairy/view/profile/my_profile.dart';
 import 'package:nanny_fairy/view/profile/profile_view.dart';
 import 'package:nanny_fairy/view/rating/add_rating.dart';
@@ -102,9 +101,7 @@ class Routes {
       case RoutesName.settingsView:
         return MaterialPageRoute(
             builder: (BuildContext context) => const SettingsView());
-      case RoutesName.paymentView:
-        return MaterialPageRoute(
-            builder: (BuildContext context) => const PaymentView());
+
       case RoutesName.totalRating:
         return MaterialPageRoute(
             builder: (BuildContext context) => const TotalRatingScreen());

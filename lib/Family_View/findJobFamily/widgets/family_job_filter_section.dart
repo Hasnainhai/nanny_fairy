@@ -125,6 +125,7 @@ class _FamilyJobFilterSectionState extends State<FamilyJobFilterSection> {
                             context,
                             MaterialPageRoute(
                               builder: (c) => ProviderDetails(
+                                familyId: user.uid,
                                 profile: user.profile,
                                 name: "${user.firstName} ${user.lastName}",
                                 bio: user.bio,
