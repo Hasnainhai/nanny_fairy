@@ -4,9 +4,7 @@ import 'package:nanny_fairy/Family_View/payment_family/payment_family.dart';
 import 'package:nanny_fairy/Repository/get_family_info_repo.dart';
 import 'package:nanny_fairy/res/components/rounded_button.dart';
 import 'package:nanny_fairy/res/components/widgets/vertical_spacing.dart';
-import 'package:nanny_fairy/view/payment/payment.dart';
 import '../../res/components/colors.dart';
-import '../../utils/routes/routes_name.dart';
 
 class ProviderDetails extends StatefulWidget {
   const ProviderDetails(
