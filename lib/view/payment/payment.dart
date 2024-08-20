@@ -1,12 +1,10 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first, use_build_context_synchronously
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_paypal_checkout/flutter_paypal_checkout.dart';
 import 'package:flutter_stripe/flutter_stripe.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart' as http;
-
 import 'package:nanny_fairy/Family_View/familyChat/widgets/family_chat_screen_widget.dart';
 import 'package:nanny_fairy/Repository/get_family_info_repo.dart';
 import 'package:nanny_fairy/res/components/rounded_button.dart';
@@ -14,7 +12,6 @@ import 'package:nanny_fairy/res/components/toggle_widget.dart';
 import 'package:nanny_fairy/res/components/widgets/custom_text_field.dart';
 import 'package:nanny_fairy/utils/utils.dart';
 import 'package:nanny_fairy/view/home/dashboard/dashboard.dart';
-
 import '../../res/components/colors.dart';
 import '../../res/components/widgets/vertical_spacing.dart';
 

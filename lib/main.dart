@@ -1,5 +1,6 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_stripe/flutter_stripe.dart';
 import 'package:nanny_fairy/FamilyController/family_auth_controller.dart';
 import 'package:nanny_fairy/FamilyController/family_community_controller.dart';
 import 'package:nanny_fairy/FamilyController/family_home_controller.dart';
@@ -39,6 +40,9 @@ import 'package:provider/provider.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
+  Stripe.publishableKey =
+      "pk_test_51PlW60P8NBIKG6QO0dHfDou7Jlnpx3KPGruG9S4JTX4PQfgFyjIIlKXmEuoSO1e5ksahBTuSM0Hdk4cKbgYR7YvM00awJvQ8KQ";
+  Stripe.instance.applySettings();
   runApp(const MyApp());
 }
 

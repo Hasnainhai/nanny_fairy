@@ -23,6 +23,7 @@ class PaymentFamilyView extends StatefulWidget {
     required this.providerId,
     required this.currentUserProfile,
     required this.providerProfile,
+
   });
 
   @override
@@ -44,6 +45,7 @@ class _PaymentFamilyViewState extends State<PaymentFamilyView> {
             mainAxisSize: MainAxisSize.min,
             children: [
               const Icon(Icons.check_circle_outline,
+
                   color: AppColor.primaryColor, size: 150),
               const VerticalSpeacing(16),
               Text(
