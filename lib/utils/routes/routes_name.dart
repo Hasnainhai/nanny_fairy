@@ -29,7 +29,7 @@ class RoutesName {
   static const String registerFamily = '/register_family';
   static const String uploadImgFamily = '/upload_img_family';
   static const String uploadIdFamily = '/upload_id_family';
-  static const String paymentFamily = '/payment_family';
+  // static const String paymentFamily = '/payment_family';
   static const String dashboardFamily = '/dashboard_family';
   // static const String communityDetailView = '/community_detail_view';
   static const String familyDetail = '/family_detail';
