@@ -92,6 +92,7 @@ class _JobFilterSectionState extends State<JobFilterSection> {
                                             "${user.firstName} ${user.lastName}",
                                         bio: user.bio,
                                         profile: user.profile,
+                                        familyId: user.uid,
                                       ),
                                     ),
                                   );

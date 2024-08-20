@@ -179,6 +179,7 @@ class _HomeDefaultViewState extends State<HomeDefaultView> {
                                           " ${value['firstName']} ${value['lastName']}",
                                       bio: value['bio'] ?? '',
                                       profile: value['profile'],
+                                      familyId: value['uid'],
                                     ),
                                   ),
                                 );

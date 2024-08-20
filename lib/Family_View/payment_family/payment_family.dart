@@ -1,15 +1,28 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+
 import 'package:nanny_fairy/res/components/rounded_button.dart';
 import 'package:nanny_fairy/res/components/toggle_widget.dart';
 import 'package:nanny_fairy/res/components/widgets/custom_text_field.dart';
 import 'package:nanny_fairy/utils/routes/routes_name.dart';
+
 import '../../res/components/colors.dart';
 import '../../res/components/widgets/vertical_spacing.dart';
 
 class PaymentFamilyView extends StatefulWidget {
+  final String providerName;
+  final String currentUsername;
+  final String providerId;
+  final String currentUserProfile;
+  final String providerProfile;
   const PaymentFamilyView({
     super.key,
+    required this.providerName,
+    required this.currentUsername,
+    required this.providerId,
+    required this.currentUserProfile,
+    required this.providerProfile,
   });
 
   @override
@@ -30,7 +43,8 @@ class _PaymentFamilyViewState extends State<PaymentFamilyView> {
           content: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-             Icon(Icons.check_circle_outline,color: AppColor.primaryColor,size: 150),
+              const Icon(Icons.check_circle_outline,
+                  color: AppColor.primaryColor, size: 150),
               const VerticalSpeacing(16),
               Text(
                 'Congratulations You are\ngood to go',
@@ -49,7 +63,6 @@ class _PaymentFamilyViewState extends State<PaymentFamilyView> {
                 title: 'Continue to home',
                 onpress: () {
                   Navigator.pushNamed(context, RoutesName.dashboardFamily);
-
                 },
               ),
               const VerticalSpeacing(16),
@@ -194,7 +207,7 @@ class _PaymentFamilyViewState extends State<PaymentFamilyView> {
                                       decoration: const BoxDecoration(
                                           image: DecorationImage(
                                               image:
-                                              AssetImage('images/cash.png'),
+                                                  AssetImage('images/cash.png'),
                                               fit: BoxFit.contain)),
                                     ),
                                     const VerticalSpeacing(5),
@@ -285,24 +298,26 @@ class _PaymentFamilyViewState extends State<PaymentFamilyView> {
                   children: [
                     Expanded(
                         child: TextFieldCustom(
-                          maxLines: 1,
-                          hintText: 'Expiration Date',
-                        )),
+                      maxLines: 1,
+                      hintText: 'Expiration Date',
+                    )),
                     SizedBox(width: 10.0),
                     Expanded(
                         child: TextFieldCustom(
-                          maxLines: 1,
-                          hintText: 'CVV',
-                        )),
+                      maxLines: 1,
+                      hintText: 'CVV',
+                    )),
                   ],
                 ),
                 const VerticalSpeacing(16.0),
                 const ToggleWidget(title: 'Remeber My Card Details'),
                 const VerticalSpeacing(46.0),
-                RoundedButton(title: 'Pay', onpress: () {
-                  familyPayDialog(context);
-                  // Navigator.pop(context);
-                }),
+                RoundedButton(
+                    title: 'Pay',
+                    onpress: () {
+                      familyPayDialog(context);
+                      // Navigator.pop(context);
+                    }),
               ],
             ),
           ),

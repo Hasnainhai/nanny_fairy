@@ -113,6 +113,7 @@ class _HomeSearchViewState extends State<HomeSearchView> {
                                 name: "${user.firstName} ${user.lastName}",
                                 bio: user.bio,
                                 profile: user.profile,
+                                familyId: user.uid,
                               ),
                             ),
                           );

@@ -54,6 +54,7 @@ class _JobDefaultSectionState extends State<JobDefaultSection> {
                                     " ${value['firstName']} ${value['lastName']}",
                                 bio: value['bio'] ?? '',
                                 profile: value['profile'],
+                                familyId: value['uid'],
                               ),
                             ),
                           );

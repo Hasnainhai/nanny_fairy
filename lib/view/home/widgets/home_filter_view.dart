@@ -94,6 +94,7 @@ class _HomeFilterViewState extends State<HomeFilterView> {
                                             "${user.firstName} ${user.lastName}",
                                         bio: user.bio,
                                         profile: user.profile,
+                                        familyId: user.uid,
                                       ),
                                     ),
                                   );
