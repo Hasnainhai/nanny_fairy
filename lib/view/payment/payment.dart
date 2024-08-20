@@ -102,6 +102,64 @@ class _PaymentViewState extends State<PaymentView> {
   }
 
   bool _isLoading = false;
+
+// Stripe payment
+  Future<void> initPayment() async {
+    setState(() {
+      _isLoading = true;
+    });
+    try {
+      final response = await http.post(
+          Uri.parse(
+              "https://us-central1-nanny-fairy.cloudfunctions.net/stripePaymentIntentRequest"),
+          body: {
+            'email': 'email',
+            'amount': '200',
+            'address': 'address',
+            'postal_code': 'postalCode',
+            'city': 'city',
+            'state': 'state',
+            'name': 'name',
+          });
+      final jsonRespone = jsonDecode(
+        response.body,
+      );
+      print(
+          '...........respose Body : ${response.body}: ${response.statusCode}');
+      await Stripe.instance.initPaymentSheet(
+          paymentSheetParameters: SetupPaymentSheetParameters(
+        paymentIntentClientSecret: jsonRespone['paymentIntent'],
+        merchantDisplayName: 'Buying services',
+        customerId: jsonRespone['customer'],
+        customerEphemeralKeySecret: jsonRespone['ephemeralKey'],
+      ));
+      await Stripe.instance.presentPaymentSheet();
+      Utils.snackBar("Payment is successful", context);
+
+      Navigator.pushAndRemoveUntil(
+          context,
+          MaterialPageRoute(builder: (c) => const DashBoardScreen()),
+          (route) => false);
+    } catch (e) {
+      if (e is StripeException) {
+        Utils.flushBarErrorMessage("Payment  Cancelled", context);
+        // Utils.flushBarErrorMessage(e.toString(), context);
+
+        setState(() {
+          _isLoading = false;
+        });
+      } else {
+        Utils.flushBarErrorMessage("Problem in Payment", context);
+        Utils.flushBarErrorMessage(e.toString(), context);
+      }
+    } finally {
+      Utils.flushBarErrorMessage('error', context);
+      setState(() {
+        _isLoading = false;
+      });
+    }
+  }
+
   Future<Map<String, String>> getPaymentUrls() async {
     final response = await http.get(Uri.parse(
         'https://us-central1-nanny-fairy.cloudfunctions.net/generatePaymentLinks'));
@@ -120,63 +178,6 @@ class _PaymentViewState extends State<PaymentView> {
       }
     } else {
       throw Exception('Failed to load payment URLs');
-    }
-  }
-
-// Stripe payment
-  Future<void> initPayment() async {
-    setState(() {
-      _isLoading = true;
-    });
-    try {
-      final response = await http.post(
-          Uri.parse(
-              "https://us-central1-citta-23-2b5be.cloudfunctions.net/stripePaymentIntentRequest"),
-          body: {
-            'email': 'email',
-            'amount': 2,
-            'address': 'address',
-            'postal_code': 'postalCode',
-            'city': 'city',
-            'state': 'state',
-            'name': 'name',
-          });
-      final jsonRespone = jsonDecode(
-        response.body,
-      );
-      await Stripe.instance.initPaymentSheet(
-          paymentSheetParameters: SetupPaymentSheetParameters(
-        paymentIntentClientSecret: jsonRespone['paymentIntent'],
-        merchantDisplayName: 'Groccery',
-        customerId: jsonRespone['customer'],
-        customerEphemeralKeySecret: jsonRespone['ephemeralKey'],
-      ));
-      await Stripe.instance.presentPaymentSheet();
-      Utils.snackBar("Payment is successful", context);
-
-      // removeCartItems();
-
-      // saveDetail();
-      Navigator.pushAndRemoveUntil(
-          context,
-          MaterialPageRoute(builder: (c) => const DashBoardScreen()),
-          (route) => false);
-    } catch (e) {
-      if (e is StripeException) {
-        Utils.flushBarErrorMessage("Payment  Cancelled", context);
-        // Utils.flushBarErrorMessage(e.toString(), context);
-
-        setState(() {
-          _isLoading = false;
-        });
-      } else {
-        Utils.flushBarErrorMessage("Problem in Payment", context);
-        // Utils.flushBarErrorMessage(e.toString(), context);
-      }
-    } finally {
-      setState(() {
-        _isLoading = false;
-      });
     }
   }
 
