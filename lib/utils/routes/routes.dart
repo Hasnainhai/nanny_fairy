@@ -132,9 +132,7 @@ class Routes {
       case RoutesName.uploadIdFamily:
         return MaterialPageRoute(
             builder: (BuildContext context) => const UploadIdFamily());
-      // case RoutesName.paymentFamily:
-      //   return MaterialPageRoute(
-      //       builder: (BuildContext context) => const PaymentFamilyView());
+
       case RoutesName.dashboardFamily:
         return MaterialPageRoute(
             builder: (BuildContext context) => const DashBoardFamilyScreen());

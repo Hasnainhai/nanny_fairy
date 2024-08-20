@@ -1,27 +1,41 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:nanny_fairy/Repository/get_provider_info.dart';
+
+import 'package:nanny_fairy/res/components/rounded_button.dart';
+import 'package:nanny_fairy/res/components/widgets/vertical_spacing.dart';
+import 'package:nanny_fairy/view/payment/payment.dart';
+
 import 'package:nanny_fairy/res/components/rounded_button.dart';
 import 'package:nanny_fairy/res/components/widgets/vertical_spacing.dart';
 import '../../res/components/colors.dart';
-import '../../utils/routes/routes_name.dart';
 
 class FamilyDetailProvider extends StatefulWidget {
-  const FamilyDetailProvider({
-    super.key,
-    this.profile,
-    required this.name,
-    required this.bio,
-  });
-  final String? profile;
+  String? profile;
   final String name;
   final String bio;
+  final String familyId;
+  FamilyDetailProvider(
+      {super.key,
+      this.profile,
+      required this.name,
+      required this.bio,
+      required this.familyId});
+
 
   @override
   State<FamilyDetailProvider> createState() => _FamilyDetailProviderState();
 }
 
 class _FamilyDetailProviderState extends State<FamilyDetailProvider> {
+  @override
+  GetProviderInfoRepo getProviderInfoRepo = GetProviderInfoRepo();
+  void initState() {
+    getProviderInfoRepo.fetchCurrentFamilyInfo();
+    super.initState();
+  }
+
   // popUp
   void showSubscribtionDialog(BuildContext context) {
     showDialog(
@@ -95,9 +109,20 @@ class _FamilyDetailProviderState extends State<FamilyDetailProvider> {
                   child: RoundedButton(
                     title: 'Subscribe and Chat',
                     onpress: () {
-                      Navigator.pushNamed(context, RoutesName.paymentView);
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (c) => PaymentView(
+                              profile: widget.profile!,
+                              userName: widget.name,
+                              familyId: widget.familyId,
+                              currentUserName:
+                                  getProviderInfoRepo.providerName!,
+                              currentUserProfile:
+                                  getProviderInfoRepo.providerProfile!),
+                        ),
+                      );
 
-                      // Navigator.push(context, MaterialPageRoute(builder:(context)=> PaymentView(profile: profile, userName: userName, familyId: familyId, currentUserName: currentUserName, currentUserProfile: currentUserProfile))
                     },
                   ),
                 ),

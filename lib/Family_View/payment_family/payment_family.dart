@@ -1,26 +1,29 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+
 import 'package:nanny_fairy/res/components/rounded_button.dart';
 import 'package:nanny_fairy/res/components/toggle_widget.dart';
 import 'package:nanny_fairy/res/components/widgets/custom_text_field.dart';
 import 'package:nanny_fairy/utils/routes/routes_name.dart';
+
 import '../../res/components/colors.dart';
 import '../../res/components/widgets/vertical_spacing.dart';
 
 class PaymentFamilyView extends StatefulWidget {
-  final String profile;
-  final String userName;
-  final String familyId;
-  final String currentUserName;
+  final String providerName;
+  final String currentUsername;
+  final String providerId;
   final String currentUserProfile;
-
+  final String providerProfile;
   const PaymentFamilyView({
     super.key,
-    required this.profile,
-    required this.userName,
-    required this.familyId,
-    required this.currentUserName,
+    required this.providerName,
+    required this.currentUsername,
+    required this.providerId,
     required this.currentUserProfile,
+    required this.providerProfile,
+
   });
 
   @override
@@ -41,7 +44,8 @@ class _PaymentFamilyViewState extends State<PaymentFamilyView> {
           content: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              Icon(Icons.check_circle_outline,
+              const Icon(Icons.check_circle_outline,
+
                   color: AppColor.primaryColor, size: 150),
               const VerticalSpeacing(16),
               Text(
