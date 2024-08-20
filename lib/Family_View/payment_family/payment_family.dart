@@ -8,8 +8,19 @@ import '../../res/components/colors.dart';
 import '../../res/components/widgets/vertical_spacing.dart';
 
 class PaymentFamilyView extends StatefulWidget {
+  final String profile;
+  final String userName;
+  final String familyId;
+  final String currentUserName;
+  final String currentUserProfile;
+
   const PaymentFamilyView({
     super.key,
+    required this.profile,
+    required this.userName,
+    required this.familyId,
+    required this.currentUserName,
+    required this.currentUserProfile,
   });
 
   @override
@@ -30,7 +41,8 @@ class _PaymentFamilyViewState extends State<PaymentFamilyView> {
           content: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-             Icon(Icons.check_circle_outline,color: AppColor.primaryColor,size: 150),
+              Icon(Icons.check_circle_outline,
+                  color: AppColor.primaryColor, size: 150),
               const VerticalSpeacing(16),
               Text(
                 'Congratulations You are\ngood to go',
@@ -49,7 +61,6 @@ class _PaymentFamilyViewState extends State<PaymentFamilyView> {
                 title: 'Continue to home',
                 onpress: () {
                   Navigator.pushNamed(context, RoutesName.dashboardFamily);
-
                 },
               ),
               const VerticalSpeacing(16),
@@ -194,7 +205,7 @@ class _PaymentFamilyViewState extends State<PaymentFamilyView> {
                                       decoration: const BoxDecoration(
                                           image: DecorationImage(
                                               image:
-                                              AssetImage('images/cash.png'),
+                                                  AssetImage('images/cash.png'),
                                               fit: BoxFit.contain)),
                                     ),
                                     const VerticalSpeacing(5),
@@ -285,24 +296,26 @@ class _PaymentFamilyViewState extends State<PaymentFamilyView> {
                   children: [
                     Expanded(
                         child: TextFieldCustom(
-                          maxLines: 1,
-                          hintText: 'Expiration Date',
-                        )),
+                      maxLines: 1,
+                      hintText: 'Expiration Date',
+                    )),
                     SizedBox(width: 10.0),
                     Expanded(
                         child: TextFieldCustom(
-                          maxLines: 1,
-                          hintText: 'CVV',
-                        )),
+                      maxLines: 1,
+                      hintText: 'CVV',
+                    )),
                   ],
                 ),
                 const VerticalSpeacing(16.0),
                 const ToggleWidget(title: 'Remeber My Card Details'),
                 const VerticalSpeacing(46.0),
-                RoundedButton(title: 'Pay', onpress: () {
-                  familyPayDialog(context);
-                  // Navigator.pop(context);
-                }),
+                RoundedButton(
+                    title: 'Pay',
+                    onpress: () {
+                      familyPayDialog(context);
+                      // Navigator.pop(context);
+                    }),
               ],
             ),
           ),

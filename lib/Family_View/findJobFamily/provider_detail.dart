@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:nanny_fairy/Family_View/payment_family/payment_family.dart';
 import 'package:nanny_fairy/Repository/get_family_info_repo.dart';
 import 'package:nanny_fairy/res/components/rounded_button.dart';
 import 'package:nanny_fairy/res/components/widgets/vertical_spacing.dart';
@@ -100,10 +101,12 @@ class _ProviderDetailsState extends State<ProviderDetails> {
                   child: RoundedButton(
                     title: 'Subscribe and Chat',
                     onpress: () {
+                      print(
+                          'profile:${widget.profile}: userName:${widget.name}:familyId: ${widget.familyId}: currentUserName:${getFamilyInfoRepo.familyName!}:${getFamilyInfoRepo.familyProfile} ');
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (c) => PaymentView(
+                          builder: (c) => PaymentFamilyView(
                             profile: widget.profile,
                             userName: widget.name,
                             familyId: widget.familyId,

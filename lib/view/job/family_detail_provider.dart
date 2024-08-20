@@ -1,23 +1,21 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-
 import 'package:nanny_fairy/res/components/rounded_button.dart';
 import 'package:nanny_fairy/res/components/widgets/vertical_spacing.dart';
-
 import '../../res/components/colors.dart';
 import '../../utils/routes/routes_name.dart';
 
 class FamilyDetailProvider extends StatefulWidget {
-  String? profile;
-  String name;
-  String bio;
-  FamilyDetailProvider({
-    Key? key,
+  const FamilyDetailProvider({
+    super.key,
     this.profile,
     required this.name,
     required this.bio,
-  }) : super(key: key);
+  });
+  final String? profile;
+  final String name;
+  final String bio;
 
   @override
   State<FamilyDetailProvider> createState() => _FamilyDetailProviderState();
@@ -98,6 +96,8 @@ class _FamilyDetailProviderState extends State<FamilyDetailProvider> {
                     title: 'Subscribe and Chat',
                     onpress: () {
                       Navigator.pushNamed(context, RoutesName.paymentView);
+
+                      // Navigator.push(context, MaterialPageRoute(builder:(context)=> PaymentView(profile: profile, userName: userName, familyId: familyId, currentUserName: currentUserName, currentUserProfile: currentUserProfile))
                     },
                   ),
                 ),
