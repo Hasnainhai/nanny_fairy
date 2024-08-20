@@ -24,7 +24,7 @@ class GetProviderInfoRepo {
     providerName =
         (firstName != null && lastName != null) ? '$firstName $lastName' : null;
 
-    providerProfile = data['profilePic'];
+    providerProfile = data['profile'];
     senderId = FirebaseAuth.instance.currentUser!.uid;
   }
 }

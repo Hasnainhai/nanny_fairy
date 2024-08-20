@@ -11,19 +11,18 @@ import '../../res/components/colors.dart';
 import '../../res/components/widgets/vertical_spacing.dart';
 
 class PaymentFamilyView extends StatefulWidget {
-  final String providerName;
-  final String currentUsername;
-  final String providerId;
+  final String userName;
+  final String currentUserName;
+  final String familyId;
   final String currentUserProfile;
-  final String providerProfile;
+  final String profile;
   const PaymentFamilyView({
     super.key,
-    required this.providerName,
-    required this.currentUsername,
-    required this.providerId,
+    required this.userName,
+    required this.currentUserName,
+    required this.familyId,
     required this.currentUserProfile,
-    required this.providerProfile,
-
+    required this.profile,
   });
 
   @override
@@ -45,7 +44,6 @@ class _PaymentFamilyViewState extends State<PaymentFamilyView> {
             mainAxisSize: MainAxisSize.min,
             children: [
               const Icon(Icons.check_circle_outline,
-
                   color: AppColor.primaryColor, size: 150),
               const VerticalSpeacing(16),
               Text(

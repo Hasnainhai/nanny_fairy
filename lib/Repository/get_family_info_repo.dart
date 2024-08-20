@@ -26,7 +26,7 @@ class GetFamilyInfoRepo {
     familyName =
         (firstName != null && lastName != null) ? '$firstName $lastName' : null;
 
-    familyProfile = data['profilePic'];
+    familyProfile = data['profile'];
     senderId = FirebaseAuth.instance.currentUser!.uid;
   }
 }
