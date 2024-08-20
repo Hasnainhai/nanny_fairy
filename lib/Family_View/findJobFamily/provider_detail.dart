@@ -101,8 +101,8 @@ class _ProviderDetailsState extends State<ProviderDetails> {
                   child: RoundedButton(
                     title: 'Subscribe and Chat',
                     onpress: () {
-                      print(
-                          'profile:${widget.profile}: userName:${widget.name}:familyId: ${widget.familyId}: currentUserName:${getFamilyInfoRepo.familyName!}:${getFamilyInfoRepo.familyProfile} ');
+                      // print(
+                      //     'profile:${widget.profile}: userName:${widget.name}:familyId: ${widget.familyId}: currentUserName:${getFamilyInfoRepo.familyName!}:Family profile${getFamilyInfoRepo.familyProfile} ');
                       Navigator.push(
                         context,
                         MaterialPageRoute(

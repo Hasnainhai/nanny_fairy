@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
+import 'package:flutter/cupertino.dart';
 
 class GetFamilyInfoRepo {
   final DatabaseReference _familyRef =
@@ -26,7 +27,8 @@ class GetFamilyInfoRepo {
     familyName =
         (firstName != null && lastName != null) ? '$firstName $lastName' : null;
 
-    familyProfile = data['profilePic'];
+    familyProfile = data['profile'];
     senderId = FirebaseAuth.instance.currentUser!.uid;
+    debugPrint('credential: $senderId, $familyName,$familyProfile');
   }
 }
