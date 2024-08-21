@@ -767,7 +767,7 @@ class _ProviderDetailsState extends State<ProviderDetails> {
                         RoundedButton(
                             title: 'Chat With Provider',
                             onpress: () {
-                              // showSubscribtionDialog(context);
+                              showSubscribtionDialog(context);
                               debugPrint(
                                   "this is the data:${getFamilyInfoRepo.familyProfile!}");
                               Navigator.push(

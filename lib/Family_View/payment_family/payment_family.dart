@@ -5,6 +5,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_paypal_checkout/flutter_paypal_checkout.dart';
 import 'package:flutter_stripe/flutter_stripe.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:nanny_fairy/Family_View/familyChat/family_chat_view.dart';
+
+
 import 'package:nanny_fairy/res/components/rounded_button.dart';
 import '../../res/components/colors.dart';
 import '../../res/components/loading_manager.dart';
@@ -34,6 +37,58 @@ class PaymentFamilyView extends StatefulWidget {
 class _PaymentFamilyViewState extends State<PaymentFamilyView> {
   bool firstButton = true;
   bool secondButton = false;
+  bool thirdButton = false;
+  void familyPayDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          backgroundColor: AppColor.whiteColor,
+          shape: const RoundedRectangleBorder(),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              const Icon(Icons.check_circle_outline,
+                  color: AppColor.primaryColor, size: 150),
+              const VerticalSpeacing(16),
+              Text(
+                'Congratulations You are\ngood to go',
+                textAlign: TextAlign.center,
+                style: GoogleFonts.getFont(
+                  "Poppins",
+                  textStyle: const TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.w500,
+                    color: AppColor.blackColor,
+                  ),
+                ),
+              ),
+              const VerticalSpeacing(30),
+              RoundedButton(
+                title: 'Continue to Chat',
+                onpress: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (c) => FamilyChatView(
+                        name: widget.userName,
+                        id: widget.familyId,
+                        profilePic: widget.profile,
+                        isSeen: true,
+                        currentUserName: widget.currentUserName,
+                        currentUserProfilePic: widget.currentUserProfile,
+                      ),
+                    ),
+                  );
+                },
+              ),
+              const VerticalSpeacing(16),
+            ],
+          ),
+        );
+      },
+    );
+  }
   bool _isLoading = false;
 
   @override
