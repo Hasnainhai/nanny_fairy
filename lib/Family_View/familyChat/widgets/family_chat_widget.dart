@@ -13,7 +13,7 @@ class FamilyChatWidget extends StatefulWidget {
   final String senderName;
   final String senderProfiel;
   final String providerId;
-  final int timesend;
+  final String timesend;
   final String text;
   final String currentUserName;
   final String currentUserProfile;
@@ -34,6 +34,18 @@ class FamilyChatWidget extends StatefulWidget {
 }
 
 class _FamilyChatWidgetState extends State<FamilyChatWidget> {
+  String formatTime(String time) {
+    try {
+      // Parse the time string to DateTime
+      DateTime parsedTime = DateTime.parse(time);
+      // Format the DateTime to the desired format
+      return DateFormat('hh:mm a').format(parsedTime);
+    } catch (e) {
+      // Handle the error, e.g., return a default value or the original string
+      return "Invalid time";
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -112,8 +124,7 @@ class _FamilyChatWidgetState extends State<FamilyChatWidget> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  DateFormat('hh:mm a').format(
-                      DateTime.fromMillisecondsSinceEpoch(widget.timesend)),
+                  formatTime(widget.timesend),
                   style: GoogleFonts.getFont(
                     "Poppins",
                     textStyle: const TextStyle(

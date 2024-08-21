@@ -129,9 +129,9 @@ class ProviderChatRepository {
       if (isSeen == false) {
         firestore
             .child("Providers")
-            .child(familyId)
-            .child("chats")
             .child(auth.currentUser!.uid)
+            .child("chats")
+            .child(familyId)
             .update({"isSeen": true});
       } else {
         return;

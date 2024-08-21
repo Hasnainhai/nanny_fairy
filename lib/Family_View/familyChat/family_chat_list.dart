@@ -59,15 +59,15 @@ class FamilyChatList extends StatelessWidget {
                 itemCount: chats.length,
                 itemBuilder: (context, index) {
                   final chat = chats[index];
-                  bool isSeen =
-                      chat.containsKey("isSeen") ? chat['isSeen'] : true;
+                  bool isSeen = chat['isSeen'];
                   return FamilyChatWidget(
                     senderName: chat['name'],
                     senderProfiel: chat['profilePic'],
                     providerId: chat['providerId'],
                     timesend: chat['timeSent'], // Convert back to DateTime
                     text: chat['lastMessage'],
-                    isSeen: isSeen, currentUserName: chat['name'],
+                    isSeen: isSeen,
+                    currentUserName: chat['name'],
                     currentUserProfile: chat['profilePic'],
                   );
                 },

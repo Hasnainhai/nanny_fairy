@@ -3,6 +3,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:nanny_fairy/Repository/home_ui_repostory.dart';
 import 'package:nanny_fairy/ViewModel/search_view_model.dart';
 import 'package:nanny_fairy/res/components/colors.dart';
+import 'package:nanny_fairy/res/components/widgets/shimmer_effect.dart';
 import 'package:nanny_fairy/res/components/widgets/ui_enums.dart';
 import 'package:nanny_fairy/view/booked/widgets/booking_widget.dart';
 import 'package:nanny_fairy/view/job/family_detail_provider.dart';
@@ -93,7 +94,7 @@ class _HomeSearchViewState extends State<HomeSearchView> {
             child: Consumer<SearchViewModel>(
               builder: (context, viewModel, child) {
                 if (viewModel.isLoading) {
-                  return const Center(child: CircularProgressIndicator());
+                  return const ShimmerUi();
                 } else if (viewModel.users.isEmpty) {
                   return const Center(child: Text('No results found'));
                 } else {
