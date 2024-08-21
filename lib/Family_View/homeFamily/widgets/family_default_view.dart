@@ -207,9 +207,8 @@ class _FamilyDefaultViewState extends State<FamilyDefaultView> {
                             ),
                           );
                         } else {
-                          bookingWidgets.add(
-                            const Center(child: Text('Invalid data format')),
-                          );
+                            const Center(child: Text('Invalid data format'));
+
                         }
                       });
 

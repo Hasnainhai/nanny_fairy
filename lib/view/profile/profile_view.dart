@@ -201,21 +201,13 @@ class _ProfileViewState extends State<ProfileView> {
                     title: 'Settings'),
                 const Divider(),
                 ProfileWidgets(
-                    ontap: () {
-                      Navigator.pushNamed(context, RoutesName.paymentView);
-                    },
-                    tColor: const Color(0xff9E93F4),
-                    bColor: const Color(0xff7465EC),
-                    icon: Icons.account_balance_wallet_outlined,
-                    trIcon: Icons.arrow_forward_ios,
-                    title: 'Payment'),
-                const Divider(),
-                ProfileWidgets(
                   ontap: () {
                     Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (c) => const TotalRatingScreen()));
+                      context,
+                      MaterialPageRoute(
+                        builder: (c) => const TotalRatingScreen(),
+                      ),
+                    );
                   },
                   tColor: const Color(0xffEC4091),
                   bColor: const Color(0xffFF9CCB),

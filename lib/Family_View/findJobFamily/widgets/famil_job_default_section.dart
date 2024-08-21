@@ -94,12 +94,9 @@ class _FamilyJobDefaultSectionState extends State<FamilyJobDefaultSection> {
                     ),
                   );
                 } else {
-                  // bookingWidgets.add(
-                  //   const Center(child: Text('Invalid data format')),
-                  // );
+                  const Center(child: Text('Invalid data format'));
                 }
               });
-
               return SingleChildScrollView(
                 scrollDirection: Axis.vertical,
                 child: Column(
