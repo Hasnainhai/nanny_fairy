@@ -66,12 +66,6 @@ class LoginOrSignupView extends StatelessWidget {
                   }),
               const VerticalSpeacing(20.0),
               RoundedButton(
-                  title: 'Login as provider',
-                  onpress: () {
-                    Navigator.pushNamed(context, RoutesName.loginView);
-                  }),
-              const VerticalSpeacing(20.0),
-              RoundedButton(
                   title: 'register as a family',
                   onpress: () {
                     Navigator.pushNamed(
@@ -84,6 +78,12 @@ class LoginOrSignupView extends StatelessWidget {
                   Navigator.pushNamed(context, RoutesName.createAccount);
                 },
               ),
+              const VerticalSpeacing(20.0),
+              RoundedButton(
+                  title: 'Login as provider',
+                  onpress: () {
+                    Navigator.pushNamed(context, RoutesName.loginView);
+                  }),
               const VerticalSpeacing(20.0),
             ],
           ),

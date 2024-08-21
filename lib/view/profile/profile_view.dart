@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:nanny_fairy/ViewModel/get_provider_info_view_model.dart';
@@ -224,8 +225,15 @@ class _ProfileViewState extends State<ProfileView> {
                 ),
                 const Divider(),
                 ProfileWidgets(
-                  ontap: () {
-                    Navigator.pushNamed(context, RoutesName.loginView);
+                  ontap: () async {
+                    // Log out the current user
+                    await FirebaseAuth.instance.signOut();
+                    // Navigate to the login view and remove all previous routes
+                    Navigator.pushNamedAndRemoveUntil(
+                      context,
+                      RoutesName.loginView,
+                      (Route<dynamic> route) => false,
+                    );
                   },
                   tColor: const Color(0xffEC4091),
                   bColor: const Color(0xffFF9CCB),
