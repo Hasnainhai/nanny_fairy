@@ -75,7 +75,9 @@ class _HomeFilterViewState extends State<HomeFilterView> {
                   SizedBox(
                     height: MediaQuery.of(context).size.height / 1.6,
                     child: filteredViewModel.filteredUsers.isEmpty
-                        ? Center(child: Text('No results found'))
+                        ? const Center(
+                            child: Text('No results found'),
+                          )
                         : ListView.builder(
                             itemCount: filteredViewModel.filteredUsers.length,
                             itemBuilder: (context, index) {

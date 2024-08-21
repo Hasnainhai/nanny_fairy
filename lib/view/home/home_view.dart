@@ -11,6 +11,7 @@ import 'package:nanny_fairy/view/home/widgets/home_default_view.dart';
 import 'package:nanny_fairy/view/home/widgets/home_filter_view.dart';
 import 'package:nanny_fairy/view/home/widgets/home_search_view.dart';
 import 'package:provider/provider.dart';
+import 'package:shimmer/shimmer.dart';
 
 class HomeView extends StatefulWidget {
   const HomeView({super.key});
@@ -58,8 +59,40 @@ class _HomeViewState extends State<HomeView> {
                     future: homeViewModel.getCurrentUser(),
                     builder: (context, snapshot) {
                       if (snapshot.connectionState == ConnectionState.waiting) {
-                        return const Center(
-                          child: CircularProgressIndicator(),
+                        return Center(
+                          child: Shimmer.fromColors(
+                            baseColor: Colors.grey[300]!,
+                            highlightColor: Colors.grey[100]!,
+                            child: ListTile(
+                              leading: const CircleAvatar(
+                                radius: 40,
+                                backgroundImage: const NetworkImage(
+                                    'https://play-lh.googleusercontent.com/jInS55DYPnTZq8GpylyLmK2L2cDmUoahVacfN_Js_TsOkBEoizKmAl5-p8iFeLiNjtE=w526-h296-rw'),
+                              ),
+                              title: Text(
+                                'WellCome',
+                                style: GoogleFonts.getFont(
+                                  "Poppins",
+                                  textStyle: const TextStyle(
+                                    fontSize: 12,
+                                    fontWeight: FontWeight.w500,
+                                    color: AppColor.whiteColor,
+                                  ),
+                                ),
+                              ),
+                              subtitle: Text(
+                                "Name",
+                                style: GoogleFonts.getFont(
+                                  "Poppins",
+                                  textStyle: const TextStyle(
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.w500,
+                                    color: AppColor.whiteColor,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
                         );
                       } else if (snapshot.hasError) {
                         return Center(child: Text('Error: ${snapshot.error}'));

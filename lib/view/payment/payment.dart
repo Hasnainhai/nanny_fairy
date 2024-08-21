@@ -6,6 +6,7 @@ import 'package:flutter_paypal_checkout/flutter_paypal_checkout.dart';
 import 'package:flutter_stripe/flutter_stripe.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart' as http;
+import 'package:nanny_fairy/Family_View/familyChat/family_chat_view.dart';
 import 'package:nanny_fairy/Family_View/familyChat/widgets/family_chat_screen_widget.dart';
 import 'package:nanny_fairy/Repository/get_family_info_repo.dart';
 import 'package:nanny_fairy/res/components/loading_manager.dart';
@@ -81,13 +82,13 @@ class _PaymentViewState extends State<PaymentView> {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (c) => FamilyChatScreenWidget(
+                      builder: (c) => FamilyChatView(
+                        name: widget.userName,
                         id: widget.familyId,
+                        profilePic: widget.profile,
                         isSeen: false,
                         currentUserName: widget.currentUserName,
-                        currentUserProfile: widget.currentUserProfile,
-                        providerName: widget.userName,
-                        providerProfilePic: widget.profile,
+                        currentUserProfilePic: widget.currentUserProfile,
                       ),
                     ),
                   );
