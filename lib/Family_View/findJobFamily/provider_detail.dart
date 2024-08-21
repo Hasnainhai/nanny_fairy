@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:nanny_fairy/Family_View/familyChat/family_chat_list.dart';
+import 'package:nanny_fairy/Family_View/familyChat/family_chat_view.dart';
+import 'package:nanny_fairy/Family_View/familyChat/widgets/family_chat_screen_widget.dart';
 import 'package:nanny_fairy/Family_View/payment_family/payment_family.dart';
 import 'package:nanny_fairy/Repository/get_family_info_repo.dart';
 import 'package:nanny_fairy/res/components/rounded_button.dart';
@@ -764,7 +767,24 @@ class _ProviderDetailsState extends State<ProviderDetails> {
                         RoundedButton(
                             title: 'Chat With Provider',
                             onpress: () {
-                              showSubscribtionDialog(context);
+                              // showSubscribtionDialog(context);
+                              debugPrint(
+                                  "this is the data:${getFamilyInfoRepo.familyProfile!}");
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (c) => FamilyChatView(
+                                    name: widget.name,
+                                    id: widget.familyId,
+                                    profilePic: widget.profile,
+                                    isSeen: true,
+                                    currentUserName:
+                                        getFamilyInfoRepo.familyName!,
+                                    currentUserProfilePic:
+                                        getFamilyInfoRepo.familyProfile!,
+                                  ),
+                                ),
+                              );
                             }),
                         const VerticalSpeacing(40),
                       ],

@@ -163,11 +163,11 @@ class ChatScreenState extends State<FamilyChatScreenWidget> {
                 familyChatRepository.saveDataToContactsSubcollection(
                   _textController.text,
                   DateTime.now(),
-                  "fS7pIyLj0JM0jNHGQGfvjPT6yUg2",
-                  "Basit Ali",
-                  "Hasian",
-                  "https://firebasestorage.googleapis.com/v0/b/nanny-fairy.appspot.com/o/Profile%2F38545360-53f8-11ef-8244-ff8013a36bbf?alt=media&token=a353846a-ac77-4e72-9363-28a82ed4f378",
-                  "https://firebasestorage.googleapis.com/v0/b/nanny-fairy.appspot.com/o/Profile%2F5ce11bf0-570e-11ef-9d6c-ad5999710623?alt=media&token=cb8153d4-0e45-48ef-9b95-c1f283911f07",
+                  widget.id,
+                  widget.currentUserName,
+                  widget.providerName,
+                  widget.currentUserProfile,
+                  widget.providerProfilePic,
                 );
                 _textController.clear();
               }
