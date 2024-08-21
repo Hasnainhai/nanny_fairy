@@ -5,6 +5,8 @@ import 'package:nanny_fairy/res/components/colors.dart';
 import 'package:nanny_fairy/res/components/widgets/shimmer_effect.dart';
 import 'package:provider/provider.dart';
 
+import '../provider_detail.dart';
+
 class FamilyJobDefaultSection extends StatefulWidget {
   const FamilyJobDefaultSection({super.key});
 
@@ -60,7 +62,29 @@ class _FamilyJobDefaultSectionState extends State<FamilyJobDefaultSection> {
                     BookingCartWidgetHome(
                       primaryButtonColor: AppColor.primaryColor,
                       primaryButtonTxt: 'View',
-                      ontapView: () {},
+                      ontapView: () {
+                        Map<String, String> timeData =
+                            (value['Time'] as Map<dynamic, dynamic>).map(
+                                (key, value) =>
+                                    MapEntry(key.toString(), value.toString()));
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (c) => ProviderDetails(
+                              familyId: value['uid'],
+                              profile: value['profile'],
+                              name:
+                                  "${value['firstName']} ${value['lastName']}",
+                              bio: value['bio'],
+                              horseRate: value['hoursrate'],
+                              experience: value['Refernce']['experince'],
+                              degree: value['education'],
+                              dayButtons: dayButtons,
+                              timeData: timeData,
+                            ),
+                          ),
+                        );
+                      },
                       profile: value['profile'],
                       name: "${value['firstName']} ${value['lastName']}",
                       degree: value['education'],
@@ -70,9 +94,9 @@ class _FamilyJobDefaultSectionState extends State<FamilyJobDefaultSection> {
                     ),
                   );
                 } else {
-                  bookingWidgets.add(
-                    const Center(child: Text('Invalid data format')),
-                  );
+                  // bookingWidgets.add(
+                  //   const Center(child: Text('Invalid data format')),
+                  // );
                 }
               });
 
