@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
+import 'package:nanny_fairy/Repository/get_provider_info.dart';
 
 import 'package:nanny_fairy/view/chat/chat_view.dart';
 
@@ -11,7 +12,7 @@ class ChatWidget extends StatelessWidget {
   final String text;
   final String profilePic;
   final String familyId;
-  final int time;
+  final String time;
   final bool isSeen;
   final String username;
 
@@ -27,6 +28,20 @@ class ChatWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    GetProviderInfoRepo getProviderInfoRepo = GetProviderInfoRepo();
+    getProviderInfoRepo.fetchCurrentFamilyInfo();
+    String formatTime(String time) {
+      try {
+        // Parse the time string to DateTime
+        DateTime parsedTime = DateTime.parse(time);
+        // Format the DateTime to the desired format
+        return DateFormat('hh:mm a').format(parsedTime);
+      } catch (e) {
+        // Handle the error, e.g., return a default value or the original string
+        return "Invalid time";
+      }
+    }
+
     return Padding(
       padding: const EdgeInsets.only(bottom: 16.0),
       child: InkWell(
@@ -40,6 +55,8 @@ class ChatWidget extends StatelessWidget {
                 userName: username,
                 familyId: familyId,
                 isSeen: isSeen,
+                currentUserName: getProviderInfoRepo.providerName!,
+                currentUserProfile: getProviderInfoRepo.providerProfile!,
               ),
             ),
           );
@@ -102,9 +119,7 @@ class ChatWidget extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  DateFormat('hh:mm a').format(
-                    DateTime.fromMillisecondsSinceEpoch(time),
-                  ),
+                  formatTime(time),
                   style: GoogleFonts.getFont(
                     "Poppins",
                     textStyle: const TextStyle(

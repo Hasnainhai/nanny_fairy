@@ -4,6 +4,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:nanny_fairy/Repository/get_provider_info.dart';
 import 'package:nanny_fairy/res/components/rounded_button.dart';
 import 'package:nanny_fairy/res/components/widgets/vertical_spacing.dart';
+import 'package:nanny_fairy/view/chat/chat_view.dart';
 import 'package:nanny_fairy/view/payment/payment.dart';
 import '../../res/components/colors.dart';
 
@@ -365,7 +366,20 @@ class _FamilyDetailProviderState extends State<FamilyDetailProvider> {
               child: RoundedButton(
                 title: 'Chat With Family',
                 onpress: () {
-                  showSubscribtionDialog(context);
+                  // showSubscribtionDialog(context);
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (c) => ChatView(
+                          profilePic: widget.profile!,
+                          userName: widget.name,
+                          familyId: widget.familyId,
+                          isSeen: true,
+                          currentUserName: getProviderInfoRepo.providerName!,
+                          currentUserProfile:
+                              getProviderInfoRepo.providerProfile!),
+                    ),
+                  );
                 },
               ),
             ),

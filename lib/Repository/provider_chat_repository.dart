@@ -23,7 +23,7 @@ class ProviderChatRepository {
       Map<String, dynamic> receiverChatContact = {
         "name": senderName,
         "profilePic": senderProfilePic,
-        "timeSent": timestamp,
+        "timeSent": DateTime.now().toIso8601String(),
         "lastMessage": text,
         "familyId": familyId,
       };
@@ -31,7 +31,7 @@ class ProviderChatRepository {
       Map<String, dynamic> senderChatContact = {
         "name": receiverName,
         "profilePic": receiverProfilePic,
-        "timeSent": timestamp,
+        "timeSent": DateTime.now().toIso8601String(),
         "lastMessage": text,
         "providerId": auth.currentUser!.uid,
         "isSeen": false,
@@ -97,9 +97,9 @@ class ProviderChatRepository {
           .child(familyId)
           .child("messages")
           .child(uuid)
-          .set({
+          .update({
         "message": text,
-        "timeSent": timeSent,
+        "timeSent": DateTime.now().toIso8601String(),
         'senderId': auth.currentUser!.uid,
         "messageId": uuid,
       });
@@ -111,10 +111,10 @@ class ProviderChatRepository {
           .child(auth.currentUser!.uid)
           .child("messages")
           .child(uuid)
-          .set({
+          .update({
         "message": text,
-        "timeSent": timeSent,
-        'senderId': familyId,
+        "timeSent": DateTime.now().toIso8601String(),
+        'senderId': auth.currentUser!.uid,
         "messageId": uuid,
       });
 
@@ -128,7 +128,7 @@ class ProviderChatRepository {
     try {
       if (isSeen == false) {
         firestore
-            .child("Family")
+            .child("Providers")
             .child(familyId)
             .child("chats")
             .child(auth.currentUser!.uid)
