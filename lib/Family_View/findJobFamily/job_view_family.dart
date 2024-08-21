@@ -60,7 +60,7 @@ class _JobViewFamilyState extends State<JobViewFamily> {
                   ),
                 ),
                 Positioned(
-                  top: 125, // Adjust this value as needed
+                  top: 110, // Adjust this value as needed
                   left: (MediaQuery.of(context).size.width - 320) /
                       2, // Center horizontally
                   child: FamilySearchBar(

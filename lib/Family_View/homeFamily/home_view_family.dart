@@ -102,7 +102,7 @@ class _HomeViewFamilyState extends State<HomeViewFamily> {
                   ),
                 ),
                 Positioned(
-                  top: 159, // Adjust this value as needed
+                  top: 135,
                   left: (MediaQuery.of(context).size.width - 320) /
                       2, // Center horizontally
                   child: FamilySearchBarProvider(
