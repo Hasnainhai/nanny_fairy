@@ -16,26 +16,21 @@ class FamilyChatView extends StatefulWidget {
   final String currentUserName;
   final String currentUserProfilePic;
   const FamilyChatView({
-    Key? key,
+    super.key,
     required this.name,
     required this.id,
     required this.profilePic,
     required this.isSeen,
     required this.currentUserName,
     required this.currentUserProfilePic,
-  }) : super(key: key);
+  });
 
   @override
   State<FamilyChatView> createState() => _FamilyChatViewState();
 }
 
 class _FamilyChatViewState extends State<FamilyChatView> {
-  @override
   GetFamilyInfoRepo getFamilyInfoRepo = GetFamilyInfoRepo();
-  void initState() {
-    getFamilyInfoRepo.fetchCurrentFamilyInfo();
-    super.initState();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -154,8 +149,8 @@ class _FamilyChatViewState extends State<FamilyChatView> {
         child: FamilyChatScreenWidget(
           id: widget.id,
           isSeen: widget.isSeen,
-          currentUserName: getFamilyInfoRepo.familyName!,
-          currentUserProfile: getFamilyInfoRepo.familyProfile!,
+          currentUserName: widget.currentUserName,
+          currentUserProfile: widget.currentUserProfilePic,
           providerName: widget.name,
           providerProfilePic: widget.profilePic,
         ),
