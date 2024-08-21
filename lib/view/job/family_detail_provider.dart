@@ -2,27 +2,22 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:nanny_fairy/Repository/get_provider_info.dart';
-
 import 'package:nanny_fairy/res/components/rounded_button.dart';
 import 'package:nanny_fairy/res/components/widgets/vertical_spacing.dart';
 import 'package:nanny_fairy/view/payment/payment.dart';
-
-import 'package:nanny_fairy/res/components/rounded_button.dart';
-import 'package:nanny_fairy/res/components/widgets/vertical_spacing.dart';
 import '../../res/components/colors.dart';
 
 class FamilyDetailProvider extends StatefulWidget {
-  String? profile;
+  final String? profile;
   final String name;
   final String bio;
   final String familyId;
-  FamilyDetailProvider(
+  const FamilyDetailProvider(
       {super.key,
       this.profile,
       required this.name,
       required this.bio,
       required this.familyId});
-
 
   @override
   State<FamilyDetailProvider> createState() => _FamilyDetailProviderState();
@@ -122,7 +117,6 @@ class _FamilyDetailProviderState extends State<FamilyDetailProvider> {
                                   getProviderInfoRepo.providerProfile!),
                         ),
                       );
-
                     },
                   ),
                 ),

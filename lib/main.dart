@@ -158,7 +158,9 @@ class MyApp extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
           scaffoldBackgroundColor: AppColor.whiteColor,
-          colorScheme: ColorScheme.fromSeed(seedColor: AppColor.primaryColor),
+          colorScheme: ColorScheme.fromSeed(
+            seedColor: AppColor.primaryColor,
+          ),
           useMaterial3: true,
         ),
         home: const SplashScreen(),
