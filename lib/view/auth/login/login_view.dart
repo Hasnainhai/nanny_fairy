@@ -31,7 +31,7 @@ class _LoginViewState extends State<LoginView> {
     return snapshot.snapshot.exists;
   }
 
-  Future<void> _login() async {
+  Future<void> _loginProvider() async {
     if (passwordController.text.isNotEmpty && emailController.text.isNotEmpty) {
       setState(() {
         _isLoading = true;
@@ -177,7 +177,7 @@ class _LoginViewState extends State<LoginView> {
                   const VerticalSpeacing(60.0),
                   RoundedButton(
                     title: 'Login',
-                    onpress: _login,
+                    onpress: _loginProvider,
                   ),
                 ],
               ),

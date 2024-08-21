@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:nanny_fairy/FamilyController/get_family_info_controller.dart';
@@ -104,32 +105,32 @@ class _ProfileViewFamilyState extends State<ProfileViewFamily> {
               return Center(child: Text('Error: ${snapshot.error}'));
             } else if (snapshot.hasData) {
               Map<dynamic, dynamic> provider =
-              snapshot.data as Map<dynamic, dynamic>;
+                  snapshot.data as Map<dynamic, dynamic>;
               return Center(
                   child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      CircleAvatar(
-                        radius: 40,
-                        foregroundImage: NetworkImage(provider['profile']),
-                        backgroundImage: const NetworkImage(
-                            'https://play-lh.googleusercontent.com/jInS55DYPnTZq8GpylyLmK2L2cDmUoahVacfN_Js_TsOkBEoizKmAl5-p8iFeLiNjtE=w526-h296-rw'),
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  CircleAvatar(
+                    radius: 40,
+                    foregroundImage: NetworkImage(provider['profile']),
+                    backgroundImage: const NetworkImage(
+                        'https://play-lh.googleusercontent.com/jInS55DYPnTZq8GpylyLmK2L2cDmUoahVacfN_Js_TsOkBEoizKmAl5-p8iFeLiNjtE=w526-h296-rw'),
+                  ),
+                  const VerticalSpeacing(16),
+                  Text(
+                    "${provider['firstName']} ${provider['lastName']}",
+                    style: GoogleFonts.getFont(
+                      "Poppins",
+                      textStyle: const TextStyle(
+                        fontSize: 14,
+                        fontWeight: FontWeight.w500,
+                        color: AppColor.whiteColor,
                       ),
-                      const VerticalSpeacing(16),
-                      Text(
-                        "${provider['firstName']} ${provider['lastName']}",
-                        style: GoogleFonts.getFont(
-                          "Poppins",
-                          textStyle: const TextStyle(
-                            fontSize: 14,
-                            fontWeight: FontWeight.w500,
-                            color: AppColor.whiteColor,
-                          ),
-                        ),
-                      ),
-                    ],
-                  ));
+                    ),
+                  ),
+                ],
+              ));
             } else {
               return const Center(child: Text('No data available'));
             }
@@ -138,7 +139,6 @@ class _ProfileViewFamilyState extends State<ProfileViewFamily> {
       ],
     );
   }
-
 
   _buildProfileFeatures() {
     return Container(
@@ -226,8 +226,15 @@ class _ProfileViewFamilyState extends State<ProfileViewFamily> {
                 ),
                 const Divider(),
                 ProfileWidgetsFamily(
-                  ontap: () {
-                    Navigator.pushNamed(context, RoutesName.loginView);
+                  ontap: () async {
+                    // Log out the current user
+                    await FirebaseAuth.instance.signOut();
+                    // Navigate to the login view and remove all previous routes
+                    Navigator.pushNamedAndRemoveUntil(
+                      context,
+                      RoutesName.loginFamily,
+                      (Route<dynamic> route) => false,
+                    );
                   },
                   tColor: const Color(0xffEC4091),
                   bColor: const Color(0xffFF9CCB),
