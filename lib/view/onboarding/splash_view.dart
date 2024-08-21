@@ -1,9 +1,8 @@
-// ignore_for_file: use_build_context_synchronously
-
 import 'dart:async';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
-import 'package:nanny_fairy/view/auth/login_or_signup_view.dart';
-
+import 'package:nanny_fairy/utils/routes/routes_name.dart';
 import '../../res/components/colors.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -14,14 +13,52 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
+  final DatabaseReference _dbRef =
+      FirebaseDatabase.instance.ref().child('Providers');
+
   @override
   void initState() {
     super.initState();
-    Timer(const Duration(seconds: 5), () {
-      Navigator.push(context, MaterialPageRoute(builder: (context) {
-        return const LoginOrSignupView();
-      }));
-    });
+    checkUserSession();
+  }
+
+  Future<void> checkUserSession() async {
+    User? user = FirebaseAuth.instance.currentUser;
+
+    if (user != null) {
+      final userId = user.uid;
+      final isProvider = await checkIfUserIsProvider(userId);
+
+      if (isProvider) {
+        // Navigate to the Provider Dashboard
+        Navigator.pushNamedAndRemoveUntil(
+          context,
+          RoutesName.dashboard,
+          (Route<dynamic> route) => false,
+        );
+      } else {
+        // Navigate to the Family Dashboard
+        Navigator.pushNamedAndRemoveUntil(
+          context,
+          RoutesName.dashboardFamily,
+          (Route<dynamic> route) => false,
+        );
+      }
+    } else {
+      // If the user is new or not logged in, navigate to the Login/Signup view
+      Timer(const Duration(seconds: 5), () {
+        Navigator.pushNamedAndRemoveUntil(
+          context,
+          RoutesName.loginOrSignup,
+          (Route<dynamic> route) => false,
+        );
+      });
+    }
+  }
+
+  Future<bool> checkIfUserIsProvider(String id) async {
+    final snapshot = await _dbRef.orderByChild('uid').equalTo(id).once();
+    return snapshot.snapshot.exists;
   }
 
   @override
@@ -37,7 +74,9 @@ class _SplashScreenState extends State<SplashScreen> {
             width: MediaQuery.of(context).size.width,
             decoration: const BoxDecoration(
               image: DecorationImage(
-                  image: AssetImage("images/splash.png"), fit: BoxFit.contain),
+                image: AssetImage("images/splash.png"),
+                fit: BoxFit.contain,
+              ),
             ),
           ),
         ),
