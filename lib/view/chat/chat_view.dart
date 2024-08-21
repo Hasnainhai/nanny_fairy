@@ -1,6 +1,7 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:nanny_fairy/Repository/provider_chat_repository.dart';
 
 import 'package:nanny_fairy/utils/routes/routes_name.dart';
 import 'package:nanny_fairy/view/chat/widgets/chatting_widget.dart';
@@ -12,12 +13,16 @@ class ChatView extends StatefulWidget {
   final String userName;
   final String familyId;
   final bool isSeen;
+  final String currentUserName;
+  final String currentUserProfile;
   const ChatView({
     super.key,
     required this.profilePic,
     required this.userName,
     required this.familyId,
     required this.isSeen,
+    required this.currentUserName,
+    required this.currentUserProfile,
   });
 
   @override
@@ -25,6 +30,13 @@ class ChatView extends StatefulWidget {
 }
 
 class _ChatViewState extends State<ChatView> {
+  ProviderChatRepository providerChatRepository = ProviderChatRepository();
+  @override
+  void initState() {
+    providerChatRepository.updateSeenStatus(true, widget.familyId);
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -143,6 +155,10 @@ class _ChatViewState extends State<ChatView> {
         child: ChatScreenWidget(
           fimalyId: widget.familyId,
           isSeen: widget.isSeen,
+          senderName: widget.currentUserName,
+          senderProfile: widget.currentUserProfile,
+          recieverName: widget.familyId,
+          recieverProfile: widget.profilePic,
         ),
       ),
     );
