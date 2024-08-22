@@ -63,8 +63,8 @@ class ChatScreenState extends State<FamilyChatScreenWidget> {
       padding: const EdgeInsets.only(left: 20.0, right: 20.0, top: 20.0),
       child: Container(
         alignment: senderId == auth.currentUser!.uid
-            ? Alignment.centerRight
-            : Alignment.centerLeft,
+            ? Alignment.centerLeft
+            : Alignment.centerRight,
         margin: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 16.0),
         child: Container(
           padding: const EdgeInsets.all(16.0),
