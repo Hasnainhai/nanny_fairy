@@ -157,7 +157,7 @@ class _ChatViewState extends State<ChatView> {
           isSeen: widget.isSeen,
           senderName: widget.currentUserName,
           senderProfile: widget.currentUserProfile,
-          recieverName: widget.familyId,
+          recieverName: widget.userName,
           recieverProfile: widget.profilePic,
         ),
       ),
