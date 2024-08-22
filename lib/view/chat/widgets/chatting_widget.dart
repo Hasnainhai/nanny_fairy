@@ -76,44 +76,73 @@ class ChatScreenState extends State<ChatScreenWidget> {
   @override
   Widget build(BuildContext context) {
     final chatController = Provider.of<ProvidersChatController>(context);
+    final ScrollController scrollController = ScrollController();
+
+    void scrollToBottom() {
+      if (scrollController.hasClients) {
+        WidgetsBinding.instance.addPostFrameCallback((_) {
+          scrollController.animateTo(
+            scrollController.position.maxScrollExtent,
+            duration: const Duration(milliseconds: 300),
+            curve: Curves.easeOut,
+          );
+        });
+      }
+    }
 
     return Column(
       children: <Widget>[
         Expanded(
-            child: StreamBuilder<List<Map<dynamic, dynamic>>>(
-          stream: chatController.providerChatRepository
-              .getFamilyChatStreamList(widget.fimalyId)
-              .map((event) {
-            List<Map<dynamic, dynamic>> chats = [];
-            if (event.snapshot.value != null) {
-              Map<dynamic, dynamic> chatData =
-                  event.snapshot.value as Map<dynamic, dynamic>;
-              chatData.forEach((key, value) {
-                chats.add(value);
-              });
-            }
-            return chats.reversed
-                .toList(); // Reverse the list to get descending order
-          }),
-          builder: (context, snapshot) {
-            if (snapshot.connectionState == ConnectionState.waiting) {
-              return const ShimmerUi();
-            } else if (snapshot.hasError) {
-              return Center(child: Text('Error: ${snapshot.error}'));
-            } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
-              return const Center(child: Text('No messages found.'));
-            } else {
-              final chats = snapshot.data!;
-              return ListView.builder(
-                itemCount: chats.length,
-                itemBuilder: (context, index) {
-                  final chat = chats[index];
-                  return _buildMessage(chat['message'], chat['senderId']);
-                },
-              );
-            }
-          },
-        )),
+          child: StreamBuilder<List<Map<dynamic, dynamic>>>(
+            stream: chatController.providerChatRepository
+                .getFamilyChatStreamList(widget.fimalyId)
+                .map((event) {
+              List<Map<dynamic, dynamic>> chats = [];
+              if (event.snapshot.value != null) {
+                Map<dynamic, dynamic> chatData =
+                    event.snapshot.value as Map<dynamic, dynamic>;
+                chatData.forEach((key, value) {
+                  chats.add(value);
+                });
+
+                // Convert timeSent strings to DateTime and sort the chats list
+                chats.sort((a, b) {
+                  try {
+                    DateTime timeA = DateTime.parse(a['timeSent']);
+                    DateTime timeB = DateTime.parse(b['timeSent']);
+                    return timeA.compareTo(timeB); // Sort by timeSent
+                  } catch (e) {
+                    print('Error parsing timeSent: $e');
+                    return 0; // Treat as equal if parsing fails
+                  }
+                });
+              }
+              return chats;
+            }),
+            builder: (context, snapshot) {
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                return const ShimmerUi(); // Replace with your loading widget
+              } else if (snapshot.hasError) {
+                return Center(child: Text('Error: ${snapshot.error}'));
+              } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
+                return const Center(child: Text('No messages found.'));
+              } else {
+                final chats = snapshot.data!;
+                WidgetsBinding.instance
+                    .addPostFrameCallback((_) => scrollToBottom());
+
+                return ListView.builder(
+                  controller: scrollController,
+                  itemCount: chats.length,
+                  itemBuilder: (context, index) {
+                    final chat = chats[index];
+                    return _buildMessage(chat['message'], chat['senderId']);
+                  },
+                );
+              }
+            },
+          ),
+        ),
         const Divider(height: 1.0),
         Container(
           decoration: const BoxDecoration(
