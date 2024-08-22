@@ -1,16 +1,26 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:nanny_fairy/res/components/toggle_widget.dart';
 import 'package:nanny_fairy/res/components/widgets/vertical_spacing.dart';
+import 'package:provider/provider.dart';
+import '../../FamilyController/family_home_controller.dart';
 import '../../res/components/colors.dart';
-import '../../res/components/day_button.dart';
-import '../../view/auth/signup/availability_view.dart';
+import '../../res/components/widgets/shimmer_effect.dart';
+import '../findJobFamily/provider_detail.dart';
+import '../homeFamily/widgets/bookCart_home_widget.dart';
 
-class SettingsFamilyView extends StatelessWidget {
+class SettingsFamilyView extends StatefulWidget {
   const SettingsFamilyView({super.key});
 
   @override
+  State<SettingsFamilyView> createState() => _SettingsFamilyViewState();
+}
+
+class _SettingsFamilyViewState extends State<SettingsFamilyView> {
+  @override
   Widget build(BuildContext context) {
+    final familyhomeController = Provider.of<FamilyHomeController>(context);
     return Scaffold(
       backgroundColor: AppColor.secondaryBgColor,
       appBar: AppBar(
@@ -115,94 +125,87 @@ class SettingsFamilyView extends StatelessWidget {
                         ],
                       ),
                       const SizedBox(height: 16),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        children: [
-                          DayButton(
-                            day: 'M',
-                            isSelected: false,
-                            onTap: (bool isSelected) {},
-                          ),
-                          const SizedBox(width: 8),
-                          DayButton(
-                            day: 'T',
-                            isSelected: false,
-                            onTap: (bool isSelected) {},
-                          ),
-                          const SizedBox(width: 8),
-                          DayButton(
-                            day: 'W',
-                            isSelected: true,
-                            onTap: (bool isSelected) {},
-                          ),
-                          const SizedBox(width: 8),
-                          DayButton(
-                            day: 'T',
-                            isSelected: false,
-                            onTap: (bool isSelected) {},
-                          ),
-                          const SizedBox(width: 8),
-                          DayButton(
-                            day: 'F',
-                            isSelected: true,
-                            onTap: (bool isSelected) {},
-                          ),
-                          const SizedBox(width: 8),
-                          DayButton(
-                            day: 'S',
-                            isSelected: false,
-                            onTap: (bool isSelected) {},
-                          ),
-                          const SizedBox(width: 8),
-                          DayButton(
-                            day: 'S',
-                            isSelected: false,
-                            onTap: (bool isSelected) {},
-                          ),
-                          const SizedBox(width: 8),
-                        ],
-                      ),
-                      const SizedBox(height: 16),
-                      const AvailabilityRow(
-                        label: 'Morning',
-                        availability: [
-                          true,
-                          true,
-                          false,
-                          false,
-                          false,
-                          false,
-                          false
-                        ],
-                        timePeriod: 'Morning',
-                      ),
-                      const Divider(),
-                      const AvailabilityRow(
-                        label: 'Afternoon',
-                        availability: [
-                          false,
-                          false,
-                          false,
-                          true,
-                          false,
-                          false,
-                          false
-                        ],
-                        timePeriod: 'Afternoon',
-                      ),
-                      const Divider(),
-                      const AvailabilityRow(
-                        label: 'Evening',
-                        availability: [
-                          false,
-                          false,
-                          false,
-                          false,
-                          false,
-                          true,
-                          false
-                        ],
-                        timePeriod: 'Evening',
+                      SizedBox(
+                        height: 50,
+                        child: FutureBuilder(
+                          future: familyhomeController.getPopularJobs(),
+                          builder: (context, snapshot) {
+                            if (snapshot.connectionState ==
+                                ConnectionState.waiting) {
+                              return const ShimmerUi();
+                            } else if (snapshot.hasError) {
+                              return Center(
+                                  child: Text('Error: ${snapshot.error}'));
+                            } else if (snapshot.data!.isEmpty) {
+                              return const Center(
+                                  child: Text('Availability Empty...'));
+                            } else if (snapshot.hasData) {
+                              Map<dynamic, dynamic> bookings =
+                                  snapshot.data as Map<dynamic, dynamic>;
+                              List<Widget> bookingWidgets = [];
+                              String currentUserUID =
+                                  FirebaseAuth.instance.currentUser!.uid;
+
+                              bookings.forEach((key, value) {
+                                if (value['uid'] == currentUserUID) {
+                                  // Filter by current user UID
+                                  if (value['Availability'] is Map) {
+                                    Map<String, dynamic> availabilityMap =
+                                        Map<String, dynamic>.from(
+                                            value['Availability']);
+                                    Set<String> daysSet = {};
+
+                                    availabilityMap
+                                        .forEach((timeOfDay, daysMap) {
+                                      if (daysMap is Map) {
+                                        daysMap.forEach((day, isAvailable) {
+                                          if (isAvailable &&
+                                              !daysSet.contains(day)) {
+                                            daysSet.add(day
+                                                .substring(0, 1)
+                                                .toUpperCase());
+                                          }
+                                        });
+                                      }
+                                    });
+
+                                    List<Widget> dayButtons =
+                                        daysSet.map((dayAbbreviation) {
+                                      return Padding(
+                                        padding: const EdgeInsets.all(4.0),
+                                        child: DayButtonProvider(
+                                            day: dayAbbreviation),
+                                      );
+                                    }).toList();
+
+                                    bookingWidgets.add(
+                                      Row(
+                                        children:
+                                            dayButtons, // Use the day buttons here
+                                      ),
+                                    );
+                                  } else {
+                                    const Center(
+                                        child: Text('Invalid data format'));
+                                  }
+                                }
+                              });
+
+                              return SingleChildScrollView(
+                                scrollDirection: Axis.vertical,
+                                child: Padding(
+                                  padding: const EdgeInsets.only(bottom: 50),
+                                  child: Column(
+                                    children: bookingWidgets,
+                                  ),
+                                ),
+                              );
+                            } else {
+                              return const Center(
+                                  child: Text('No data available'));
+                            }
+                          },
+                        ),
                       ),
                       const VerticalSpeacing(10),
                     ],
@@ -527,6 +530,43 @@ class SettingsFamilyView extends StatelessWidget {
                 ),
               ),
             ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class DayButtonProvider extends StatefulWidget {
+  final String day;
+
+  const DayButtonProvider({
+    super.key,
+    required this.day,
+  });
+
+  @override
+  _DayButtonProviderState createState() => _DayButtonProviderState();
+}
+
+class _DayButtonProviderState extends State<DayButtonProvider> {
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: 15,
+      width: 15,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(2),
+        color: Colors.transparent,
+        border: Border.all(color: Colors.grey),
+      ),
+      child: Center(
+        child: Text(
+          widget.day.toString(),
+          style: const TextStyle(
+            fontSize: 8,
+            color: AppColor.blackColor,
+            fontWeight: FontWeight.w500,
           ),
         ),
       ),
