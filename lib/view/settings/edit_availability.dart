@@ -9,14 +9,14 @@ import 'package:nanny_fairy/utils/utils.dart';
 import '../../../res/components/colors.dart';
 import '../../../res/components/day_button.dart';
 
-class AvailabilityView extends StatefulWidget {
-  const AvailabilityView({super.key});
+class EditAvailabilityView extends StatefulWidget {
+  const EditAvailabilityView({super.key});
 
   @override
-  State<AvailabilityView> createState() => _AvailabilityViewState();
+  State<EditAvailabilityView> createState() => _EditAvailabilityViewState();
 }
 
-class _AvailabilityViewState extends State<AvailabilityView> {
+class _EditAvailabilityViewState extends State<EditAvailabilityView> {
   final DatabaseReference _dbRef = FirebaseDatabase.instance.ref();
   // String selectedDay = 'Monday';
   List<String> days = [
@@ -44,7 +44,7 @@ class _AvailabilityViewState extends State<AvailabilityView> {
     };
 
     // Store the map in Firebase under a user-specific path
-    _dbRef.child('Providers').child(userId).child('Time').set(times);
+    _dbRef.child('Providers').child(userId).child('Time').update(times);
   }
 
   @override
@@ -66,7 +66,7 @@ class _AvailabilityViewState extends State<AvailabilityView> {
             },
           ),
           title: Text(
-            'Availability',
+            'Edit Availability',
             style: GoogleFonts.getFont(
               "Poppins",
               textStyle: const TextStyle(
@@ -349,11 +349,11 @@ class _AvailabilityViewState extends State<AvailabilityView> {
                 ),
                 const VerticalSpeacing(46.0),
                 RoundedButton(
-                    title: 'Register',
+                    title: 'Update',
                     onpress: () {
                       if (selectedTimes.isNotEmpty) {
-                        Navigator.pushNamed(
-                            context, RoutesName.educationHorlyView);
+                        Navigator.pushNamedAndRemoveUntil(
+                            context, RoutesName.dashboard, (router) => false);
                       } else {
                         Utils.snackBar(
                             'Please select the day and time', context);
