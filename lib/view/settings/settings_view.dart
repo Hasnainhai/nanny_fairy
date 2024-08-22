@@ -2,13 +2,32 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:nanny_fairy/res/components/toggle_widget.dart';
 import 'package:nanny_fairy/res/components/widgets/vertical_spacing.dart';
+import 'package:provider/provider.dart';
+import '../../FamilyController/get_family_info_controller.dart';
 import '../../res/components/colors.dart';
 
-class SettingsView extends StatelessWidget {
+class SettingsView extends StatefulWidget {
   const SettingsView({super.key});
 
   @override
+  State<SettingsView> createState() => _SettingsViewState();
+}
+
+class _SettingsViewState extends State<SettingsView> {
+  @override
+  void initState() {
+    super.initState();
+    // Fetch users when the widget initializes
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      Provider.of<GetFamilyInfoController>(context, listen: false)
+          .getFamilyInfo();
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
+    final getProviderInfo = Provider.of<GetFamilyInfoController>(context);
+
     return Scaffold(
       backgroundColor: AppColor.secondaryBgColor,
       appBar: AppBar(
@@ -114,6 +133,7 @@ class SettingsView extends StatelessWidget {
                     ),
                   ),
                 ),
+
                 // Text(
                 //   'Deactivr of verwijderen',
                 //   style: GoogleFonts.getFont(
@@ -168,17 +188,36 @@ class SettingsView extends StatelessWidget {
                         ),
                       ),
                     ),
-                    Text(
-                      'hasnain@gmail.com',
-                      style: GoogleFonts.getFont(
-                        "Poppins",
-                        textStyle: const TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.w400,
-                          color: AppColor.blackColor,
-                        ),
-                      ),
-                    ),
+                    FutureBuilder<Map<dynamic, dynamic>>(
+                        future: getProviderInfo.getFamilyInfo(),
+                        builder: (context, snapshot) {
+                          if (snapshot.connectionState ==
+                              ConnectionState.waiting) {
+                            return const Center(
+                              child: CircularProgressIndicator(),
+                            );
+                          } else if (snapshot.hasError) {
+                            return Center(
+                                child: Text('Error: ${snapshot.error}'));
+                          } else if (snapshot.hasData) {
+                            Map<dynamic, dynamic> provider =
+                                snapshot.data as Map<dynamic, dynamic>;
+                            return Text(
+                              provider['email'],
+                              style: GoogleFonts.getFont(
+                                "Poppins",
+                                textStyle: const TextStyle(
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w400,
+                                  color: AppColor.blackColor,
+                                ),
+                              ),
+                            );
+                          }
+                          return const Center(
+                            child: Text('No email'),
+                          );
+                        }),
                     const VerticalSpeacing(16.0),
                     Text(
                       'watchwood',
