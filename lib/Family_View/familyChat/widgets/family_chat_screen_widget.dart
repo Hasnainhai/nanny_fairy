@@ -63,8 +63,8 @@ class ChatScreenState extends State<FamilyChatScreenWidget> {
       padding: const EdgeInsets.only(left: 20.0, right: 20.0, top: 20.0),
       child: Container(
         alignment: senderId == auth.currentUser!.uid
-            ? Alignment.centerLeft
-            : Alignment.centerRight,
+            ? Alignment.centerRight
+            : Alignment.centerLeft,
         margin: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 16.0),
         child: Container(
           padding: const EdgeInsets.all(16.0),
@@ -122,7 +122,6 @@ class ChatScreenState extends State<FamilyChatScreenWidget> {
                     DateTime timeB = DateTime.parse(b['timeSent']);
                     return timeA.compareTo(timeB); // Sort by timeSent
                   } catch (e) {
-                    print('Error parsing timeSent: $e');
                     return 0; // Treat as equal if parsing fails
                   }
                 });
@@ -145,6 +144,10 @@ class ChatScreenState extends State<FamilyChatScreenWidget> {
                   itemCount: chats.length,
                   itemBuilder: (context, index) {
                     final chat = chats[index];
+                    debugPrint("this is sender Id ${chat['senderId']}");
+                    debugPrint(
+                        "this is current User Id ${FirebaseAuth.instance.currentUser!.uid}");
+
                     return _buildMessage(chat['message'], chat['senderId']);
                   },
                 );

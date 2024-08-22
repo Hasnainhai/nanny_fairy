@@ -52,7 +52,7 @@ class ChatScreenState extends State<ChatScreenWidget> {
     return Padding(
       padding: const EdgeInsets.only(left: 20.0, right: 20.0, top: 20.0),
       child: Container(
-        alignment: widget.fimalyId == auth.currentUser!.uid
+        alignment: senderId == auth.currentUser!.uid
             ? Alignment.centerRight
             : Alignment.centerLeft,
         margin: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 16.0),
