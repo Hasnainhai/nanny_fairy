@@ -112,7 +112,6 @@ class ChatScreenState extends State<ChatScreenWidget> {
                     DateTime timeB = DateTime.parse(b['timeSent']);
                     return timeA.compareTo(timeB); // Sort by timeSent
                   } catch (e) {
-                    print('Error parsing timeSent: $e');
                     return 0; // Treat as equal if parsing fails
                   }
                 });

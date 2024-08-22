@@ -144,9 +144,6 @@ class ChatScreenState extends State<FamilyChatScreenWidget> {
                   itemCount: chats.length,
                   itemBuilder: (context, index) {
                     final chat = chats[index];
-                    debugPrint("this is sender Id ${chat['senderId']}");
-                    debugPrint(
-                        "this is current User Id ${FirebaseAuth.instance.currentUser!.uid}");
 
                     return _buildMessage(chat['message'], chat['senderId']);
                   },
