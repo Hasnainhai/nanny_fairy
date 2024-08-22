@@ -111,7 +111,7 @@ class FamilyChatRepository {
           .set({
         "message": text,
         "timeSent": DateTime.now().toIso8601String(),
-        'senderId': providerId,
+        'senderId': auth.currentUser!.uid,
         "messageId": uuid,
       });
 
