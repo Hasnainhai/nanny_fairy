@@ -4,11 +4,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
 import 'package:nanny_fairy/Repository/family_chat_repository.dart';
 import 'package:nanny_fairy/ViewModel/family_chat_view_model.dart';
-import 'package:nanny_fairy/res/components/widgets/shimmer_effect.dart';
-
 import '../../../res/components/colors.dart';
 
 class FamilyChatScreenWidget extends StatefulWidget {
@@ -130,10 +127,7 @@ class ChatScreenState extends State<FamilyChatScreenWidget> {
             }),
             builder: (context, snapshot) {
               if (snapshot.connectionState == ConnectionState.waiting) {
-
-
                 return const Center(child: CircularProgressIndicator());
-
               } else if (snapshot.hasError) {
                 return Center(child: Text('Error: ${snapshot.error}'));
               } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
