@@ -120,7 +120,7 @@ class ChatScreenState extends State<ChatScreenWidget> {
             }),
             builder: (context, snapshot) {
               if (snapshot.connectionState == ConnectionState.waiting) {
-                return const ShimmerUi(); // Replace with your loading widget
+                return const CircularProgressIndicator(); // Replace with your loading widget
               } else if (snapshot.hasError) {
                 return Center(child: Text('Error: ${snapshot.error}'));
               } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
