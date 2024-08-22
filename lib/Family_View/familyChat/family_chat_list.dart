@@ -67,8 +67,6 @@ class FamilyChatList extends StatelessWidget {
                     timesend: chat['timeSent'], // Convert back to DateTime
                     text: chat['lastMessage'],
                     isSeen: chat['isSeen'],
-                    currentUserName: chat['name'],
-                    currentUserProfile: chat['profilePic'],
                   );
                 },
               );

@@ -4,6 +4,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 
 import 'package:nanny_fairy/Family_View/familyChat/family_chat_view.dart';
+import 'package:nanny_fairy/Repository/get_family_info_repo.dart';
 
 import '../../../res/components/colors.dart';
 
@@ -15,8 +16,6 @@ class FamilyChatWidget extends StatefulWidget {
   final String providerId;
   final String timesend;
   final String text;
-  final String currentUserName;
-  final String currentUserProfile;
   const FamilyChatWidget({
     super.key,
     required this.isSeen,
@@ -25,8 +24,6 @@ class FamilyChatWidget extends StatefulWidget {
     required this.providerId,
     required this.timesend,
     required this.text,
-    required this.currentUserName,
-    required this.currentUserProfile,
   });
 
   @override
@@ -46,6 +43,14 @@ class _FamilyChatWidgetState extends State<FamilyChatWidget> {
     }
   }
 
+  GetFamilyInfoRepo getFamilyInfoRepo = GetFamilyInfoRepo();
+  @override
+  void initState() {
+    getFamilyInfoRepo.fetchCurrentFamilyInfo();
+
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -60,8 +65,9 @@ class _FamilyChatWidgetState extends State<FamilyChatWidget> {
                 id: widget.providerId,
                 profilePic: widget.senderProfiel,
                 isSeen: widget.isSeen,
-                currentUserName: widget.currentUserName,
-                currentUserProfilePic: widget.currentUserProfile,
+                currentUserName: getFamilyInfoRepo.familyName.toString(),
+                currentUserProfilePic:
+                    getFamilyInfoRepo.familyProfile.toString(),
               ),
             ),
           );
