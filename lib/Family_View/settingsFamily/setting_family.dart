@@ -3,13 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:nanny_fairy/res/components/toggle_widget.dart';
 import 'package:nanny_fairy/res/components/widgets/vertical_spacing.dart';
+import 'package:nanny_fairy/view/settings/edit_availability.dart';
 import 'package:provider/provider.dart';
 import '../../FamilyController/family_home_controller.dart';
 import '../../ViewModel/get_provider_info_view_model.dart';
 import '../../res/components/colors.dart';
 import '../../res/components/widgets/shimmer_effect.dart';
-import '../findJobFamily/provider_detail.dart';
-import '../homeFamily/widgets/bookCart_home_widget.dart';
 
 class SettingsFamilyView extends StatefulWidget {
   const SettingsFamilyView({super.key});
@@ -57,6 +56,35 @@ class _SettingsFamilyViewState extends State<SettingsFamilyView> {
               Icons.west,
               color: AppColor.blackColor,
             )),
+        actions: [
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: InkWell(
+              onTap: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const EditAvailabilityView()));
+              },
+              child: Container(
+                height: 28,
+                width: 45,
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(4),
+                    color: AppColor.primaryColor),
+                child: const Center(
+                  child: Text(
+                    'Edit',
+                    style: TextStyle(
+                      fontSize: 16,
+                      color: AppColor.whiteColor,
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ],
       ),
       body: Padding(
         padding: const EdgeInsets.only(top: 30.0, left: 10.0, right: 10.0),
@@ -118,22 +146,22 @@ class _SettingsFamilyViewState extends State<SettingsFamilyView> {
                               ),
                             ],
                           ),
-                          Container(
-                            height: 28,
-                            width: 45,
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(4),
-                                color: AppColor.primaryColor),
-                            child: const Center(
-                              child: Text(
-                                'Edit',
-                                style: TextStyle(
-                                  fontSize: 16,
-                                  color: AppColor.whiteColor,
-                                ),
-                              ),
-                            ),
-                          ),
+                          // Container(
+                          //   height: 28,
+                          //   width: 45,
+                          //   decoration: BoxDecoration(
+                          //       borderRadius: BorderRadius.circular(4),
+                          //       color: AppColor.primaryColor),
+                          //   child: const Center(
+                          //     child: Text(
+                          //       'Edit',
+                          //       style: TextStyle(
+                          //         fontSize: 16,
+                          //         color: AppColor.whiteColor,
+                          //       ),
+                          //     ),
+                          //   ),
+                          // ),
                         ],
                       ),
                       const SizedBox(height: 16),
@@ -248,171 +276,166 @@ class _SettingsFamilyViewState extends State<SettingsFamilyView> {
                 child: Padding(
                   padding: const EdgeInsets.all(10.0),
                   child: FutureBuilder(
-                      future: familyhomeController.getPopularJobs(),
-                      builder: (context, snapshot) {
-                        if (snapshot.connectionState ==
-                            ConnectionState.waiting) {
-                          return const Center(
-                            child: CircularProgressIndicator(),
-                          );
-                        } else if (snapshot.hasError) {
-                          return Center(
-                              child: Text('Error: ${snapshot.error}'));
-                        } else if (snapshot.data!.isEmpty) {
-                          return const Center(
-                              child: Text('Availability Empty...'));
-                        } else if (snapshot.hasData) {
-                          Map<dynamic, dynamic> bookings =
-                              snapshot.data as Map<dynamic, dynamic>;
-                          String currentUserUID =
-                              FirebaseAuth.instance.currentUser!.uid;
-
-                          Map<String, String> timeData = {};
-
-                          bookings.forEach((key, value) {
-                            if (value['uid'] == currentUserUID) {
-                              // Filter by current user UID
-                              if (value['Time'] is Map) {
-                                timeData =
-                                    (value['Time'] as Map<dynamic, dynamic>)
-                                        .map((key, value) => MapEntry(
-                                            key.toString(), value.toString()));
-                              }
-                            }
-                          });
-
-                          return Column(
-                            children: [
-                              const SizedBox(height: 16),
-                              Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Text(
-                                    'Timing',
-                                    style: GoogleFonts.getFont(
-                                      "Poppins",
-                                      textStyle: const TextStyle(
-                                        fontSize: 16,
-                                        fontWeight: FontWeight.w400,
-                                        color: AppColor.blackColor,
-                                      ),
-                                    ),
-                                  ),
-                                  Container(
-                                    height: 28,
-                                    width: 45,
-                                    decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(4),
-                                        color: AppColor.primaryColor),
-                                    child: const Center(
-                                      child: Text(
-                                        'Edit',
-                                        style: TextStyle(
-                                          fontSize: 16,
-                                          color: AppColor.whiteColor,
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                              VerticalSpeacing(16),
-                              Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Text(
-                                    'Morning',
-                                    style: GoogleFonts.getFont(
-                                      "Poppins",
-                                      textStyle: const TextStyle(
-                                        fontSize: 16,
-                                        fontWeight: FontWeight.w400,
-                                        color: AppColor.blackColor,
-                                      ),
-                                    ),
-                                  ),
-                                  Text(
-                                    '${timeData['MorningStart']} to ${timeData['MorningEnd']}',
-                                    style: GoogleFonts.getFont(
-                                      "Poppins",
-                                      textStyle: const TextStyle(
-                                        fontSize: 12,
-                                        fontWeight: FontWeight.w400,
-                                        color: AppColor.primaryColor,
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                              Divider(),
-                              VerticalSpeacing(16),
-                              Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Text(
-                                    'Afternoon',
-                                    style: GoogleFonts.getFont(
-                                      "Poppins",
-                                      textStyle: const TextStyle(
-                                        fontSize: 16,
-                                        fontWeight: FontWeight.w400,
-                                        color: AppColor.blackColor,
-                                      ),
-                                    ),
-                                  ),
-                                  Text(
-                                    '${timeData['AfternoonStart']} to ${timeData['AfternoonEnd']}',
-                                    style: GoogleFonts.getFont(
-                                      "Poppins",
-                                      textStyle: const TextStyle(
-                                        fontSize: 12,
-                                        fontWeight: FontWeight.w400,
-                                        color: AppColor.primaryColor,
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                              Divider(),
-                              VerticalSpeacing(16),
-                              Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Text(
-                                    'Evening',
-                                    style: GoogleFonts.getFont(
-                                      "Poppins",
-                                      textStyle: const TextStyle(
-                                        fontSize: 16,
-                                        fontWeight: FontWeight.w400,
-                                        color: AppColor.blackColor,
-                                      ),
-                                    ),
-                                  ),
-                                  Text(
-                                    '${timeData['EveningStart']} to ${timeData['EveningEnd']}',
-                                    style: GoogleFonts.getFont(
-                                      "Poppins",
-                                      textStyle: const TextStyle(
-                                        fontSize: 12,
-                                        fontWeight: FontWeight.w400,
-                                        color: AppColor.primaryColor,
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ],
-                          );
-                        }
+                    future: familyhomeController.getPopularJobs(),
+                    builder: (context, snapshot) {
+                      if (snapshot.connectionState == ConnectionState.waiting) {
                         return const Center(
-                          child: Text('format exception'),
+                          child: CircularProgressIndicator(),
                         );
-                      }),
+                      } else if (snapshot.hasError) {
+                        return Center(child: Text('Error: ${snapshot.error}'));
+                      } else if (snapshot.data!.isEmpty) {
+                        return const Center(
+                            child: Text('Availability Empty...'));
+                      } else if (snapshot.hasData) {
+                        Map<dynamic, dynamic> bookings =
+                            snapshot.data as Map<dynamic, dynamic>;
+                        String currentUserUID =
+                            FirebaseAuth.instance.currentUser!.uid;
+
+                        Map<String, String> timeData = {};
+
+                        bookings.forEach((key, value) {
+                          if (value['uid'] == currentUserUID) {
+                            // Filter by current user UID
+                            if (value['Time'] is Map) {
+                              timeData =
+                                  (value['Time'] as Map<dynamic, dynamic>).map(
+                                      (key, value) => MapEntry(
+                                          key.toString(), value.toString()));
+                            }
+                          }
+                        });
+
+                        return Column(
+                          children: [
+                            const SizedBox(height: 16),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(
+                                  'Timing',
+                                  style: GoogleFonts.getFont(
+                                    "Poppins",
+                                    textStyle: const TextStyle(
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.w400,
+                                      color: AppColor.blackColor,
+                                    ),
+                                  ),
+                                ),
+                                // Container(
+                                //   height: 28,
+                                //   width: 45,
+                                //   decoration: BoxDecoration(
+                                //       borderRadius: BorderRadius.circular(4),
+                                //       color: AppColor.primaryColor),
+                                //   child: const Center(
+                                //     child: Text(
+                                //       'Edit',
+                                //       style: TextStyle(
+                                //         fontSize: 16,
+                                //         color: AppColor.whiteColor,
+                                //       ),
+                                //     ),
+                                //   ),
+                                // ),
+                              ],
+                            ),
+                            const VerticalSpeacing(16),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(
+                                  'Morning',
+                                  style: GoogleFonts.getFont(
+                                    "Poppins",
+                                    textStyle: const TextStyle(
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.w400,
+                                      color: AppColor.blackColor,
+                                    ),
+                                  ),
+                                ),
+                                Text(
+                                  '${timeData['MorningStart']} to ${timeData['MorningEnd']}',
+                                  style: GoogleFonts.getFont(
+                                    "Poppins",
+                                    textStyle: const TextStyle(
+                                      fontSize: 12,
+                                      fontWeight: FontWeight.w400,
+                                      color: AppColor.primaryColor,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                            Divider(),
+                            VerticalSpeacing(16),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(
+                                  'Afternoon',
+                                  style: GoogleFonts.getFont(
+                                    "Poppins",
+                                    textStyle: const TextStyle(
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.w400,
+                                      color: AppColor.blackColor,
+                                    ),
+                                  ),
+                                ),
+                                Text(
+                                  '${timeData['AfternoonStart']} to ${timeData['AfternoonEnd']}',
+                                  style: GoogleFonts.getFont(
+                                    "Poppins",
+                                    textStyle: const TextStyle(
+                                      fontSize: 12,
+                                      fontWeight: FontWeight.w400,
+                                      color: AppColor.primaryColor,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                            const Divider(),
+                            const VerticalSpeacing(16),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(
+                                  'Evening',
+                                  style: GoogleFonts.getFont(
+                                    "Poppins",
+                                    textStyle: const TextStyle(
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.w400,
+                                      color: AppColor.blackColor,
+                                    ),
+                                  ),
+                                ),
+                                Text(
+                                  '${timeData['EveningStart']} to ${timeData['EveningEnd']}',
+                                  style: GoogleFonts.getFont(
+                                    "Poppins",
+                                    textStyle: const TextStyle(
+                                      fontSize: 12,
+                                      fontWeight: FontWeight.w400,
+                                      color: AppColor.primaryColor,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ],
+                        );
+                      }
+                      return const Center(
+                        child: Text('format exception'),
+                      );
+                    },
+                  ),
                 ),
               ),
               const VerticalSpeacing(16.0),
