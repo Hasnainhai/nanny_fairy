@@ -35,6 +35,7 @@ class FamilyChatRepository {
         "timeSent": DateTime.now().toIso8601String(),
         "lastMessage": text,
         "providerId": providerId,
+        "isSeen": true,
       };
 
       // Use update instead of set to avoid overwriting the entire node
