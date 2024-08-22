@@ -23,7 +23,7 @@ class FamilyChatRepository {
       Map<String, dynamic> receiverChatContact = {
         "name": senderName,
         "profilePic": senderProfilePic,
-        "timeSent": DateTime.now().toIso8601String(),
+        "timeSent": DateTime.now().toUtc().toIso8601String(),
         "lastMessage": text,
         "familyId": auth.currentUser!.uid,
         "isSeen": false,
@@ -32,7 +32,7 @@ class FamilyChatRepository {
       Map<String, dynamic> senderChatContact = {
         "name": receiverName,
         "profilePic": receiverProfilePic,
-        "timeSent": DateTime.now().toIso8601String(),
+        "timeSent": DateTime.now().toUtc().toIso8601String(),
         "lastMessage": text,
         "providerId": providerId,
         "isSeen": true,
@@ -97,7 +97,7 @@ class FamilyChatRepository {
           .child(uuid)
           .set({
         "message": text,
-        "timeSent": DateTime.now().toIso8601String(),
+        "timeSent": DateTime.now().toUtc().toIso8601String(),
         'senderId': auth.currentUser!.uid,
         "messageId": uuid,
       });
@@ -111,7 +111,7 @@ class FamilyChatRepository {
           .child(uuid)
           .set({
         "message": text,
-        "timeSent": DateTime.now().toIso8601String(),
+        "timeSent": DateTime.now().toUtc().toIso8601String(),
         'senderId': auth.currentUser!.uid,
         "messageId": uuid,
       });
