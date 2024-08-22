@@ -5,6 +5,7 @@ import 'package:nanny_fairy/res/components/toggle_widget.dart';
 import 'package:nanny_fairy/res/components/widgets/vertical_spacing.dart';
 import 'package:provider/provider.dart';
 import '../../FamilyController/family_home_controller.dart';
+import '../../ViewModel/get_provider_info_view_model.dart';
 import '../../res/components/colors.dart';
 import '../../res/components/widgets/shimmer_effect.dart';
 import '../findJobFamily/provider_detail.dart';
@@ -19,8 +20,19 @@ class SettingsFamilyView extends StatefulWidget {
 
 class _SettingsFamilyViewState extends State<SettingsFamilyView> {
   @override
+  void initState() {
+    super.initState();
+    // Fetch users when the widget initializes
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      Provider.of<GetProviderInfoViewModel>(context, listen: false)
+          .getProviderInfo();
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
     final familyhomeController = Provider.of<FamilyHomeController>(context);
+    final getProviderInfo = Provider.of<GetProviderInfoViewModel>(context);
     return Scaffold(
       backgroundColor: AppColor.secondaryBgColor,
       appBar: AppBar(
@@ -221,14 +233,12 @@ class _SettingsFamilyViewState extends State<SettingsFamilyView> {
                   borderRadius: BorderRadius.circular(12),
                   border: Border.all(
                     strokeAlign: BorderSide.strokeAlignCenter,
-                    color: const Color(0xff1B81BC)
-                        .withOpacity(0.10), // Stroke color with 10% opacity
+                    color: const Color(0xff1B81BC).withOpacity(0.10),
                     width: 1,
                   ),
                   boxShadow: [
                     BoxShadow(
-                      color: const Color(0xff1B81BC).withOpacity(
-                          0.1), // Drop shadow color with 4% opacity
+                      color: const Color(0xff1B81BC).withOpacity(0.1),
                       blurRadius: 2,
                       offset: const Offset(1, 2),
                       spreadRadius: 1,
@@ -399,8 +409,8 @@ class _SettingsFamilyViewState extends State<SettingsFamilyView> {
                             ],
                           );
                         }
-                        return Center(
-                          child: Text('formeat exception'),
+                        return const Center(
+                          child: Text('format exception'),
                         );
                       }),
                 ),
@@ -480,17 +490,17 @@ class _SettingsFamilyViewState extends State<SettingsFamilyView> {
                       ),
                     ),
                   ),
-                  Text(
-                    'Deactivr of verwijderen',
-                    style: GoogleFonts.getFont(
-                      "Poppins",
-                      textStyle: const TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.w400,
-                        color: AppColor.primaryColor,
-                      ),
-                    ),
-                  ),
+                  // Text(
+                  //   'Deactivr of verwijderen',
+                  //   style: GoogleFonts.getFont(
+                  //     "Poppins",
+                  //     textStyle: const TextStyle(
+                  //       fontSize: 16,
+                  //       fontWeight: FontWeight.w400,
+                  //       color: AppColor.primaryColor,
+                  //     ),
+                  //   ),
+                  // ),
                 ],
               ),
               const VerticalSpeacing(10.0),
@@ -534,16 +544,36 @@ class _SettingsFamilyViewState extends State<SettingsFamilyView> {
                           ),
                         ),
                       ),
-                      Text(
-                        'hasnain@gmail.com',
-                        style: GoogleFonts.getFont(
-                          "Poppins",
-                          textStyle: const TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.w400,
-                            color: AppColor.blackColor,
-                          ),
-                        ),
+                      FutureBuilder<Map<dynamic, dynamic>>(
+                        future: getProviderInfo.getProviderInfo(),
+                        builder: (context, snapshot) {
+                          if (snapshot.connectionState ==
+                              ConnectionState.waiting) {
+                            return const Center(
+                              child: Text('waiting...'),
+                            );
+                          } else if (snapshot.hasError) {
+                            return Center(
+                                child: Text('Error: ${snapshot.error}'));
+                          } else if (snapshot.hasData) {
+                            Map<dynamic, dynamic> provider =
+                                snapshot.data as Map<dynamic, dynamic>;
+                            return Text(
+                              provider['email'],
+                              style: GoogleFonts.getFont(
+                                "Poppins",
+                                textStyle: const TextStyle(
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w400,
+                                  color: AppColor.blackColor,
+                                ),
+                              ),
+                            );
+                          } else {
+                            return const Center(
+                                child: Text('No data available'));
+                          }
+                        },
                       ),
                       const VerticalSpeacing(16.0),
                       Text(
