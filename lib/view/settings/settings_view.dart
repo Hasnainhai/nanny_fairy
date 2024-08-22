@@ -114,17 +114,17 @@ class SettingsView extends StatelessWidget {
                     ),
                   ),
                 ),
-                Text(
-                  'Deactivr of verwijderen',
-                  style: GoogleFonts.getFont(
-                    "Poppins",
-                    textStyle: const TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.w400,
-                      color: AppColor.primaryColor,
-                    ),
-                  ),
-                ),
+                // Text(
+                //   'Deactivr of verwijderen',
+                //   style: GoogleFonts.getFont(
+                //     "Poppins",
+                //     textStyle: const TextStyle(
+                //       fontSize: 16,
+                //       fontWeight: FontWeight.w400,
+                //       color: AppColor.primaryColor,
+                //     ),
+                //   ),
+                // ),
               ],
             ),
             const VerticalSpeacing(10.0),
