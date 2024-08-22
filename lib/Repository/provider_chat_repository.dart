@@ -23,7 +23,7 @@ class ProviderChatRepository {
       Map<String, dynamic> receiverChatContact = {
         "name": senderName,
         "profilePic": senderProfilePic,
-        "timeSent": DateTime.now().toIso8601String(),
+        "timeSent": DateTime.now().toUtc().toIso8601String(),
         "lastMessage": text,
         "familyId": familyId,
       };
@@ -31,7 +31,7 @@ class ProviderChatRepository {
       Map<String, dynamic> senderChatContact = {
         "name": receiverName,
         "profilePic": receiverProfilePic,
-        "timeSent": DateTime.now().toIso8601String(),
+        "timeSent": DateTime.now().toUtc().toIso8601String(),
         "lastMessage": text,
         "providerId": auth.currentUser!.uid,
         "isSeen": false,
@@ -80,7 +80,7 @@ class ProviderChatRepository {
         .child(providerId)
         .child("messages");
 
-    return familyChatRef.orderByChild("timeSent").onValue;
+    return familyChatRef.onValue;
   }
 
   Future<void> saveMessageToDatabase(
@@ -99,7 +99,7 @@ class ProviderChatRepository {
           .child(uuid)
           .update({
         "message": text,
-        "timeSent": DateTime.now().toIso8601String(),
+        "timeSent": DateTime.now().toUtc().toIso8601String(),
         'senderId': auth.currentUser!.uid,
         "messageId": uuid,
       });
@@ -113,7 +113,7 @@ class ProviderChatRepository {
           .child(uuid)
           .update({
         "message": text,
-        "timeSent": DateTime.now().toIso8601String(),
+        "timeSent": DateTime.now().toUtc().toIso8601String(),
         'senderId': auth.currentUser!.uid,
         "messageId": uuid,
       });
