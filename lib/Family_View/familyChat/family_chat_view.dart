@@ -1,4 +1,5 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -7,6 +8,7 @@ import 'package:nanny_fairy/Repository/get_family_info_repo.dart';
 import 'package:nanny_fairy/utils/routes/routes_name.dart';
 
 import '../../res/components/colors.dart';
+import '../familyRating/family_rating.dart';
 
 class FamilyChatView extends StatefulWidget {
   final String name;
@@ -116,6 +118,18 @@ class _FamilyChatViewState extends State<FamilyChatView> {
             ),
             InkWell(
               onTap: () {
+                final familyId = FirebaseAuth.instance.currentUser!.uid;
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => FamilyRating(
+                              providerId: widget.id,
+                              familyId: familyId,
+                              familyProfile: widget.currentUserProfilePic,
+                              familyName: widget.currentUserName,
+                              providerProfile: widget.profilePic,
+                              providerName: widget.name,
+                            )));
                 // Navigator.pushNamed(context, RoutesName.addRating);
               },
               child: Container(
