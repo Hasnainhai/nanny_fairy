@@ -21,7 +21,7 @@ class CommunityRepoFamily {
     String title,
     String content,
     String familyProfile,
-      String familyName,
+    String familyName,
   ) async {
     showDialog(
       context: context,
@@ -61,6 +61,7 @@ class CommunityRepoFamily {
         "userId": userId,
         "familyProfile": familyProfile,
         "familyName": familyName,
+        "timePost": DateTime.now().toUtc().toIso8601String()
       });
       Navigator.of(context).pop();
       Utils.toastMessage('Images saved successfully!');
