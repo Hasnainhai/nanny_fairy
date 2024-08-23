@@ -21,16 +21,17 @@ class ProviderChatRepository {
 
       // Update the last message and time in both the Providers and Family nodes
       Map<String, dynamic> receiverChatContact = {
-        "name": senderName,
-        "profilePic": senderProfilePic,
+        "name": receiverName,
+        "profilePic": receiverProfilePic,
         "timeSent": DateTime.now().toUtc().toIso8601String(),
         "lastMessage": text,
         "familyId": familyId,
+        "isSeen":true,
       };
 
       Map<String, dynamic> senderChatContact = {
-        "name": receiverName,
-        "profilePic": receiverProfilePic,
+        "name": senderName,
+        "profilePic": senderProfilePic,
         "timeSent": DateTime.now().toUtc().toIso8601String(),
         "lastMessage": text,
         "providerId": auth.currentUser!.uid,
@@ -44,7 +45,6 @@ class ProviderChatRepository {
           .child("chats")
           .child(familyId)
           .update(receiverChatContact);
-
       await firestore
           .child("Family")
           .child(familyId)
@@ -58,6 +58,10 @@ class ProviderChatRepository {
         timestamp,
         familyId,
       );
+      debugPrint("this is recieverName:$receiverName");
+      debugPrint("this is senderName:$senderName");
+
+
     } catch (e) {
       print("Failed to save contact: $e");
     }

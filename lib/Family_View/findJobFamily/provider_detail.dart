@@ -102,21 +102,21 @@ class _ProviderDetailsState extends State<ProviderDetails> {
                   child: RoundedButton(
                     title: 'Subscribe and Chat',
                     onpress: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => PaymentFamilyView(
+                                  userName: widget.name,
+                                  currentUserName:
+                                      getFamilyInfoRepo.familyName.toString(),
+                                  familyId: widget.familyId,
+                                  currentUserProfile: getFamilyInfoRepo
+                                      .familyProfile
+                                      .toString(),
+                                  profile: widget.profile)));
                       // print(
                       //     'profile:${widget.profile}: userName:${widget.name}:familyId: ${widget.familyId}: currentUserName:${getFamilyInfoRepo.familyName!}:Family profile${getFamilyInfoRepo.familyProfile} ');
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (c) => PaymentFamilyView(
-                            profile: widget.profile,
-                            userName: widget.name,
-                            familyId: widget.familyId,
-                            currentUserName: getFamilyInfoRepo.familyName!,
-                            currentUserProfile:
-                                getFamilyInfoRepo.familyProfile!,
-                          ),
-                        ),
-                      );
+
                     },
                   ),
                 ),
@@ -768,23 +768,6 @@ class _ProviderDetailsState extends State<ProviderDetails> {
                             title: 'Chat With Provider',
                             onpress: () {
                               showSubscribtionDialog(context);
-                              debugPrint(
-                                  "this is the data:${getFamilyInfoRepo.familyProfile!}");
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (c) => FamilyChatView(
-                                    name: widget.name,
-                                    id: widget.familyId,
-                                    profilePic: widget.profile,
-                                    isSeen: true,
-                                    currentUserName:
-                                        getFamilyInfoRepo.familyName!,
-                                    currentUserProfilePic:
-                                        getFamilyInfoRepo.familyProfile!,
-                                  ),
-                                ),
-                              );
                             }),
                         const VerticalSpeacing(40),
                       ],

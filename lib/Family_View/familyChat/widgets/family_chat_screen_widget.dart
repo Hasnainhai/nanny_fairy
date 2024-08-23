@@ -184,6 +184,7 @@ class ChatScreenState extends State<FamilyChatScreenWidget> {
               color: AppColor.primaryColor,
             ),
             onPressed: () {
+              debugPrint("This is the reciever name:${widget.providerName}");
               if (_textController.text.isNotEmpty) {
                 familyChatRepository.saveDataToContactsSubcollection(
                   _textController.text,

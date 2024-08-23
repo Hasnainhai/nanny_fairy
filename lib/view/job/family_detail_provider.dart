@@ -1,6 +1,8 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:nanny_fairy/Family_View/familyChat/family_chat_view.dart';
+import 'package:nanny_fairy/Repository/get_family_info_repo.dart';
 import 'package:nanny_fairy/Repository/get_provider_info.dart';
 import 'package:nanny_fairy/res/components/rounded_button.dart';
 import 'package:nanny_fairy/res/components/widgets/vertical_spacing.dart';
@@ -29,8 +31,10 @@ class FamilyDetailProvider extends StatefulWidget {
 }
 
 class _FamilyDetailProviderState extends State<FamilyDetailProvider> {
-  @override
+  GetFamilyInfoRepo getFamilyInfoRepo = GetFamilyInfoRepo();
   GetProviderInfoRepo getProviderInfoRepo = GetProviderInfoRepo();
+
+  @override
   void initState() {
     getProviderInfoRepo.fetchCurrentFamilyInfo();
     super.initState();
@@ -109,6 +113,7 @@ class _FamilyDetailProviderState extends State<FamilyDetailProvider> {
                   child: RoundedButton(
                     title: 'Subscribe and Chat',
                     onpress: () {
+                      debugPrint("This is reciever Name:${widget.name}");
                       Navigator.push(
                         context,
                         MaterialPageRoute(
@@ -370,20 +375,8 @@ class _FamilyDetailProviderState extends State<FamilyDetailProvider> {
               child: RoundedButton(
                 title: 'Chat With Family',
                 onpress: () {
-                  // showSubscribtionDialog(context);
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (c) => ChatView(
-                          profilePic: widget.profile!,
-                          userName: widget.name,
-                          familyId: widget.familyId,
-                          isSeen: true,
-                          currentUserName: getProviderInfoRepo.providerName!,
-                          currentUserProfile:
-                              getProviderInfoRepo.providerProfile!),
-                    ),
-                  );
+                  showSubscribtionDialog(context);
+                  // Navigator.push(context, MaterialPageRoute(builder: (c)=>FamilyChatView(name: widget.name, id: widget.familyId, profilePic: widget.profile!, isSeen: false, currentUserName: get, currentUserProfilePic: currentUserProfilePic)))
                 },
               ),
             ),
