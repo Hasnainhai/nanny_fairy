@@ -224,7 +224,8 @@ class _FamilyDefaultViewState extends State<FamilyDefaultView> {
                               skill: '',
                               hoursRate: value['hoursrate'],
                               dayButtons: dayButtons,
-                              ratings: ratings,
+                              ratings: calculateAverageRating(
+                                  ratings as List<Map<String, dynamic>>),
                               totalRatings:
                                   int.parse(ratingsData['totalRatings']!),
                             ),
@@ -254,5 +255,14 @@ class _FamilyDefaultViewState extends State<FamilyDefaultView> {
         ),
       ],
     );
+  }
+
+  double calculateAverageRating(List<Map<String, dynamic>> reviews) {
+    if (reviews.isEmpty) return 0.0;
+    double totalRating = 0.0;
+    for (var review in reviews) {
+      totalRating += review['countRatingStars'] ?? 0.0;
+    }
+    return totalRating / reviews.length;
   }
 }

@@ -13,12 +13,16 @@ class FamilyDetailProvider extends StatefulWidget {
   final String name;
   final String bio;
   final String familyId;
-  const FamilyDetailProvider(
+  double? ratings;
+  int? totalRatings;
+  FamilyDetailProvider(
       {super.key,
       this.profile,
       required this.name,
       required this.bio,
-      required this.familyId});
+      required this.familyId,
+      this.ratings,
+      this.totalRatings});
 
   @override
   State<FamilyDetailProvider> createState() => _FamilyDetailProviderState();
@@ -219,7 +223,7 @@ class _FamilyDetailProviderState extends State<FamilyDetailProvider> {
                                 color: Colors.amber, size: 20),
                             const SizedBox(width: 4),
                             Text(
-                              '4.8 (456 Reviews)',
+                              '${widget.ratings} (${widget.totalRatings} Reviews)',
                               style: GoogleFonts.getFont(
                                 "Poppins",
                                 textStyle: const TextStyle(
