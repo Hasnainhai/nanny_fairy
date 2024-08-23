@@ -20,6 +20,20 @@ class FamilyDefaultView extends StatefulWidget {
 }
 
 class _FamilyDefaultViewState extends State<FamilyDefaultView> {
+  Map<String, String> getRatingsAndTotalRatings(Map<dynamic, dynamic> value) {
+    String ratings = value != null && value['countRatingStars'] != null
+        ? value['countRatingStars'].toString()
+        : 'N/A';
+    // Get the total number of reviews
+    String totalRatings =
+        value['reviews'] != null ? value['reviews'].length.toString() : '0';
+
+    return {
+      'ratings': ratings,
+      'totalRatings': totalRatings,
+    };
+  }
+
   @override
   Widget build(BuildContext context) {
     final familyhomeController = Provider.of<FamilyHomeController>(context);
@@ -141,7 +155,7 @@ class _FamilyDefaultViewState extends State<FamilyDefaultView> {
                       return Center(child: Text('Error: ${snapshot.error}'));
                     } else if (snapshot.data!.isEmpty) {
                       return Center(child: Text('No Providers...'));
-                    }else if (snapshot.hasData) {
+                    } else if (snapshot.hasData) {
                       Map<dynamic, dynamic> bookings =
                           snapshot.data as Map<dynamic, dynamic>;
                       List<Widget> bookingWidgets = [];
@@ -170,7 +184,11 @@ class _FamilyDefaultViewState extends State<FamilyDefaultView> {
                               child: DayButtonFamily(day: dayAbbreviation),
                             );
                           }).toList();
-
+                          Map<String, String> ratingsData =
+                              getRatingsAndTotalRatings(value);
+                          double? ratings = ratingsData['ratings'] != 'N/A'
+                              ? double.tryParse(ratingsData['ratings']!)
+                              : 0.0;
                           bookingWidgets.add(
                             BookingCartWidgetHome(
                               primaryButtonColor: AppColor.primaryColor,
@@ -206,11 +224,13 @@ class _FamilyDefaultViewState extends State<FamilyDefaultView> {
                               skill: '',
                               hoursRate: value['hoursrate'],
                               dayButtons: dayButtons,
+                              ratings: ratings,
+                              totalRatings:
+                                  int.parse(ratingsData['totalRatings']!),
                             ),
                           );
                         } else {
-                            const Center(child: Text('Invalid data format'));
-
+                          const Center(child: Text('Invalid data format'));
                         }
                       });
 

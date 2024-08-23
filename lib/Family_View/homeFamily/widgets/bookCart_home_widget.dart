@@ -6,7 +6,7 @@ import 'package:nanny_fairy/utils/routes/routes_name.dart';
 import '../../../res/components/colors.dart';
 
 class BookingCartWidgetHome extends StatefulWidget {
-  const BookingCartWidgetHome(
+  BookingCartWidgetHome(
       {super.key,
       required this.primaryButtonTxt,
       required this.ontapView,
@@ -16,7 +16,9 @@ class BookingCartWidgetHome extends StatefulWidget {
       required this.degree,
       required this.skill,
       required this.dayButtons,
-      required this.hoursRate});
+      required this.hoursRate,
+      this.ratings,
+      this.totalRatings});
   final Function() ontapView;
   final String primaryButtonTxt;
   final Color primaryButtonColor;
@@ -25,6 +27,8 @@ class BookingCartWidgetHome extends StatefulWidget {
   final String degree;
   final String skill;
   final String hoursRate;
+  double? ratings;
+  int? totalRatings;
   final List<Widget> dayButtons;
 
   @override
@@ -136,7 +140,7 @@ class _BookingCartWidgetHomeState extends State<BookingCartWidgetHome> {
                       ),
                     ),
                     Text(
-                      '⭐4.8(45 Reviews)',
+                      '⭐${widget.ratings}(${widget.totalRatings} Reviews)',
                       style: GoogleFonts.getFont(
                         "Poppins",
                         textStyle: const TextStyle(
@@ -281,7 +285,7 @@ class _BookingCartWidgetHomeState extends State<BookingCartWidgetHome> {
                     ),
                   ),
                   Row(
-                    children: widget.dayButtons,  // Use the day buttons here
+                    children: widget.dayButtons, // Use the day buttons here
                   ),
                 ],
               ),
@@ -292,4 +296,3 @@ class _BookingCartWidgetHomeState extends State<BookingCartWidgetHome> {
     );
   }
 }
-
