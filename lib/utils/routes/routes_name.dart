@@ -20,7 +20,7 @@ class RoutesName {
   static const String settingsView = '/settings_view';
   static const String paymentView = '/payment_view';
   static const String totalRating = '/total_rating';
-  static const String addRating = '/add_rating';
+  // static const String addRating = '/add_rating';
   static const String filterPopup = '/filter_popup';
   static const String loginView = '/login_view';
   static const String forgetPass = '/forget_pass';

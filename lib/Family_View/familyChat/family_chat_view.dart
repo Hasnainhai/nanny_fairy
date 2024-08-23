@@ -116,7 +116,7 @@ class _FamilyChatViewState extends State<FamilyChatView> {
             ),
             InkWell(
               onTap: () {
-                Navigator.pushNamed(context, RoutesName.addRating);
+                // Navigator.pushNamed(context, RoutesName.addRating);
               },
               child: Container(
                 height: 26,

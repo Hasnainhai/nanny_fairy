@@ -1,10 +1,12 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:nanny_fairy/Repository/provider_chat_repository.dart';
 
 import 'package:nanny_fairy/utils/routes/routes_name.dart';
 import 'package:nanny_fairy/view/chat/widgets/chatting_widget.dart';
+import 'package:nanny_fairy/view/rating/add_rating.dart';
 
 import '../../res/components/colors.dart';
 
@@ -36,6 +38,8 @@ class _ChatViewState extends State<ChatView> {
     providerChatRepository.updateSeenStatus(true, widget.familyId);
     super.initState();
   }
+
+  final providerId = FirebaseAuth.instance.currentUser!.uid;
 
   @override
   Widget build(BuildContext context) {
@@ -122,7 +126,18 @@ class _ChatViewState extends State<ChatView> {
             ),
             InkWell(
               onTap: () {
-                Navigator.pushNamed(context, RoutesName.addRating);
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => Rating(
+                              providerId: providerId,
+                              familyId: widget.familyId,
+                              familyProfile: widget.profilePic,
+                              familyName: widget.userName,
+                              providerProfile: widget.currentUserProfile,
+                              providerName: widget.currentUserName,
+                            )));
+                // Navigator.pushNamed(context, RoutesName.addRating);
               },
               child: Container(
                 height: 26,
