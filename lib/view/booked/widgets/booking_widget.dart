@@ -12,6 +12,8 @@ class BookingCartWidget extends StatefulWidget {
   final List<String> passion;
   final Function() ontapView;
   final String primaryButtonTxt;
+  double? ratings;
+  int? totalRatings;
 
   BookingCartWidget({
     super.key,
@@ -20,6 +22,8 @@ class BookingCartWidget extends StatefulWidget {
     required this.name,
     this.profilePic,
     required this.passion,
+    this.ratings,
+    this.totalRatings,
   });
 
   @override
@@ -144,7 +148,7 @@ class _BookingCartWidgetState extends State<BookingCartWidget> {
                           ),
                         ),
                         Text(
-                          '⭐4.8(45 Reviews)',
+                          '⭐${widget.ratings}(${widget.totalRatings} Reviews)',
                           style: GoogleFonts.getFont(
                             "Poppins",
                             textStyle: const TextStyle(

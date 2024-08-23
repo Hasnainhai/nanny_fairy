@@ -7,16 +7,16 @@ import '../../res/components/colors.dart';
 import '../../res/components/widgets/vertical_spacing.dart';
 import '../../utils/utils.dart';
 
-class TotalRatingScreen extends StatefulWidget {
-  const TotalRatingScreen({
+class TotalRatingsFamily extends StatefulWidget {
+  const TotalRatingsFamily({
     super.key,
   });
 
   @override
-  State<TotalRatingScreen> createState() => _TotalRatingScreenState();
+  State<TotalRatingsFamily> createState() => _TotalRatingsFamilyState();
 }
 
-class _TotalRatingScreenState extends State<TotalRatingScreen> {
+class _TotalRatingsFamilyState extends State<TotalRatingsFamily> {
   List<Map<String, dynamic>> reviews = [];
   bool _isLoading = true;
 
@@ -31,7 +31,7 @@ class _TotalRatingScreenState extends State<TotalRatingScreen> {
   Future<void> fetchReviews() async {
     DatabaseReference ref = FirebaseDatabase.instance
         .ref()
-        .child('Providers')
+        .child('Family')
         .child(currentUserId)
         .child('reviews');
 
@@ -176,7 +176,8 @@ class _TotalRatingScreenState extends State<TotalRatingScreen> {
                               rating: (review['countRatingStars'] ?? 0.0)
                                   .toString(),
                               time: review['timestamp'] ?? 'Unknown',
-                              comment: review['FamilyComment'] ?? 'No comment',
+                              comment:
+                                  review['providerComment'] ?? 'No comment',
                             );
                           }).toList(),
                         ],

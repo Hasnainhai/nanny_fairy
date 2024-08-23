@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:nanny_fairy/FamilyController/get_family_info_controller.dart';
+import 'package:nanny_fairy/Family_View/familyRating/total_ratings_family.dart';
 import 'package:nanny_fairy/Family_View/profileFamily/widgets/profile_widget_family.dart';
 import 'package:nanny_fairy/utils/routes/routes_name.dart';
 import 'package:provider/provider.dart';
@@ -206,7 +207,7 @@ class _ProfileViewFamilyState extends State<ProfileViewFamily> {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (c) => const TotalRatingScreen(),
+                        builder: (c) => const TotalRatingsFamily(),
                       ),
                     );
                   },

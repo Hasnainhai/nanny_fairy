@@ -19,6 +19,20 @@ class HomeDefaultView extends StatefulWidget {
 }
 
 class _HomeDefaultViewState extends State<HomeDefaultView> {
+  Map<String, String> getRatingsAndTotalRatings(Map<dynamic, dynamic> value) {
+    String ratings = value != null && value['countRatingStars'] != null
+        ? value['countRatingStars'].toString()
+        : 'N/A';
+    // Get the total number of reviews
+    String totalRatings =
+        value['reviews'] != null ? value['reviews'].length.toString() : '0';
+
+    return {
+      'ratings': ratings,
+      'totalRatings': totalRatings,
+    };
+  }
+
   @override
   Widget build(BuildContext context) {
     final homeViewModel = Provider.of<ProviderHomeViewModel>(context);
@@ -173,6 +187,17 @@ class _HomeDefaultViewState extends State<HomeDefaultView> {
                           List<String> passions =
                               (value['FamilyPassions'] as List<dynamic>)
                                   .cast<String>();
+                          Map<String, String> ratingsData =
+                              getRatingsAndTotalRatings(value);
+                          // Calculate ratings using a list of reviews, if available
+                          List<Map<String, dynamic>> reviews =
+                              value['reviews'] is List
+                                  ? (value['reviews'] as List<dynamic>)
+                                      .cast<Map<String, dynamic>>()
+                                  : [];
+
+                          double averageRating =
+                              calculateAverageRating(reviews);
 
                           bookingWidgets.add(
                             BookingCartWidget(
@@ -187,6 +212,10 @@ class _HomeDefaultViewState extends State<HomeDefaultView> {
                                       bio: value['bio'] ?? '',
                                       profile: value['profile'],
                                       familyId: value['uid'],
+                                      ratings: averageRating,
+                                      totalRatings: int.parse(
+                                        ratingsData['totalRatings']!,
+                                      ),
                                     ),
                                   ),
                                 );
@@ -195,6 +224,9 @@ class _HomeDefaultViewState extends State<HomeDefaultView> {
                                   "${value['firstName']} ${value['lastName']}",
                               profilePic: value['profile'],
                               passion: passions,
+                              ratings: averageRating,
+                              totalRatings:
+                                  int.parse(ratingsData['totalRatings']!),
                             ),
                           );
                         },
@@ -217,5 +249,14 @@ class _HomeDefaultViewState extends State<HomeDefaultView> {
         ),
       ],
     );
+  }
+
+  double calculateAverageRating(List<Map<String, dynamic>> reviews) {
+    if (reviews.isEmpty) return 0.0;
+    double totalRating = 0.0;
+    for (var review in reviews) {
+      totalRating += review['countRatingStars'] ?? 0.0;
+    }
+    return totalRating / reviews.length;
   }
 }
