@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:nanny_fairy/Repository/get_provider_info.dart';
 import 'package:nanny_fairy/ViewModel/community_view_view_model.dart';
 import 'package:nanny_fairy/res/components/rounded_button.dart';
 import 'package:nanny_fairy/res/components/widgets/custom_text_field.dart';
@@ -61,6 +62,13 @@ class _UploadComunityPostState extends State<UploadComunityPost> {
         post = img;
       },
     );
+  }
+
+  final GetProviderInfoRepo getProviderInfoRepo = GetProviderInfoRepo();
+  @override
+  void initState() {
+    super.initState();
+    getProviderInfoRepo.fetchCurrentFamilyInfo();
   }
 
   @override
@@ -220,8 +228,13 @@ class _UploadComunityPostState extends State<UploadComunityPost> {
                       onpress: () {
                         if (titleController.text.isNotEmpty ||
                             contentController.text.isNotEmpty) {
-                          communityController.uploadPostProvider(context, post,
-                              titleController.text, contentController.text);
+                          communityController.uploadPostProvider(
+                              context,
+                              post,
+                              titleController.text,
+                              contentController.text,
+                              getProviderInfoRepo.providerName!,
+                              getProviderInfoRepo.providerProfile!);
                         } else {
                           Utils.flushBarErrorMessage(
                               "Please upload post", context);

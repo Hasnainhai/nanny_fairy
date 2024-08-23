@@ -21,12 +21,13 @@ class FamilyCommunityController extends ChangeNotifier {
     File? post,
     String title,
     String content,
-    // String postId,
+    String familyProfile,
+    String familyName,
   ) async {
     _setLoading(true);
     try {
       await _communityRepoFamily.uploadFamilyPost(
-          context, post, title, content);
+          context, post, title, content, familyProfile, familyName);
     } catch (e) {
       debugPrint('Error uploading Post: ${e.toString()}');
     } finally {
@@ -56,6 +57,7 @@ class FamilyCommunityController extends ChangeNotifier {
     _posts = posts;
     notifyListeners();
   }
+
   Future<int> fetchTotalComments(String postId) async {
     return await _communityRepoFamily.getTotalComments(postId);
   }

@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:nanny_fairy/FamilyController/family_community_controller.dart';
+import 'package:nanny_fairy/Repository/get_family_info_repo.dart';
 import 'package:nanny_fairy/res/components/rounded_button.dart';
 import 'package:nanny_fairy/res/components/widgets/custom_text_field.dart';
 import 'package:nanny_fairy/res/components/widgets/vertical_spacing.dart';
@@ -64,6 +65,13 @@ class _UploadComunityPostFamilyState extends State<UploadComunityPostFamily> {
         post = img;
       },
     );
+  }
+
+  final GetFamilyInfoRepo getFamilyInfoRepo = GetFamilyInfoRepo();
+  @override
+  void initState() {
+    getFamilyInfoRepo.fetchCurrentFamilyInfo();
+    super.initState();
   }
 
   @override
@@ -225,10 +233,13 @@ class _UploadComunityPostFamilyState extends State<UploadComunityPostFamily> {
                         if (titleController.text.isNotEmpty ||
                             contentController.text.isNotEmpty) {
                           communityContrillerFamily.uploadPostFamily(
-                              context,
-                              post,
-                              titleController.text,
-                              contentController.text);
+                            context,
+                            post,
+                            titleController.text,
+                            contentController.text,
+                            getFamilyInfoRepo.familyProfile!,
+                            getFamilyInfoRepo.familyName!,
+                          );
                         } else {
                           Utils.flushBarErrorMessage(
                               "Please upload post", context);

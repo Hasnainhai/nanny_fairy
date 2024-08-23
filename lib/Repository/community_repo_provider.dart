@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:nanny_fairy/view/home/dashboard/dashboard.dart';
 import 'package:uuid/uuid.dart';
 import '../res/components/common_firebase_storge.dart';
-import '../utils/routes/routes_name.dart';
 import '../utils/utils.dart';
 
 class CommunityRepoProvider {
@@ -21,7 +20,8 @@ class CommunityRepoProvider {
     File? post,
     String title,
     String content,
-    // String postId,
+    String providerName,
+    String providerProfile,
   ) async {
     showDialog(
       context: context,
@@ -59,12 +59,15 @@ class CommunityRepoProvider {
         "title": title,
         "content": content,
         "userId": userId,
+        "providerName": providerName,
+        "providerProfile": providerProfile,
       });
       Navigator.of(context).pop();
       Utils.toastMessage('Images saved successfully!');
       debugPrint(userId);
 
-      Navigator.push(context, MaterialPageRoute(builder: (context)=>const DashBoardScreen()));
+      Navigator.push(context,
+          MaterialPageRoute(builder: (context) => const DashBoardScreen()));
       // Navigator.pushNamedAndRemoveUntil(
       //   context,
       //   RoutesName.dashboard,
