@@ -20,7 +20,8 @@ class CommunityRepoFamily {
     File? post,
     String title,
     String content,
-    // String postId,
+    String familyProfile,
+      String familyName,
   ) async {
     showDialog(
       context: context,
@@ -58,6 +59,8 @@ class CommunityRepoFamily {
         "title": title,
         "content": content,
         "userId": userId,
+        "familyProfile": familyProfile,
+        "familyName": familyName,
       });
       Navigator.of(context).pop();
       Utils.toastMessage('Images saved successfully!');
