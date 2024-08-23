@@ -105,9 +105,9 @@ class Routes {
       case RoutesName.totalRating:
         return MaterialPageRoute(
             builder: (BuildContext context) => const TotalRatingScreen());
-      case RoutesName.addRating:
-        return MaterialPageRoute(
-            builder: (BuildContext context) => const Rating());
+      // case RoutesName.addRating:
+      //   return MaterialPageRoute(
+      //       builder: (BuildContext context) => const Rating());
       case RoutesName.filterPopup:
         return MaterialPageRoute(
             builder: (BuildContext context) => const FilterPopUp());
