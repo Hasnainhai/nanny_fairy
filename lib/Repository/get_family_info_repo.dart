@@ -18,17 +18,34 @@ class GetFamilyInfoRepo {
 
   // New function to fetch and assign current family info
   Future<void> fetchCurrentFamilyInfo() async {
-    DatabaseEvent snapshot =
-        await _familyRef.child(FirebaseAuth.instance.currentUser!.uid).once();
-    final data = snapshot.snapshot.value as Map<dynamic, dynamic>;
+    try {
+      DatabaseEvent snapshot = await _familyRef.child(FirebaseAuth.instance.currentUser!.uid).once();
 
-    String? firstName = data['firstName'];
-    String? lastName = data['lastName'];
-    familyName =
-        (firstName != null && lastName != null) ? '$firstName $lastName' : null;
+      // Check if snapshot has a value
+      if (snapshot.snapshot.value == null) {
+        debugPrint('No data found for the current user.');
+        return;
+      }
 
-    familyProfile = data['profile'];
-    senderId = FirebaseAuth.instance.currentUser!.uid;
-    debugPrint('credential: $senderId, $familyName,$familyProfile');
+      // Safely cast the snapshot value to a map
+      final data = snapshot.snapshot.value as Map<dynamic, dynamic>?;
+
+      if (data == null) {
+        debugPrint('Data is not a map or is null.');
+        return;
+      }
+
+      String? firstName = data['firstName'] as String?;
+      String? lastName = data['lastName'] as String?;
+      familyName = (firstName != null && lastName != null) ? '$firstName $lastName' : null;
+
+      familyProfile = data['profile'] as String?;
+      senderId = FirebaseAuth.instance.currentUser!.uid;
+
+      debugPrint('credential: $senderId, $familyName, $familyProfile');
+    } catch (e) {
+      debugPrint('Error fetching family info: $e');
+    }
   }
+
 }

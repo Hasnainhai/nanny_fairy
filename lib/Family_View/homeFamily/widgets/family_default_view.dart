@@ -224,10 +224,11 @@ class _FamilyDefaultViewState extends State<FamilyDefaultView> {
                               skill: '',
                               hoursRate: value['hoursrate'],
                               dayButtons: dayButtons,
-                              ratings: calculateAverageRating(
-                                  ratings as List<Map<String, dynamic>>),
-                              totalRatings:
-                                  int.parse(ratingsData['totalRatings']!),
+                              // ratings: 4.4,
+                              // calculateAverageRating(
+                              //     ratings as List<Map<String, dynamic>>),
+                              // totalRatings:
+                              // int.parse(ratingsData['totalRatings']!),
                             ),
                           );
                         } else {

@@ -12,8 +12,10 @@ import 'package:nanny_fairy/Repository/get_family_info_repo.dart';
 import 'package:nanny_fairy/res/components/loading_manager.dart';
 import 'package:nanny_fairy/res/components/rounded_button.dart';
 import 'package:nanny_fairy/utils/utils.dart';
+import '../../Repository/get_provider_info.dart';
 import '../../res/components/colors.dart';
 import '../../res/components/widgets/vertical_spacing.dart';
+import '../chat/chat_view.dart';
 
 class PaymentView extends StatefulWidget {
   final String profile;
@@ -38,14 +40,11 @@ class PaymentView extends StatefulWidget {
 class _PaymentViewState extends State<PaymentView> {
   bool firstButton = true;
   bool secondButton = false;
-  GetFamilyInfoRepo familyInfoRepo = GetFamilyInfoRepo();
+
   bool _isLoading = false;
   @override
-  void initState() {
-    // TODO: implement initState
-    familyInfoRepo.fetchCurrentFamilyInfo();
-    super.initState();
-  }
+
+
 
 // Payment success popup
   void paymentDonePopup() {
@@ -82,14 +81,14 @@ class _PaymentViewState extends State<PaymentView> {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (c) => FamilyChatView(
-                        name: widget.userName,
-                        id: widget.familyId,
-                        profilePic: widget.profile,
-                        isSeen: false,
-                        currentUserName: widget.currentUserName,
-                        currentUserProfilePic: widget.currentUserProfile,
-                      ),
+                      builder: (c) => ChatView(
+                          profilePic: widget.profile,
+                          userName: widget.userName,
+                          familyId: widget.familyId,
+                          isSeen: true,
+                          currentUserName: widget.currentUserName,
+                          currentUserProfile:
+                              widget.currentUserProfile),
                     ),
                   );
                 },
