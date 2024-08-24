@@ -1,23 +1,15 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:nanny_fairy/Family_View/familyChat/family_chat_view.dart';
 import 'package:nanny_fairy/Repository/get_family_info_repo.dart';
 import 'package:nanny_fairy/Repository/get_provider_info.dart';
 import 'package:nanny_fairy/res/components/rounded_button.dart';
 import 'package:nanny_fairy/res/components/widgets/vertical_spacing.dart';
-import 'package:nanny_fairy/view/chat/chat_view.dart';
 import 'package:nanny_fairy/view/payment/payment.dart';
 import '../../res/components/colors.dart';
 
 class FamilyDetailProvider extends StatefulWidget {
-  final String? profile;
-  final String name;
-  final String bio;
-  final String familyId;
-  double? ratings;
-  int? totalRatings;
-  FamilyDetailProvider(
+  const FamilyDetailProvider(
       {super.key,
       this.profile,
       required this.name,
@@ -25,6 +17,12 @@ class FamilyDetailProvider extends StatefulWidget {
       required this.familyId,
       this.ratings,
       this.totalRatings});
+  final String? profile;
+  final String name;
+  final String bio;
+  final String familyId;
+  final double? ratings;
+  final int? totalRatings;
 
   @override
   State<FamilyDetailProvider> createState() => _FamilyDetailProviderState();
