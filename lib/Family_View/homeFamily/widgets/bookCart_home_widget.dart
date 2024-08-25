@@ -6,21 +6,20 @@ import 'package:nanny_fairy/utils/routes/routes_name.dart';
 import '../../../res/components/colors.dart';
 
 class BookingCartWidgetHome extends StatefulWidget {
-  BookingCartWidgetHome(
-      {super.key,
-      required this.primaryButtonTxt,
-      required this.ontapView,
-      required this.primaryButtonColor,
-      required this.profile,
-      required this.name,
-      required this.degree,
-      required this.skill,
-      required this.dayButtons,
-      required this.hoursRate,
-      // this.ratings,
-      // this.totalRatings,
-      }
-);
+  BookingCartWidgetHome({
+    super.key,
+    required this.primaryButtonTxt,
+    required this.ontapView,
+    required this.primaryButtonColor,
+    required this.profile,
+    required this.name,
+    required this.degree,
+    required this.skill,
+    required this.dayButtons,
+    required this.hoursRate,
+    this.ratings,
+    this.totalRatings,
+  });
   final Function() ontapView;
   final String primaryButtonTxt;
   final Color primaryButtonColor;
@@ -29,7 +28,7 @@ class BookingCartWidgetHome extends StatefulWidget {
   final String degree;
   final String skill;
   final String hoursRate;
-  // double? ratings;
+  double? ratings;
   int? totalRatings;
   final List<Widget> dayButtons;
 
@@ -141,17 +140,17 @@ class _BookingCartWidgetHomeState extends State<BookingCartWidgetHome> {
                         ),
                       ),
                     ),
-                    // Text(
-                    //   '⭐${widget.ratings}(${widget.totalRatings} Reviews)',
-                    //   style: GoogleFonts.getFont(
-                    //     "Poppins",
-                    //     textStyle: const TextStyle(
-                    //       fontSize: 11,
-                    //       fontWeight: FontWeight.w500,
-                    //       color: AppColor.blackColor,
-                    //     ),
-                    //   ),
-                    // ),
+                    Text(
+                      '⭐${widget.ratings}(${widget.totalRatings} Reviews)',
+                      style: GoogleFonts.getFont(
+                        "Poppins",
+                        textStyle: const TextStyle(
+                          fontSize: 11,
+                          fontWeight: FontWeight.w500,
+                          color: AppColor.blackColor,
+                        ),
+                      ),
+                    ),
                     const VerticalSpeacing(10),
                     Row(
                       children: [

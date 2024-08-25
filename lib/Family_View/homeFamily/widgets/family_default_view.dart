@@ -10,7 +10,6 @@ import 'package:nanny_fairy/res/components/widgets/shimmer_effect.dart';
 import 'package:nanny_fairy/res/components/widgets/vertical_spacing.dart';
 import 'package:nanny_fairy/utils/routes/routes_name.dart';
 import 'package:provider/provider.dart';
-import 'package:shimmer/shimmer.dart';
 
 class FamilyDefaultView extends StatefulWidget {
   const FamilyDefaultView({super.key});
@@ -186,9 +185,24 @@ class _FamilyDefaultViewState extends State<FamilyDefaultView> {
                           }).toList();
                           Map<String, String> ratingsData =
                               getRatingsAndTotalRatings(value);
-                          double? ratings = ratingsData['ratings'] != 'N/A'
-                              ? double.tryParse(ratingsData['ratings']!)
-                              : 0.0;
+                          List<Map<String, dynamic>> ratings =
+                              ratingsData['ratings'] != 'N/A'
+                                  ? List<Map<String, dynamic>>.from(
+                                      ratingsData['ratings'] as Iterable)
+                                  : [];
+
+                          double calculateAverageRating(
+                              List<Map<String, dynamic>> reviews) {
+                            if (reviews.isEmpty) return 0.0;
+                            double totalRating = 0.0;
+                            for (var review in reviews) {
+                              totalRating += review['countRatingStars'] ?? 0.0;
+                            }
+                            return totalRating / reviews.length;
+                          }
+
+                          double averageRating =
+                              calculateAverageRating(ratings);
                           bookingWidgets.add(
                             BookingCartWidgetHome(
                               primaryButtonColor: AppColor.primaryColor,
@@ -224,11 +238,9 @@ class _FamilyDefaultViewState extends State<FamilyDefaultView> {
                               skill: '',
                               hoursRate: value['hoursrate'],
                               dayButtons: dayButtons,
-                              // ratings: 4.4,
-                              // calculateAverageRating(
-                              //     ratings as List<Map<String, dynamic>>),
-                              // totalRatings:
-                              // int.parse(ratingsData['totalRatings']!),
+                              ratings: averageRating,
+                              totalRatings:
+                                  int.parse(ratingsData['totalRatings']!),
                             ),
                           );
                         } else {
@@ -258,12 +270,12 @@ class _FamilyDefaultViewState extends State<FamilyDefaultView> {
     );
   }
 
-  double calculateAverageRating(List<Map<String, dynamic>> reviews) {
-    if (reviews.isEmpty) return 0.0;
-    double totalRating = 0.0;
-    for (var review in reviews) {
-      totalRating += review['countRatingStars'] ?? 0.0;
-    }
-    return totalRating / reviews.length;
-  }
+  // double calculateAverageRating(List<Map<String, dynamic>> reviews) {
+  //   if (reviews.isEmpty) return 0.0;
+  //   double totalRating = 0.0;
+  //   for (var review in reviews) {
+  //     totalRating += review['countRatingStars'] ?? 0.0;
+  //   }
+  //   return totalRating / reviews.length;
+  // }
 }
