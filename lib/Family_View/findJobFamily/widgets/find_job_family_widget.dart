@@ -79,7 +79,7 @@ class _FindJobsFamilyWidgetState extends State<FindJobsFamilyWidget> {
 
                 InkWell(
                   onTap: () {
-                    Navigator.pushNamed(context, RoutesName.providerDetails);
+                    Navigator.pushNamed(context, RoutesName.jobViewFamily);
                   },
                   child: Container(
                     height: 30,

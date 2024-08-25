@@ -1,311 +1,234 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:nanny_fairy/res/components/widgets/vertical_spacing.dart';
-import 'package:nanny_fairy/utils/routes/routes_name.dart';
-
+import 'package:provider/provider.dart';
+import '../../ViewModel/get_provider_info_view_model.dart';
 import '../../res/components/colors.dart';
+import 'edit_profile.dart';
 
-class MyProfile extends StatelessWidget {
+class MyProfile extends StatefulWidget {
   const MyProfile({super.key});
 
   @override
+  State<MyProfile> createState() => _MyProfileState();
+}
+
+class _MyProfileState extends State<MyProfile> {
+  @override
+  void initState() {
+    super.initState();
+    // Fetch users when the widget initializes
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      Provider.of<GetProviderInfoViewModel>(context, listen: false)
+          .getProviderInfo();
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
+    final getProviderInfo = Provider.of<GetProviderInfoViewModel>(context);
     return Scaffold(
-      backgroundColor: AppColor.secondaryBgColor,
+      backgroundColor: AppColor.primaryColor,
       appBar: AppBar(
-        backgroundColor: AppColor.secondaryBgColor,
+        backgroundColor: Colors.transparent,
+        elevation: 0.0,
         title: Text(
-          'your profile details',
+          'Your Profile Details',
           style: GoogleFonts.getFont(
             "Poppins",
             textStyle: const TextStyle(
               fontSize: 18,
               fontWeight: FontWeight.w400,
-              color: AppColor.blackColor,
+              color: AppColor.whiteColor,
             ),
           ),
         ),
         centerTitle: true,
         leading: IconButton(
-            onPressed: () {
-              Navigator.pop(context);
-            },
-            icon: const Icon(
-              Icons.west,
-              color: AppColor.blackColor,
-            )),
+          onPressed: () {
+            Navigator.pop(context);
+          },
+          icon: const Icon(
+            Icons.west,
+            color: AppColor.whiteColor,
+          ),
+        ),
         actions: [
           IconButton(
-              onPressed: () {
-                Navigator.pushNamed(context, RoutesName.editProfile);
-              },
-              icon: const Icon(
-                Icons.border_color_outlined,
-                color: AppColor.blackColor,
-              ))
+            onPressed: () async {
+              final providerData = await getProviderInfo
+                  .getProviderInfo(); // Await the Future to complete
+              if (providerData != null) {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => EditProfile(
+                      providerData: providerData,
+                    ),
+                  ),
+                );
+              }
+            },
+            icon: const Icon(
+              Icons.border_color_outlined,
+              color: AppColor.whiteColor,
+            ),
+          ),
         ],
       ),
-      body: Padding(
-        padding: const EdgeInsets.only(top: 30.0, left: 16.0, right: 16.0),
-        child: SingleChildScrollView(
-          scrollDirection: Axis.vertical,
-          child: Container(
-            height: MediaQuery.of(context).size.height,
-            width: double.infinity,
-            color: AppColor.whiteColor,
-            child: Padding(
-              padding: const EdgeInsets.all(10.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text.rich(
-                    TextSpan(
-                      text: 'Name\n\n',
-                      style: GoogleFonts.getFont(
-                        "Poppins",
-                        textStyle: const TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.w600,
-                          color: AppColor.blackColor,
-                        ),
+      body: Container(
+        height: MediaQuery.of(context).size.height,
+        width: double.infinity,
+        decoration: const BoxDecoration(
+          color: AppColor.whiteColor,
+          borderRadius: BorderRadius.only(
+            topLeft: Radius.circular(30),
+          ),
+        ),
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: SingleChildScrollView(
+            scrollDirection: Axis.vertical,
+            child: FutureBuilder<Map<dynamic, dynamic>>(
+              future: getProviderInfo.getProviderInfo(),
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return const Center(
+                    child: CircularProgressIndicator(),
+                  );
+                } else if (snapshot.hasError) {
+                  return Center(child: Text('Error: ${snapshot.error}'));
+                } else if (snapshot.hasData) {
+                  Map<dynamic, dynamic> provider =
+                      snapshot.data as Map<dynamic, dynamic>;
+                  return Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      ProfileItem(
+                        icon: Icons.person,
+                        label: 'Name',
+                        value:
+                            "${provider['firstName']} ${provider['lastName']}",
                       ),
-                      children: [
-                        TextSpan(
-                          text: 'Hassnain Haider',
-                          style: GoogleFonts.getFont(
-                            "Poppins",
-                            textStyle: const TextStyle(
-                              fontSize: 14,
-                              fontWeight: FontWeight.w400,
-                              color: AppColor.blackColor,
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  const VerticalSpeacing(16.0),
-                  Text.rich(
-                    TextSpan(
-                      text: 'Address\n\n',
-                      style: GoogleFonts.getFont(
-                        "Poppins",
-                        textStyle: const TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.w600,
-                          color: AppColor.blackColor,
-                        ),
+                      const Divider(),
+                      const VerticalSpeacing(10.0),
+                      ProfileItem(
+                        icon: Icons.location_on,
+                        label: 'Address',
+                        value: provider['address'],
                       ),
-                      children: [
-                        TextSpan(
-                          text: 'E-11 block Islamabad',
-                          style: GoogleFonts.getFont(
-                            "Poppins",
-                            textStyle: const TextStyle(
-                              fontSize: 14,
-                              fontWeight: FontWeight.w400,
-                              color: AppColor.blackColor,
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  const VerticalSpeacing(16.0),
-                  Text.rich(
-                    TextSpan(
-                      text: 'Hourly Rate\n\n',
-                      style: GoogleFonts.getFont(
-                        "Poppins",
-                        textStyle: const TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.w600,
-                          color: AppColor.blackColor,
-                        ),
+                      const Divider(),
+                      const VerticalSpeacing(10.0),
+                      ProfileItem(
+                        icon: Icons.phone,
+                        label: 'Telephone Number',
+                        value: provider['phoneNumber'],
                       ),
-                      children: [
-                        TextSpan(
-                          text: '\$50',
-                          style: GoogleFonts.getFont(
-                            "Poppins",
-                            textStyle: const TextStyle(
-                              fontSize: 14,
-                              fontWeight: FontWeight.w400,
-                              color: AppColor.blackColor,
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  const VerticalSpeacing(16.0),
-                  Text.rich(
-                    TextSpan(
-                      text: 'TelePhone Number\n\n',
-                      style: GoogleFonts.getFont(
-                        "Poppins",
-                        textStyle: const TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.w600,
-                          color: AppColor.blackColor,
-                        ),
+                      const Divider(),
+                      const VerticalSpeacing(10.0),
+                      ProfileItem(
+                        icon: Icons.cake,
+                        label: 'Date of Birth',
+                        value: provider['dob'],
                       ),
-                      children: [
-                        TextSpan(
-                          text: '+923129739152',
-                          style: GoogleFonts.getFont(
-                            "Poppins",
-                            textStyle: const TextStyle(
-                              fontSize: 14,
-                              fontWeight: FontWeight.w400,
-                              color: AppColor.blackColor,
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  const VerticalSpeacing(16.0),
-                  Text.rich(
-                    TextSpan(
-                      text: 'Date of Birdth\n\n',
-                      style: GoogleFonts.getFont(
-                        "Poppins",
-                        textStyle: const TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.w600,
-                          color: AppColor.blackColor,
-                        ),
+                      const Divider(),
+                      const VerticalSpeacing(10.0),
+                      ProfileItem(
+                        icon: Icons.email,
+                        label: 'Email Address',
+                        value: provider['email'],
                       ),
-                      children: [
-                        TextSpan(
-                          text: '12/11/2003',
-                          style: GoogleFonts.getFont(
-                            "Poppins",
-                            textStyle: const TextStyle(
-                              fontSize: 14,
-                              fontWeight: FontWeight.w400,
-                              color: AppColor.blackColor,
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  const VerticalSpeacing(16.0),
-                  Text.rich(
-                    TextSpan(
-                      text: 'Email Address\n\n',
-                      style: GoogleFonts.getFont(
-                        "Poppins",
-                        textStyle: const TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.w600,
-                          color: AppColor.blackColor,
-                        ),
+                      const Divider(),
+                      const VerticalSpeacing(10.0),
+                      ProfileItem(
+                        icon: Icons.description,
+                        label: 'Description',
+                        value: provider['bio'],
                       ),
-                      children: [
-                        TextSpan(
-                          text: 'Hassnain@gmail.com',
-                          style: GoogleFonts.getFont(
-                            "Poppins",
-                            textStyle: const TextStyle(
-                              fontSize: 14,
-                              fontWeight: FontWeight.w400,
-                              color: AppColor.blackColor,
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  const VerticalSpeacing(16.0),
-                  Text.rich(
-                    TextSpan(
-                      text: 'Password\n\n',
-                      style: GoogleFonts.getFont(
-                        "Poppins",
-                        textStyle: const TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.w600,
-                          color: AppColor.blackColor,
-                        ),
+                      const Divider(),
+                      const VerticalSpeacing(10.0),
+                      ProfileItem(
+                        icon: Icons.euro_outlined,
+                        label: 'Hourly Rate',
+                        value: '€${provider['hoursrate']}',
                       ),
-                      children: [
-                        TextSpan(
-                          text: '***********',
-                          style: GoogleFonts.getFont(
-                            "Poppins",
-                            textStyle: const TextStyle(
-                              fontSize: 14,
-                              fontWeight: FontWeight.w400,
-                              color: AppColor.blackColor,
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  const VerticalSpeacing(16.0),
-                  Text.rich(
-                    TextSpan(
-                      text: 'Confirm Password\n\n',
-                      style: GoogleFonts.getFont(
-                        "Poppins",
-                        textStyle: const TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.w600,
-                          color: AppColor.blackColor,
-                        ),
+                      const Divider(),
+                      const VerticalSpeacing(10.0),
+                      ProfileItem(
+                        icon: Icons.star_outline,
+                        label: 'Skills',
+                        value: provider['Refernce']['skill'],
                       ),
-                      children: [
-                        TextSpan(
-                          text: '*********',
-                          style: GoogleFonts.getFont(
-                            "Poppins",
-                            textStyle: const TextStyle(
-                              fontSize: 14,
-                              fontWeight: FontWeight.w400,
-                              color: AppColor.blackColor,
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  const VerticalSpeacing(16.0),
-                  Text.rich(
-                    TextSpan(
-                      text: 'Discription\n\n',
-                      style: GoogleFonts.getFont(
-                        "Poppins",
-                        textStyle: const TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.w600,
-                          color: AppColor.blackColor,
-                        ),
-                      ),
-                      children: [
-                        TextSpan(
-                          text: 'my name is hasnain i am sofware engineer',
-                          style: GoogleFonts.getFont(
-                            "Poppins",
-                            textStyle: const TextStyle(
-                              fontSize: 14,
-                              fontWeight: FontWeight.w400,
-                              color: AppColor.blackColor,
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  const VerticalSpeacing(16.0),
-                ],
-              ),
+                      const VerticalSpeacing(16.0),
+                    ],
+                  );
+                } else {
+                  return const Center(child: Text('No data available'));
+                }
+              },
             ),
           ),
         ),
+      ),
+    );
+  }
+}
+
+class ProfileItem extends StatelessWidget {
+  final IconData icon;
+  final String label;
+  final String value;
+
+  const ProfileItem({
+    required this.icon,
+    required this.label,
+    required this.value,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 8.0),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Icon(
+            icon,
+            color: AppColor.primaryColor,
+            size: 20,
+          ),
+          const SizedBox(width: 10),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  label,
+                  style: GoogleFonts.getFont(
+                    "Poppins",
+                    textStyle: const TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.w400,
+                      color: AppColor.blackColor,
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 5),
+                Text(
+                  value,
+                  style: GoogleFonts.getFont(
+                    "Poppins",
+                    textStyle: const TextStyle(
+                      fontSize: 14,
+                      fontWeight: FontWeight.w400,
+                      color: AppColor.blackColor,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
       ),
     );
   }

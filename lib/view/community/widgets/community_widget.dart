@@ -5,63 +5,104 @@ import '../../../res/components/colors.dart';
 import '../../../res/components/widgets/vertical_spacing.dart';
 
 class CommunituCartWidget extends StatelessWidget {
-  const CommunituCartWidget({super.key});
+  const CommunituCartWidget({super.key, required this.post, required this.title, required this.content, required this.totalComments});
+
+
+  final String post;
+  final String title;
+  final String content;
+  final int totalComments;
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
-      onTap: (){
-        Navigator.pushNamed(context, RoutesName.communityDetailView);
-      },
-      child: SizedBox(
-        height: 309,
-        width: double.infinity,
+    return Container(
+      decoration: BoxDecoration(
+        color: AppColor.whiteColor,
+        borderRadius: BorderRadius.circular(12),
+        border: Border.all(
+          strokeAlign: BorderSide.strokeAlignCenter,
+          color: const Color(0xff1B81BC)
+              .withOpacity(0.10), // Stroke color with 10% opacity
+          width: 1,
+        ),
+        boxShadow: [
+          BoxShadow(
+            color: const Color(0xff1B81BC)
+                .withOpacity(0.1), // Drop shadow color with 4% opacity
+            blurRadius: 2,
+            offset: const Offset(1, 2),
+            spreadRadius: 1,
+          ),
+        ],
+      ),
+      height: 309,
+      width: double.infinity,
+      child: Padding(
+        padding: const EdgeInsets.all(12.0),
         child: Column(
           children: [
             Container(
-              height: 150,
+              height: 140,
               width: double.infinity,
-              decoration: const BoxDecoration(
+              decoration: BoxDecoration(
                 image: DecorationImage(
-                  image: NetworkImage(
-                      'https://blog.adoptuskids.org/wp-content/uploads/2019/08/ausk-family-profile-pic-2-620x405.jpg'),
+                  image: NetworkImage(post),
                   fit: BoxFit.fill,
                 ),
               ),
             ),
             const VerticalSpeacing(10.0),
-            Wrap(
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  'Welcome to www.saydulmoon.info. Officia irure irure anim nisi exercitation velit cupidatat qui Lorem id ad. Amet quis occaecat quis voluptate cupidatat quis irure irure consequat irure. ',
+                  title,
                   style: GoogleFonts.getFont(
                     "Poppins",
                     textStyle: const TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.w400,
-                      color: AppColor.grayColor,
+                      fontSize: 12,
+                      fontWeight: FontWeight.bold,
+                      color: AppColor.blackColor,
+                    ),
+                  ),
+                ),
+                Container(
+                  decoration: const BoxDecoration(
+                    borderRadius: BorderRadius.only(
+                        topRight: Radius.circular(12),
+                        bottomLeft: Radius.circular(12)),
+                    color: AppColor.avatarColor,
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.all(4.0),
+                    child: Center(
+                      child: Text(
+                        '$totalComments Comment',
+                        style: GoogleFonts.getFont(
+                          "Poppins",
+                          textStyle: const TextStyle(
+                            fontSize: 12,
+                            fontWeight: FontWeight.w400,
+                            color: AppColor.whiteColor,
+                          ),
+                        ),
+                      ),
                     ),
                   ),
                 ),
               ],
             ),
-            const VerticalSpeacing(5.0),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.end,
+            const VerticalSpeacing(10.0),
+            Wrap(
               children: [
-                const Icon(
-                  Icons.message,
-                  color: AppColor.grayColor,
-                ),
-                const SizedBox(width: 5.0),
                 Text(
-                  'Comment',
+                  content,
                   style: GoogleFonts.getFont(
                     "Poppins",
                     textStyle: const TextStyle(
-                      fontSize: 16,
+                      fontSize: 14,
                       fontWeight: FontWeight.w400,
-                      color: AppColor.blackColor,
+                      color: AppColor.grayColor,
                     ),
                   ),
                 ),

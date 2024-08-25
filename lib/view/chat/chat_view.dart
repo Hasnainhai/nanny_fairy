@@ -1,11 +1,45 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:nanny_fairy/Repository/provider_chat_repository.dart';
+
 import 'package:nanny_fairy/utils/routes/routes_name.dart';
 import 'package:nanny_fairy/view/chat/widgets/chatting_widget.dart';
+import 'package:nanny_fairy/view/rating/add_rating.dart';
+
 import '../../res/components/colors.dart';
 
-class ChatView extends StatelessWidget {
-  const ChatView({super.key});
+class ChatView extends StatefulWidget {
+  final String profilePic;
+  final String userName;
+  final String familyId;
+  final bool isSeen;
+  final String currentUserName;
+  final String currentUserProfile;
+  const ChatView({
+    super.key,
+    required this.profilePic,
+    required this.userName,
+    required this.familyId,
+    required this.isSeen,
+    required this.currentUserName,
+    required this.currentUserProfile,
+  });
+
+  @override
+  State<ChatView> createState() => _ChatViewState();
+}
+
+class _ChatViewState extends State<ChatView> {
+  ProviderChatRepository providerChatRepository = ProviderChatRepository();
+  @override
+  void initState() {
+    providerChatRepository.updateSeenStatus(true, widget.familyId);
+    super.initState();
+  }
+
+  final providerId = FirebaseAuth.instance.currentUser!.uid;
 
   @override
   Widget build(BuildContext context) {
@@ -16,7 +50,6 @@ class ChatView extends StatelessWidget {
         backgroundColor: Colors.transparent,
         elevation: 0.0,
         automaticallyImplyLeading: false,
-
         title: Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
@@ -34,11 +67,14 @@ class ChatView extends StatelessWidget {
                   ),
                   child: Stack(
                     children: [
-                      const CircleAvatar(
+                      CircleAvatar(
                         radius: 24,
-                        backgroundImage: NetworkImage(
+                        backgroundImage: const NetworkImage(
                           'https://user-images.githubusercontent.com/22866157/40578885-e3bf4e8e-6139-11e8-8be4-92fc3149f6f0.jpg',
                         ), // Set your profile image path here
+                        foregroundImage: NetworkImage(
+                          widget.profilePic,
+                        ),
                       ),
                       Positioned(
                         bottom: 0,
@@ -53,7 +89,7 @@ class ChatView extends StatelessWidget {
                                 width: 2,
                                 color: AppColor.primaryColor,
                               ) // Online status indicator color
-                          ),
+                              ),
                         ),
                       ),
                     ],
@@ -62,7 +98,7 @@ class ChatView extends StatelessWidget {
                 const SizedBox(width: 12.0),
                 Text.rich(
                   TextSpan(
-                    text: 'User Name\n',
+                    text: '${widget.userName}\n',
                     style: GoogleFonts.getFont(
                       "Poppins",
                       textStyle: const TextStyle(
@@ -89,20 +125,33 @@ class ChatView extends StatelessWidget {
               ],
             ),
             InkWell(
-              onTap: (){
-                Navigator.pushNamed(context, RoutesName.addRating);
-
+              onTap: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => Rating(
+                              providerId: providerId,
+                              familyId: widget.familyId,
+                              familyProfile: widget.profilePic,
+                              familyName: widget.userName,
+                              providerProfile: widget.currentUserProfile,
+                              providerName: widget.currentUserName,
+                            )));
+                // Navigator.pushNamed(context, RoutesName.addRating);
               },
               child: Container(
                 height: 26,
                 width: 82,
                 color: AppColor.whiteColor,
-                child: const Center(child: Text('Write Review',style: TextStyle(
-                  fontSize: 10,
-                  color: AppColor.primaryColor,
-                  fontWeight: FontWeight.w500,
-                ),
-                ),
+                child: const Center(
+                  child: Text(
+                    'Write Review',
+                    style: TextStyle(
+                      fontSize: 10,
+                      color: AppColor.primaryColor,
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
                 ),
               ),
             ),
@@ -118,7 +167,14 @@ class ChatView extends StatelessWidget {
             topLeft: Radius.circular(30.0),
           ),
         ),
-        child: const ChatScreenWidget(),
+        child: ChatScreenWidget(
+          fimalyId: widget.familyId,
+          isSeen: widget.isSeen,
+          senderName: widget.currentUserName,
+          senderProfile: widget.currentUserProfile,
+          recieverName: widget.userName,
+          recieverProfile: widget.profilePic,
+        ),
       ),
     );
   }

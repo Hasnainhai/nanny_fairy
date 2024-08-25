@@ -36,7 +36,7 @@ class _ToggleWidgetState extends State<ToggleWidget> {
             width: 40.0,
             height: 20.0,
             decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(0.0),
+              borderRadius: BorderRadius.circular(100.0),
               color:
               switchValue ? AppColor.primaryColor : const Color(0xffECECEC),
             ),
@@ -49,7 +49,8 @@ class _ToggleWidgetState extends State<ToggleWidget> {
                   width: 12.0,
                   height: 12.0,
                   decoration: const BoxDecoration(
-                    // shape: BoxShape.circle,
+
+                    shape: BoxShape.circle,
                     color: Colors.white,
                   ),
                 ),

@@ -1,14 +1,10 @@
 // ignore_for_file: file_names, use_build_context_synchronously, unnecessary_null_comparison
-
 import 'package:flutter/material.dart';
 import 'package:nanny_fairy/view/booked/booked_view.dart';
-import 'package:nanny_fairy/view/chat/chat_view.dart';
 import 'package:nanny_fairy/view/community/community_view.dart';
-import 'package:nanny_fairy/view/job/job_view.dart';
+import 'package:nanny_fairy/view/home/home_view.dart';
 import 'package:nanny_fairy/view/profile/profile_view.dart';
-
 import '../../../res/components/colors.dart';
-import '../../../utils/routes/routes_name.dart';
 import '../../chat/chat_list.dart';
 
 class DashBoardScreen extends StatefulWidget {
@@ -29,7 +25,6 @@ class _DashBoardScreenState extends State<DashBoardScreen>
     });
   }
   // for profile
-
 
   @override
   void initState() {
@@ -102,7 +97,7 @@ class _DashBoardScreenState extends State<DashBoardScreen>
         physics: const NeverScrollableScrollPhysics(),
         controller: tabController,
         children: const [
-          JobView(),
+          HomeView(),
           ChatList(),
           BookedView(),
           CommunityView(),
@@ -110,22 +105,22 @@ class _DashBoardScreenState extends State<DashBoardScreen>
         ],
       ),
       bottomNavigationBar: BottomNavigationBar(
-        items: const [
+        items:  const [
           BottomNavigationBarItem(
-            icon: Icon(
-              Icons.receipt,
+            icon: ImageIcon(
+              AssetImage('images/home.png'),
             ),
-            label: ('job'),
+            label: 'Home',
           ),
           BottomNavigationBarItem(
-            icon: Icon(
-              Icons.chat,
+            icon:ImageIcon(
+              AssetImage('images/chatting.png'),
             ),
             label: ('chat'),
           ),
-           BottomNavigationBarItem(
-            icon: Icon(
-              Icons.book_online_outlined,
+          BottomNavigationBarItem(
+            icon: ImageIcon(
+              AssetImage('images/booked.png'),
             ),
             label: ('Booked'),
           ),
@@ -134,10 +129,9 @@ class _DashBoardScreenState extends State<DashBoardScreen>
             label: ('community'),
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.person_outline),
+            icon: Icon(Icons.account_circle_outlined),
             label: ('profile'),
           ),
-
         ],
         unselectedItemColor: AppColor.grayColor,
         selectedItemColor: AppColor.primaryColor,
@@ -147,7 +141,6 @@ class _DashBoardScreenState extends State<DashBoardScreen>
         currentIndex: selectIndex,
         onTap: onItemClick,
       ),
-
     );
   }
 }

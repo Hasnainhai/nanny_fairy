@@ -1,12 +1,32 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 // ignore_for_file: file_names
 
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
+import 'package:nanny_fairy/Repository/provider_chat_repository.dart';
+import 'package:nanny_fairy/ViewModel/provider_chat_view_model.dart';
+import 'package:nanny_fairy/res/components/widgets/shimmer_effect.dart';
 
 import '../../../res/components/colors.dart';
 
-
 class ChatScreenWidget extends StatefulWidget {
-  const ChatScreenWidget({super.key});
+  final String fimalyId;
+  final bool isSeen;
+  final String senderName;
+  final String senderProfile;
+  final String recieverName;
+  final String recieverProfile;
+  const ChatScreenWidget({
+    super.key,
+    required this.fimalyId,
+    required this.isSeen,
+    required this.senderName,
+    required this.senderProfile,
+    required this.recieverName,
+    required this.recieverProfile,
+  });
 
   @override
   State createState() => ChatScreenState();
@@ -20,36 +40,32 @@ class ChatMessage {
 }
 
 class ChatScreenState extends State<ChatScreenWidget> {
-  final List<ChatMessage> _messages = <ChatMessage>[];
   final TextEditingController _textController = TextEditingController();
 
-  void _handleSubmitted(String text) {
-    _textController.clear();
-    ChatMessage message = ChatMessage(
-        text: text,
-        isSender: true); // You can modify this to determine sender/receiver.
-    setState(() {
-      _messages.insert(0, message);
-    });
-  }
+  Widget _buildMessage(String message, String senderId) {
+    var auth = FirebaseAuth.instance;
+    final chatController = Provider.of<ProvidersChatController>(context);
 
-  Widget _buildMessage(ChatMessage message) {
+    chatController.providerChatRepository
+        .updateSeenStatus(widget.isSeen, widget.fimalyId);
+
     return Padding(
       padding: const EdgeInsets.only(left: 20.0, right: 20.0, top: 20.0),
       child: Container(
-        alignment:
-        message.isSender ? Alignment.centerRight : Alignment.centerLeft,
+        alignment: senderId == auth.currentUser!.uid
+            ? Alignment.centerRight
+            : Alignment.centerLeft,
         margin: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 16.0),
         child: Container(
           padding: const EdgeInsets.all(16.0),
           decoration: BoxDecoration(
-            color: message.isSender
+            color: senderId == auth.currentUser!.uid
                 ? AppColor.primaryColor
                 : AppColor.blackColor,
             borderRadius: BorderRadius.circular(12.0),
           ),
           child: Text(
-            message.text,
+            message,
             style: const TextStyle(color: Colors.white),
           ),
         ),
@@ -59,13 +75,72 @@ class ChatScreenState extends State<ChatScreenWidget> {
 
   @override
   Widget build(BuildContext context) {
+    final chatController = Provider.of<ProvidersChatController>(context);
+    final ScrollController scrollController = ScrollController();
+
+    void scrollToBottom() {
+      if (scrollController.hasClients) {
+        WidgetsBinding.instance.addPostFrameCallback((_) {
+          scrollController.animateTo(
+            scrollController.position.maxScrollExtent,
+            duration: const Duration(milliseconds: 300),
+            curve: Curves.easeOut,
+          );
+        });
+      }
+    }
+
     return Column(
       children: <Widget>[
         Expanded(
-          child: ListView.builder(
-            itemCount: _messages.length,
-            itemBuilder: (context, index) {
-              return _buildMessage(_messages[index]);
+          child: StreamBuilder<List<Map<dynamic, dynamic>>>(
+            stream: chatController.providerChatRepository
+                .getFamilyChatStreamList(widget.fimalyId)
+                .map((event) {
+              List<Map<dynamic, dynamic>> chats = [];
+              if (event.snapshot.value != null) {
+                Map<dynamic, dynamic> chatData =
+                    event.snapshot.value as Map<dynamic, dynamic>;
+                chatData.forEach((key, value) {
+                  chats.add(value);
+                });
+
+                // Convert timeSent strings to DateTime and sort the chats list
+                chats.sort((a, b) {
+                  try {
+                    DateTime timeA = DateTime.parse(a['timeSent']);
+                    DateTime timeB = DateTime.parse(b['timeSent']);
+                    return timeA.compareTo(timeB); // Sort by timeSent
+                  } catch (e) {
+                    return 0; // Treat as equal if parsing fails
+                  }
+                });
+              }
+              return chats;
+            }),
+            builder: (context, snapshot) {
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                return const Center(
+                    child:
+                        CircularProgressIndicator()); // Replace with your loading widget
+              } else if (snapshot.hasError) {
+                return Center(child: Text('Error: ${snapshot.error}'));
+              } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
+                return const Center(child: Text('No messages found.'));
+              } else {
+                final chats = snapshot.data!;
+                WidgetsBinding.instance
+                    .addPostFrameCallback((_) => scrollToBottom());
+
+                return ListView.builder(
+                  controller: scrollController,
+                  itemCount: chats.length,
+                  itemBuilder: (context, index) {
+                    final chat = chats[index];
+                    return _buildMessage(chat['message'], chat['senderId']);
+                  },
+                );
+              }
             },
           ),
         ),
@@ -81,6 +156,8 @@ class ChatScreenState extends State<ChatScreenWidget> {
   }
 
   Widget _buildTextComposer() {
+    ProviderChatRepository chatController = ProviderChatRepository();
+
     return Container(
       margin: const EdgeInsets.all(10.0),
       child: Row(
@@ -88,7 +165,6 @@ class ChatScreenState extends State<ChatScreenWidget> {
           Expanded(
             child: TextField(
               controller: _textController,
-              onSubmitted: _handleSubmitted,
               decoration: const InputDecoration(
                   hintText: 'Type a message...',
                   hintStyle: TextStyle(
@@ -103,7 +179,16 @@ class ChatScreenState extends State<ChatScreenWidget> {
             ),
             onPressed: () {
               if (_textController.text.isNotEmpty) {
-                _handleSubmitted(_textController.text);
+                chatController.saveDataToContactsSubcollection(
+                  _textController.text,
+                  DateTime.now(),
+                  widget.fimalyId,
+                  widget.senderName,
+                  widget.recieverName,
+                  widget.senderProfile,
+                  widget.recieverProfile,
+                );
+                _textController.clear();
               }
             },
           ),

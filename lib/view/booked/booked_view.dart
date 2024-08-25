@@ -1,9 +1,6 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:nanny_fairy/utils/routes/routes_name.dart';
 import 'package:nanny_fairy/view/booked/widgets/booking_widget.dart';
-
 import '../../res/components/colors.dart';
 import '../../res/components/widgets/vertical_spacing.dart';
 
@@ -20,7 +17,7 @@ class BookedView extends StatelessWidget {
           backgroundColor: AppColor.primaryColor,
           automaticallyImplyLeading: false,
           title: Text(
-            'Completed Tasks',
+            'Completed Booked',
             style: GoogleFonts.getFont(
               "Poppins",
               textStyle: const TextStyle(
@@ -34,20 +31,20 @@ class BookedView extends StatelessWidget {
         ),
       ),
       body: Padding(
-        padding: const EdgeInsets.only(left: 16.0, right: 16.0),
+        padding: const EdgeInsets.only(left: 2.0, right: 1.0),
         child: ListView(
-          children: const [
+          children: [
             Column(
               children: [
-                VerticalSpeacing(20.0),
-                BookingCartWidget(),
-                BookingCartWidget(),
-                BookingCartWidget(),
-                BookingCartWidget(),
-                BookingCartWidget(),
-                BookingCartWidget(),
-                BookingCartWidget(),
-                BookingCartWidget(),
+                const VerticalSpeacing(20.0),
+                // BookingCartWidget(ontapView: () {  },primaryButtonTxt: 'Completed',),
+                // BookingCartWidget(ontapView: () {  },primaryButtonTxt: 'Completed',),
+                // BookingCartWidget(ontapView: () {  },primaryButtonTxt: 'Completed',),
+                // BookingCartWidget(ontapView: () {  },primaryButtonTxt: 'Completed',),
+                // BookingCartWidget(ontapView: () {  },primaryButtonTxt: 'Completed',),
+                // BookingCartWidget(ontapView: () {  },primaryButtonTxt: 'Completed',),
+                // BookingCartWidget(ontapView: () {  },primaryButtonTxt: 'Completed',),
+                // BookingCartWidget(ontapView: () {  },primaryButtonTxt: 'Completed',),
               ],
             ),
           ],

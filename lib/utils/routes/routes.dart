@@ -1,7 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:nanny_fairy/Family_View/findJobFamily/provider_details.dart';
+import 'package:nanny_fairy/Family_View/Login/family_login.dart';
+import 'package:nanny_fairy/Family_View/Login/forget_password_family.dart';
+import 'package:nanny_fairy/Family_View/communityFamily/upload_community_post_family.dart';
+import 'package:nanny_fairy/Family_View/filters/filter_family_popup.dart';
+import 'package:nanny_fairy/Family_View/homeFamily/home_view_family.dart';
+import 'package:nanny_fairy/Family_View/findJobFamily/job_view_family.dart';
 import 'package:nanny_fairy/Family_View/homeFamily/dashboard_family/dashboard_family.dart';
 import 'package:nanny_fairy/Family_View/payment_family/payment_family.dart';
+import 'package:nanny_fairy/Family_View/profileFamily/my_profile_family.dart';
+import 'package:nanny_fairy/Family_View/settingsFamily/setting_family.dart';
+import 'package:nanny_fairy/Family_View/signup/create_account_family.dart';
 import 'package:nanny_fairy/Family_View/signup/register_details_family.dart';
 import 'package:nanny_fairy/Family_View/signup/select_passion_family.dart';
 import 'package:nanny_fairy/Family_View/signup/upload_id_family.dart';
@@ -10,6 +18,9 @@ import 'package:nanny_fairy/utils/routes/routes_name.dart';
 import 'package:nanny_fairy/view/auth/forgetPass/forget_pass.dart';
 import 'package:nanny_fairy/view/auth/login/login_view.dart';
 import 'package:nanny_fairy/view/auth/login_or_signup_view.dart';
+import 'package:nanny_fairy/view/auth/signup/availability_view.dart';
+import 'package:nanny_fairy/view/auth/signup/create_account.dart';
+import 'package:nanny_fairy/view/auth/signup/education_horly_view.dart';
 import 'package:nanny_fairy/view/auth/signup/fill_prefrences_view.dart';
 import 'package:nanny_fairy/view/auth/signup/register_details.dart';
 import 'package:nanny_fairy/view/auth/signup/select_passion_view.dart';
@@ -17,19 +28,14 @@ import 'package:nanny_fairy/view/auth/signup/select_preference.dart';
 import 'package:nanny_fairy/view/auth/signup/upload_image.dart';
 import 'package:nanny_fairy/view/auth/uploadId/upload_id.dart';
 import 'package:nanny_fairy/view/booked/booked_view.dart';
-import 'package:nanny_fairy/view/job/find_job_view.dart';
-import 'package:nanny_fairy/view/chat/chat_view.dart';
 import 'package:nanny_fairy/view/community/community_view.dart';
 import 'package:nanny_fairy/view/community/upload_comunity_post.dart';
-import 'package:nanny_fairy/view/community/widgets/community_detail_view.dart';
 import 'package:nanny_fairy/view/filter/filter_popup.dart';
 import 'package:nanny_fairy/view/home/dashboard/dashboard.dart';
 import 'package:nanny_fairy/view/home/home_view.dart';
 import 'package:nanny_fairy/view/job/job_view.dart';
 import 'package:nanny_fairy/view/notifications/notifications_view.dart';
 import 'package:nanny_fairy/view/onboarding/splash_view.dart';
-import 'package:nanny_fairy/view/payment/payment.dart';
-import 'package:nanny_fairy/view/profile/edit_profile.dart';
 import 'package:nanny_fairy/view/profile/my_profile.dart';
 import 'package:nanny_fairy/view/profile/profile_view.dart';
 import 'package:nanny_fairy/view/rating/add_rating.dart';
@@ -60,18 +66,14 @@ class Routes {
       case RoutesName.selectPreference:
         return MaterialPageRoute(
             builder: (BuildContext context) => const SelectPreference());
-      case RoutesName.fillpreferenceView:
+
+      case RoutesName.refrenceView:
         return MaterialPageRoute(
-            builder: (BuildContext context) => const FillPreferenceView());
-      case RoutesName.fillpreferenceView:
-        return MaterialPageRoute(
-            builder: (BuildContext context) => const FillPreferenceView());
+            builder: (BuildContext context) => const RefrenceView());
       case RoutesName.jobView:
         return MaterialPageRoute(
             builder: (BuildContext context) => const JobView());
-      case RoutesName.chatView:
-        return MaterialPageRoute(
-            builder: (BuildContext context) => const ChatView());
+
       case RoutesName.bookedView:
         return MaterialPageRoute(
             builder: (BuildContext context) => const BookedView());
@@ -90,24 +92,22 @@ class Routes {
       case RoutesName.myProfile:
         return MaterialPageRoute(
             builder: (BuildContext context) => const MyProfile());
-      case RoutesName.editProfile:
-        return MaterialPageRoute(
-            builder: (BuildContext context) => const EditProfile());
+      // case RoutesName.editProfile:
+      //   return MaterialPageRoute(
+      //       builder: (BuildContext context) => const EditProfile());
       case RoutesName.notificationsView:
         return MaterialPageRoute(
             builder: (BuildContext context) => const NotificationsView());
       case RoutesName.settingsView:
         return MaterialPageRoute(
             builder: (BuildContext context) => const SettingsView());
-      case RoutesName.paymentView:
-        return MaterialPageRoute(
-            builder: (BuildContext context) => const PaymentView());
+
       case RoutesName.totalRating:
         return MaterialPageRoute(
             builder: (BuildContext context) => const TotalRatingScreen());
-      case RoutesName.addRating:
-        return MaterialPageRoute(
-            builder: (BuildContext context) => const Rating());
+      // case RoutesName.addRating:
+      //   return MaterialPageRoute(
+      //       builder: (BuildContext context) => const Rating());
       case RoutesName.filterPopup:
         return MaterialPageRoute(
             builder: (BuildContext context) => const FilterPopUp());
@@ -132,21 +132,61 @@ class Routes {
       case RoutesName.uploadIdFamily:
         return MaterialPageRoute(
             builder: (BuildContext context) => const UploadIdFamily());
-      case RoutesName.paymentFamily:
-        return MaterialPageRoute(
-            builder: (BuildContext context) => const PaymentFamilyView());
+
       case RoutesName.dashboardFamily:
         return MaterialPageRoute(
             builder: (BuildContext context) => const DashBoardFamilyScreen());
-      case RoutesName.communityDetailView:
+      // case RoutesName.communityDetailView:
+      //   return MaterialPageRoute(
+      //       builder: (BuildContext context) => const CommunityDetailView());
+
+      case RoutesName.jobViewFamily:
         return MaterialPageRoute(
-            builder: (BuildContext context) => const CommunityDetailView());
-      case RoutesName.findJobView:
+            builder: (BuildContext context) => const JobViewFamily());
+      case RoutesName.createAccount:
         return MaterialPageRoute(
-            builder: (BuildContext context) => const FindJobView());
-      case RoutesName.providerDetails:
+            builder: (BuildContext context) => CreateAccount());
+      case RoutesName.availabilityView:
         return MaterialPageRoute(
-            builder: (BuildContext context) => const ProviderDetails());
+            builder: (BuildContext context) => const AvailabilityView());
+      case RoutesName.educationHorlyView:
+        return MaterialPageRoute(
+            builder: (BuildContext context) => const EducationHorlyView());
+      case RoutesName.createAccountFamily:
+        return MaterialPageRoute(
+            builder: (BuildContext context) => const CreateAccountFamily());
+      case RoutesName.homeViewFamily:
+        return MaterialPageRoute(
+            builder: (BuildContext context) => const HomeViewFamily());
+      case RoutesName.uploadPostFamily:
+        return MaterialPageRoute(
+            builder: (BuildContext context) =>
+                const UploadComunityPostFamily());
+      // case RoutesName.communityDetailViewFamily:
+      //   return MaterialPageRoute(
+      //       builder: (BuildContext context) =>
+      //           const CommunityDetailViewFamily());
+      // case RoutesName.providerDetails:
+      //   return MaterialPageRoute(
+      //       builder: (BuildContext context) => const ProviderDetails());
+      case RoutesName.filterPopUpFamily:
+        return MaterialPageRoute(
+            builder: (BuildContext context) => const FilterPopUpFamily());
+      case RoutesName.settingsFamily:
+        return MaterialPageRoute(
+            builder: (BuildContext context) => const SettingsFamilyView());
+      case RoutesName.myProfileFamily:
+        return MaterialPageRoute(
+            builder: (BuildContext context) => const MyProfileFamily());
+      // case RoutesName.editProfileFamily:
+      //   return MaterialPageRoute(
+      //       builder: (BuildContext context) => const EditProfileFamily());
+      case RoutesName.loginFamily:
+        return MaterialPageRoute(
+            builder: (BuildContext context) => const LoginViewFamily());
+      case RoutesName.forgetPassFamily:
+        return MaterialPageRoute(
+            builder: (BuildContext context) => const ForgetPassFamily());
 
       default:
         return MaterialPageRoute(builder: (_) {

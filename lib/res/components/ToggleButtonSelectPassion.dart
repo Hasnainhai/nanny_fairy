@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-
 import 'colors.dart';
 
 class ToggleRadioButton extends StatefulWidget {
@@ -26,7 +25,25 @@ class _ToggleRadioButtonState extends State<ToggleRadioButton> {
     return Container(
       height: 50,
       width: double.infinity,
-      color: isSelected ? AppColor.primaryColor : AppColor.boxFillColor,
+      decoration: BoxDecoration(
+        color: isSelected ? AppColor.primaryColor : AppColor.whiteColor,
+        borderRadius: BorderRadius.circular(6),
+        border: Border.all(
+          strokeAlign: BorderSide.strokeAlignCenter,
+          color: const Color(0xff1B81BC)
+              .withOpacity(0.10), // Stroke color with 10% opacity
+          width: 1,
+        ),
+        boxShadow: [
+          BoxShadow(
+            color: const Color(0xff1B81BC)
+                .withOpacity(0.1), // Drop shadow color with 4% opacity
+            blurRadius: 2,
+            offset: const Offset(1, 2),
+            spreadRadius: 1,
+          ),
+        ],
+      ),
       child: GestureDetector(
         onTap: _handleTap,
         child: Padding(

@@ -1,16 +1,13 @@
 // ignore_for_file: file_names, use_build_context_synchronously, unnecessary_null_comparison
 
 import 'package:flutter/material.dart';
+import 'package:nanny_fairy/Family_View/bookFamily/book_view_family.dart';
 import 'package:nanny_fairy/Family_View/familyChat/family_chat_list.dart';
-import 'package:nanny_fairy/Family_View/findJobFamily/find_job_family.dart';
-import 'package:nanny_fairy/view/booked/booked_view.dart';
-import 'package:nanny_fairy/view/chat/chat_view.dart';
-import 'package:nanny_fairy/view/community/community_view.dart';
-import 'package:nanny_fairy/view/job/job_view.dart';
-import 'package:nanny_fairy/view/profile/profile_view.dart';
+import 'package:nanny_fairy/Family_View/homeFamily/home_view_family.dart';
 
 import '../../../res/components/colors.dart';
-import '../../../utils/routes/routes_name.dart';
+import '../../communityFamily/community_family.dart';
+import '../../profileFamily/profile_family.dart';
 
 class DashBoardFamilyScreen extends StatefulWidget {
   const DashBoardFamilyScreen({super.key});
@@ -30,7 +27,6 @@ class _DashBoardFamilyScreenState extends State<DashBoardFamilyScreen>
     });
   }
   // for profile
-
 
   @override
   void initState() {
@@ -103,30 +99,30 @@ class _DashBoardFamilyScreenState extends State<DashBoardFamilyScreen>
         physics: const NeverScrollableScrollPhysics(),
         controller: tabController,
         children: const [
-          FindJobFamilyView(),
+          HomeViewFamily(),
           FamilyChatList(),
-          BookedView(),
-          CommunityView(),
-          ProfileView(),
+          BookedViewFamily(),
+          CommunityViewFamily(),
+          ProfileViewFamily(),
         ],
       ),
       bottomNavigationBar: BottomNavigationBar(
-        items: [
-          const BottomNavigationBarItem(
-            icon: Icon(
-              Icons.home_outlined,
+        items: const [
+          BottomNavigationBarItem(
+            icon: ImageIcon(
+              AssetImage('images/home.png'),
             ),
-            label: ('Home'),
+            label: 'Home',
           ),
-          const BottomNavigationBarItem(
-            icon: Icon(
-              Icons.chat,
+          BottomNavigationBarItem(
+            icon: ImageIcon(
+              AssetImage('images/chatting.png'),
             ),
             label: ('chat'),
           ),
           BottomNavigationBarItem(
-            icon: Icon(
-              Icons.book_online_outlined,
+            icon: ImageIcon(
+              AssetImage('images/booked.png'),
             ),
             label: ('Booked'),
           ),
@@ -135,10 +131,9 @@ class _DashBoardFamilyScreenState extends State<DashBoardFamilyScreen>
             label: ('community'),
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.person_outline),
+            icon: Icon(Icons.account_circle_outlined),
             label: ('profile'),
           ),
-
         ],
         unselectedItemColor: AppColor.grayColor,
         selectedItemColor: AppColor.primaryColor,
@@ -148,7 +143,6 @@ class _DashBoardFamilyScreenState extends State<DashBoardFamilyScreen>
         currentIndex: selectIndex,
         onTap: onItemClick,
       ),
-
     );
   }
 }

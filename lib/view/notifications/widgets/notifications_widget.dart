@@ -7,14 +7,36 @@ class NotificationsWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
+    return Container(
       height: 94,
       width: double.infinity,
+      decoration: BoxDecoration(
+        color: AppColor.whiteColor,
+        borderRadius: BorderRadius.circular(12),
+        border: Border.all(
+          strokeAlign: BorderSide.strokeAlignCenter,
+          color: const Color(0xff1B81BC)
+              .withOpacity(0.10), // Stroke color with 10% opacity
+          width: 1,
+        ),
+        boxShadow: [
+          BoxShadow(
+            color: const Color(0xff1B81BC)
+                .withOpacity(0.1), // Drop shadow color with 4% opacity
+            blurRadius: 2,
+            offset: const Offset(1, 2),
+            spreadRadius: 1,
+          ),
+        ],
+      ),
       child: ListTile(
         leading: Container(
           height: 50,
           width: 50,
-          color: AppColor.primaryColor,
+          decoration: BoxDecoration(
+            color: AppColor.primaryColor,
+            borderRadius: BorderRadius.circular(25),
+          ),
           child: const Center(
             child: Icon(
               Icons.notifications,

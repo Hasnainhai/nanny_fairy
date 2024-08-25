@@ -1,14 +1,98 @@
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:nanny_fairy/res/components/rounded_button.dart';
 import 'package:nanny_fairy/res/components/widgets/custom_text_field.dart';
 import 'package:nanny_fairy/res/components/widgets/vertical_spacing.dart';
-import 'package:nanny_fairy/utils/routes/routes_name.dart';
-
+import 'package:nanny_fairy/utils/utils.dart';
+import 'package:nanny_fairy/view/profile/my_profile.dart';
 import '../../res/components/colors.dart';
 
-class EditProfile extends StatelessWidget {
-  const EditProfile({super.key});
+class EditProfile extends StatefulWidget {
+  final Map<dynamic, dynamic> providerData;
+
+  const EditProfile({required this.providerData, super.key});
+
+  @override
+  State<EditProfile> createState() => _EditProfileState();
+}
+
+class _EditProfileState extends State<EditProfile> {
+  late TextEditingController nameController;
+  late TextEditingController addressController;
+  late TextEditingController hourlyRateController;
+  late TextEditingController phoneController;
+  late TextEditingController dobController;
+  late TextEditingController emailController;
+  late TextEditingController descriptionController;
+  late TextEditingController skillController;
+
+  @override
+  void initState() {
+    super.initState();
+    nameController = TextEditingController(
+        text: widget.providerData['firstName'] +
+            ' ' +
+            widget.providerData['lastName']);
+    addressController =
+        TextEditingController(text: widget.providerData['address']);
+    hourlyRateController = TextEditingController(
+        text: widget.providerData['hoursrate'].toString());
+    phoneController =
+        TextEditingController(text: widget.providerData['phoneNumber']);
+    dobController = TextEditingController(text: widget.providerData['dob']);
+    emailController = TextEditingController(text: widget.providerData['email']);
+    descriptionController =
+        TextEditingController(text: widget.providerData['bio']);
+    skillController =
+        TextEditingController(text: widget.providerData['Refernce']['skill']);
+  }
+
+  @override
+  void dispose() {
+    nameController.dispose();
+    addressController.dispose();
+    hourlyRateController.dispose();
+    phoneController.dispose();
+    dobController.dispose();
+    emailController.dispose();
+    descriptionController.dispose();
+    skillController.dispose();
+    super.dispose();
+  }
+
+  void _updateProfile() async {
+    try {
+      final DatabaseReference providerRef =
+          FirebaseDatabase.instance.ref().child('Providers');
+
+      final userDocument =
+          providerRef.child(FirebaseAuth.instance.currentUser!.uid);
+
+      // Prepare the data to be updated
+      Map<String, dynamic> updatedData = {
+        'firstName': nameController.text.split(' ')[0],
+        'lastName': nameController.text.split(' ').sublist(1).join(' '),
+        'address': addressController.text,
+        'hoursrate': hourlyRateController.text,
+        'phoneNumber': phoneController.text,
+        'dob': dobController.text,
+        'email': emailController.text,
+        'bio': descriptionController.text,
+      };
+      Map<String, dynamic> updateSkill = {
+        'skill': skillController.text,
+      };
+      // Update the user's profile information in the database
+      await userDocument.update(updatedData);
+      await userDocument.child('Refernce').update(updateSkill);
+      Navigator.push(
+          context, MaterialPageRoute(builder: (context) => MyProfile()));
+    } catch (e) {
+      Utils.flushBarErrorMessage('Failed to update profile', context);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -42,7 +126,7 @@ class EditProfile extends StatelessWidget {
         ),
       ),
       body: Container(
-        height: double.infinity,
+        height: MediaQuery.of(context).size.height,
         width: double.infinity,
         decoration: const BoxDecoration(
           color: AppColor.whiteColor,
@@ -56,47 +140,58 @@ class EditProfile extends StatelessWidget {
             scrollDirection: Axis.vertical,
             child: Column(
               children: [
-                const TextFieldCustom(
-                    maxLines: 1, text: 'Name', hintText: 'hassnain'),
-                const VerticalSpeacing(16.0),
-                const TextFieldCustom(
-                    maxLines: 1, text: 'Address', hintText: 'E-11 Islamabad'),
-                const VerticalSpeacing(16.0),
-                const TextFieldCustom(
+                TextFieldCustom(
+                    controller: nameController,
+                    prefixIcon: const Icon(Icons.person_outline),
                     maxLines: 1,
-                    text: 'Hourly',
+                    hintText: 'Name'),
+                const VerticalSpeacing(16.0),
+                TextFieldCustom(
+                    controller: addressController,
+                    prefixIcon: const Icon(Icons.location_on_outlined),
+                    maxLines: 1,
+                    hintText: 'Address'),
+                const VerticalSpeacing(16.0),
+                TextFieldCustom(
+                    controller: hourlyRateController,
+                    prefixIcon: const Icon(Icons.access_time_outlined),
+                    maxLines: 1,
                     hintText: 'Enter hourly rate...'),
                 const VerticalSpeacing(16.0),
-                const TextFieldCustom(
+                TextFieldCustom(
+                    controller: phoneController,
+                    prefixIcon: const Icon(Icons.phone),
                     maxLines: 1,
-                    text: 'Telephone Number',
-                    hintText: '+923129739152'),
+                    hintText: 'Telephone Number'),
                 const VerticalSpeacing(16.0),
-                const TextFieldCustom(
-                    maxLines: 1, text: 'Date of Birth', hintText: '1/02/2003'),
-                const VerticalSpeacing(16.0),
-                const TextFieldCustom(
+                TextFieldCustom(
+                    controller: dobController,
+                    prefixIcon: const Icon(Icons.calendar_month_outlined),
                     maxLines: 1,
-                    text: 'Email Address',
-                    hintText: 'hassnain@gmail.com'),
+                    hintText: 'Date of Birth'),
                 const VerticalSpeacing(16.0),
-                const TextFieldCustom(
-                    maxLines: 1, text: 'Password', hintText: '********'),
-                const VerticalSpeacing(16.0),
-                const TextFieldCustom(
+                TextFieldCustom(
+                    controller: emailController,
+                    prefixIcon: const Icon(Icons.mail_outline),
                     maxLines: 1,
-                    text: 'Confirm Password',
-                    hintText: '*********'),
+                    hintText: 'Email Address'),
                 const VerticalSpeacing(16.0),
-                const TextFieldCustom(
+                TextFieldCustom(
+                    controller: descriptionController,
+                    prefixIcon: const Icon(Icons.border_color_outlined),
                     maxLines: 1,
-                    text: 'Description',
-                    hintText: 'I am hasnain a sofware engineer'),
+                    hintText: 'Description'),
+                const VerticalSpeacing(16.0),
+                TextFieldCustom(
+                    controller: skillController,
+                    prefixIcon: const Icon(Icons.inventory_outlined),
+                    maxLines: 1,
+                    hintText: 'Skills...'),
                 const VerticalSpeacing(16.0),
                 RoundedButton(
                     title: 'Update Profile',
                     onpress: () {
-                      Navigator.pushNamed(context, RoutesName.myProfile);
+                      _updateProfile();
                     }),
                 const VerticalSpeacing(30.0),
               ],

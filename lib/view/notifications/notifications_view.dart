@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:nanny_fairy/res/components/widgets/vertical_spacing.dart';
 import 'package:nanny_fairy/view/notifications/widgets/notifications_widget.dart';
 import '../../res/components/colors.dart';
 
@@ -39,14 +40,23 @@ class NotificationsView extends StatelessWidget {
           child: Column(
             children: [
               NotificationsWidget(),
+              VerticalSpeacing(16),
               NotificationsWidget(),
+              VerticalSpeacing(16),
               NotificationsWidget(),
+              VerticalSpeacing(16),
               NotificationsWidget(),
+              VerticalSpeacing(16),
               NotificationsWidget(),
+              VerticalSpeacing(16),
               NotificationsWidget(),
+              VerticalSpeacing(16),
               NotificationsWidget(),
+              VerticalSpeacing(16),
               NotificationsWidget(),
+              VerticalSpeacing(16),
               NotificationsWidget(),
+              VerticalSpeacing(16),
               NotificationsWidget(),
             ],
           ),

@@ -1,36 +1,97 @@
-
-
-import 'package:flutter/cupertino.dart';
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:nanny_fairy/utils/routes/routes_name.dart';
+import 'package:intl/intl.dart';
+import 'package:nanny_fairy/Repository/get_provider_info.dart';
+
+import 'package:nanny_fairy/view/chat/chat_view.dart';
 
 import '../../../res/components/colors.dart';
 
 class ChatWidget extends StatelessWidget {
-  const ChatWidget({super.key});
+  final String text;
+  final String profilePic;
+  final String familyId;
+  final String time;
+  final bool isSeen;
+  final String username;
+
+  const ChatWidget({
+    super.key,
+    required this.text,
+    required this.profilePic,
+    required this.familyId,
+    required this.time,
+    required this.isSeen,
+    required this.username,
+  });
 
   @override
   Widget build(BuildContext context) {
+    GetProviderInfoRepo getProviderInfoRepo = GetProviderInfoRepo();
+    getProviderInfoRepo.fetchCurrentFamilyInfo();
+    String formatTime(String time) {
+      try {
+        // Parse the time string to DateTime
+        DateTime parsedTime = DateTime.parse(time);
+        // Format the DateTime to the desired format
+        return DateFormat('hh:mm a').format(parsedTime);
+      } catch (e) {
+        // Handle the error, e.g., return a default value or the original string
+        return "Invalid time";
+      }
+    }
+
     return Padding(
       padding: const EdgeInsets.only(bottom: 16.0),
       child: InkWell(
-        onTap: (){
-          Navigator.pushNamed(context, RoutesName.chatView);
+        onTap: () {
+          // Navigator.pushNamed(context, RoutesName.chatView);
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (c) => ChatView(
+                profilePic: profilePic,
+                userName: username,
+                familyId: familyId,
+                isSeen: isSeen,
+                currentUserName: getProviderInfoRepo.providerName!,
+                currentUserProfile: getProviderInfoRepo.providerProfile!,
+              ),
+            ),
+          );
         },
         child: Container(
           height: 93,
           width: double.infinity,
-          color: AppColor.whiteColor,
+          decoration: BoxDecoration(
+            color: AppColor.whiteColor,
+            borderRadius: BorderRadius.circular(12),
+            border: Border.all(
+              strokeAlign: BorderSide.strokeAlignCenter,
+              color: const Color(0xff1B81BC)
+                  .withOpacity(0.10), // Stroke color with 10% opacity
+              width: 1,
+            ),
+            boxShadow: [
+              BoxShadow(
+                color: const Color(0xff1B81BC)
+                    .withOpacity(0.1), // Drop shadow color with 4% opacity
+                blurRadius: 2,
+                offset: const Offset(1, 2),
+                spreadRadius: 1,
+              ),
+            ],
+          ),
           child: ListTile(
-
-            leading: const CircleAvatar(
+            leading: CircleAvatar(
               radius: 25,
-              backgroundImage: NetworkImage(
+              backgroundImage: const NetworkImage(
                   'https://t4.ftcdn.net/jpg/03/64/21/11/360_F_364211147_1qgLVxv1Tcq0Ohz3FawUfrtONzz8nq3e.jpg'),
+              foregroundImage: NetworkImage(profilePic),
             ),
             title: Text(
-              'Hassnian',
+              username,
               style: GoogleFonts.getFont(
                 "Poppins",
                 textStyle: const TextStyle(
@@ -43,13 +104,13 @@ class ChatWidget extends StatelessWidget {
             subtitle: SizedBox(
               width: 30,
               child: Text(
-                'i am hasnain haider a software engineer',
+                text.length > 30 ? '${text.substring(0, 35)}...' : text,
                 style: GoogleFonts.getFont(
                   "Poppins",
-                  textStyle: const TextStyle(
+                  textStyle: TextStyle(
                     fontSize: 12,
-                    fontWeight: FontWeight.w400,
-                    color: AppColor.grayColor,
+                    fontWeight: isSeen ? FontWeight.w400 : FontWeight.w600,
+                    color: isSeen ? AppColor.grayColor : AppColor.blackColor,
                   ),
                 ),
               ),
@@ -58,7 +119,7 @@ class ChatWidget extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  '12.50',
+                  formatTime(time),
                   style: GoogleFonts.getFont(
                     "Poppins",
                     textStyle: const TextStyle(
@@ -68,27 +129,18 @@ class ChatWidget extends StatelessWidget {
                     ),
                   ),
                 ),
-                Container(
-                  height: 20,
-                  width: 20,
-                  decoration: BoxDecoration(borderRadius:BorderRadius.circular(10.0),color: AppColor.primaryColor),
-                  child: Center(child:  Text(
-                    '2',
-                    style: GoogleFonts.getFont(
-                      "Poppins",
-                      textStyle: const TextStyle(
-                        fontSize: 12,
-                        fontWeight: FontWeight.w400,
-                        color: AppColor.whiteColor,
-                      ),
-                    ),
-                  ),),
-                ),
+                isSeen == false
+                    ? Container(
+                        height: 20,
+                        width: 20,
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(10.0),
+                            color: AppColor.primaryColor),
+                      )
+                    : const SizedBox(),
               ],
             ),
           ),
-
-
         ),
       ),
     );

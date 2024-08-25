@@ -1,0 +1,199 @@
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_database/firebase_database.dart';
+import 'package:flutter/material.dart';
+import 'package:nanny_fairy/view/rating/widget/rating_card.dart';
+
+import '../../res/components/colors.dart';
+import '../../res/components/widgets/vertical_spacing.dart';
+import '../../utils/utils.dart';
+
+class TotalRatingsFamily extends StatefulWidget {
+  const TotalRatingsFamily({
+    super.key,
+  });
+
+  @override
+  State<TotalRatingsFamily> createState() => _TotalRatingsFamilyState();
+}
+
+class _TotalRatingsFamilyState extends State<TotalRatingsFamily> {
+  List<Map<String, dynamic>> reviews = [];
+  bool _isLoading = true;
+
+  @override
+  void initState() {
+    super.initState();
+    fetchReviews();
+  }
+
+  final currentUserId = FirebaseAuth.instance.currentUser!.uid;
+
+  Future<void> fetchReviews() async {
+    DatabaseReference ref = FirebaseDatabase.instance
+        .ref()
+        .child('Family')
+        .child(currentUserId)
+        .child('reviews');
+
+    try {
+      final snapshot = await ref.get();
+      if (snapshot.exists) {
+        List<Map<String, dynamic>> loadedReviews = [];
+        Map<dynamic, dynamic> reviewsData =
+            snapshot.value as Map<dynamic, dynamic>;
+        reviewsData.forEach((key, value) {
+          loadedReviews.add(Map<String, dynamic>.from(value));
+        });
+
+        setState(() {
+          reviews = loadedReviews;
+        });
+      }
+    } catch (error) {
+      Utils.flushBarErrorMessage('Error fetching reviews: $error', context);
+    } finally {
+      setState(() {
+        _isLoading = false;
+      });
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: AppColor.secondaryBgColor,
+      appBar: AppBar(
+        backgroundColor: AppColor.primaryColor,
+        elevation: 0,
+        centerTitle: true,
+        leading: IconButton(
+          onPressed: () {
+            Navigator.pop(context);
+          },
+          icon: const Icon(
+            Icons.arrow_back,
+            color: AppColor.whiteColor,
+          ),
+        ),
+        title: const Text(
+          "Reviews",
+          style: TextStyle(
+            fontFamily: 'CenturyGothic',
+            fontSize: 18,
+            fontWeight: FontWeight.w400,
+            color: AppColor.whiteColor,
+          ),
+        ),
+      ),
+      body: SafeArea(
+        child: _isLoading
+            ? const Center(child: CircularProgressIndicator())
+            : reviews.isEmpty
+                ? const Center(child: Text('No reviews available.'))
+                : Padding(
+                    padding: const EdgeInsets.only(
+                      left: 20,
+                      right: 20,
+                      top: 20,
+                    ),
+                    child: SingleChildScrollView(
+                      scrollDirection: Axis.vertical,
+                      child: Column(
+                        children: [
+                          Row(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Column(
+                                children: [
+                                  Container(
+                                    height: 60,
+                                    width: 60,
+                                    color: AppColor.primaryColor,
+                                    child: Center(
+                                      child: Text(
+                                        calculateAverageRating(reviews)
+                                            .toStringAsFixed(1),
+                                        style: const TextStyle(
+                                          fontFamily: 'CenturyGothic',
+                                          fontSize: 22,
+                                          fontWeight: FontWeight.w400,
+                                          color: AppColor.whiteColor,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                  const VerticalSpeacing(10),
+                                  Text(
+                                    "${reviews.length} reviews",
+                                    style: const TextStyle(
+                                      fontFamily: 'CenturyGothic',
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.w400,
+                                      color: AppColor.blackColor,
+                                    ),
+                                  ),
+                                  const Row(
+                                    children: [
+                                      Icon(
+                                        Icons.star,
+                                        color: Colors.amber,
+                                        size: 18,
+                                      ),
+                                      Icon(
+                                        Icons.star,
+                                        color: Colors.amber,
+                                        size: 18,
+                                      ),
+                                      Icon(
+                                        Icons.star,
+                                        color: Colors.amber,
+                                        size: 18,
+                                      ),
+                                      Icon(
+                                        Icons.star,
+                                        color: Colors.amber,
+                                        size: 18,
+                                      ),
+                                      Icon(
+                                        Icons.star,
+                                        color: Colors.amber,
+                                        size: 18,
+                                      ),
+                                    ],
+                                  ),
+                                ],
+                              ),
+                              // Add your star rating rows here as before
+                            ],
+                          ),
+                          const Divider(),
+                          ...reviews.map((review) {
+                            return ReviewCard(
+                              imgUrl: review['providerProfile'] ?? '',
+                              profilePic: review['familyProfile'] ?? '',
+                              name: review['providerName'] ?? 'Unknown',
+                              rating: (review['countRatingStars'] ?? 0.0)
+                                  .toString(),
+                              time: review['timestamp'] ?? 'Unknown',
+                              comment:
+                                  review['providerComment'] ?? 'No comment',
+                            );
+                          }).toList(),
+                        ],
+                      ),
+                    ),
+                  ),
+      ),
+    );
+  }
+
+  double calculateAverageRating(List<Map<String, dynamic>> reviews) {
+    if (reviews.isEmpty) return 0.0;
+    double totalRating = 0.0;
+    for (var review in reviews) {
+      totalRating += review['countRatingStars'] ?? 0.0;
+    }
+    return totalRating / reviews.length;
+  }
+}
