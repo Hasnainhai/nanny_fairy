@@ -275,13 +275,4 @@ class _FamilyDefaultViewState extends State<FamilyDefaultView> {
       ],
     );
   }
-
-  // double calculateAverageRating(List<Map<String, dynamic>> reviews) {
-  //   if (reviews.isEmpty) return 0.0;
-  //   double totalRating = 0.0;
-  //   for (var review in reviews) {
-  //     totalRating += review['countRatingStars'] ?? 0.0;
-  //   }
-  //   return totalRating / reviews.length;
-  // }
 }

@@ -116,7 +116,6 @@ class _FamilyFilterViewState extends State<FamilyFilterView> {
                           child: DayButtonFamily(day: dayAbbreviation),
                         );
                       }).toList();
-
                       return BookingCartWidgetHome(
                         primaryButtonColor: AppColor.primaryColor,
                         primaryButtonTxt: 'View',
