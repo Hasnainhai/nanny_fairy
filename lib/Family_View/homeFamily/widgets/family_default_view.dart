@@ -23,7 +23,6 @@ class _FamilyDefaultViewState extends State<FamilyDefaultView> {
     String ratings = value != null && value['countRatingStars'] != null
         ? value['countRatingStars'].toString()
         : 'N/A';
-    // Get the total number of reviews
     String totalRatings =
         value['reviews'] != null ? value['reviews'].length.toString() : '0';
 
@@ -31,6 +30,15 @@ class _FamilyDefaultViewState extends State<FamilyDefaultView> {
       'ratings': ratings,
       'totalRatings': totalRatings,
     };
+  }
+
+  double calculateAverageRating(Map<dynamic, dynamic> reviews) {
+    if (reviews.isEmpty) return 0.0;
+    double totalRating = 0.0;
+    reviews.forEach((key, review) {
+      totalRating += review['countRatingStars'] ?? 0.0;
+    });
+    return totalRating / reviews.length;
   }
 
   @override
@@ -185,24 +193,11 @@ class _FamilyDefaultViewState extends State<FamilyDefaultView> {
                           }).toList();
                           Map<String, String> ratingsData =
                               getRatingsAndTotalRatings(value);
-                          List<Map<String, dynamic>> ratings =
-                              ratingsData['ratings'] != 'N/A'
-                                  ? List<Map<String, dynamic>>.from(
-                                      ratingsData['ratings'] as Iterable)
-                                  : [];
-
-                          double calculateAverageRating(
-                              List<Map<String, dynamic>> reviews) {
-                            if (reviews.isEmpty) return 0.0;
-                            double totalRating = 0.0;
-                            for (var review in reviews) {
-                              totalRating += review['countRatingStars'] ?? 0.0;
-                            }
-                            return totalRating / reviews.length;
-                          }
-
+                          Map<dynamic, dynamic> reviews =
+                              value['reviews'] ?? {};
                           double averageRating =
-                              calculateAverageRating(ratings);
+                              calculateAverageRating(reviews);
+
                           bookingWidgets.add(
                             BookingCartWidgetHome(
                               primaryButtonColor: AppColor.primaryColor,
@@ -238,7 +233,7 @@ class _FamilyDefaultViewState extends State<FamilyDefaultView> {
                               skill: '',
                               hoursRate: value['hoursrate'],
                               dayButtons: dayButtons,
-                              ratings: averageRating,
+                              ratings: averageRating, // Pass average rating
                               totalRatings:
                                   int.parse(ratingsData['totalRatings']!),
                             ),
