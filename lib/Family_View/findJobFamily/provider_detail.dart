@@ -10,17 +10,20 @@ import 'package:nanny_fairy/res/components/widgets/vertical_spacing.dart';
 import '../../res/components/colors.dart';
 
 class ProviderDetails extends StatefulWidget {
-  const ProviderDetails(
-      {super.key,
-      required this.profile,
-      required this.name,
-      required this.bio,
-      required this.horseRate,
-      required this.experience,
-      required this.degree,
-      required this.dayButtons,
-      required this.timeData,
-      required this.familyId});
+  ProviderDetails({
+    super.key,
+    required this.profile,
+    required this.name,
+    required this.bio,
+    required this.horseRate,
+    required this.experience,
+    required this.degree,
+    required this.dayButtons,
+    required this.timeData,
+    required this.familyId,
+    this.ratings,
+    this.totalRatings,
+  });
   final String profile;
   final String name;
   final String bio;
@@ -30,6 +33,8 @@ class ProviderDetails extends StatefulWidget {
   final List<Widget> dayButtons;
   final Map<String, String> timeData;
   final String familyId;
+  double? ratings;
+  int? totalRatings;
 
   @override
   State<ProviderDetails> createState() => _ProviderDetailsState();
@@ -116,7 +121,6 @@ class _ProviderDetailsState extends State<ProviderDetails> {
                                   profile: widget.profile)));
                       // print(
                       //     'profile:${widget.profile}: userName:${widget.name}:familyId: ${widget.familyId}: currentUserName:${getFamilyInfoRepo.familyName!}:Family profile${getFamilyInfoRepo.familyProfile} ');
-
                     },
                   ),
                 ),
@@ -211,7 +215,7 @@ class _ProviderDetailsState extends State<ProviderDetails> {
                                 color: Colors.amber, size: 20),
                             const SizedBox(width: 4),
                             Text(
-                              '4.8 (456 Reviews)',
+                              '${widget.ratings} (${widget.totalRatings} Reviews)',
                               style: GoogleFonts.getFont(
                                 "Poppins",
                                 textStyle: const TextStyle(

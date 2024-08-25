@@ -10,7 +10,6 @@ import 'package:nanny_fairy/res/components/widgets/shimmer_effect.dart';
 import 'package:nanny_fairy/res/components/widgets/vertical_spacing.dart';
 import 'package:nanny_fairy/utils/routes/routes_name.dart';
 import 'package:provider/provider.dart';
-import 'package:shimmer/shimmer.dart';
 
 class FamilyDefaultView extends StatefulWidget {
   const FamilyDefaultView({super.key});
@@ -24,7 +23,6 @@ class _FamilyDefaultViewState extends State<FamilyDefaultView> {
     String ratings = value != null && value['countRatingStars'] != null
         ? value['countRatingStars'].toString()
         : 'N/A';
-    // Get the total number of reviews
     String totalRatings =
         value['reviews'] != null ? value['reviews'].length.toString() : '0';
 
@@ -32,6 +30,15 @@ class _FamilyDefaultViewState extends State<FamilyDefaultView> {
       'ratings': ratings,
       'totalRatings': totalRatings,
     };
+  }
+
+  double calculateAverageRating(Map<dynamic, dynamic> reviews) {
+    if (reviews.isEmpty) return 0.0;
+    double totalRating = 0.0;
+    reviews.forEach((key, review) {
+      totalRating += review['countRatingStars'] ?? 0.0;
+    });
+    return totalRating / reviews.length;
   }
 
   @override
@@ -186,9 +193,11 @@ class _FamilyDefaultViewState extends State<FamilyDefaultView> {
                           }).toList();
                           Map<String, String> ratingsData =
                               getRatingsAndTotalRatings(value);
-                          double? ratings = ratingsData['ratings'] != 'N/A'
-                              ? double.tryParse(ratingsData['ratings']!)
-                              : 0.0;
+                          Map<dynamic, dynamic> reviews =
+                              value['reviews'] ?? {};
+                          double averageRating =
+                              calculateAverageRating(reviews);
+
                           bookingWidgets.add(
                             BookingCartWidgetHome(
                               primaryButtonColor: AppColor.primaryColor,
@@ -202,19 +211,23 @@ class _FamilyDefaultViewState extends State<FamilyDefaultView> {
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                      builder: (c) => ProviderDetails(
-                                            familyId: value['uid'],
-                                            profile: value['profile'],
-                                            name:
-                                                "${value['firstName']} ${value['lastName']}",
-                                            bio: value['bio'],
-                                            horseRate: value['hoursrate'],
-                                            experience: value['Refernce']
-                                                ['experince'],
-                                            degree: value['education'],
-                                            dayButtons: dayButtons,
-                                            timeData: timeData,
-                                          )),
+                                    builder: (c) => ProviderDetails(
+                                        familyId: value['uid'],
+                                        profile: value['profile'],
+                                        name:
+                                            "${value['firstName']} ${value['lastName']}",
+                                        bio: value['bio'],
+                                        horseRate: value['hoursrate'],
+                                        experience: value['Refernce']
+                                            ['experince'],
+                                        degree: value['education'],
+                                        dayButtons: dayButtons,
+                                        timeData: timeData,
+                                        ratings: averageRating,
+                                        totalRatings: int.parse(
+                                          ratingsData['totalRatings']!,
+                                        )),
+                                  ),
                                 );
                               },
                               profile: value['profile'],
@@ -224,11 +237,9 @@ class _FamilyDefaultViewState extends State<FamilyDefaultView> {
                               skill: '',
                               hoursRate: value['hoursrate'],
                               dayButtons: dayButtons,
-                              // ratings: 4.4,
-                              // calculateAverageRating(
-                              //     ratings as List<Map<String, dynamic>>),
-                              // totalRatings:
-                              // int.parse(ratingsData['totalRatings']!),
+                              ratings: averageRating,
+                              totalRatings:
+                                  int.parse(ratingsData['totalRatings']!),
                             ),
                           );
                         } else {
@@ -258,12 +269,12 @@ class _FamilyDefaultViewState extends State<FamilyDefaultView> {
     );
   }
 
-  double calculateAverageRating(List<Map<String, dynamic>> reviews) {
-    if (reviews.isEmpty) return 0.0;
-    double totalRating = 0.0;
-    for (var review in reviews) {
-      totalRating += review['countRatingStars'] ?? 0.0;
-    }
-    return totalRating / reviews.length;
-  }
+  // double calculateAverageRating(List<Map<String, dynamic>> reviews) {
+  //   if (reviews.isEmpty) return 0.0;
+  //   double totalRating = 0.0;
+  //   for (var review in reviews) {
+  //     totalRating += review['countRatingStars'] ?? 0.0;
+  //   }
+  //   return totalRating / reviews.length;
+  // }
 }
