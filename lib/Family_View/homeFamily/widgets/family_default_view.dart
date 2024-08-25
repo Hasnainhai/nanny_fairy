@@ -207,26 +207,33 @@ class _FamilyDefaultViewState extends State<FamilyDefaultView> {
                                     (value['Time'] as Map<dynamic, dynamic>)
                                         .map((key, value) => MapEntry(
                                             key.toString(), value.toString()));
+                                Map<String, String> reviews =
+                                    (value['reviews'] as Map<dynamic, dynamic>)
+                                        .map((key, value) => MapEntry(
+                                            key.toString(), value.toString()));
+                                print(
+                                    '...................>Reviews: $reviews..................');
 
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
                                     builder: (c) => ProviderDetails(
-                                        familyId: value['uid'],
-                                        profile: value['profile'],
-                                        name:
-                                            "${value['firstName']} ${value['lastName']}",
-                                        bio: value['bio'],
-                                        horseRate: value['hoursrate'],
-                                        experience: value['Refernce']
-                                            ['experince'],
-                                        degree: value['education'],
-                                        dayButtons: dayButtons,
-                                        timeData: timeData,
-                                        ratings: averageRating,
-                                        totalRatings: int.parse(
-                                          ratingsData['totalRatings']!,
-                                        )),
+                                      familyId: value['uid'],
+                                      profile: value['profile'],
+                                      name:
+                                          "${value['firstName']} ${value['lastName']}",
+                                      bio: value['bio'],
+                                      horseRate: value['hoursrate'],
+                                      experience: value['Refernce']
+                                          ['experince'],
+                                      degree: value['education'],
+                                      dayButtons: dayButtons,
+                                      timeData: timeData,
+                                      ratings: averageRating,
+                                      totalRatings: int.parse(
+                                          ratingsData['totalRatings']!),
+                                      // getRatings: reviews,
+                                    ),
                                   ),
                                 );
                               },
