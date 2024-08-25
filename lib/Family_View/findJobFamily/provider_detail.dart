@@ -10,7 +10,7 @@ import 'package:nanny_fairy/res/components/widgets/vertical_spacing.dart';
 import '../../res/components/colors.dart';
 
 class ProviderDetails extends StatefulWidget {
-  ProviderDetails({
+  const ProviderDetails({
     super.key,
     required this.profile,
     required this.name,
@@ -33,8 +33,8 @@ class ProviderDetails extends StatefulWidget {
   final List<Widget> dayButtons;
   final Map<String, String> timeData;
   final String familyId;
-  double? ratings;
-  int? totalRatings;
+  final double? ratings;
+  final int? totalRatings;
 
   @override
   State<ProviderDetails> createState() => _ProviderDetailsState();
