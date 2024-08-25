@@ -211,19 +211,23 @@ class _FamilyDefaultViewState extends State<FamilyDefaultView> {
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                      builder: (c) => ProviderDetails(
-                                            familyId: value['uid'],
-                                            profile: value['profile'],
-                                            name:
-                                                "${value['firstName']} ${value['lastName']}",
-                                            bio: value['bio'],
-                                            horseRate: value['hoursrate'],
-                                            experience: value['Refernce']
-                                                ['experince'],
-                                            degree: value['education'],
-                                            dayButtons: dayButtons,
-                                            timeData: timeData,
-                                          )),
+                                    builder: (c) => ProviderDetails(
+                                        familyId: value['uid'],
+                                        profile: value['profile'],
+                                        name:
+                                            "${value['firstName']} ${value['lastName']}",
+                                        bio: value['bio'],
+                                        horseRate: value['hoursrate'],
+                                        experience: value['Refernce']
+                                            ['experince'],
+                                        degree: value['education'],
+                                        dayButtons: dayButtons,
+                                        timeData: timeData,
+                                        ratings: averageRating,
+                                        totalRatings: int.parse(
+                                          ratingsData['totalRatings']!,
+                                        )),
+                                  ),
                                 );
                               },
                               profile: value['profile'],
@@ -233,7 +237,7 @@ class _FamilyDefaultViewState extends State<FamilyDefaultView> {
                               skill: '',
                               hoursRate: value['hoursrate'],
                               dayButtons: dayButtons,
-                              ratings: averageRating, // Pass average rating
+                              ratings: averageRating,
                               totalRatings:
                                   int.parse(ratingsData['totalRatings']!),
                             ),
