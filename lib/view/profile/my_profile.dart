@@ -17,7 +17,6 @@ class _MyProfileState extends State<MyProfile> {
   @override
   void initState() {
     super.initState();
-    // Fetch users when the widget initializes
     WidgetsBinding.instance.addPostFrameCallback((_) {
       Provider.of<GetProviderInfoViewModel>(context, listen: false)
           .getProviderInfo();
