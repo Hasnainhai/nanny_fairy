@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:nanny_fairy/Family_View/familyChat/family_chat_list.dart';
-import 'package:nanny_fairy/Family_View/familyChat/family_chat_view.dart';
-import 'package:nanny_fairy/Family_View/familyChat/widgets/family_chat_screen_widget.dart';
 import 'package:nanny_fairy/Family_View/payment_family/payment_family.dart';
 import 'package:nanny_fairy/Repository/get_family_info_repo.dart';
 import 'package:nanny_fairy/res/components/rounded_button.dart';
@@ -413,7 +410,6 @@ class _ProviderDetailsState extends State<ProviderDetails> {
                               ],
                             ),
                             const VerticalSpeacing(10),
-
                             Row(
                               mainAxisAlignment: MainAxisAlignment.end,
                               children: [
@@ -579,10 +575,12 @@ class _ProviderDetailsState extends State<ProviderDetails> {
                               height: 90,
                               child: SingleChildScrollView(
                                 scrollDirection: Axis.horizontal,
-                                physics: const ScrollPhysics(),
+                                physics: ScrollPhysics(),
                                 child: Row(
                                   children: [
                                     Container(
+                                      margin: const EdgeInsets.only(
+                                          right: 10), // Space between cards
                                       height: 85,
                                       width: 221,
                                       decoration: BoxDecoration(
@@ -610,9 +608,12 @@ class _ProviderDetailsState extends State<ProviderDetails> {
                                               decoration: BoxDecoration(
                                                 borderRadius:
                                                     BorderRadius.circular(12),
-                                                image: const DecorationImage(
-                                                    image: NetworkImage(
-                                                        'https://newprofilepic.photo-cdn.net//assets/images/article/profile.jpg?90af0c8')),
+                                                image: DecorationImage(
+                                                  image: NetworkImage(
+                                                    'https://newprofilepic.photo-cdn.net//assets/images/article/profile.jpg?90af0c8',
+                                                  ),
+                                                  fit: BoxFit.cover,
+                                                ),
                                               ),
                                             ),
                                             const SizedBox(width: 10),
@@ -621,7 +622,7 @@ class _ProviderDetailsState extends State<ProviderDetails> {
                                                   CrossAxisAlignment.start,
                                               children: [
                                                 Text(
-                                                  'Aliza shah',
+                                                  'Unknown',
                                                   style: GoogleFonts.getFont(
                                                     "Poppins",
                                                     textStyle: const TextStyle(
@@ -634,7 +635,7 @@ class _ProviderDetailsState extends State<ProviderDetails> {
                                                   ),
                                                 ),
                                                 Text(
-                                                  'Aliqua officia duis\noccaecat\nfnostrud',
+                                                  'No comment',
                                                   style: GoogleFonts.getFont(
                                                     "Poppins",
                                                     textStyle: const TextStyle(
@@ -654,7 +655,7 @@ class _ProviderDetailsState extends State<ProviderDetails> {
                                               size: 20,
                                             ),
                                             Text(
-                                              '4.5',
+                                              '0.0',
                                               style: GoogleFonts.getFont(
                                                 "Poppins",
                                                 textStyle: const TextStyle(
@@ -664,103 +665,10 @@ class _ProviderDetailsState extends State<ProviderDetails> {
                                                 ),
                                               ),
                                             ),
-                                            // Row(children: [
-                                            //
-                                            // ]),
                                           ],
                                         ),
                                       ),
-                                    ),
-                                    const SizedBox(width: 10),
-                                    Container(
-                                      height: 85,
-                                      width: 221,
-                                      decoration: BoxDecoration(
-                                        color: Colors.white,
-                                        borderRadius: BorderRadius.circular(20),
-                                        boxShadow: [
-                                          BoxShadow(
-                                            color: Colors.grey.withOpacity(0.1),
-                                            spreadRadius: 5,
-                                            blurRadius: 7,
-                                            offset: const Offset(0,
-                                                3), // changes position of shadow
-                                          ),
-                                        ],
-                                      ),
-                                      child: Padding(
-                                        padding: const EdgeInsets.only(
-                                            top: 10, left: 5, right: 5),
-                                        child: Row(
-                                          children: [
-                                            const SizedBox(width: 16.0),
-                                            Container(
-                                              height: 50,
-                                              width: 50,
-                                              decoration: BoxDecoration(
-                                                borderRadius:
-                                                    BorderRadius.circular(12),
-                                                image: const DecorationImage(
-                                                    image: NetworkImage(
-                                                        'https://newprofilepic.photo-cdn.net//assets/images/article/profile.jpg?90af0c8')),
-                                              ),
-                                            ),
-                                            const SizedBox(width: 10),
-                                            Column(
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
-                                              children: [
-                                                Text(
-                                                  'Aliza shah',
-                                                  style: GoogleFonts.getFont(
-                                                    "Poppins",
-                                                    textStyle: const TextStyle(
-                                                      fontSize: 14,
-                                                      fontWeight:
-                                                          FontWeight.w400,
-                                                      color:
-                                                          AppColor.blackColor,
-                                                    ),
-                                                  ),
-                                                ),
-                                                Text(
-                                                  'Aliqua officia duis\noccaecat\nfnostrud',
-                                                  style: GoogleFonts.getFont(
-                                                    "Poppins",
-                                                    textStyle: const TextStyle(
-                                                      fontSize: 10,
-                                                      fontWeight:
-                                                          FontWeight.w400,
-                                                      color: AppColor.grayColor,
-                                                    ),
-                                                  ),
-                                                ),
-                                              ],
-                                            ),
-                                            const SizedBox(width: 5),
-                                            const Icon(
-                                              Icons.star,
-                                              color: Colors.amber,
-                                              size: 20,
-                                            ),
-                                            Text(
-                                              '4.5',
-                                              style: GoogleFonts.getFont(
-                                                "Poppins",
-                                                textStyle: const TextStyle(
-                                                  fontSize: 10,
-                                                  fontWeight: FontWeight.w400,
-                                                  color: AppColor.primaryColor,
-                                                ),
-                                              ),
-                                            ),
-                                            // Row(children: [
-                                            //
-                                            // ]),
-                                          ],
-                                        ),
-                                      ),
-                                    ),
+                                    )
                                   ],
                                 ),
                               ),

@@ -116,6 +116,10 @@ class _FamilyFilterViewState extends State<FamilyFilterView> {
                           child: DayButtonFamily(day: dayAbbreviation),
                         );
                       }).toList();
+                      // Map<String, String> reviews =
+                      // (value['reviews'] as Map<dynamic, dynamic>)
+                      //     .map((key, value) => MapEntry(
+                      //     key.toString(), value.toString()));
                       return BookingCartWidgetHome(
                         primaryButtonColor: AppColor.primaryColor,
                         primaryButtonTxt: 'View',
