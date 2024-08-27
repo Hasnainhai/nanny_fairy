@@ -23,7 +23,6 @@ class _HomeDefaultViewState extends State<HomeDefaultView> {
     String ratings = value != null && value['countRatingStars'] != null
         ? value['countRatingStars'].toString()
         : 'N/A';
-    // Get the total number of reviews
     String totalRatings =
         value['reviews'] != null ? value['reviews'].length.toString() : '0';
 
@@ -31,6 +30,15 @@ class _HomeDefaultViewState extends State<HomeDefaultView> {
       'ratings': ratings,
       'totalRatings': totalRatings,
     };
+  }
+
+  double calculateAverageRating(Map<dynamic, dynamic> reviews) {
+    if (reviews.isEmpty) return 0.0;
+    double totalRating = 0.0;
+    reviews.forEach((key, review) {
+      totalRating += review['countRatingStars'] ?? 0.0;
+    });
+    return totalRating / reviews.length;
   }
 
   @override
@@ -189,16 +197,10 @@ class _HomeDefaultViewState extends State<HomeDefaultView> {
                                   .cast<String>();
                           Map<String, String> ratingsData =
                               getRatingsAndTotalRatings(value);
-                          // Calculate ratings using a list of reviews, if available
-                          List<Map<String, dynamic>> reviews =
-                              value['reviews'] is List
-                                  ? (value['reviews'] as List<dynamic>)
-                                      .cast<Map<String, dynamic>>()
-                                  : [];
-
+                          Map<dynamic, dynamic> reviews =
+                              value['reviews'] ?? {};
                           double averageRating =
                               calculateAverageRating(reviews);
-
                           bookingWidgets.add(
                             BookingCartWidget(
                               primaryButtonTxt: 'View',
@@ -231,7 +233,6 @@ class _HomeDefaultViewState extends State<HomeDefaultView> {
                           );
                         },
                       );
-
                       return SingleChildScrollView(
                         scrollDirection: Axis.vertical,
                         child: Column(
@@ -249,14 +250,5 @@ class _HomeDefaultViewState extends State<HomeDefaultView> {
         ),
       ],
     );
-  }
-
-  double calculateAverageRating(List<Map<String, dynamic>> reviews) {
-    if (reviews.isEmpty) return 0.0;
-    double totalRating = 0.0;
-    for (var review in reviews) {
-      totalRating += review['countRatingStars'] ?? 0.0;
-    }
-    return totalRating / reviews.length;
   }
 }
