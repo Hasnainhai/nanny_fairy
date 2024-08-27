@@ -1,8 +1,6 @@
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:nanny_fairy/Family_View/familyChat/family_chat_list.dart';
-import 'package:nanny_fairy/Family_View/familyChat/family_chat_view.dart';
-import 'package:nanny_fairy/Family_View/familyChat/widgets/family_chat_screen_widget.dart';
 import 'package:nanny_fairy/Family_View/payment_family/payment_family.dart';
 import 'package:nanny_fairy/Repository/get_family_info_repo.dart';
 import 'package:nanny_fairy/res/components/rounded_button.dart';
@@ -45,7 +43,61 @@ class _ProviderDetailsState extends State<ProviderDetails> {
   @override
   void initState() {
     getFamilyInfoRepo.fetchCurrentFamilyInfo();
+    fetchReviews();
     super.initState();
+  }
+
+  List<Widget> reviewCards = [];
+
+  void fetchReviews() async {
+    DatabaseReference reviewsRef = FirebaseDatabase.instance
+        .ref()
+        .child('Providers')
+        .child(widget.familyId)
+        .child('reviews');
+
+    reviewsRef.onValue.listen((DatabaseEvent event) {
+      final dataSnapshot = event.snapshot;
+      if (dataSnapshot.value != null) {
+        Map<dynamic, dynamic> reviews =
+            dataSnapshot.value as Map<dynamic, dynamic>;
+        List<Widget> loadedReviewCards = [];
+
+        reviews.forEach((key, value) {
+          String familyName = value['familyName'] ?? 'Unknown';
+          String familyComment = value['FamilyComment'] ?? 'No comment';
+          String familyProfile = value['familyProfile'] ??
+              'https://newprofilepic.photo-cdn.net//assets/images/article/profile.jpg?90af0c8';
+          double countRatingStars =
+              double.parse(value['countRatingStars']?.toString() ?? '0.0');
+
+          loadedReviewCards.add(buildReviewCard(
+              familyName, familyComment, familyProfile, countRatingStars));
+        });
+
+        setState(() {
+          reviewCards = loadedReviewCards;
+        });
+      } else {
+        setState(() {
+          reviewCards = [
+            Center(
+              child: Text(
+                'No reviews available',
+                style: GoogleFonts.getFont(
+                  "Poppins",
+                  textStyle: const TextStyle(
+                    fontSize: 14,
+                    fontWeight: FontWeight.w400,
+                    color: Colors.grey,
+                  ),
+                ),
+              ),
+            ),
+          ];
+        });
+      }
+    });
   }
 
   // popUp
@@ -413,7 +465,6 @@ class _ProviderDetailsState extends State<ProviderDetails> {
                               ],
                             ),
                             const VerticalSpeacing(10),
-
                             Row(
                               mainAxisAlignment: MainAxisAlignment.end,
                               children: [
@@ -561,17 +612,17 @@ class _ProviderDetailsState extends State<ProviderDetails> {
                                     ),
                                   ),
                                 ),
-                                Text(
-                                  'More Review',
-                                  style: GoogleFonts.getFont(
-                                    "Poppins",
-                                    textStyle: const TextStyle(
-                                      fontSize: 14,
-                                      fontWeight: FontWeight.w400,
-                                      color: AppColor.primaryColor,
-                                    ),
-                                  ),
-                                ),
+                                // Text(
+                                //   'More Review',
+                                //   style: GoogleFonts.getFont(
+                                //     "Poppins",
+                                //     textStyle: const TextStyle(
+                                //       fontSize: 14,
+                                //       fontWeight: FontWeight.w400,
+                                //       color: AppColor.primaryColor,
+                                //     ),
+                                //   ),
+                                // ),
                               ],
                             ),
                             const VerticalSpeacing(16.0),
@@ -579,189 +630,9 @@ class _ProviderDetailsState extends State<ProviderDetails> {
                               height: 90,
                               child: SingleChildScrollView(
                                 scrollDirection: Axis.horizontal,
-                                physics: const ScrollPhysics(),
+                                physics: ScrollPhysics(),
                                 child: Row(
-                                  children: [
-                                    Container(
-                                      height: 85,
-                                      width: 221,
-                                      decoration: BoxDecoration(
-                                        color: Colors.white,
-                                        borderRadius: BorderRadius.circular(20),
-                                        boxShadow: [
-                                          BoxShadow(
-                                            color: Colors.grey.withOpacity(0.1),
-                                            spreadRadius: 5,
-                                            blurRadius: 7,
-                                            offset: const Offset(0,
-                                                3), // changes position of shadow
-                                          ),
-                                        ],
-                                      ),
-                                      child: Padding(
-                                        padding: const EdgeInsets.only(
-                                            top: 10, left: 5, right: 5),
-                                        child: Row(
-                                          children: [
-                                            const SizedBox(width: 16.0),
-                                            Container(
-                                              height: 50,
-                                              width: 50,
-                                              decoration: BoxDecoration(
-                                                borderRadius:
-                                                    BorderRadius.circular(12),
-                                                image: const DecorationImage(
-                                                    image: NetworkImage(
-                                                        'https://newprofilepic.photo-cdn.net//assets/images/article/profile.jpg?90af0c8')),
-                                              ),
-                                            ),
-                                            const SizedBox(width: 10),
-                                            Column(
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
-                                              children: [
-                                                Text(
-                                                  'Aliza shah',
-                                                  style: GoogleFonts.getFont(
-                                                    "Poppins",
-                                                    textStyle: const TextStyle(
-                                                      fontSize: 14,
-                                                      fontWeight:
-                                                          FontWeight.w400,
-                                                      color:
-                                                          AppColor.blackColor,
-                                                    ),
-                                                  ),
-                                                ),
-                                                Text(
-                                                  'Aliqua officia duis\noccaecat\nfnostrud',
-                                                  style: GoogleFonts.getFont(
-                                                    "Poppins",
-                                                    textStyle: const TextStyle(
-                                                      fontSize: 10,
-                                                      fontWeight:
-                                                          FontWeight.w400,
-                                                      color: AppColor.grayColor,
-                                                    ),
-                                                  ),
-                                                ),
-                                              ],
-                                            ),
-                                            const SizedBox(width: 5),
-                                            const Icon(
-                                              Icons.star,
-                                              color: Colors.amber,
-                                              size: 20,
-                                            ),
-                                            Text(
-                                              '4.5',
-                                              style: GoogleFonts.getFont(
-                                                "Poppins",
-                                                textStyle: const TextStyle(
-                                                  fontSize: 10,
-                                                  fontWeight: FontWeight.w400,
-                                                  color: AppColor.primaryColor,
-                                                ),
-                                              ),
-                                            ),
-                                            // Row(children: [
-                                            //
-                                            // ]),
-                                          ],
-                                        ),
-                                      ),
-                                    ),
-                                    const SizedBox(width: 10),
-                                    Container(
-                                      height: 85,
-                                      width: 221,
-                                      decoration: BoxDecoration(
-                                        color: Colors.white,
-                                        borderRadius: BorderRadius.circular(20),
-                                        boxShadow: [
-                                          BoxShadow(
-                                            color: Colors.grey.withOpacity(0.1),
-                                            spreadRadius: 5,
-                                            blurRadius: 7,
-                                            offset: const Offset(0,
-                                                3), // changes position of shadow
-                                          ),
-                                        ],
-                                      ),
-                                      child: Padding(
-                                        padding: const EdgeInsets.only(
-                                            top: 10, left: 5, right: 5),
-                                        child: Row(
-                                          children: [
-                                            const SizedBox(width: 16.0),
-                                            Container(
-                                              height: 50,
-                                              width: 50,
-                                              decoration: BoxDecoration(
-                                                borderRadius:
-                                                    BorderRadius.circular(12),
-                                                image: const DecorationImage(
-                                                    image: NetworkImage(
-                                                        'https://newprofilepic.photo-cdn.net//assets/images/article/profile.jpg?90af0c8')),
-                                              ),
-                                            ),
-                                            const SizedBox(width: 10),
-                                            Column(
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
-                                              children: [
-                                                Text(
-                                                  'Aliza shah',
-                                                  style: GoogleFonts.getFont(
-                                                    "Poppins",
-                                                    textStyle: const TextStyle(
-                                                      fontSize: 14,
-                                                      fontWeight:
-                                                          FontWeight.w400,
-                                                      color:
-                                                          AppColor.blackColor,
-                                                    ),
-                                                  ),
-                                                ),
-                                                Text(
-                                                  'Aliqua officia duis\noccaecat\nfnostrud',
-                                                  style: GoogleFonts.getFont(
-                                                    "Poppins",
-                                                    textStyle: const TextStyle(
-                                                      fontSize: 10,
-                                                      fontWeight:
-                                                          FontWeight.w400,
-                                                      color: AppColor.grayColor,
-                                                    ),
-                                                  ),
-                                                ),
-                                              ],
-                                            ),
-                                            const SizedBox(width: 5),
-                                            const Icon(
-                                              Icons.star,
-                                              color: Colors.amber,
-                                              size: 20,
-                                            ),
-                                            Text(
-                                              '4.5',
-                                              style: GoogleFonts.getFont(
-                                                "Poppins",
-                                                textStyle: const TextStyle(
-                                                  fontSize: 10,
-                                                  fontWeight: FontWeight.w400,
-                                                  color: AppColor.primaryColor,
-                                                ),
-                                              ),
-                                            ),
-                                            // Row(children: [
-                                            //
-                                            // ]),
-                                          ],
-                                        ),
-                                      ),
-                                    ),
-                                  ],
+                                  children: reviewCards,
                                 ),
                               ),
                             ),
@@ -792,6 +663,99 @@ class _ProviderDetailsState extends State<ProviderDetails> {
             ),
           ),
         ],
+      ),
+    );
+  }
+
+  Widget buildReviewCard(String familyName, String familyComment,
+      String familyProfile, double countRatingStars) {
+    return Container(
+      margin: const EdgeInsets.only(right: 10), // Space between cards
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(20),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.grey.withOpacity(0.1),
+            spreadRadius: 5,
+            blurRadius: 7,
+            offset: const Offset(0, 3),
+          ),
+        ],
+      ),
+      child: Padding(
+        padding: const EdgeInsets.only(top: 20, left: 5, right: 5),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const SizedBox(width: 12.0),
+            Container(
+              height: 50,
+              width: 50,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(12),
+                image: DecorationImage(
+                  image: NetworkImage(familyProfile),
+                  fit: BoxFit.cover,
+                ),
+              ),
+            ),
+            const SizedBox(width: 10),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Text(
+                  familyName,
+                  style: GoogleFonts.getFont(
+                    "Poppins",
+                    textStyle: const TextStyle(
+                      fontSize: 14,
+                      fontWeight: FontWeight.w400,
+                      color: Colors.black,
+                    ),
+                  ),
+                ),
+                SizedBox(
+                  height: 50,
+                  width: 90,
+                  child: Text(
+                    familyComment.length > 30
+                        ? '${familyComment.substring(0, 30)}...'
+                        : familyComment,
+                    style: GoogleFonts.getFont(
+                      "Poppins",
+                      textStyle: const TextStyle(
+                        fontSize: 10,
+                        fontWeight: FontWeight.w400,
+                        color: Colors.grey,
+                      ),
+                    ),
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(width: 5),
+            const Icon(
+              Icons.star,
+              color: Colors.amber,
+              size: 20,
+            ),
+            Text(
+              countRatingStars.toString(),
+              style: GoogleFonts.getFont(
+                "Poppins",
+                textStyle: const TextStyle(
+                  fontSize: 10,
+                  fontWeight: FontWeight.w400,
+                  color: Colors.orange,
+                ),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

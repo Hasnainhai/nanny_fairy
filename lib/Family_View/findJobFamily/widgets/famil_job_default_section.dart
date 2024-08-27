@@ -16,6 +16,28 @@ class FamilyJobDefaultSection extends StatefulWidget {
 }
 
 class _FamilyJobDefaultSectionState extends State<FamilyJobDefaultSection> {
+  Map<String, String> getRatingsAndTotalRatings(Map<dynamic, dynamic> value) {
+    String ratings = value != null && value['countRatingStars'] != null
+        ? value['countRatingStars'].toString()
+        : 'N/A';
+    String totalRatings =
+        value['reviews'] != null ? value['reviews'].length.toString() : '0';
+
+    return {
+      'ratings': ratings,
+      'totalRatings': totalRatings,
+    };
+  }
+
+  double calculateAverageRating(Map<dynamic, dynamic> reviews) {
+    if (reviews.isEmpty) return 0.0;
+    double totalRating = 0.0;
+    reviews.forEach((key, review) {
+      totalRating += review['countRatingStars'] ?? 0.0;
+    });
+    return totalRating / reviews.length;
+  }
+
   @override
   Widget build(BuildContext context) {
     final familyhomeController = Provider.of<FamilyHomeController>(context);
@@ -57,6 +79,10 @@ class _FamilyJobDefaultSectionState extends State<FamilyJobDefaultSection> {
                       child: DayButtonFamily(day: dayAbbreviation),
                     );
                   }).toList();
+                  Map<String, String> ratingsData =
+                      getRatingsAndTotalRatings(value);
+                  Map<dynamic, dynamic> reviews = value['reviews'] ?? {};
+                  double averageRating = calculateAverageRating(reviews);
 
                   bookingWidgets.add(
                     BookingCartWidgetHome(
@@ -81,6 +107,9 @@ class _FamilyJobDefaultSectionState extends State<FamilyJobDefaultSection> {
                               degree: value['education'],
                               dayButtons: dayButtons,
                               timeData: timeData,
+                              ratings: averageRating,
+                              totalRatings:
+                                  int.parse(ratingsData['totalRatings']!),
                             ),
                           ),
                         );
@@ -91,6 +120,8 @@ class _FamilyJobDefaultSectionState extends State<FamilyJobDefaultSection> {
                       skill: '',
                       hoursRate: value['hoursrate'],
                       dayButtons: dayButtons,
+                      ratings: averageRating,
+                      totalRatings: int.parse(ratingsData['totalRatings']!),
                     ),
                   );
                 } else {
