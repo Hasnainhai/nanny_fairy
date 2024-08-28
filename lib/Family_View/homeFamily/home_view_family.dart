@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:nanny_fairy/FamilyController/get_family_info_controller.dart';
@@ -106,26 +108,9 @@ class _HomeViewFamilyState extends State<HomeViewFamily> {
                                           .filterProvidersByDistance(
                                               2.0); // 2 kilometers
 
-                                      // Access the filtered list of nearby providers directly
-                                      List<Map<String, dynamic>>
-                                          nearbyProviders = distanceRepository
-                                              .distanceFilterProviders;
-
-                                      print(
-                                          'Nearby Providers: $nearbyProviders');
                                       uiState.switchToType(
                                           FamilyHomeUiEnums.DistanceSection);
-                                      ScaffoldMessenger.of(context)
-                                          .showSnackBar(
-                                        SnackBar(
-                                          content: Text(
-                                              'Found ${nearbyProviders.length} nearby providers.'),
-                                        ),
-                                      );
-
-                                      // Switch UI state or perform other UI-related actions
                                     } catch (e) {
-                                      print('Error: $e');
                                       ScaffoldMessenger.of(context)
                                           .showSnackBar(
                                         const SnackBar(
