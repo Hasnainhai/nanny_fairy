@@ -76,6 +76,7 @@ class _ReviewCardState extends State<ReviewCard> {
                             minRating: 1,
                             allowHalfRating: true,
                             glowColor: Colors.amber,
+                            ignoreGestures: true,
                             itemCount: 5,
                             itemSize: 18,
                             itemPadding:
@@ -113,7 +114,6 @@ class _ReviewCardState extends State<ReviewCard> {
               ),
             ),
             const VerticalSpeacing(14),
-
           ],
         ),
       ),

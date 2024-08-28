@@ -7,15 +7,7 @@ import '../../../res/components/colors.dart';
 import '../../../res/components/widgets/card_button.dart';
 
 class BookingCartWidget extends StatefulWidget {
-  final String name;
-  final String? profilePic;
-  final List<String> passion;
-  final Function() ontapView;
-  final String primaryButtonTxt;
-  double? ratings;
-  int? totalRatings;
-
-  BookingCartWidget({
+  const BookingCartWidget({
     super.key,
     required this.primaryButtonTxt,
     required this.ontapView,
@@ -25,7 +17,13 @@ class BookingCartWidget extends StatefulWidget {
     this.ratings,
     this.totalRatings,
   });
-
+  final String name;
+  final String? profilePic;
+  final List<String> passion;
+  final Function() ontapView;
+  final String primaryButtonTxt;
+  final double? ratings;
+  final int? totalRatings;
   @override
   State<BookingCartWidget> createState() => _BookingCartWidgetState();
 }
