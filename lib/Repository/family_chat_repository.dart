@@ -21,21 +21,21 @@ class FamilyChatRepository {
 
       // Update the last message and time in both the Providers and Family nodes
       Map<String, dynamic> receiverChatContact = {
+        "name": receiverName,
+        "profilePic": receiverProfilePic,
+        "timeSent": DateTime.now().toUtc().toIso8601String(),
+        "lastMessage": text,
+        "providerId": providerId,
+        "isSeen": false,
+      };
+
+      Map<String, dynamic> senderChatContact = {
         "name": senderName,
         "profilePic": senderProfilePic,
         "timeSent": DateTime.now().toUtc().toIso8601String(),
         "lastMessage": text,
         "familyId": auth.currentUser!.uid,
         "isSeen": false,
-      };
-
-      Map<String, dynamic> senderChatContact = {
-        "name": receiverName,
-        "profilePic": receiverProfilePic,
-        "timeSent": DateTime.now().toUtc().toIso8601String(),
-        "lastMessage": text,
-        "providerId": providerId,
-        "isSeen": true,
       };
 
       // Use update instead of set to avoid overwriting the entire node
@@ -56,6 +56,8 @@ class FamilyChatRepository {
       // Now save the message to the messages node
       await saveMessageToDatabase(
           text, timestamp, providerId, auth.currentUser!.uid);
+      print(
+          '..............$senderChatContact: receivercontect : $receiverChatContact');
     } catch (e) {
       print("Failed to save contact: $e");
     }
