@@ -12,6 +12,28 @@ class JobDefaultSection extends StatefulWidget {
 }
 
 class _JobDefaultSectionState extends State<JobDefaultSection> {
+  Map<String, String> getRatingsAndTotalRatings(Map<dynamic, dynamic> value) {
+    String ratings = value != null && value['countRatingStars'] != null
+        ? value['countRatingStars'].toString()
+        : 'N/A';
+    String totalRatings =
+        value['reviews'] != null ? value['reviews'].length.toString() : '0';
+
+    return {
+      'ratings': ratings,
+      'totalRatings': totalRatings,
+    };
+  }
+
+  double calculateAverageRating(Map<dynamic, dynamic> reviews) {
+    if (reviews.isEmpty) return 0.0;
+    double totalRating = 0.0;
+    reviews.forEach((key, review) {
+      totalRating += review['countRatingStars'] ?? 0.0;
+    });
+    return totalRating / reviews.length;
+  }
+
   @override
   Widget build(BuildContext context) {
     final homeViewModel = Provider.of<ProviderHomeViewModel>(context);
@@ -41,6 +63,10 @@ class _JobDefaultSectionState extends State<JobDefaultSection> {
                     List<String> passions =
                         (value['FamilyPassions'] as List<dynamic>)
                             .cast<String>();
+                    Map<String, String> ratingsData =
+                        getRatingsAndTotalRatings(value);
+                    Map<dynamic, dynamic> reviews = value['reviews'] ?? {};
+                    double averageRating = calculateAverageRating(reviews);
 
                     bookingWidgets.add(
                       BookingCartWidget(
@@ -55,6 +81,10 @@ class _JobDefaultSectionState extends State<JobDefaultSection> {
                                 bio: value['bio'] ?? '',
                                 profile: value['profile'],
                                 familyId: value['uid'],
+                                ratings: averageRating,
+                                totalRatings: int.parse(
+                                  ratingsData['totalRatings']!,
+                                ),
                               ),
                             ),
                           );
@@ -62,6 +92,8 @@ class _JobDefaultSectionState extends State<JobDefaultSection> {
                         name: "${value['firstName']} ${value['lastName']}",
                         profilePic: value['profile'],
                         passion: passions,
+                        ratings: averageRating,
+                        totalRatings: int.parse(ratingsData['totalRatings']!),
                       ),
                     );
                   },
