@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:nanny_fairy/FamilyController/get_family_info_controller.dart';
 import 'package:nanny_fairy/Family_View/homeFamily/widgets/family_default_view.dart';
+import 'package:nanny_fairy/Family_View/homeFamily/widgets/family_distance_view.dart';
 import 'package:nanny_fairy/Family_View/homeFamily/widgets/family_filter_view.dart';
 import 'package:nanny_fairy/Family_View/homeFamily/widgets/family_search__view.dart';
 import 'package:nanny_fairy/Repository/family_distance_repository.dart';
@@ -95,31 +96,48 @@ class _HomeViewFamilyState extends State<HomeViewFamily> {
                                 ),
                               ),
                             ),
-                            trailing: IconButton(
-                              onPressed: () async {
-                                try {
-                                  List<Map<String, dynamic>> nearbyProviders =
+                            trailing: Consumer<FamilyHomeUiRepository>(
+                              builder: (context, uiState, child) {
+                                return IconButton(
+                                  onPressed: () async {
+                                    try {
+                                      // Call the method to filter providers by distance
                                       await distanceRepository
                                           .filterProvidersByDistance(
                                               2.0); // 2 kilometers
 
-                                  print('Nearby Providers: $nearbyProviders');
+                                      // Access the filtered list of nearby providers directly
+                                      List<Map<String, dynamic>>
+                                          nearbyProviders = distanceRepository
+                                              .distanceFilterProviders;
 
-                                  ScaffoldMessenger.of(context).showSnackBar(
-                                    SnackBar(
-                                        content: Text(
-                                            'Found ${nearbyProviders.length} nearby providers.')),
-                                  );
-                                } catch (e) {
-                                  print('Error: $e');
-                                  ScaffoldMessenger.of(context).showSnackBar(
-                                    const SnackBar(
-                                        content: Text(
-                                            'Failed to fetch nearby providers.')),
-                                  );
-                                }
+                                      print(
+                                          'Nearby Providers: $nearbyProviders');
+                                      uiState.switchToType(
+                                          FamilyHomeUiEnums.DistanceSection);
+                                      ScaffoldMessenger.of(context)
+                                          .showSnackBar(
+                                        SnackBar(
+                                          content: Text(
+                                              'Found ${nearbyProviders.length} nearby providers.'),
+                                        ),
+                                      );
+
+                                      // Switch UI state or perform other UI-related actions
+                                    } catch (e) {
+                                      print('Error: $e');
+                                      ScaffoldMessenger.of(context)
+                                          .showSnackBar(
+                                        const SnackBar(
+                                          content: Text(
+                                              'Failed to fetch nearby providers.'),
+                                        ),
+                                      );
+                                    }
+                                  },
+                                  icon: const Icon(Icons.social_distance),
+                                );
                               },
-                              icon: const Icon(Icons.social_distance),
                             ),
                           ),
                         );
@@ -142,7 +160,7 @@ class _HomeViewFamilyState extends State<HomeViewFamily> {
                 ),
               ],
             ),
-            const VerticalSpeacing(50.0),
+            const VerticalSpeacing(20.0),
             Consumer<FamilyHomeUiRepository>(
               builder: (context, uiState, _) {
                 Widget selectedWidget;
@@ -156,6 +174,9 @@ class _HomeViewFamilyState extends State<HomeViewFamily> {
                     break;
                   case FamilyHomeUiEnums.FilterSection:
                     selectedWidget = const FamilyFilterView();
+                    break;
+                  case FamilyHomeUiEnums.DistanceSection:
+                    selectedWidget = const FamilyDistanceFilterView();
                     break;
                 }
 
