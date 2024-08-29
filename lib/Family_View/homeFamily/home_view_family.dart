@@ -98,32 +98,6 @@ class _HomeViewFamilyState extends State<HomeViewFamily> {
                                 ),
                               ),
                             ),
-                            trailing: Consumer<FamilyHomeUiRepository>(
-                              builder: (context, uiState, child) {
-                                return IconButton(
-                                  onPressed: () async {
-                                    try {
-                                      // Call the method to filter providers by distance
-                                      await distanceRepository
-                                          .filterProvidersByDistance(
-                                              2.0); // 2 kilometers
-
-                                      uiState.switchToType(
-                                          FamilyHomeUiEnums.DistanceSection);
-                                    } catch (e) {
-                                      ScaffoldMessenger.of(context)
-                                          .showSnackBar(
-                                        const SnackBar(
-                                          content: Text(
-                                              'Failed to fetch nearby providers.'),
-                                        ),
-                                      );
-                                    }
-                                  },
-                                  icon: const Icon(Icons.social_distance),
-                                );
-                              },
-                            ),
                           ),
                         );
                       } else {
