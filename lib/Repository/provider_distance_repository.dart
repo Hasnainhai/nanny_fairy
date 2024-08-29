@@ -14,6 +14,7 @@ class ProviderDistanceRepository {
     final data = snapshot.snapshot.value as Map<dynamic, dynamic>?;
 
     if (data == null) {
+      print("No families data found.");
       return [];
     }
 
@@ -25,6 +26,7 @@ class ProviderDistanceRepository {
       }
     });
 
+    print("Fetched families data: ${familyList.length} families found.");
     return familyList;
   }
 
@@ -42,6 +44,7 @@ class ProviderDistanceRepository {
       final address = snapshot.snapshot.value as String?;
 
       if (address != null) {
+        print("Provider address found: $address");
         return address;
       } else {
         print('No address found for the current provider.');
@@ -59,8 +62,11 @@ class ProviderDistanceRepository {
     String? providerAddress = await getProviderAddress();
 
     if (providerAddress == null) {
+      print("Provider address is null, cannot filter families by distance.");
       return; // Exit if no provider address is found
     }
+
+    print("Filtering families based on distance...");
 
     for (var family in families) {
       String? familyAddress = family['address'] as String?;
@@ -71,10 +77,18 @@ class ProviderDistanceRepository {
 
       double distance = await getDistanceInKm(providerAddress, familyAddress);
 
+      print(
+          "Distance from provider to family '${family['firstName']} ${family['lastName']}': $distance km");
+
       if (distance <= maxDistanceKm) {
         distanceFilteredFamilies.add(family);
+        print(
+            "Family '${family['firstName']} ${family['lastName']}' added to filtered list.");
       }
     }
+
+    print(
+        "Filtering completed. ${distanceFilteredFamilies.length} families matched the criteria.");
   }
 
   // Function to get the distance in kilometers between two addresses
@@ -86,10 +100,10 @@ class ProviderDistanceRepository {
         '?origins=$encodedOrigin'
         '&destinations=$encodedDestination'
         '&units=metric' // Use 'metric' to get distances in kilometers
-        '&key=YOUR_API_KEY_HERE'; // Replace with your actual API key
+        '&key=AIzaSyCBUyZVjnq9IGxH9Zu6ACNRIJXtkfZ2iuQ'; // Replace with your actual API key
 
     http.Response response = await http.get(Uri.parse(url));
-    print(response.body);
+    print("Distance API Response: ${response.body}");
 
     if (response.statusCode == 200) {
       var jsonResponse = jsonDecode(response.body);
@@ -103,9 +117,12 @@ class ProviderDistanceRepository {
             ['value']; // Distance in meters
         return distance / 1000; // Convert to kilometers
       } else {
+        print("Invalid response from Distance Matrix API.");
         throw Exception('No valid data found in the API response.');
       }
     } else {
+      print(
+          "Failed to fetch data from Distance Matrix API: ${response.statusCode}");
       throw Exception('Failed to fetch data: ${response.statusCode}');
     }
   }

@@ -5,7 +5,6 @@ import 'package:nanny_fairy/res/components/widgets/vertical_spacing.dart';
 import 'package:nanny_fairy/utils/routes/routes_name.dart';
 import 'package:nanny_fairy/view/booked/widgets/booking_widget.dart';
 import 'package:nanny_fairy/view/job/family_detail_provider.dart';
-import 'package:provider/provider.dart';
 import 'package:nanny_fairy/repository/provider_distance_repository.dart';
 
 class HomeDistanceView extends StatefulWidget {
@@ -40,12 +39,10 @@ class _HomeDistanceViewState extends State<HomeDistanceView> {
 
   @override
   Widget build(BuildContext context) {
-    final providerDistanceRepository =
-        Provider.of<ProviderDistanceRepository>(context);
+    ProviderDistanceRepository providerDistanceRepository =
+        ProviderDistanceRepository();
 
     // Get the filtered families list directly from the repository
-    List<Map<String, dynamic>> filteredFamilies =
-        providerDistanceRepository.distanceFilteredFamilies;
 
     return Column(
       children: [
@@ -89,52 +86,55 @@ class _HomeDistanceViewState extends State<HomeDistanceView> {
               const VerticalSpeacing(16.0),
               SizedBox(
                 height: MediaQuery.of(context).size.height * 0.3,
-                child: filteredFamilies.isEmpty
-                    ? const Center(child: Text('No data available'))
-                    : SingleChildScrollView(
-                        scrollDirection: Axis.vertical,
-                        child: Column(
-                          children: filteredFamilies.map((family) {
-                            List<String> passions =
-                                (family['FamilyPassions'] as List<dynamic>)
-                                    .cast<String>();
-                            Map<String, String> ratingsData =
-                                getRatingsAndTotalRatings(family);
-                            Map<dynamic, dynamic> reviews =
-                                family['reviews'] ?? {};
-                            double averageRating =
-                                calculateAverageRating(reviews);
+                child:
+                    providerDistanceRepository.distanceFilteredFamilies.isEmpty
+                        ? const Center(child: Text('No data available'))
+                        : SingleChildScrollView(
+                            scrollDirection: Axis.vertical,
+                            child: Column(
+                              children: providerDistanceRepository
+                                  .distanceFilteredFamilies
+                                  .map((family) {
+                                List<String> passions =
+                                    (family['FamilyPassions'] as List<dynamic>)
+                                        .cast<String>();
+                                Map<String, String> ratingsData =
+                                    getRatingsAndTotalRatings(family);
+                                Map<dynamic, dynamic> reviews =
+                                    family['reviews'] ?? {};
+                                double averageRating =
+                                    calculateAverageRating(reviews);
 
-                            return BookingCartWidget(
-                              primaryButtonTxt: 'View',
-                              ontapView: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (c) => FamilyDetailProvider(
-                                      name:
-                                          "${family['firstName']} ${family['lastName']}",
-                                      bio: family['bio'] ?? '',
-                                      profile: family['profile'],
-                                      familyId: family['uid'],
-                                      ratings: averageRating,
-                                      totalRatings: int.parse(
-                                          ratingsData['totalRatings']!),
-                                    ),
-                                  ),
+                                return BookingCartWidget(
+                                  primaryButtonTxt: 'View',
+                                  ontapView: () {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (c) => FamilyDetailProvider(
+                                          name:
+                                              "${family['firstName']} ${family['lastName']}",
+                                          bio: family['bio'] ?? '',
+                                          profile: family['profile'],
+                                          familyId: family['uid'],
+                                          ratings: averageRating,
+                                          totalRatings: int.parse(
+                                              ratingsData['totalRatings']!),
+                                        ),
+                                      ),
+                                    );
+                                  },
+                                  name:
+                                      "${family['firstName']} ${family['lastName']}",
+                                  profilePic: family['profile'],
+                                  passion: passions,
+                                  ratings: averageRating,
+                                  totalRatings:
+                                      int.parse(ratingsData['totalRatings']!),
                                 );
-                              },
-                              name:
-                                  "${family['firstName']} ${family['lastName']}",
-                              profilePic: family['profile'],
-                              passion: passions,
-                              ratings: averageRating,
-                              totalRatings:
-                                  int.parse(ratingsData['totalRatings']!),
-                            );
-                          }).toList(),
-                        ),
-                      ),
+                              }).toList(),
+                            ),
+                          ),
               ),
             ],
           ),
