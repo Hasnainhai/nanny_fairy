@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:nanny_fairy/Family_View/familyChat/family_chat_view.dart';
 import 'package:nanny_fairy/Family_View/payment_family/payment_family.dart';
 import 'package:nanny_fairy/Repository/get_family_info_repo.dart';
 import 'package:nanny_fairy/res/components/rounded_button.dart';
@@ -651,15 +652,15 @@ class _ProviderDetailsState extends State<ProviderDetails> {
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                      builder: (c) => ChatView(
+                                      builder: (c) => FamilyChatView(
                                             profilePic: widget.profile,
-                                            userName: widget.name,
-                                            familyId: widget.familyId,
                                             isSeen: false,
                                             currentUserName: getFamilyInfoRepo
                                                 .familyName
                                                 .toString(),
-                                            currentUserProfile:
+                                            name: widget.name,
+                                            id: widget.familyId,
+                                            currentUserProfilePic:
                                                 getFamilyInfoRepo.familyProfile
                                                     .toString(),
                                           )),

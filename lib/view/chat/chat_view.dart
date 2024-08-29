@@ -9,6 +9,8 @@ import 'package:nanny_fairy/view/chat/widgets/chatting_widget.dart';
 import 'package:nanny_fairy/view/rating/add_rating.dart';
 
 import '../../res/components/colors.dart';
+import '../../res/components/rounded_button.dart';
+import '../../res/components/widgets/vertical_spacing.dart';
 
 class ChatView extends StatefulWidget {
   final String profilePic;

@@ -5,10 +5,8 @@ import 'package:google_fonts/google_fonts.dart';
 
 import 'package:nanny_fairy/Family_View/familyChat/widgets/family_chat_screen_widget.dart';
 import 'package:nanny_fairy/Repository/get_family_info_repo.dart';
-import 'package:nanny_fairy/utils/routes/routes_name.dart';
-
 import '../../res/components/colors.dart';
-import '../familyRating/family_rating.dart';
+import '../../res/components/rounded_button.dart';
 
 class FamilyChatView extends StatefulWidget {
   final String name;
@@ -33,6 +31,69 @@ class FamilyChatView extends StatefulWidget {
 
 class _FamilyChatViewState extends State<FamilyChatView> {
   GetFamilyInfoRepo getFamilyInfoRepo = GetFamilyInfoRepo();
+  void familyHiringPopup() {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          backgroundColor: AppColor.whiteColor,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(12),
+          ),
+          content: SingleChildScrollView(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                const Icon(Icons.verified_outlined,
+                    color: AppColor.primaryColor, size: 100),
+                const SizedBox(height: 16),
+                Text(
+                  'Confirm hiring this provider to start the service and notify them of your choice.',
+                  textAlign: TextAlign.center,
+                  style: GoogleFonts.getFont(
+                    "Poppins",
+                    textStyle: const TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.w500,
+                      color: AppColor.blackColor,
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 24),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Expanded(
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                        child: RoundedButton(
+                          title: 'Confirm',
+                          onpress: () {
+                            // Add your confirm action here
+                          },
+                        ),
+                      ),
+                    ),
+                    Expanded(
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                        child: RoundedButton(
+                          title: 'Cancel',
+                          onpress: () {
+                            Navigator.of(context).pop(); // Dismiss the dialog
+                          },
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ),
+        );
+      },
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -75,13 +136,13 @@ class _FamilyChatViewState extends State<FamilyChatView> {
                           width: 16,
                           height: 16,
                           decoration: BoxDecoration(
-                              shape: BoxShape.circle,
-                              color: Colors.green,
-                              border: Border.all(
-                                width: 2,
-                                color: AppColor.primaryColor,
-                              ) // Online status indicator color
-                              ),
+                            shape: BoxShape.circle,
+                            color: Colors.green,
+                            border: Border.all(
+                              width: 2,
+                              color: AppColor.primaryColor,
+                            ), // Online status indicator color
+                          ),
                         ),
                       ),
                     ],
@@ -118,19 +179,7 @@ class _FamilyChatViewState extends State<FamilyChatView> {
             ),
             InkWell(
               onTap: () {
-                final familyId = FirebaseAuth.instance.currentUser!.uid;
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => FamilyRating(
-                              providerId: widget.id,
-                              familyId: familyId,
-                              familyProfile: widget.currentUserProfilePic,
-                              familyName: widget.currentUserName,
-                              providerProfile: widget.profilePic,
-                              providerName: widget.name,
-                            )));
-                // Navigator.pushNamed(context, RoutesName.addRating);
+                familyHiringPopup();
               },
               child: Container(
                 height: 26,
@@ -138,7 +187,7 @@ class _FamilyChatViewState extends State<FamilyChatView> {
                 color: AppColor.whiteColor,
                 child: const Center(
                   child: Text(
-                    'Write Review',
+                    'Hiring',
                     style: TextStyle(
                       fontSize: 10,
                       color: AppColor.primaryColor,
@@ -148,6 +197,38 @@ class _FamilyChatViewState extends State<FamilyChatView> {
                 ),
               ),
             ),
+            // InkWell(
+            //   onTap: () {
+            //     final familyId = FirebaseAuth.instance.currentUser!.uid;
+            //     Navigator.push(
+            //         context,
+            //         MaterialPageRoute(
+            //             builder: (context) => FamilyRating(
+            //                   providerId: widget.id,
+            //                   familyId: familyId,
+            //                   familyProfile: widget.currentUserProfilePic,
+            //                   familyName: widget.currentUserName,
+            //                   providerProfile: widget.profilePic,
+            //                   providerName: widget.name,
+            //                 )));
+            //     // Navigator.pushNamed(context, RoutesName.addRating);
+            //   },
+            //   child: Container(
+            //     height: 26,
+            //     width: 82,
+            //     color: AppColor.whiteColor,
+            //     child: const Center(
+            //       child: Text(
+            //         'Write Review',
+            //         style: TextStyle(
+            //           fontSize: 10,
+            //           color: AppColor.primaryColor,
+            //           fontWeight: FontWeight.w500,
+            //         ),
+            //       ),
+            //     ),
+            //   ),
+            // ),
           ],
         ),
       ),
