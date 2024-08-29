@@ -4,7 +4,7 @@ import 'package:nanny_fairy/Models/family_search_model.dart';
 
 class FamilySearchRepository extends ChangeNotifier {
   final DatabaseReference _providerRef =
-      FirebaseDatabase.instance.ref().child('Providers');
+  FirebaseDatabase.instance.ref().child('Providers');
   List<ProviderSearchModel> _providers = [];
   List<ProviderSearchModel> _filteredProviders = [];
   bool _isLoading = true;
@@ -23,22 +23,27 @@ class FamilySearchRepository extends ChangeNotifier {
 
       if (snapshot.snapshot.value != null) {
         final Map<dynamic, dynamic> data =
-            snapshot.snapshot.value as Map<dynamic, dynamic>;
+        snapshot.snapshot.value as Map<dynamic, dynamic>;
         List<ProviderSearchModel> fetchedProviders = [];
 
         data.forEach((key, value) {
           if (value is Map<dynamic, dynamic>) {
             try {
               final Map<String, dynamic> providerData =
-                  Map<String, dynamic>.from(value);
+              Map<String, dynamic>.from(value);
 
               // Handle availability field
               if (providerData['Availability'] is Map<dynamic, dynamic>) {
                 providerData['Availability'] = (providerData['Availability']
-                        as Map<dynamic, dynamic>)
+                as Map<dynamic, dynamic>)
                     .map((k, v) => MapEntry(k.toString(),
-                        v is bool ? v : false)); // Default to false if not bool
+                    v is bool ? v : false)); // Default to false if not bool
               }
+
+              // Calculate ratings
+              double averageRating = calculateAverageRating(providerData['reviews'] ?? {});
+              providerData['averageRating'] = averageRating.toString();
+              providerData['totalRatings'] = (providerData['reviews']?.length ?? 0).toString();
 
               fetchedProviders
                   .add(ProviderSearchModel.fromMap(providerData, key));
@@ -61,6 +66,15 @@ class FamilySearchRepository extends ChangeNotifier {
 
     _isLoading = false;
     notifyListeners();
+  }
+
+  double calculateAverageRating(Map<dynamic, dynamic> reviews) {
+    if (reviews.isEmpty) return 0.0;
+    double totalRating = 0.0;
+    reviews.forEach((key, review) {
+      totalRating += review['countRatingStars'] ?? 0.0;
+    });
+    return totalRating / reviews.length;
   }
 
   // Normalize strings for case-insensitive matching
