@@ -3,10 +3,11 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:nanny_fairy/Repository/home_ui_repostory.dart';
 import 'package:nanny_fairy/ViewModel/provider_home_view_model.dart';
 import 'package:nanny_fairy/res/components/colors.dart';
-import 'package:nanny_fairy/res/components/searchBar.dart';
+import 'package:nanny_fairy/res/components/searchbar.dart';
 import 'package:nanny_fairy/res/components/widgets/ui_enums.dart';
 import 'package:nanny_fairy/res/components/widgets/vertical_spacing.dart';
 import 'package:nanny_fairy/utils/routes/routes_name.dart';
+import 'package:nanny_fairy/view/home/widgets/distance_filter.dart';
 import 'package:nanny_fairy/view/home/widgets/home_default_view.dart';
 import 'package:nanny_fairy/view/home/widgets/home_filter_view.dart';
 import 'package:nanny_fairy/view/home/widgets/home_search_view.dart';
@@ -141,7 +142,6 @@ class _HomeViewState extends State<HomeView> {
                 Positioned(
                   top: 135,
                   left: (MediaQuery.of(context).size.width - 320) / 2,
-
                   child: SearchBarProvider(
                     onTapFilter: () {
                       Navigator.pushNamed(context, RoutesName.filterPopup);
@@ -166,6 +166,9 @@ class _HomeViewState extends State<HomeView> {
                     break;
                   case UIType.FilterSection:
                     selectedWidget = const HomeFilterView();
+                    break;
+                  case UIType.DistanceSection:
+                    selectedWidget = const HomeDistanceView();
                     break;
                 }
 

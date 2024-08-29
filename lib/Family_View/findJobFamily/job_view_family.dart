@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:nanny_fairy/Family_View/findJobFamily/widgets/famil_job_default_section.dart';
+import 'package:nanny_fairy/Family_View/findJobFamily/widgets/family_job_distance_view.dart';
 import 'package:nanny_fairy/Family_View/findJobFamily/widgets/family_job_filter_section.dart';
 import 'package:nanny_fairy/Family_View/findJobFamily/widgets/family_job_search_seaction.dart';
 import 'package:nanny_fairy/Repository/family_home_ui_repository.dart';
@@ -76,7 +77,7 @@ class _JobViewFamilyState extends State<JobViewFamily> {
                 ),
               ],
             ),
-            const VerticalSpeacing(50),
+            const VerticalSpeacing(20),
             Consumer<FamilyHomeUiRepository>(
               builder: (context, uiState, _) {
                 Widget selectedWidget;
@@ -90,6 +91,9 @@ class _JobViewFamilyState extends State<JobViewFamily> {
                     break;
                   case FamilyJobEnums.SearchSection:
                     selectedWidget = const FamilyJobSearchSeaction();
+                    break;
+                  case FamilyJobEnums.DistanceFilter:
+                    selectedWidget = const FamilyJobDistanceFilterView();
                     break;
                 }
 

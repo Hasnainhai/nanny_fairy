@@ -4,42 +4,7 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:http/http.dart' as http;
 
 class FamilyDistanceRepository {
-  // Function to fetch distance and duration from Google Distance Matrix API
-  Future<void> getDistanceAndDuration(String origin, String destination) async {
-    // Encoding the origin and destination parameters to handle spaces and special characters
-    String encodedOrigin = Uri.encodeComponent(origin);
-    String encodedDestination = Uri.encodeComponent(destination);
-
-    // Updated URL with 'units=metric' for distances in kilometers
-    String url = 'https://maps.googleapis.com/maps/api/distancematrix/json'
-        '?origins=$encodedOrigin'
-        '&destinations=$encodedDestination'
-        '&units=metric' // Use 'metric' to get distances in kilometers
-        '&key=AIzaSyCBUyZVjnq9IGxH9Zu6ACNRIJXtkfZ2iuQ'; // Replace with your actual API key
-
-    http.Response response = await http.get(Uri.parse(url));
-    print(response.body);
-
-    if (response.statusCode == 200) {
-      var jsonResponse = jsonDecode(response.body);
-
-      if (jsonResponse['rows'].isNotEmpty &&
-          jsonResponse['rows'][0]['elements'].isNotEmpty &&
-          jsonResponse['rows'][0]['elements'][0]['status'] == 'OK') {
-        var distance =
-            jsonResponse['rows'][0]['elements'][0]['distance']['text'];
-        var duration =
-            jsonResponse['rows'][0]['elements'][0]['duration']['text'];
-
-        print('Distance: $distance');
-        print('Duration: $duration');
-      } else {
-        print('No valid data found in the API response.');
-      }
-    } else {
-      throw Exception('Failed to fetch data: ${response.statusCode}');
-    }
-  }
+  List<Map<String, dynamic>> distanceFilterProviders = [];
 
   // Function to fetch provider data from Firebase
   Future<List<Map<String, dynamic>>> fetchProvidersData() async {
@@ -47,11 +12,9 @@ class FamilyDistanceRepository {
         FirebaseDatabase.instance.ref().child('Providers');
     DatabaseEvent snapshot = await databaseReference.once();
 
-    // Ensure that the snapshot value is of the expected type
     final data = snapshot.snapshot.value as Map<dynamic, dynamic>?;
 
     if (data == null) {
-      // Handle the case where no data is found
       return [];
     }
 
@@ -108,7 +71,9 @@ class FamilyDistanceRepository {
     if (response.statusCode == 200) {
       var jsonResponse = jsonDecode(response.body);
 
-      if (jsonResponse['rows'].isNotEmpty &&
+      if (jsonResponse['rows'] != null &&
+          jsonResponse['rows'].isNotEmpty &&
+          jsonResponse['rows'][0]['elements'] != null &&
           jsonResponse['rows'][0]['elements'].isNotEmpty &&
           jsonResponse['rows'][0]['elements'][0]['status'] == 'OK') {
         var distance = jsonResponse['rows'][0]['elements'][0]['distance']
@@ -123,26 +88,26 @@ class FamilyDistanceRepository {
   }
 
   // Function to filter providers based on distance from the current family address
-  Future<List<Map<String, dynamic>>> filterProvidersByDistance(
-      double maxDistanceKm) async {
+  Future<void> filterProvidersByDistance(double maxDistanceKm) async {
     List<Map<String, dynamic>> providers = await fetchProvidersData();
     String? familyAddress = await getFamilyAddress();
 
     if (familyAddress == null) {
-      return []; // Return an empty list if no family address is found
+      return; // Exit if no family address is found
     }
-
-    List<Map<String, dynamic>> nearbyProviders = [];
 
     for (var provider in providers) {
-      String providerAddress = provider['address'];
-      double distance = await getDistanceInKm("kkh Danyore", providerAddress);
+      String? providerAddress = provider['address'] as String?;
+      if (providerAddress == null) {
+        print('Provider address is null, skipping this provider.');
+        continue; // Skip this provider if the address is null
+      }
+
+      double distance = await getDistanceInKm(familyAddress, providerAddress);
 
       if (distance <= maxDistanceKm) {
-        nearbyProviders.add(provider);
+        distanceFilterProviders.add(provider);
       }
     }
-
-    return nearbyProviders;
   }
 }
