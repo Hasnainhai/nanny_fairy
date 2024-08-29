@@ -72,8 +72,7 @@ class _FamilyDistanceFilterViewState
                     ),
                     InkWell(
                       onTap: () {
-                        uiState
-                            .switchToType((FamilyHomeUiEnums.DefaultSection));
+                        uiState.switchToJobDefaultSection();
                       },
                       child: Text(
                         'Clear all',
