@@ -57,20 +57,20 @@ class _FamilyChatWidgetState extends State<FamilyChatWidget> {
       padding: const EdgeInsets.only(bottom: 16.0),
       child: InkWell(
         onTap: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (c) => FamilyChatView(
-                name: widget.senderName,
-                id: widget.providerId,
-                profilePic: widget.senderProfiel,
-                isSeen: widget.isSeen,
-                currentUserName: getFamilyInfoRepo.familyName.toString(),
-                currentUserProfilePic:
-                    getFamilyInfoRepo.familyProfile.toString(),
-              ),
-            ),
-          );
+          // Navigator.push(
+          //   context,
+          //   MaterialPageRoute(
+          //     builder: (c) => FamilyChatView(
+          //       name: widget.senderName,
+          //       id: widget.providerId,
+          //       profilePic: widget.senderProfiel,
+          //       isSeen: widget.isSeen,
+          //       currentUserName: getFamilyInfoRepo.familyName.toString(),
+          //       currentUserProfilePic:
+          //           getFamilyInfoRepo.familyProfile.toString(),
+          //     ),
+          //   ),
+          // );
         },
         child: Container(
           height: 93,

@@ -1,10 +1,14 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-
 import 'package:nanny_fairy/Family_View/familyChat/widgets/family_chat_screen_widget.dart';
 import 'package:nanny_fairy/Repository/get_family_info_repo.dart';
+import 'package:nanny_fairy/Repository/get_provider_info.dart';
+import 'package:nanny_fairy/res/components/loading_manager.dart';
+import 'package:nanny_fairy/utils/utils.dart';
+import 'package:uuid/uuid.dart';
 import '../../res/components/colors.dart';
 import '../../res/components/rounded_button.dart';
 
@@ -15,6 +19,10 @@ class FamilyChatView extends StatefulWidget {
   final bool isSeen;
   final String currentUserName;
   final String currentUserProfilePic;
+  final String providerRatings;
+  final String providerTotalRatings;
+  final String education;
+  final String horlyRate;
   const FamilyChatView({
     super.key,
     required this.name,
@@ -23,6 +31,10 @@ class FamilyChatView extends StatefulWidget {
     required this.isSeen,
     required this.currentUserName,
     required this.currentUserProfilePic,
+    required this.providerRatings,
+    required this.providerTotalRatings,
+    required this.education,
+    required this.horlyRate,
   });
 
   @override
@@ -31,6 +43,81 @@ class FamilyChatView extends StatefulWidget {
 
 class _FamilyChatViewState extends State<FamilyChatView> {
   GetFamilyInfoRepo getFamilyInfoRepo = GetFamilyInfoRepo();
+  GetProviderInfoRepo getProviderInfoRepo = GetProviderInfoRepo();
+  @override
+  void initState() {
+    getFamilyInfoRepo.fetchCurrentFamilyInfo();
+    getProviderInfoRepo.fetchCurrentFamilyInfo();
+
+    super.initState();
+  }
+
+  final uUid = const Uuid().v1();
+  final familyId = FirebaseAuth.instance.currentUser!.uid;
+  bool _isLoading = false;
+
+  Future<void> hiringProvider() async {
+    try {
+      setState(() {
+        _isLoading = true;
+      });
+
+      // Reference to provider's order in the database
+      DatabaseReference providerOrderRef = FirebaseDatabase.instance
+          .ref()
+          .child('Providers')
+          .child(widget.id)
+          .child('Orders')
+          .child(uUid);
+
+      // Reference to family's order in the database
+      DatabaseReference familyOrderRef = FirebaseDatabase.instance
+          .ref()
+          .child('Family')
+          .child(familyId)
+          .child('Orders')
+          .child(uUid);
+
+      // Data for the provider's order
+      Map<String, dynamic> providerData = {
+        'providerId': widget.id,
+        'orderId': uUid,
+        'providerName': widget.name,
+        'providerPic': widget.profilePic,
+        'providerRatings': widget.providerRatings,
+        'providerTotalRatings': widget.providerTotalRatings,
+        'education': widget.education,
+        'horseRate': widget.horlyRate,
+      };
+
+      // Data for the family's order
+      Map<String, dynamic> familyData = {
+        'familyId': familyId,
+        'orderId': uUid,
+        'familyName': getFamilyInfoRepo.familyName,
+        'familyProfile': getFamilyInfoRepo.familyProfile,
+      };
+
+      // Set data for the provider's order
+      await providerOrderRef.set(providerData);
+
+      // Set data for the family's order
+      await familyOrderRef.set(familyData);
+
+      setState(() {
+        _isLoading = false;
+      });
+      Utils.toastMessage('Order successfully created!');
+      print('Order successfully created!');
+    } catch (e) {
+      setState(() {
+        _isLoading = false;
+      });
+      print('Error $e');
+      Utils.flushBarErrorMessage('Error $e', context);
+    }
+  }
+
   void familyHiringPopup() {
     showDialog(
       context: context,
@@ -68,7 +155,10 @@ class _FamilyChatViewState extends State<FamilyChatView> {
                         padding: const EdgeInsets.symmetric(horizontal: 8.0),
                         child: RoundedButton(
                           title: 'Confirm',
-                          onpress: () {
+                          onpress: () async {
+                            Navigator.of(context).pop();
+                            await hiringProvider();
+                            print(" providerId: ${widget.id}, :providerName ");
                             // Add your confirm action here
                           },
                         ),
@@ -232,22 +322,25 @@ class _FamilyChatViewState extends State<FamilyChatView> {
           ],
         ),
       ),
-      body: Container(
-        height: double.infinity,
-        width: double.infinity,
-        decoration: const BoxDecoration(
-          color: AppColor.whiteColor,
-          borderRadius: BorderRadius.only(
-            topLeft: Radius.circular(30.0),
+      body: LoadingManager(
+        isLoading: _isLoading,
+        child: Container(
+          height: double.infinity,
+          width: double.infinity,
+          decoration: const BoxDecoration(
+            color: AppColor.whiteColor,
+            borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(30.0),
+            ),
           ),
-        ),
-        child: FamilyChatScreenWidget(
-          id: widget.id,
-          isSeen: widget.isSeen,
-          currentUserName: widget.currentUserName,
-          currentUserProfile: widget.currentUserProfilePic,
-          providerName: widget.name,
-          providerProfilePic: widget.profilePic,
+          child: FamilyChatScreenWidget(
+            id: widget.id,
+            isSeen: widget.isSeen,
+            currentUserName: widget.currentUserName,
+            currentUserProfile: widget.currentUserProfilePic,
+            providerName: widget.name,
+            providerProfilePic: widget.profilePic,
+          ),
         ),
       ),
     );

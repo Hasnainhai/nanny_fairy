@@ -166,14 +166,18 @@ class _ProviderDetailsState extends State<ProviderDetails> {
                           context,
                           MaterialPageRoute(
                               builder: (context) => PaymentFamilyView(
-                                  userName: widget.name,
-                                  currentUserName:
-                                      getFamilyInfoRepo.familyName.toString(),
-                                  familyId: widget.familyId,
-                                  currentUserProfile: getFamilyInfoRepo
-                                      .familyProfile
-                                      .toString(),
-                                  profile: widget.profile)));
+                                    userName: widget.name,
+                                    currentUserName:
+                                        getFamilyInfoRepo.familyName.toString(),
+                                    familyId: widget.familyId,
+                                    currentUserProfile: getFamilyInfoRepo
+                                        .familyProfile
+                                        .toString(),
+                                    profile: widget.profile,
+                                    providerRatings: widget.ratings.toString(),
+                                    providerTotalRatings:
+                                        widget.totalRatings.toString(), education: widget.degree, horlyRate: widget.horseRate,
+                                  )));
                       // print(
                       //     'profile:${widget.profile}: userName:${widget.name}:familyId: ${widget.familyId}: currentUserName:${getFamilyInfoRepo.familyName!}:Family profile${getFamilyInfoRepo.familyProfile} ');
                     },
@@ -663,6 +667,10 @@ class _ProviderDetailsState extends State<ProviderDetails> {
                                             currentUserProfilePic:
                                                 getFamilyInfoRepo.familyProfile
                                                     .toString(),
+                                            providerRatings:
+                                                widget.ratings.toString(),
+                                            providerTotalRatings:
+                                                widget.totalRatings.toString(), education: widget.degree, horlyRate: widget.horseRate,
                                           )),
                                 );
                               } else {
