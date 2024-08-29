@@ -42,19 +42,21 @@ class FamilyChatView extends StatefulWidget {
 }
 
 class _FamilyChatViewState extends State<FamilyChatView> {
-  GetFamilyInfoRepo getFamilyInfoRepo = GetFamilyInfoRepo();
-  GetProviderInfoRepo getProviderInfoRepo = GetProviderInfoRepo();
+  final GetFamilyInfoRepo getFamilyInfoRepo = GetFamilyInfoRepo();
+  final GetProviderInfoRepo getProviderInfoRepo = GetProviderInfoRepo();
+
   @override
   void initState() {
     getFamilyInfoRepo.fetchCurrentFamilyInfo();
     getProviderInfoRepo.fetchCurrentFamilyInfo();
-
     super.initState();
   }
 
   final uUid = const Uuid().v1();
   final familyId = FirebaseAuth.instance.currentUser!.uid;
   bool _isLoading = false;
+  String _buttonText = 'Hiring';
+  bool _isLocked = false;
 
   Future<void> hiringProvider() async {
     try {
@@ -87,7 +89,8 @@ class _FamilyChatViewState extends State<FamilyChatView> {
         'providerRatings': widget.providerRatings,
         'providerTotalRatings': widget.providerTotalRatings,
         'education': widget.education,
-        'horseRate': widget.horlyRate,
+        'horlyRate': widget.horlyRate,
+        'status': 'Pending', // Set status to Pending
       };
 
       // Data for the family's order
@@ -96,6 +99,7 @@ class _FamilyChatViewState extends State<FamilyChatView> {
         'orderId': uUid,
         'familyName': getFamilyInfoRepo.familyName,
         'familyProfile': getFamilyInfoRepo.familyProfile,
+        'status': 'Pending', // Set status to Pending
       };
 
       // Set data for the provider's order
@@ -158,8 +162,12 @@ class _FamilyChatViewState extends State<FamilyChatView> {
                           onpress: () async {
                             Navigator.of(context).pop();
                             await hiringProvider();
-                            print(" providerId: ${widget.id}, :providerName ");
-                            // Add your confirm action here
+                            setState(() {
+                              _buttonText = 'Pending';
+                              _isLocked = true;
+                            });
+                            print(
+                                " providerId: ${widget.id}, providerName: ${widget.name}");
                           },
                         ),
                       ),
@@ -268,17 +276,19 @@ class _FamilyChatViewState extends State<FamilyChatView> {
               ],
             ),
             InkWell(
-              onTap: () {
-                familyHiringPopup();
-              },
+              onTap: _isLocked
+                  ? null
+                  : () {
+                      familyHiringPopup();
+                    },
               child: Container(
                 height: 26,
                 width: 82,
                 color: AppColor.whiteColor,
-                child: const Center(
+                child: Center(
                   child: Text(
-                    'Hiring',
-                    style: TextStyle(
+                    _buttonText,
+                    style: const TextStyle(
                       fontSize: 10,
                       color: AppColor.primaryColor,
                       fontWeight: FontWeight.w500,
