@@ -42,6 +42,69 @@ class _ChatViewState extends State<ChatView> {
   }
 
   final providerId = FirebaseAuth.instance.currentUser!.uid;
+  void providerAcceptPopup() {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          backgroundColor: AppColor.whiteColor,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(12),
+          ),
+          content: SingleChildScrollView(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                const Icon(Icons.check_circle_outline,
+                    color: AppColor.primaryColor, size: 100),
+                const SizedBox(height: 16),
+                Text(
+                  'Confirm your acceptance of this hiring offer to begin the service. The family will be notified of your decision.',
+                  textAlign: TextAlign.center,
+                  style: GoogleFonts.getFont(
+                    "Poppins",
+                    textStyle: const TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.w500,
+                      color: AppColor.blackColor,
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 24),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Expanded(
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                        child: RoundedButton(
+                          title: 'Accept',
+                          onpress: () {
+                            Navigator.of(context).pop();
+                          },
+                        ),
+                      ),
+                    ),
+                    Expanded(
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                        child: RoundedButton(
+                          title: 'Cancel',
+                          onpress: () {
+                            Navigator.of(context).pop(); // Dismiss the dialog
+                          },
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ),
+        );
+      },
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -128,18 +191,7 @@ class _ChatViewState extends State<ChatView> {
             ),
             InkWell(
               onTap: () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => Rating(
-                              providerId: providerId,
-                              familyId: widget.familyId,
-                              familyProfile: widget.profilePic,
-                              familyName: widget.userName,
-                              providerProfile: widget.currentUserProfile,
-                              providerName: widget.currentUserName,
-                            )));
-                // Navigator.pushNamed(context, RoutesName.addRating);
+                providerAcceptPopup();
               },
               child: Container(
                 height: 26,
@@ -147,7 +199,7 @@ class _ChatViewState extends State<ChatView> {
                 color: AppColor.whiteColor,
                 child: const Center(
                   child: Text(
-                    'Write Review',
+                    'offer',
                     style: TextStyle(
                       fontSize: 10,
                       color: AppColor.primaryColor,
@@ -157,6 +209,37 @@ class _ChatViewState extends State<ChatView> {
                 ),
               ),
             ),
+            // InkWell(
+            //   onTap: () {
+            //     Navigator.push(
+            //         context,
+            //         MaterialPageRoute(
+            //             builder: (context) => Rating(
+            //                   providerId: providerId,
+            //                   familyId: widget.familyId,
+            //                   familyProfile: widget.profilePic,
+            //                   familyName: widget.userName,
+            //                   providerProfile: widget.currentUserProfile,
+            //                   providerName: widget.currentUserName,
+            //                 )));
+            //     // Navigator.pushNamed(context, RoutesName.addRating);
+            //   },
+            //   child: Container(
+            //     height: 26,
+            //     width: 82,
+            //     color: AppColor.whiteColor,
+            //     child: const Center(
+            //       child: Text(
+            //         'Write Review',
+            //         style: TextStyle(
+            //           fontSize: 10,
+            //           color: AppColor.primaryColor,
+            //           fontWeight: FontWeight.w500,
+            //         ),
+            //       ),
+            //     ),
+            //   ),
+            // ),
           ],
         ),
       ),
