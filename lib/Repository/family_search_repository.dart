@@ -40,11 +40,6 @@ class FamilySearchRepository extends ChangeNotifier {
                     v is bool ? v : false)); // Default to false if not bool
               }
 
-              // Calculate ratings
-              double averageRating = calculateAverageRating(providerData['reviews'] ?? {});
-              providerData['averageRating'] = averageRating.toString();
-              providerData['totalRatings'] = (providerData['reviews']?.length ?? 0).toString();
-
               fetchedProviders
                   .add(ProviderSearchModel.fromMap(providerData, key));
             } catch (e) {
@@ -66,15 +61,6 @@ class FamilySearchRepository extends ChangeNotifier {
 
     _isLoading = false;
     notifyListeners();
-  }
-
-  double calculateAverageRating(Map<dynamic, dynamic> reviews) {
-    if (reviews.isEmpty) return 0.0;
-    double totalRating = 0.0;
-    reviews.forEach((key, review) {
-      totalRating += review['countRatingStars'] ?? 0.0;
-    });
-    return totalRating / reviews.length;
   }
 
   // Normalize strings for case-insensitive matching
