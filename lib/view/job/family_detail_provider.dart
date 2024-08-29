@@ -3,13 +3,12 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:http/http.dart';
 import 'package:nanny_fairy/Repository/get_family_info_repo.dart';
 import 'package:nanny_fairy/Repository/get_provider_info.dart';
 import 'package:nanny_fairy/res/components/rounded_button.dart';
 import 'package:nanny_fairy/res/components/widgets/vertical_spacing.dart';
+import 'package:nanny_fairy/view/chat/chat_view.dart';
 import 'package:nanny_fairy/view/payment/payment.dart';
-import '../../Family_View/familyChat/family_chat_view.dart';
 import '../../res/components/colors.dart';
 
 class FamilyDetailProvider extends StatefulWidget {
@@ -383,14 +382,14 @@ class _FamilyDetailProviderState extends State<FamilyDetailProvider> {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (c) => FamilyChatView(
-                          name: widget.name,
-                          id: widget.familyId,
+                        builder: (c) => ChatView(
                           profilePic: widget.profile!,
                           isSeen: false,
                           currentUserName:
                               getProviderInfoRepo.providerName.toString(),
-                          currentUserProfilePic:
+                          userName: widget.name,
+                          familyId: widget.familyId,
+                          currentUserProfile:
                               getProviderInfoRepo.providerProfile.toString(),
                         ),
                       ),
