@@ -1,10 +1,18 @@
 import 'dart:convert';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
+import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
-class ProviderDistanceRepository {
-  List<Map<String, dynamic>> distanceFilteredFamilies = [];
+class ProviderDistanceRepository extends ChangeNotifier {
+  List<Map<String, dynamic>> _distanceFilteredFamilies = [];
+  List<Map<String, dynamic>> get distanceFilteredFamilies =>
+      _distanceFilteredFamilies;
+
+  void updateDistanceFilteredFamilies(List<Map<String, dynamic>> newFamilies) {
+    _distanceFilteredFamilies = newFamilies;
+    notifyListeners();
+  }
 
   // Function to fetch family data from Firebase
   Future<List<Map<String, dynamic>>> fetchFamiliesData() async {
@@ -61,34 +69,45 @@ class ProviderDistanceRepository {
     List<Map<String, dynamic>> families = await fetchFamiliesData();
     String? providerAddress = await getProviderAddress();
 
-    if (providerAddress == null) {
-      print("Provider address is null, cannot filter families by distance.");
-      return; // Exit if no provider address is found
-    }
-
-    print("Filtering families based on distance...");
-
-    for (var family in families) {
-      String? familyAddress = family['address'] as String?;
-      if (familyAddress == null) {
-        print('Family address is null, skipping this family.');
-        continue; // Skip this family if the address is null
+    try {
+      if (providerAddress == null) {
+        print("Provider address is null, cannot filter families by distance.");
+        return; // Exit if no provider address is found
       }
 
-      double distance = await getDistanceInKm(providerAddress, familyAddress);
+      print("Filtering families based on distance...");
+
+      // Clear the previous list to avoid adding duplicate entries
+      _distanceFilteredFamilies.clear();
+
+      for (var family in families) {
+        String? familyAddress = family['address'] as String?;
+        if (familyAddress == null) {
+          print('Family address is null, skipping this family.');
+          continue; // Skip this family if the address is null
+        }
+
+        double distance = await getDistanceInKm(providerAddress, familyAddress);
+
+        print(
+            "Distance from provider to family '${family['firstName']} ${family['lastName']}': $distance km");
+
+        if (distance <= maxDistanceKm) {
+          _distanceFilteredFamilies.add(family);
+          print(
+              "Family '${family['firstName']} ${family['lastName']}' added to filtered list.");
+        }
+      }
+      updateDistanceFilteredFamilies(_distanceFilteredFamilies);
+
+      // Notify listeners that the filtered list has been updated
+      notifyListeners();
 
       print(
-          "Distance from provider to family '${family['firstName']} ${family['lastName']}': $distance km");
-
-      if (distance <= maxDistanceKm) {
-        distanceFilteredFamilies.add(family);
-        print(
-            "Family '${family['firstName']} ${family['lastName']}' added to filtered list.");
-      }
+          "Filtering completed. ${_distanceFilteredFamilies.length} families matched the criteria.");
+    } catch (e) {
+      print("Error in storing the list data: $e");
     }
-
-    print(
-        "Filtering completed. ${distanceFilteredFamilies.length} families matched the criteria.");
   }
 
   // Function to get the distance in kilometers between two addresses

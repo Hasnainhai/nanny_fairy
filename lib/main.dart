@@ -21,6 +21,7 @@ import 'package:nanny_fairy/Repository/home_ui_repostory.dart';
 import 'package:nanny_fairy/Repository/provider_chat_repository.dart';
 import 'package:nanny_fairy/Repository/provider_home_repository.dart';
 import 'package:nanny_fairy/Repository/search_repository.dart';
+import 'package:nanny_fairy/Repository/provider_distance_repository.dart'; // Import the ProviderDistanceRepository
 import 'package:nanny_fairy/ViewModel/auth_view_model.dart';
 import 'package:nanny_fairy/ViewModel/family_chat_view_model.dart';
 import 'package:nanny_fairy/ViewModel/family_filter_view_model.dart';
@@ -54,6 +55,10 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
+        ChangeNotifierProvider<ProviderDistanceRepository>(
+          create: (_) => ProviderDistanceRepository(),
+        ),
+
         Provider<AuthRepository>(
           create: (_) => AuthRepository(),
         ),
@@ -70,7 +75,6 @@ class MyApp extends StatelessWidget {
           create: (_) => SearchRepository(),
         ),
         ChangeNotifierProvider<FamilyFilterRepository>(
-          // Use the new FamilyFilterRepository
           create: (context) => FamilyFilterRepository(),
         ),
         ChangeNotifierProvider<FilteredRepository>(
@@ -124,7 +128,6 @@ class MyApp extends StatelessWidget {
               CommunityViewViewModel(context.read<CommunityRepoProvider>()),
         ),
         ChangeNotifierProvider<FamilyFilterController>(
-          // Initialize FamilyFilterController
           create: (context) =>
               FamilyFilterController(context.read<FamilyFilterRepository>()),
         ),
@@ -152,6 +155,10 @@ class MyApp extends StatelessWidget {
             providerChatRepository: ProviderChatRepository(),
           )..loadChats(),
         ),
+        // Add the ProviderDistanceRepository
+        // ChangeNotifierProvider<ProviderDistanceRepository>(
+        //   create: (_) => ProviderDistanceRepository(),
+        // ),
       ],
       child: MaterialApp(
         initialRoute: RoutesName.splash,
