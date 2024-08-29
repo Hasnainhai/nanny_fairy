@@ -1,7 +1,9 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:nanny_fairy/Repository/home_ui_repostory.dart';
-import 'package:nanny_fairy/ViewModel/provider_home_view_model.dart';
+import 'package:nanny_fairy/Repository/provider_distance_repository.dart';
 import 'package:nanny_fairy/ViewModel/search_view_model.dart';
 import 'package:nanny_fairy/res/components/widgets/ui_enums.dart';
 import 'package:provider/provider.dart';
@@ -51,6 +53,8 @@ class _SearchBarProviderState extends State<SearchBarProvider> {
 
   @override
   Widget build(BuildContext context) {
+    ProviderDistanceRepository distanceRepository =
+        ProviderDistanceRepository();
     return Row(
       children: [
         GestureDetector(
@@ -175,68 +179,87 @@ class _SearchBarProviderState extends State<SearchBarProvider> {
             child: Center(
               child: Focus(
                 focusNode: _dropdownFocusNode,
-                child: DropdownButtonHideUnderline(
-                  child: DropdownButton<String>(
-                    value: selectedKM,
-                    icon: const SizedBox.shrink(),
-                    style: GoogleFonts.getFont(
-                      "Poppins",
-                      textStyle: const TextStyle(
-                        fontSize: 12,
-                        fontWeight: FontWeight.w600,
-                        color: AppColor.primaryColor,
-                      ),
-                    ),
-                    onChanged: (String? newValue) {
-                      if (newValue != null) {
-                        setState(() {
-                          selectedKM = newValue;
-                        });
-                      }
-                    },
-                    items: kM.map<DropdownMenuItem<String>>((String value) {
-                      return DropdownMenuItem<String>(
-                        value: value,
-                        child: Column(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            Text(
-                              value.split(" ")[0],
-                              style: GoogleFonts.getFont(
-                                "Poppins",
-                                textStyle: const TextStyle(
-                                  fontSize: 12,
-                                  fontWeight: FontWeight.w600,
-                                  color: AppColor.blackColor,
+                child: Consumer<HomeUiSwithchRepository>(
+                  builder: (context, uiState, child) {
+                    return DropdownButtonHideUnderline(
+                      child: DropdownButton<String>(
+                        value: selectedKM,
+                        icon: const SizedBox.shrink(),
+                        style: GoogleFonts.getFont(
+                          "Poppins",
+                          textStyle: const TextStyle(
+                            fontSize: 12,
+                            fontWeight: FontWeight.w600,
+                            color: AppColor.primaryColor,
+                          ),
+                        ),
+                        onChanged: (String? newValue) async {
+                          if (newValue != null) {
+                            setState(() {
+                              selectedKM = newValue;
+                            });
+                            try {
+                              // Call the method to filter providers by distance
+                              await distanceRepository.filterFamiliesByDistance(
+                                double.parse(selectedKM),
+                              );
+
+                              uiState.switchToType(UIType.DistanceSection);
+                            } catch (e) {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(
+                                  content:
+                                      Text('Failed to fetch nearby providers.'),
                                 ),
-                              ),
-                            ),
-                            Row(
+                              );
+                            }
+                          }
+                        },
+                        items: kM.map<DropdownMenuItem<String>>((String value) {
+                          return DropdownMenuItem<String>(
+                            value: value,
+                            child: Column(
                               mainAxisSize: MainAxisSize.min,
                               children: [
                                 Text(
-                                  "KM",
+                                  value.split(" ")[0],
                                   style: GoogleFonts.getFont(
                                     "Poppins",
                                     textStyle: const TextStyle(
                                       fontSize: 12,
-                                      fontWeight: FontWeight.w400,
+                                      fontWeight: FontWeight.w600,
                                       color: AppColor.blackColor,
                                     ),
                                   ),
                                 ),
-                                const Icon(
-                                  Icons.expand_more_outlined,
-                                  color: AppColor.blackColor,
-                                  size: 16,
+                                Row(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    Text(
+                                      "KM",
+                                      style: GoogleFonts.getFont(
+                                        "Poppins",
+                                        textStyle: const TextStyle(
+                                          fontSize: 12,
+                                          fontWeight: FontWeight.w400,
+                                          color: AppColor.blackColor,
+                                        ),
+                                      ),
+                                    ),
+                                    const Icon(
+                                      Icons.expand_more_outlined,
+                                      color: AppColor.blackColor,
+                                      size: 16,
+                                    ),
+                                  ],
                                 ),
                               ],
                             ),
-                          ],
-                        ),
-                      );
-                    }).toList(),
-                  ),
+                          );
+                        }).toList(),
+                      ),
+                    );
+                  },
                 ),
               ),
             ),
