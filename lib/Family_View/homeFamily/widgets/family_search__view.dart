@@ -10,7 +10,6 @@ import 'package:nanny_fairy/res/components/widgets/family_home_ui_enums.dart';
 import 'package:nanny_fairy/res/components/widgets/shimmer_effect.dart';
 import 'package:nanny_fairy/res/components/widgets/vertical_spacing.dart';
 import 'package:provider/provider.dart';
-
 import '../../../Models/family_search_model.dart';
 
 class FamilySearchView extends StatefulWidget {
@@ -142,11 +141,15 @@ class _FamilySearchViewState extends State<FamilySearchView> {
                       Set<String> daysSet = {};
                       if (user.availability != null &&
                           user.availability.isNotEmpty) {
-                        debugPrint(
-                            'Availability Map: ${user.availability.toString()}'); // Print availability map
-                        daysSet = user.availability.keys.toSet();
-                      } else {
-                        debugPrint('user.availability is null or empty');
+                        user.availability.forEach((timeOfDay, daysMap) {
+                          if (daysMap is Map) {
+                            daysMap.forEach((day, isAvailable) {
+                              if (isAvailable && !daysSet.contains(day)) {
+                                daysSet.add(day.substring(0, 1).toUpperCase());
+                              }
+                            });
+                          }
+                        });
                       }
 
                       List<Widget> dayButtons = daysSet.map((dayAbbreviation) {
@@ -156,23 +159,15 @@ class _FamilySearchViewState extends State<FamilySearchView> {
                         );
                       }).toList();
 
+                      double averageRating =
+                          double.tryParse(user.averageRating.toString()) ?? 0.0;
+                      int totalRatings =
+                          int.tryParse(user.totalRatings.toString()) ?? 0;
+
                       return BookingCartWidgetHome(
                         primaryButtonColor: AppColor.primaryColor,
                         primaryButtonTxt: 'View',
                         ontapView: () {
-                          debugPrint(
-                              'Navigating to ProviderDetails with data:');
-                          debugPrint('Profile: ${user.profile}');
-                          debugPrint(
-                              'Name: ${user.firstName} ${user.lastName}');
-                          debugPrint('Bio: ${user.bio}');
-                          debugPrint('HorseRate: ${user.hoursrate}');
-                          debugPrint(
-                              'Experience: ${user.reference.experience}');
-                          debugPrint('Degree: ${user.education}');
-                          debugPrint('DayButtons: $dayButtons');
-                          debugPrint('TimeData: $timeData');
-
                           Navigator.push(
                             context,
                             MaterialPageRoute(
@@ -186,6 +181,8 @@ class _FamilySearchViewState extends State<FamilySearchView> {
                                 degree: user.education,
                                 dayButtons: dayButtons,
                                 timeData: timeData,
+                                ratings: averageRating,
+                                totalRatings: totalRatings,
                               ),
                             ),
                           );
@@ -196,13 +193,15 @@ class _FamilySearchViewState extends State<FamilySearchView> {
                         skill: '',
                         hoursRate: user.hoursrate,
                         dayButtons: dayButtons,
+                        ratings: averageRating,
+                        totalRatings: totalRatings,
                       );
                     },
                   );
                 }
               },
             ),
-          )
+          ),
         ],
       ),
     );

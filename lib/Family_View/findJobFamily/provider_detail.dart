@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -5,6 +6,7 @@ import 'package:nanny_fairy/Family_View/payment_family/payment_family.dart';
 import 'package:nanny_fairy/Repository/get_family_info_repo.dart';
 import 'package:nanny_fairy/res/components/rounded_button.dart';
 import 'package:nanny_fairy/res/components/widgets/vertical_spacing.dart';
+import 'package:nanny_fairy/view/chat/chat_view.dart';
 import '../../res/components/colors.dart';
 
 class ProviderDetails extends StatefulWidget {
@@ -641,8 +643,30 @@ class _ProviderDetailsState extends State<ProviderDetails> {
                         const VerticalSpeacing(26),
                         RoundedButton(
                             title: 'Chat With Provider',
-                            onpress: () {
-                              showSubscribtionDialog(context);
+                            onpress: () async {
+                              var paymentInfo =
+                                  await getCurrentUserPaymentInfo();
+                              if (paymentInfo != null &&
+                                  paymentInfo['status'] == 'completed') {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (c) => ChatView(
+                                            profilePic: widget.profile,
+                                            userName: widget.name,
+                                            familyId: widget.familyId,
+                                            isSeen: false,
+                                            currentUserName: getFamilyInfoRepo
+                                                .familyName
+                                                .toString(),
+                                            currentUserProfile:
+                                                getFamilyInfoRepo.familyProfile
+                                                    .toString(),
+                                          )),
+                                );
+                              } else {
+                                showSubscribtionDialog(context);
+                              }
                             }),
                         const VerticalSpeacing(40),
                       ],
@@ -665,6 +689,32 @@ class _ProviderDetailsState extends State<ProviderDetails> {
         ],
       ),
     );
+  }
+
+  Future<Map<dynamic, dynamic>?> getCurrentUserPaymentInfo() async {
+    try {
+      String currentUserId = FirebaseAuth.instance.currentUser!.uid;
+      DatabaseReference paymentInfoRef = FirebaseDatabase.instance
+          .ref()
+          .child('Family')
+          .child(currentUserId)
+          .child('paymentInfo');
+
+      // Fetch the payment info data from Firebase
+      DatabaseEvent event = await paymentInfoRef.once();
+      DataSnapshot snapshot = event.snapshot;
+
+      if (snapshot.exists) {
+        // Cast snapshot value to a Map
+        return snapshot.value as Map<dynamic, dynamic>?;
+      } else {
+        print("No payment info found for the current user.");
+        return null;
+      }
+    } catch (e) {
+      print("Error fetching payment info: $e");
+      return null;
+    }
   }
 
   Widget buildReviewCard(String familyName, String familyComment,

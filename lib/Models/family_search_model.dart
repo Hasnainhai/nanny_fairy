@@ -19,6 +19,8 @@ class ProviderSearchModel {
   final IdPics idPics;
   final Reference reference;
   final Time time;
+  final double averageRating;  // Add this field
+  final int totalRatings;
 
   ProviderSearchModel({
     required this.uid,
@@ -39,6 +41,8 @@ class ProviderSearchModel {
     required this.idPics,
     required this.reference,
     required this.time,
+    required this.averageRating,  // Initialize this field
+    required this.totalRatings,
   });
 
   factory ProviderSearchModel.fromMap(Map<String, dynamic> data, String uid) {
@@ -70,6 +74,8 @@ class ProviderSearchModel {
         idPics: IdPics.fromMap(idPicsData),
         reference: Reference.fromMap(referenceData),
         time: Time.fromMap(timeData),
+        averageRating: double.tryParse(data['averageRating']?.toString() ?? '0.0') ?? 0.0,  // Add this line
+        totalRatings: int.tryParse(data['totalRatings']?.toString() ?? '0') ?? 0,
       );
     } catch (e) {
       debugPrint('Error processing provider $uid: $e');
