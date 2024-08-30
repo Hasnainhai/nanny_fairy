@@ -10,10 +10,22 @@ class BookingCartWidgetFamily extends StatefulWidget {
       {super.key,
       required this.primaryButtonTxt,
       required this.ontapView,
-      required this.primaryButtonColor});
+      required this.primaryButtonColor,
+      required this.profile,
+      required this.name,
+      required this.totalRatings,
+      required this.ratings,
+      required this.education,
+      required this.horlyRate});
   final Function() ontapView;
   final String primaryButtonTxt;
   final Color primaryButtonColor;
+  final String profile;
+  final String name;
+  final String totalRatings;
+  final String ratings;
+  final String education;
+  final String horlyRate;
 
   @override
   State<BookingCartWidgetFamily> createState() =>
@@ -114,7 +126,7 @@ class _BookingCartWidgetFamilyState extends State<BookingCartWidgetFamily> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'Hassnain Haider',
+                      widget.name,
                       style: GoogleFonts.getFont(
                         "Poppins",
                         textStyle: const TextStyle(
@@ -125,7 +137,7 @@ class _BookingCartWidgetFamilyState extends State<BookingCartWidgetFamily> {
                       ),
                     ),
                     Text(
-                      '⭐4.8(45 Reviews)',
+                      '⭐${widget.ratings}(${widget.totalRatings} Reviews)',
                       style: GoogleFonts.getFont(
                         "Poppins",
                         textStyle: const TextStyle(
@@ -146,7 +158,7 @@ class _BookingCartWidgetFamilyState extends State<BookingCartWidgetFamily> {
                               size: 16,
                             ),
                             Text(
-                              'MBBS',
+                              widget.education,
                               style: GoogleFonts.getFont(
                                 "Poppins",
                                 textStyle: const TextStyle(
@@ -185,7 +197,7 @@ class _BookingCartWidgetFamilyState extends State<BookingCartWidgetFamily> {
                             Row(
                               children: [
                                 Text(
-                                  '23',
+                                  widget.horlyRate,
                                   style: GoogleFonts.getFont(
                                     "Poppins",
                                     textStyle: const TextStyle(
@@ -251,70 +263,6 @@ class _BookingCartWidgetFamilyState extends State<BookingCartWidgetFamily> {
               ],
             ),
             const VerticalSpeacing(10.0),
-            Padding(
-              padding: const EdgeInsets.only(left: 10, right: 10),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    'Online: Today',
-                    style: GoogleFonts.getFont(
-                      "Poppins",
-                      textStyle: const TextStyle(
-                        fontSize: 12,
-                        fontWeight: FontWeight.w600,
-                        color: AppColor.blackColor,
-                      ),
-                    ),
-                  ),
-                  Row(
-                    children: [
-                      DayButtonFamily(
-                        day: 'M',
-                        isSelected: false,
-                        onTap: (bool isSelected) {},
-                      ),
-                      const SizedBox(width: 4),
-                      DayButtonFamily(
-                        day: 'T',
-                        isSelected: false,
-                        onTap: (bool isSelected) {},
-                      ),
-                      const SizedBox(width: 4),
-                      DayButtonFamily(
-                        day: 'W',
-                        isSelected: false,
-                        onTap: (bool isSelected) {},
-                      ),
-                      const SizedBox(width: 4),
-                      DayButtonFamily(
-                        day: 'T',
-                        isSelected: false,
-                        onTap: (bool isSelected) {},
-                      ),
-                      const SizedBox(width: 4),
-                      DayButtonFamily(
-                        day: 'F',
-                        isSelected: false,
-                        onTap: (bool isSelected) {},
-                      ),
-                      const SizedBox(width: 4),
-                      DayButtonFamily(
-                        day: 'S',
-                        isSelected: false,
-                        onTap: (bool isSelected) {},
-                      ),
-                      const SizedBox(width: 4),
-                      DayButtonFamily(
-                        day: 'S',
-                        isSelected: false,
-                        onTap: (bool isSelected) {},
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-            ),
           ],
         ),
       ),
