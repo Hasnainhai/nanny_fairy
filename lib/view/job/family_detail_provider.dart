@@ -398,7 +398,7 @@ class _FamilyDetailProviderState extends State<FamilyDetailProvider> {
                               getProviderInfoRepo.providerProfile.toString(),
                           familyTotalRatings: widget.totalRatings.toString(),
                           familyRatings: widget.ratings.toString(),
-                          familyPassion: [],
+                          familyPassion: widget.passion,
                         ),
                       ),
                     );
