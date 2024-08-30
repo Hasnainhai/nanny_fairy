@@ -106,6 +106,7 @@ class _ProviderJobDistanceSectionState
                                             totalRatings: int.parse(
                                                 ratingsData['totalRatings'] ??
                                                     '0'),
+                                            passion: passions,
                                           ),
                                         ),
                                       );
