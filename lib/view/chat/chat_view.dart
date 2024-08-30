@@ -121,8 +121,8 @@ class _ChatViewState extends State<ChatView> {
       };
 
       // Set data for the provider's accept
-      await familyOrderRef.update(familyUpdateData);
-      await providerOrderRef.update(providerUpdateData);
+      await familyOrderRef.update(providerUpdateData);
+      await providerOrderRef.update(familyUpdateData);
 
       setState(() {
         _isLoading = false;

@@ -151,10 +151,10 @@ class _FamilyChatViewState extends State<FamilyChatView> {
       };
 
       // Set data for the provider's order
-      await providerOrderRef.set(providerData);
+      await providerOrderRef.set(familyData);
 
       // Set data for the family's order
-      await familyOrderRef.set(familyData);
+      await familyOrderRef.set(providerData);
 
       setState(() {
         _buttonText = 'Pending'; // Update button text after creating order
