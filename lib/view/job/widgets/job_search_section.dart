@@ -116,6 +116,7 @@ class _JobSearchViewState extends State<JobSearchSection> {
                                 bio: user.bio,
                                 profile: user.profile,
                                 familyId: user.uid,
+                                passion: passions,
                               ),
                             ),
                           );
