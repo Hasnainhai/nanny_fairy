@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:nanny_fairy/Repository/home_ui_repostory.dart';
+import 'package:nanny_fairy/ViewModel/family_distance_view_model.dart';
 import 'package:nanny_fairy/ViewModel/provider_distance_view_model.dart';
 import 'package:nanny_fairy/ViewModel/search_view_model.dart';
 import 'package:nanny_fairy/res/components/colors.dart';
@@ -177,7 +178,7 @@ class _JobSearchBarState extends State<JobSearchbar> {
               child: Focus(
                   focusNode: _dropdownFocusNode,
                   child: Consumer2<HomeUiSwithchRepository,
-                      ProviderDistanceViewModel>(
+                      FamilyDistanceViewModel>(
                     builder: (context, uiState, distanceRepo, child) {
                       return DropdownButtonHideUnderline(
                         child: DropdownButton<String>(
@@ -198,8 +199,9 @@ class _JobSearchBarState extends State<JobSearchbar> {
                               });
 
                               try {
-                                await distanceRepo.filterFamiliesByDistance(
-                                    double.parse(selectedKM));
+                                await distanceRepo.filterProvidersByDistance(
+                                  double.parse(selectedKM),
+                                );
                                 uiState
                                     .switchToJobType(JobUIType.DistanceSection);
                               } catch (e) {
