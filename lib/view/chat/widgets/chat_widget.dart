@@ -15,9 +15,6 @@ class ChatWidget extends StatelessWidget {
   final String time;
   final bool isSeen;
   final String username;
-  final List<String> passions;
-  final String ratings;
-  final String totalRatings;
 
   const ChatWidget({
     super.key,
@@ -27,9 +24,6 @@ class ChatWidget extends StatelessWidget {
     required this.time,
     required this.isSeen,
     required this.username,
-    required this.passions,
-    required this.ratings,
-    required this.totalRatings,
   });
 
   @override
@@ -63,9 +57,6 @@ class ChatWidget extends StatelessWidget {
                 isSeen: isSeen,
                 currentUserName: getProviderInfoRepo.providerName!,
                 currentUserProfile: getProviderInfoRepo.providerProfile!,
-                familyTotalRatings: ratings,
-                familyRatings: totalRatings,
-                familyPassion: passions,
               ),
             ),
           );

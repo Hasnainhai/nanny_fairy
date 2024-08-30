@@ -1,15 +1,16 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:nanny_fairy/Repository/provider_chat_repository.dart';
+
+import 'package:nanny_fairy/utils/routes/routes_name.dart';
 import 'package:nanny_fairy/view/chat/widgets/chatting_widget.dart';
-import 'package:uuid/uuid.dart';
-import '../../Repository/get_family_info_repo.dart';
-import '../../Repository/get_provider_info.dart';
+import 'package:nanny_fairy/view/rating/add_rating.dart';
+
 import '../../res/components/colors.dart';
 import '../../res/components/rounded_button.dart';
-import '../../utils/utils.dart';
+import '../../res/components/widgets/vertical_spacing.dart';
 
 class ChatView extends StatefulWidget {
   final String profilePic;
@@ -18,10 +19,6 @@ class ChatView extends StatefulWidget {
   final bool isSeen;
   final String currentUserName;
   final String currentUserProfile;
-  final String familyTotalRatings;
-  final String familyRatings;
-  final List<String> familyPassion;
-
   const ChatView({
     super.key,
     required this.profilePic,
@@ -30,9 +27,6 @@ class ChatView extends StatefulWidget {
     required this.isSeen,
     required this.currentUserName,
     required this.currentUserProfile,
-    required this.familyTotalRatings,
-    required this.familyRatings,
-    required this.familyPassion,
   });
 
   @override
@@ -44,99 +38,10 @@ class _ChatViewState extends State<ChatView> {
   @override
   void initState() {
     providerChatRepository.updateSeenStatus(true, widget.familyId);
-    getFamilyInfoRepo.fetchCurrentFamilyInfo();
-    getProviderInfoRepo.fetchCurrentFamilyInfo();
-    getProviderData();
-
-    // fetchProviderDataAndSetButtonText();
     super.initState();
   }
 
   final providerId = FirebaseAuth.instance.currentUser!.uid;
-  final GetFamilyInfoRepo getFamilyInfoRepo = GetFamilyInfoRepo();
-  final GetProviderInfoRepo getProviderInfoRepo = GetProviderInfoRepo();
-
-  final uUid = const Uuid().v1();
-  bool _isLoading = false;
-
-  bool _isLocked = false;
-  String _buttonText = 'Loading...';
-
-  Future<Map<String, String>> getProviderData() async {
-    DatabaseReference providerOrderRef = FirebaseDatabase.instance
-        .ref()
-        .child('Providers')
-        .child(providerId)
-        .child('Orders')
-        .child(widget.familyId);
-    final providerOrderSnapshot = await providerOrderRef.get();
-    if (providerOrderSnapshot.exists) {
-      final providerOrderData = providerOrderSnapshot.value;
-      if (providerOrderData is Map) {
-        final status = providerOrderData['status'];
-        print('Status : $status');
-        setState(() {
-          _buttonText = status;
-        });
-        return {
-          'status': status,
-        };
-      }
-    }
-    setState(() {
-      _buttonText = "No status";
-    });
-    return {};
-  }
-
-  Future<void> acceptFamilyOffer() async {
-    try {
-      setState(() {
-        _isLoading = true;
-      });
-      DatabaseReference familyOrderRef = FirebaseDatabase.instance
-          .ref()
-          .child('Family')
-          .child(widget.familyId)
-          .child('Orders')
-          .child(providerId);
-      DatabaseReference providerOrderRef = FirebaseDatabase.instance
-          .ref()
-          .child('Providers')
-          .child(providerId)
-          .child('Orders')
-          .child(widget.familyId);
-
-      // Data update for the family's order
-      Map<String, dynamic> familyUpdateData = {
-        'familyProfile': widget.profilePic,
-        'FamilyRatings': widget.familyRatings,
-        'familyTotalRatings': widget.familyTotalRatings,
-        'familyPassion': widget.familyPassion,
-        'status': 'Completed',
-      };
-      Map<String, dynamic> providerUpdateData = {
-        'status': 'Completed',
-      };
-
-      // Set data for the provider's accept
-      await familyOrderRef.update(familyUpdateData);
-      await providerOrderRef.update(providerUpdateData);
-
-      setState(() {
-        _isLoading = false;
-      });
-      Utils.toastMessage('Order successfully created!');
-      print('Order successfully created!');
-    } catch (e) {
-      setState(() {
-        _isLoading = false;
-      });
-      print('Error $e');
-      Utils.flushBarErrorMessage('Error $e', context);
-    }
-  }
-
   void providerAcceptPopup() {
     showDialog(
       context: context,
@@ -174,8 +79,7 @@ class _ChatViewState extends State<ChatView> {
                         padding: const EdgeInsets.symmetric(horizontal: 8.0),
                         child: RoundedButton(
                           title: 'Accept',
-                          onpress: () async {
-                            await acceptFamilyOffer();
+                          onpress: () {
                             Navigator.of(context).pop();
                           },
                         ),
@@ -232,7 +136,7 @@ class _ChatViewState extends State<ChatView> {
                         radius: 24,
                         backgroundImage: const NetworkImage(
                           'https://user-images.githubusercontent.com/22866157/40578885-e3bf4e8e-6139-11e8-8be4-92fc3149f6f0.jpg',
-                        ),
+                        ), // Set your profile image path here
                         foregroundImage: NetworkImage(
                           widget.profilePic,
                         ),
@@ -293,10 +197,10 @@ class _ChatViewState extends State<ChatView> {
                 height: 26,
                 width: 82,
                 color: AppColor.whiteColor,
-                child: Center(
+                child: const Center(
                   child: Text(
-                    _buttonText,
-                    style: const TextStyle(
+                    'offer',
+                    style: TextStyle(
                       fontSize: 10,
                       color: AppColor.primaryColor,
                       fontWeight: FontWeight.w500,
