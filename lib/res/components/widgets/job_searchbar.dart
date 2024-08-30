@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:nanny_fairy/Repository/home_ui_repostory.dart';
+import 'package:nanny_fairy/ViewModel/provider_distance_view_model.dart';
 import 'package:nanny_fairy/ViewModel/search_view_model.dart';
 import 'package:nanny_fairy/res/components/colors.dart';
 import 'package:nanny_fairy/res/components/widgets/job_enum.dart';
+import 'package:nanny_fairy/res/components/widgets/ui_enums.dart';
 import 'package:provider/provider.dart';
 
 class JobSearchbar extends StatefulWidget {
@@ -173,71 +175,89 @@ class _JobSearchBarState extends State<JobSearchbar> {
             ),
             child: Center(
               child: Focus(
-                focusNode: _dropdownFocusNode,
-                child: DropdownButtonHideUnderline(
-                  child: DropdownButton<String>(
-                    value: selectedKM,
-                    icon: const SizedBox.shrink(),
-                    style: GoogleFonts.getFont(
-                      "Poppins",
-                      textStyle: const TextStyle(
-                        fontSize: 12,
-                        fontWeight: FontWeight.w600,
-                        color: AppColor.primaryColor,
-                      ),
-                    ),
-                    onChanged: (String? newValue) {
-                      if (newValue != null) {
-                        setState(() {
-                          selectedKM = newValue;
-                        });
-                      }
-                    },
-                    items: kM.map<DropdownMenuItem<String>>((String value) {
-                      return DropdownMenuItem<String>(
-                        value: value,
-                        child: Column(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            Text(
-                              value.split(" ")[0],
-                              style: GoogleFonts.getFont(
-                                "Poppins",
-                                textStyle: const TextStyle(
-                                  fontSize: 12,
-                                  fontWeight: FontWeight.w600,
-                                  color: AppColor.blackColor,
-                                ),
-                              ),
+                  focusNode: _dropdownFocusNode,
+                  child: Consumer2<HomeUiSwithchRepository,
+                      ProviderDistanceViewModel>(
+                    builder: (context, uiState, distanceRepo, child) {
+                      return DropdownButtonHideUnderline(
+                        child: DropdownButton<String>(
+                          value: selectedKM,
+                          icon: const SizedBox.shrink(),
+                          style: GoogleFonts.getFont(
+                            "Poppins",
+                            textStyle: const TextStyle(
+                              fontSize: 12,
+                              fontWeight: FontWeight.w600,
+                              color: AppColor.primaryColor,
                             ),
-                            Row(
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                Text(
-                                  "KM",
-                                  style: GoogleFonts.getFont(
-                                    "Poppins",
-                                    textStyle: const TextStyle(
-                                      fontSize: 12,
-                                      fontWeight: FontWeight.w400,
-                                      color: AppColor.blackColor,
+                          ),
+                          onChanged: (String? newValue) async {
+                            if (newValue != null) {
+                              setState(() {
+                                selectedKM = newValue;
+                              });
+
+                              try {
+                                await distanceRepo.filterFamiliesByDistance(
+                                    double.parse(selectedKM));
+                                uiState
+                                    .switchToJobType(JobUIType.DistanceSection);
+                              } catch (e) {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  const SnackBar(
+                                      content: Text(
+                                          'Failed to fetch nearby providers.')),
+                                );
+                              }
+                            }
+                          },
+                          items:
+                              kM.map<DropdownMenuItem<String>>((String value) {
+                            return DropdownMenuItem<String>(
+                              value: value,
+                              child: Column(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  Text(
+                                    value.split(" ")[0],
+                                    style: GoogleFonts.getFont(
+                                      "Poppins",
+                                      textStyle: const TextStyle(
+                                        fontSize: 12,
+                                        fontWeight: FontWeight.w600,
+                                        color: AppColor.blackColor,
+                                      ),
                                     ),
                                   ),
-                                ),
-                                const Icon(
-                                  Icons.expand_more_outlined,
-                                  color: AppColor.blackColor,
-                                  size: 16,
-                                ),
-                              ],
-                            ),
-                          ],
+                                  Row(
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: [
+                                      Text(
+                                        "KM",
+                                        style: GoogleFonts.getFont(
+                                          "Poppins",
+                                          textStyle: const TextStyle(
+                                            fontSize: 12,
+                                            fontWeight: FontWeight.w400,
+                                            color: AppColor.blackColor,
+                                          ),
+                                        ),
+                                      ),
+                                      const Icon(
+                                        Icons.expand_more_outlined,
+                                        color: AppColor.blackColor,
+                                        size: 16,
+                                      ),
+                                    ],
+                                  ),
+                                ],
+                              ),
+                            );
+                          }).toList(),
                         ),
                       );
-                    }).toList(),
-                  ),
-                ),
-              ),
+                    },
+                  )),
             ),
           ),
         ),
