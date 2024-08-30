@@ -5,7 +5,6 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:nanny_fairy/utils/utils.dart';
 import 'package:nanny_fairy/view/home/dashboard/widgets/bokkingFamilyCard.dart';
 import '../../res/components/colors.dart';
-import '../../res/components/widgets/vertical_spacing.dart';
 
 class BookedView extends StatefulWidget {
   const BookedView({super.key});
@@ -91,7 +90,8 @@ class _BookedViewState extends State<BookedView> {
             )
           : _completedOrders.isNotEmpty
               ? Padding(
-                  padding: const EdgeInsets.only(left: 16.0, right: 16.0),
+                  padding:
+                      const EdgeInsets.only(left: 16.0, right: 16.0, top: 20),
                   child: ListView.builder(
                     itemCount: _completedOrders.length,
                     itemBuilder: (context, index) {
@@ -107,21 +107,16 @@ class _BookedViewState extends State<BookedView> {
                           }
                         });
                       }
-                      return Column(
-                        children: [
-                          const VerticalSpeacing(20.0),
-                          BookingFamilyCard(
-                            primaryButtonTxt: 'Completed',
-                            ontapView: () {
-                              // Handle tap if necessary
-                            },
-                            name: order['familyName'] ?? '',
-                            passion: passion,
-                            profilePic: order['familyProfile'] ?? '',
-                            ratings: order['familyRatings'] ?? '',
-                            totalRatings: order['familyTotalRatings'] ?? '',
-                          ),
-                        ],
+                      return BookingFamilyCard(
+                        primaryButtonTxt: 'Completed',
+                        ontapView: () {
+                          // Handle tap if necessary
+                        },
+                        name: order['familyName'] ?? '',
+                        passion: passion,
+                        profilePic: order['familyProfile'] ?? '',
+                        ratings: order['familyRatings'] ?? '',
+                        totalRatings: order['familyTotalRatings'] ?? '',
                       );
                     },
                   ),
