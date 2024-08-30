@@ -9,11 +9,6 @@ class ProviderDistanceRepository extends ChangeNotifier {
   List<Map<String, dynamic>> get distanceFilteredFamilies =>
       _distanceFilteredFamilies;
 
-  void updateDistanceFilteredFamilies(List<Map<String, dynamic>> newFamilies) {
-    _distanceFilteredFamilies = newFamilies;
-    notifyListeners();
-  }
-
   // Function to fetch family data from Firebase
   Future<List<Map<String, dynamic>>> fetchFamiliesData() async {
     final databaseReference = FirebaseDatabase.instance.ref().child('Family');
@@ -98,7 +93,6 @@ class ProviderDistanceRepository extends ChangeNotifier {
               "Family '${family['firstName']} ${family['lastName']}' added to filtered list.");
         }
       }
-      updateDistanceFilteredFamilies(_distanceFilteredFamilies);
 
       // Notify listeners that the filtered list has been updated
       notifyListeners();

@@ -30,6 +30,7 @@ import 'package:nanny_fairy/ViewModel/community_view_view_model.dart';
 import 'package:nanny_fairy/ViewModel/filter_view_model.dart';
 import 'package:nanny_fairy/ViewModel/get_provider_info_view_model.dart';
 import 'package:nanny_fairy/ViewModel/provider_chat_view_model.dart';
+import 'package:nanny_fairy/ViewModel/provider_distance_view_model.dart';
 import 'package:nanny_fairy/ViewModel/provider_home_view_model.dart';
 import 'package:nanny_fairy/ViewModel/search_view_model.dart';
 import 'package:nanny_fairy/res/components/colors.dart';
@@ -55,8 +56,9 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider<ProviderDistanceRepository>(
-          create: (_) => ProviderDistanceRepository(),
+        ChangeNotifierProvider(
+          create: (_) =>
+              ProviderDistanceViewModel(ProviderDistanceRepository()),
         ),
 
         Provider<AuthRepository>(

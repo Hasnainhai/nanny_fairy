@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:nanny_fairy/Repository/home_ui_repostory.dart';
+import 'package:nanny_fairy/ViewModel/provider_distance_view_model.dart';
 import 'package:nanny_fairy/res/components/colors.dart';
 import 'package:nanny_fairy/res/components/widgets/vertical_spacing.dart';
 import 'package:nanny_fairy/view/booked/widgets/booking_widget.dart';
 import 'package:nanny_fairy/view/job/family_detail_provider.dart';
-import 'package:nanny_fairy/repository/provider_distance_repository.dart';
 import 'package:provider/provider.dart';
 
 class HomeDistanceView extends StatefulWidget {
@@ -17,21 +18,14 @@ class HomeDistanceView extends StatefulWidget {
 class _HomeDistanceViewState extends State<HomeDistanceView> {
   @override
   Widget build(BuildContext context) {
-    // Accessing the provider and printing debug information
-    final providerDistanceRepository =
-        Provider.of<ProviderDistanceRepository>(context, listen: false);
-    print(
-        'ProviderDistanceRepository is available: ${providerDistanceRepository.distanceFilteredFamilies != null}');
+    // Accessing the ViewModel
+    // final providerDistanceViewModel =
+    //     Provider.of<ProviderDistanceViewModel>(context, listen: false);
 
-    return Consumer<ProviderDistanceRepository>(
-      builder: (context, providerDistanceRepository, child) {
-        // Debugging: Print the filtered families
-        print(
-            'ProviderDistanceRepository data: ${providerDistanceRepository.distanceFilteredFamilies}');
-
+    return Consumer2<HomeUiSwithchRepository, ProviderDistanceViewModel>(
+      builder: (context, uistate, providerDistanceViewModel, child) {
         return Column(
           children: [
-            const VerticalSpeacing(16.0),
             Padding(
               padding: const EdgeInsets.only(left: 16.0, right: 16.0),
               child: Column(
@@ -52,7 +46,7 @@ class _HomeDistanceViewState extends State<HomeDistanceView> {
                       ),
                       InkWell(
                         onTap: () {
-                          debugPrint("Clear All tapped");
+                          uistate.switchToDefaultSection();
                         },
                         child: Text(
                           'Clear All',
@@ -70,14 +64,14 @@ class _HomeDistanceViewState extends State<HomeDistanceView> {
                   ),
                   const VerticalSpeacing(16.0),
                   SizedBox(
-                    height: MediaQuery.of(context).size.height * 0.3,
-                    child: providerDistanceRepository
+                    height: MediaQuery.of(context).size.height * 1.3,
+                    child: providerDistanceViewModel
                             .distanceFilteredFamilies.isEmpty
                         ? const Center(child: Text('No data available'))
                         : SingleChildScrollView(
                             scrollDirection: Axis.vertical,
                             child: Column(
-                              children: providerDistanceRepository
+                              children: providerDistanceViewModel
                                   .distanceFilteredFamilies
                                   .map((family) {
                                 try {

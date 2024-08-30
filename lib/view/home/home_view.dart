@@ -150,7 +150,7 @@ class _HomeViewState extends State<HomeView> {
                 ),
               ],
             ),
-            const VerticalSpeacing(50.0),
+            const VerticalSpeacing(20.0),
             // const HomeDefaultView(),
             // const HomeSearchView(),
             Consumer<HomeUiSwithchRepository>(

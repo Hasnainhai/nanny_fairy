@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:nanny_fairy/Repository/home_ui_repostory.dart';
 import 'package:nanny_fairy/Repository/provider_distance_repository.dart';
+import 'package:nanny_fairy/ViewModel/provider_distance_view_model.dart';
 import 'package:nanny_fairy/ViewModel/search_view_model.dart';
 import 'package:nanny_fairy/res/components/widgets/ui_enums.dart';
 import 'package:provider/provider.dart';
@@ -176,7 +177,7 @@ class _SearchBarProviderState extends State<SearchBarProvider> {
               child: Focus(
                   focusNode: _dropdownFocusNode,
                   child: Consumer2<HomeUiSwithchRepository,
-                      ProviderDistanceRepository>(
+                      ProviderDistanceViewModel>(
                     builder: (context, uiState, distanceRepo, child) {
                       return DropdownButtonHideUnderline(
                         child: DropdownButton<String>(
