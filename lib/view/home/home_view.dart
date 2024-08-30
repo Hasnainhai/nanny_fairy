@@ -150,7 +150,7 @@ class _HomeViewState extends State<HomeView> {
                 ),
               ],
             ),
-            const VerticalSpeacing(50.0),
+            const VerticalSpeacing(20.0),
             // const HomeDefaultView(),
             // const HomeSearchView(),
             Consumer<HomeUiSwithchRepository>(
@@ -164,14 +164,14 @@ class _HomeViewState extends State<HomeView> {
                   case UIType.DefaultSection:
                     selectedWidget = const HomeDefaultView();
                     break;
-                  case UIType.FilterSection:
-                    selectedWidget = const HomeFilterView();
-                    break;
                   case UIType.DistanceSection:
                     selectedWidget = const HomeDistanceView();
                     break;
-                }
 
+                  case UIType.FilterSection:
+                    selectedWidget = const HomeFilterView();
+                    break;
+                }
                 return selectedWidget;
               },
             ),
