@@ -74,6 +74,9 @@ class ChatList extends StatelessWidget {
                       time: chat['timeSent'],
                       isSeen: isSeen,
                       username: chat['name'],
+                      passions: [],
+                      ratings: '',
+                      totalRatings: '',
                     );
                   },
                 );

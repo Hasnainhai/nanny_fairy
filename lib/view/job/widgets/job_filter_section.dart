@@ -93,6 +93,7 @@ class _JobFilterSectionState extends State<JobFilterSection> {
                                         bio: user.bio,
                                         profile: user.profile,
                                         familyId: user.uid,
+                                        passion: passions,
                                       ),
                                     ),
                                   );

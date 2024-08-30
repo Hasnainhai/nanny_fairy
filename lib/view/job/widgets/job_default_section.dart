@@ -85,6 +85,7 @@ class _JobDefaultSectionState extends State<JobDefaultSection> {
                                 totalRatings: int.parse(
                                   ratingsData['totalRatings']!,
                                 ),
+                                passion: passions,
                               ),
                             ),
                           );
