@@ -176,7 +176,9 @@ class _ProviderDetailsState extends State<ProviderDetails> {
                                     profile: widget.profile,
                                     providerRatings: widget.ratings.toString(),
                                     providerTotalRatings:
-                                        widget.totalRatings.toString(), education: widget.degree, horlyRate: widget.horseRate,
+                                        widget.totalRatings.toString(),
+                                    education: widget.degree,
+                                    horlyRate: widget.horseRate,
                                   )));
                       // print(
                       //     'profile:${widget.profile}: userName:${widget.name}:familyId: ${widget.familyId}: currentUserName:${getFamilyInfoRepo.familyName!}:Family profile${getFamilyInfoRepo.familyProfile} ');
@@ -414,27 +416,28 @@ class _ProviderDetailsState extends State<ProviderDetails> {
                                     subTitle: 'Experience'),
                                 const SizedBox(width: 16),
                                 Container(
-                                  height: 39,
-                                  width: 43,
                                   decoration: BoxDecoration(
                                       color: AppColor.avatarColor,
                                       borderRadius: BorderRadius.circular(4)),
-                                  child: Column(
-                                    children: [
-                                      const Icon(Icons.school_outlined,
-                                          color: AppColor.whiteColor),
-                                      Text(
-                                        widget.degree,
-                                        style: GoogleFonts.getFont(
-                                          "Poppins",
-                                          textStyle: const TextStyle(
-                                            fontSize: 10,
-                                            fontWeight: FontWeight.w600,
-                                            color: Colors.white,
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(2.0),
+                                    child: Column(
+                                      children: [
+                                        const Icon(Icons.school_outlined,
+                                            color: AppColor.whiteColor),
+                                        Text(
+                                          widget.degree,
+                                          style: GoogleFonts.getFont(
+                                            "Poppins",
+                                            textStyle: const TextStyle(
+                                              fontSize: 10,
+                                              fontWeight: FontWeight.w600,
+                                              color: Colors.white,
+                                            ),
                                           ),
                                         ),
-                                      ),
-                                    ],
+                                      ],
+                                    ),
                                   ),
                                 ),
                               ],
@@ -670,7 +673,9 @@ class _ProviderDetailsState extends State<ProviderDetails> {
                                             providerRatings:
                                                 widget.ratings.toString(),
                                             providerTotalRatings:
-                                                widget.totalRatings.toString(), education: widget.degree, horlyRate: widget.horseRate,
+                                                widget.totalRatings.toString(),
+                                            education: widget.degree,
+                                            horlyRate: widget.horseRate,
                                           )),
                                 );
                               } else {
