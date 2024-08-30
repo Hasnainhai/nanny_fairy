@@ -1,10 +1,14 @@
 import 'dart:convert';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
+import 'package:flutter/material.dart'; // Add this import for ChangeNotifier
 import 'package:http/http.dart' as http;
 
-class FamilyDistanceRepository {
-  List<Map<String, dynamic>> distanceFilterProviders = [];
+class FamilyDistanceRepository extends ChangeNotifier {
+  // Extend ChangeNotifier
+  List<Map<String, dynamic>> _distanceFilterProviders = [];
+  List<Map<String, dynamic>> get distanceFilterProviders =>
+      _distanceFilterProviders;
 
   // Function to fetch provider data from Firebase
   Future<List<Map<String, dynamic>>> fetchProvidersData() async {
@@ -62,7 +66,7 @@ class FamilyDistanceRepository {
     String url = 'https://maps.googleapis.com/maps/api/distancematrix/json'
         '?origins=$encodedOrigin'
         '&destinations=$encodedDestination'
-        '&units=metric' // Use 'metric' to get distances in kilometers
+        '&units=metric'
         '&key=AIzaSyCBUyZVjnq9IGxH9Zu6ACNRIJXtkfZ2iuQ'; // Replace with your actual API key
 
     http.Response response = await http.get(Uri.parse(url));
@@ -96,18 +100,23 @@ class FamilyDistanceRepository {
       return; // Exit if no family address is found
     }
 
+    _distanceFilterProviders.clear(); // Clear previous results
+
     for (var provider in providers) {
       String? providerAddress = provider['address'] as String?;
       if (providerAddress == null) {
         print('Provider address is null, skipping this provider.');
-        continue; // Skip this provider if the address is null
+        continue;
       }
 
       double distance = await getDistanceInKm(familyAddress, providerAddress);
-
+      debugPrint(
+          " This Provider ${provider['firstName'] + provider['lastName']} has been added ");
       if (distance <= maxDistanceKm) {
-        distanceFilterProviders.add(provider);
+        _distanceFilterProviders.add(provider);
       }
     }
+
+    notifyListeners(); // Notify listeners that the data has been updated
   }
 }

@@ -10,6 +10,7 @@ import 'package:nanny_fairy/Repository/community_repo_family.dart';
 import 'package:nanny_fairy/Repository/community_repo_provider.dart';
 import 'package:nanny_fairy/Repository/family_auth_repository.dart';
 import 'package:nanny_fairy/Repository/family_chat_repository.dart';
+import 'package:nanny_fairy/Repository/family_distance_repository.dart';
 import 'package:nanny_fairy/Repository/family_home_repo.dart';
 import 'package:nanny_fairy/Repository/family_home_ui_repository.dart';
 import 'package:nanny_fairy/Repository/family_search_repository.dart';
@@ -24,6 +25,7 @@ import 'package:nanny_fairy/Repository/search_repository.dart';
 import 'package:nanny_fairy/Repository/provider_distance_repository.dart'; // Import the ProviderDistanceRepository
 import 'package:nanny_fairy/ViewModel/auth_view_model.dart';
 import 'package:nanny_fairy/ViewModel/family_chat_view_model.dart';
+import 'package:nanny_fairy/ViewModel/family_distance_view_model.dart';
 import 'package:nanny_fairy/ViewModel/family_filter_view_model.dart';
 import 'package:nanny_fairy/ViewModel/family_search_view_model.dart';
 import 'package:nanny_fairy/ViewModel/community_view_view_model.dart';
@@ -55,6 +57,9 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
+        ChangeNotifierProvider(
+          create: (_) => FamilyDistanceViewModel(FamilyDistanceRepository()),
+        ),
         ChangeNotifierProvider(
           create: (_) =>
               ProviderDistanceViewModel(ProviderDistanceRepository()),
