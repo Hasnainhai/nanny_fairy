@@ -120,6 +120,7 @@ class _HomeDistanceViewState extends State<HomeDistanceView> {
                                           ratings: averageRating,
                                           totalRatings: int.parse(
                                               ratingsData['totalRatings']!),
+                                          passion: passions,
                                         ),
                                       ),
                                     );

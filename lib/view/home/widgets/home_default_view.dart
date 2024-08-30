@@ -192,9 +192,11 @@ class _HomeDefaultViewState extends State<HomeDefaultView> {
 
                       bookings.forEach(
                         (key, value) {
-                          List<String> passions = value['FamilyPassions'] != null
-                              ? (value['FamilyPassions'] as List<dynamic>).cast<String>()
-                              : [];
+                          List<String> passions =
+                              value['FamilyPassions'] != null
+                                  ? (value['FamilyPassions'] as List<dynamic>)
+                                      .cast<String>()
+                                  : [];
                           Map<String, String> ratingsData =
                               getRatingsAndTotalRatings(value);
                           Map<dynamic, dynamic> reviews =
@@ -218,6 +220,7 @@ class _HomeDefaultViewState extends State<HomeDefaultView> {
                                       totalRatings: int.parse(
                                         ratingsData['totalRatings']!,
                                       ),
+                                      passion: passions,
                                     ),
                                   ),
                                 );
@@ -228,8 +231,7 @@ class _HomeDefaultViewState extends State<HomeDefaultView> {
                               passion: passions,
                               ratings: averageRating,
                               totalRatings:
-                                  int.parse(ratingsData['totalRatings']!
-                                  ),
+                                  int.parse(ratingsData['totalRatings']!),
                             ),
                           );
                         },
