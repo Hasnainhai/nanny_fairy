@@ -88,22 +88,23 @@ class _HomeDistanceViewState extends State<HomeDistanceView> {
                                   double averageRating =
                                       calculateAverageRating(reviews);
 
-                                  return BookingCartWidget(
-                                    primaryButtonTxt: 'View',
-                                    ontapView: () {
-                                      Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                          builder: (c) => FamilyDetailProvider(
-                                            name:
-                                                "${family['firstName']} ${family['lastName']}",
-                                            bio: family['bio'] ?? '',
-                                            profile: family['profile'],
-                                            familyId: family['uid'],
-                                            ratings: averageRating,
-                                            totalRatings: int.parse(
-                                                ratingsData['totalRatings'] ??
-                                                    '0'),
+                                return BookingCartWidget(
+                                  primaryButtonTxt: 'View',
+                                  ontapView: () {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (c) => FamilyDetailProvider(
+                                          name:
+                                              "${family['firstName']} ${family['lastName']}",
+                                          bio: family['bio'] ?? '',
+                                          profile: family['profile'],
+                                          familyId: family['uid'],
+                                          ratings: averageRating,
+                                          totalRatings: int.parse(
+                                              ratingsData['totalRatings']!),
+                                          passion: passions,
+                                 
                                           ),
                                         ),
                                       );
