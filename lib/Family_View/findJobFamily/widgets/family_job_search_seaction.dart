@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:nanny_fairy/Family_View/findJobFamily/job_view_family.dart';
 import 'package:nanny_fairy/Family_View/findJobFamily/provider_detail.dart';
 import 'package:nanny_fairy/Family_View/homeFamily/widgets/bookCart_home_widget.dart';
 import 'package:nanny_fairy/Models/family_search_model.dart';
@@ -100,131 +101,39 @@ class _FamilyJobSearchSeactionState extends State<FamilyJobSearchSeaction> {
                     itemCount: viewModel.users.length,
                     itemBuilder: (context, index) {
                       final user = viewModel.users[index];
-                      debugPrint(
-                          'User: ${user.toString()}'); // Print user object
-
-                      Map<String, String> timeData = {};
-
-                      // Check and handle time data
-                      if (user.time is Map) {
-                        final timeMap = user.time as Map?;
-                        debugPrint(
-                            'Time Map: ${timeMap.toString()}'); // Print time map
-                        if (timeMap != null && timeMap.isNotEmpty) {
-                          timeData = timeMap.map(
-                            (key, value) =>
-                                MapEntry(key.toString(), value.toString()),
-                          );
-                        } else {
-                          debugPrint('Time data is null or empty');
-                          timeData = {
-                            "morningStart": "N/A",
-                            "morningEnd": "N/A",
-                            "afternoonStart": "N/A",
-                            "afternoonEnd": "N/A",
-                            "eveningStart": "N/A",
-                            "eveningEnd": "N/A",
-                          };
+                      Map<String, Map<String, bool>> testAvailability = {
+                        "Morning": {
+                          "Monday": true,
+                          "Tuesday": true,
+                          "Friday": true,
+                          "Sunday": false,
+                        },
+                        "Afternoon": {
+                          "Wednesday": true,
+                          "Thursday": false,
                         }
-                      } else if (user.time is Time) {
-                        final time = user.time as Time?;
-                        debugPrint(
-                            'Time Object: ${time.toString()}'); // Print time object
-                        if (time != null) {
-                          timeData = {
-                            "MorningStart": time.morningStart,
-                            "MorningEnd": time.morningEnd,
-                            "AfternoonStart": time.afternoonStart,
-                            "AfternoonEnd": time.afternoonEnd,
-                            "EveningStart": time.eveningStart,
-                            "EveningEnd": time.eveningEnd,
-                          };
-                        } else {
-                          debugPrint('Time object is null');
-                          timeData = {
-                            "morningStart": "N/A",
-                            "morningEnd": "N/A",
-                            "afternoonStart": "N/A",
-                            "afternoonEnd": "N/A",
-                            "eveningStart": "N/A",
-                            "eveningEnd": "N/A",
-                          };
-                        }
-                      } else {
-                        debugPrint(
-                            'Unexpected type for time: ${user.time.runtimeType}');
-                        timeData = {
-                          "morningStart": "N/A",
-                          "morningEnd": "N/A",
-                          "afternoonStart": "N/A",
-                          "afternoonEnd": "N/A",
-                          "eveningStart": "N/A",
-                          "eveningEnd": "N/A",
-                        };
-                      }
+                      };
+                      Set<String> testDaysSet = _getDaysSet(testAvailability);
 
-                      // Handle availability field
-                      Set<String> daysSet = {};
-                      if (user.availability != null &&
-                          user.availability.isNotEmpty) {
-                        debugPrint(
-                            'Availability Map: ${user.availability.toString()}'); // Print availability map
-                        daysSet = user.availability.keys.toSet();
-                      } else {
-                        debugPrint('user.availability is null or empty');
-                      }
-
-                      List<Widget> dayButtons = daysSet.map((dayAbbreviation) {
-                        return Padding(
-                          padding: const EdgeInsets.all(4.0),
-                          child: DayButtonFamily(day: dayAbbreviation),
-                        );
-                      }).toList();
+                      final dayButtons = _buildDayButtons(testDaysSet);
 
                       return BookingCartWidgetHome(
                         primaryButtonColor: AppColor.primaryColor,
                         primaryButtonTxt: 'View',
-                        ontapView: () {
-                          debugPrint(
-                              'Navigating to ProviderDetails with data:');
-                          debugPrint('Profile: ${user.profile}');
-                          debugPrint(
-                              'Name: ${user.firstName} ${user.lastName}');
-                          debugPrint('Bio: ${user.bio}');
-                          debugPrint('HorseRate: ${user.hoursrate}');
-                          debugPrint(
-                              'Experience: ${user.reference.experience}');
-                          debugPrint('Degree: ${user.education}');
-                          debugPrint('DayButtons: $dayButtons');
-                          debugPrint('TimeData: $timeData');
-
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (c) => ProviderDetails(
-                                familyId: user.uid,
-                                profile: user.profile,
-                                name: "${user.firstName} ${user.lastName}",
-                                bio: user.bio,
-                                horseRate: user.hoursrate,
-                                experience: user.reference.experience,
-                                degree: user.education,
-                                dayButtons: dayButtons,
-                                timeData: timeData,
-                                ratings: user.averageRating,
-                                totalRatings: user.totalRatings,
-                              ),
-                            ),
-                          );
-                        },
+                        ontapView: () => _navigateToProviderDetails(
+                          context,
+                          user,
+                          dayButtons,
+                          _getTimeData(user.time),
+                        ),
                         profile: user.profile,
                         name: "${user.firstName} ${user.lastName}",
                         degree: user.education,
                         skill: '',
                         hoursRate: user.hoursrate,
                         dayButtons: dayButtons,
-                        ratings: user.averageRating,
                         totalRatings: user.totalRatings,
+                        ratings: user.averageRating,
                       );
                     },
                   );
@@ -236,39 +145,96 @@ class _FamilyJobSearchSeactionState extends State<FamilyJobSearchSeaction> {
       ),
     );
   }
-}
 
-class DayButtonFamily extends StatefulWidget {
-  final String day;
+  Map<String, String> _getTimeData(dynamic time) {
+    if (time is Map) {
+      final timeMap = time as Map<String, dynamic>;
+      return timeMap
+          .map((key, value) => MapEntry(key.toString(), value.toString()));
+    } else if (time is Time) {
+      final timeObject = time as Time;
+      return {
+        "MorningStart": timeObject.morningStart,
+        "MorningEnd": timeObject.morningEnd,
+        "AfternoonStart": timeObject.afternoonStart,
+        "AfternoonEnd": timeObject.afternoonEnd,
+        "EveningStart": timeObject.eveningStart,
+        "EveningEnd": timeObject.eveningEnd,
+      };
+    }
+    return _defaultTimeData();
+  }
 
-  const DayButtonFamily({
-    super.key,
-    required this.day,
-  });
+  Map<String, String> _defaultTimeData() {
+    return {
+      "MorningStart": "N/A",
+      "MorningEnd": "N/A",
+      "AfternoonStart": "N/A",
+      "AfternoonEnd": "N/A",
+      "EveningStart": "N/A",
+      "EveningEnd": "N/A",
+    };
+  }
 
-  @override
-  _DayButtonFamilyState createState() => _DayButtonFamilyState();
-}
+  Set<String> _getDaysSet(Map<String, dynamic>? availability) {
+    final daysSet = <String>{};
+    if (availability == null || availability.isEmpty) {
+      print('No availability data found'); // Debugging line for empty data
+      return daysSet; // Return an empty set if no availability
+    }
 
-class _DayButtonFamilyState extends State<DayButtonFamily> {
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      height: 15,
-      width: 15,
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(2),
-        color: Colors.transparent,
-        border: Border.all(color: Colors.grey),
-      ),
-      child: Center(
-        child: Text(
-          widget.day,
-          style: const TextStyle(
-            fontSize: 8,
-            color: AppColor.blackColor,
-            fontWeight: FontWeight.w500,
-          ),
+    print('Availability data: $availability'); // Debugging line
+
+    availability.forEach((timeOfDay, daysMap) {
+      if (daysMap is Map) {
+        daysMap.forEach((day, value) {
+          if (value == true) {
+            String dayAbbreviation = day.substring(0, 1).toUpperCase();
+            daysSet.add(dayAbbreviation);
+          }
+        });
+      } else {
+        print(
+            'Invalid availability data for $timeOfDay: $daysMap'); // Debugging line
+      }
+    });
+
+    print('Days set: $daysSet'); // Debugging line
+    return daysSet;
+  }
+
+// Function to build the day buttons
+  List<Widget> _buildDayButtons(Set<String> daysSet) {
+    print('Building day buttons for: $daysSet'); // Debugging line
+    return daysSet.map((dayAbbreviation) {
+      return Padding(
+        padding: const EdgeInsets.all(4.0),
+        child: DayButtonFamily(day: dayAbbreviation),
+      );
+    }).toList();
+  }
+
+  void _navigateToProviderDetails(
+    BuildContext context,
+    ProviderSearchModel user,
+    List<Widget> dayButtons,
+    Map<String, String> timeData,
+  ) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (c) => ProviderDetails(
+          familyId: user.uid,
+          profile: user.profile,
+          name: "${user.firstName} ${user.lastName}",
+          bio: user.bio,
+          horseRate: user.hoursrate,
+          experience: user.reference.experience,
+          degree: user.education,
+          dayButtons: dayButtons,
+          timeData: timeData,
+          ratings: user.averageRating,
+          totalRatings: user.totalRatings,
         ),
       ),
     );
