@@ -104,7 +104,6 @@ class _FamilyNotificationsViewState extends State<FamilyNotificationsView> {
                             order['providerName'] ?? 'Unknown Provider';
                         String status = order['status'];
                         String notificationDetail;
-
                         if (status == 'Pending') {
                           notificationDetail =
                               'Your request has been sent to $providerName.';
