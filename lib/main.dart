@@ -22,7 +22,7 @@ import 'package:nanny_fairy/Repository/home_ui_repostory.dart';
 import 'package:nanny_fairy/Repository/provider_chat_repository.dart';
 import 'package:nanny_fairy/Repository/provider_home_repository.dart';
 import 'package:nanny_fairy/Repository/search_repository.dart';
-import 'package:nanny_fairy/Repository/provider_distance_repository.dart'; // Import the ProviderDistanceRepository
+import 'package:nanny_fairy/Repository/provider_distance_repository.dart';
 import 'package:nanny_fairy/ViewModel/auth_view_model.dart';
 import 'package:nanny_fairy/ViewModel/family_chat_view_model.dart';
 import 'package:nanny_fairy/ViewModel/family_distance_view_model.dart';

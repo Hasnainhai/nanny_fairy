@@ -183,7 +183,8 @@ class _ProfileViewFamilyState extends State<ProfileViewFamily> {
                 const Divider(),
                 ProfileWidgetsFamily(
                   ontap: () {
-                    Navigator.pushNamed(context, RoutesName.notificationsView);
+                    Navigator.pushNamed(
+                        context, RoutesName.familyNotifications);
                   },
                   tColor: const Color(0xff46C5CA),
                   bColor: const Color(0xff6DF5FC),
