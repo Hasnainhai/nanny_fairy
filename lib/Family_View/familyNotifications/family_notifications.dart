@@ -89,39 +89,43 @@ class _FamilyNotificationsViewState extends State<FamilyNotificationsView> {
       ),
       body: _isLoading
           ? const Center(child: CircularProgressIndicator())
-          : Padding(
-              padding:
-                  const EdgeInsets.only(top: 30.0, left: 16.0, right: 16.0),
-              child: SingleChildScrollView(
-                scrollDirection: Axis.vertical,
-                child: Column(
-                  children: _orders.map((order) {
-                    String providerName =
-                        order['providerName'] ?? 'Unknown Provider';
-                    String status = order['status'];
-                    String notificationDetail;
+          : _orders.isEmpty
+              ? const Center(
+                  child: Text('Empty Notifications...'),
+                )
+              : Padding(
+                  padding:
+                      const EdgeInsets.only(top: 30.0, left: 16.0, right: 16.0),
+                  child: SingleChildScrollView(
+                    scrollDirection: Axis.vertical,
+                    child: Column(
+                      children: _orders.map((order) {
+                        String providerName =
+                            order['providerName'] ?? 'Unknown Provider';
+                        String status = order['status'];
+                        String notificationDetail;
 
-                    if (status == 'Pending') {
-                      notificationDetail =
-                          'Your request has been sent to $providerName.';
-                    } else if (status == 'Completed') {
-                      notificationDetail =
-                          'Your request has been accepted by $providerName.';
-                    } else {
-                      notificationDetail = 'Status: $status';
-                    }
+                        if (status == 'Pending') {
+                          notificationDetail =
+                              'Your request has been sent to $providerName.';
+                        } else if (status == 'Completed') {
+                          notificationDetail =
+                              'Your request has been accepted by $providerName.';
+                        } else {
+                          notificationDetail = 'Status: $status';
+                        }
 
-                    return Padding(
-                      padding: const EdgeInsets.only(bottom: 16),
-                      child: FamilyNotificationsWidget(
-                        providerName: providerName,
-                        notificationDetail: notificationDetail,
-                      ),
-                    );
-                  }).toList(),
+                        return Padding(
+                          padding: const EdgeInsets.only(bottom: 16),
+                          child: FamilyNotificationsWidget(
+                            providerName: providerName,
+                            notificationDetail: notificationDetail,
+                          ),
+                        );
+                      }).toList(),
+                    ),
+                  ),
                 ),
-              ),
-            ),
     );
   }
 }
