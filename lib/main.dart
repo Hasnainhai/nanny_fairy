@@ -64,7 +64,6 @@ class MyApp extends StatelessWidget {
           create: (_) =>
               ProviderDistanceViewModel(ProviderDistanceRepository()),
         ),
-
         Provider<AuthRepository>(
           create: (_) => AuthRepository(),
         ),
@@ -161,10 +160,6 @@ class MyApp extends StatelessWidget {
             providerChatRepository: ProviderChatRepository(),
           )..loadChats(),
         ),
-        // Add the ProviderDistanceRepository
-        // ChangeNotifierProvider<ProviderDistanceRepository>(
-        //   create: (_) => ProviderDistanceRepository(),
-        // ),
       ],
       child: MaterialApp(
         initialRoute: RoutesName.splash,

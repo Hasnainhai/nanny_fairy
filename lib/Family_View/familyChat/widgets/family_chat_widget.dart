@@ -16,6 +16,10 @@ class FamilyChatWidget extends StatefulWidget {
   final String providerId;
   final String timesend;
   final String text;
+  final String providerRating;
+  final String providerTotalRating;
+  final String education;
+  final String hourlyRating;
   const FamilyChatWidget({
     super.key,
     required this.isSeen,
@@ -24,6 +28,10 @@ class FamilyChatWidget extends StatefulWidget {
     required this.providerId,
     required this.timesend,
     required this.text,
+    required this.providerRating,
+    required this.providerTotalRating,
+    required this.education,
+    required this.hourlyRating,
   });
 
   @override
@@ -57,20 +65,24 @@ class _FamilyChatWidgetState extends State<FamilyChatWidget> {
       padding: const EdgeInsets.only(bottom: 16.0),
       child: InkWell(
         onTap: () {
-          // Navigator.push(
-          //   context,
-          //   MaterialPageRoute(
-          //     builder: (c) => FamilyChatView(
-          //       name: widget.senderName,
-          //       id: widget.providerId,
-          //       profilePic: widget.senderProfiel,
-          //       isSeen: widget.isSeen,
-          //       currentUserName: getFamilyInfoRepo.familyName.toString(),
-          //       currentUserProfilePic:
-          //           getFamilyInfoRepo.familyProfile.toString(),
-          //     ),
-          //   ),
-          // );
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (c) => FamilyChatView(
+                name: widget.senderName,
+                id: widget.providerId,
+                profilePic: widget.senderProfiel,
+                isSeen: widget.isSeen,
+                currentUserName: getFamilyInfoRepo.familyName.toString(),
+                currentUserProfilePic:
+                    getFamilyInfoRepo.familyProfile.toString(),
+                providerRatings: widget.providerRating,
+                providerTotalRatings: widget.providerTotalRating,
+                education: widget.education,
+                horlyRate: widget.hourlyRating,
+              ),
+            ),
+          );
         },
         child: Container(
           height: 93,
