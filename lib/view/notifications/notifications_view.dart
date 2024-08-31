@@ -13,7 +13,7 @@ class NotificationsView extends StatefulWidget {
 }
 
 class _NotificationsViewState extends State<NotificationsView> {
-  final String familyId = FirebaseAuth.instance.currentUser!.uid;
+  final String providerId = FirebaseAuth.instance.currentUser!.uid;
 
   List<Map<String, dynamic>> _orders = [];
   bool _isLoading = true;
@@ -23,8 +23,8 @@ class _NotificationsViewState extends State<NotificationsView> {
       // Reference to the family's orders in the database
       DatabaseReference familyOrdersRef = FirebaseDatabase.instance
           .ref()
-          .child('Family')
-          .child(familyId)
+          .child('Providers')
+          .child(providerId)
           .child('Orders');
 
       // Fetch all orders data
@@ -95,17 +95,16 @@ class _NotificationsViewState extends State<NotificationsView> {
                 scrollDirection: Axis.vertical,
                 child: Column(
                   children: _orders.map((order) {
-                    String providerName =
-                        order['providerName'] ?? 'Unknown Provider';
+                    String familyName = order['familyName'] ?? 'Unknown family';
                     String status = order['status'];
                     String notificationDetail;
 
                     if (status == 'Pending') {
                       notificationDetail =
-                          'Your request has been sent to $providerName.';
+                          'You received an offer from $familyName.';
                     } else if (status == 'Completed') {
                       notificationDetail =
-                          'Your request has been accepted by $providerName.';
+                          'You accepted the offer by $familyName.';
                     } else {
                       notificationDetail = 'Status: $status';
                     }
@@ -113,7 +112,7 @@ class _NotificationsViewState extends State<NotificationsView> {
                     return Padding(
                       padding: const EdgeInsets.only(bottom: 16),
                       child: NotificationsWidget(
-                        providerName: providerName,
+                        providerName: familyName,
                         notificationDetail: notificationDetail,
                       ),
                     );
