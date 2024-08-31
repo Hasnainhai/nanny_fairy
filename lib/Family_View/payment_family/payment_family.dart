@@ -32,8 +32,9 @@ class PaymentFamilyView extends StatefulWidget {
     required this.currentUserProfile,
     required this.profile,
     required this.providerRatings,
-    required this.providerTotalRatings, required this.education, required this.horlyRate,
-
+    required this.providerTotalRatings,
+    required this.education,
+    required this.horlyRate,
   });
 
   @override
@@ -285,8 +286,10 @@ class _PaymentFamilyViewState extends State<PaymentFamilyView> {
                         isSeen: true,
                         currentUserName: widget.currentUserName,
                         currentUserProfilePic: widget.currentUserProfile,
-                        providerRatings:widget.providerRatings,
-                        providerTotalRatings: widget.providerRatings, education:widget.education, horlyRate: widget.horlyRate,
+                        providerRatings: widget.providerRatings,
+                        providerTotalRatings: widget.providerRatings,
+                        education: widget.education,
+                        horlyRate: widget.horlyRate,
                       ),
                     ),
                   );
