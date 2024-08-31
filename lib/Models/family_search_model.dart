@@ -48,7 +48,7 @@ class ProviderSearchModel {
   factory ProviderSearchModel.fromMap(Map<String, dynamic> data, String uid) {
     try {
       Map<String, dynamic> referenceData =
-          Map<String, dynamic>.from(data['Refernce'] ?? {});
+          Map<String, dynamic>.from(data['Reference'] ?? {});
       Map<String, dynamic> idPicsData =
           Map<String, dynamic>.from(data['IdPics'] ?? {});
       Map<String, dynamic> timeData =
@@ -113,6 +113,21 @@ class ProviderSearchModel {
     });
     return totalRating / reviews.length;
   }
+
+  // Method to get available days as a formatted string
+  List<String> getAvailableDays() {
+    Set<String> daysSet = {};
+    availability.forEach((timeOfDay, daysMap) {
+      if (daysMap is Map<String, bool>) {
+        daysMap.forEach((day, isAvailable) {
+          if (isAvailable) {
+            daysSet.add(day);
+          }
+        });
+      }
+    });
+    return daysSet.toList();
+  }
 }
 
 class IdPics {
@@ -146,7 +161,7 @@ class Reference {
 
   factory Reference.fromMap(Map<String, dynamic> data) {
     return Reference(
-      experience: data['experince'] ?? '',
+      experience: data['experience'] ?? '',
       job: data['job'] ?? '',
       land: data['land'] ?? '',
       phoneNumber: data['phoneNumber'] ?? '',
