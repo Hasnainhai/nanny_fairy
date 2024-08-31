@@ -117,16 +117,23 @@ class ProviderSearchModel {
   // Method to get available days as a formatted string
   List<String> getAvailableDays() {
     Set<String> daysSet = {};
+
+    // Iterate through each time of day and its corresponding availability map
     availability.forEach((timeOfDay, daysMap) {
-      if (daysMap is Map<String, bool>) {
-        daysMap.forEach((day, isAvailable) {
-          if (isAvailable) {
-            daysSet.add(day);
-          }
-        });
-      }
+      daysMap.forEach((day, isAvailable) {
+        // Check if the provider is available on the given day
+        if (isAvailable) {
+          // Get the first letter of the day
+          String dayInitial = day.substring(0, 1).toUpperCase();
+          daysSet.add(dayInitial);
+        }
+      });
     });
-    return daysSet.toList();
+
+    // Convert the set to a sorted list
+    List<String> sortedDays = daysSet.toList()..sort();
+
+    return sortedDays;
   }
 }
 

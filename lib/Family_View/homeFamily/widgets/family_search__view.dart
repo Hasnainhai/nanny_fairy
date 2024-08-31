@@ -70,24 +70,11 @@ class _FamilySearchViewState extends State<FamilySearchView> {
                   return ListView.builder(
                     itemCount: viewModel.users.length,
                     itemBuilder: (context, index) {
-                      Map<String, Map<String, bool>> testAvailability = {
-                        "Morning": {
-                          "Monday": true,
-                          "Tuesday": true,
-                          "Friday": true,
-                          "Sunday": false,
-                        },
-                        "Afternoon": {
-                          "Wednesday": true,
-                          "Thursday": false,
-                        }
-                      };
-                      Set<String> testDaysSet = _getDaysSet(testAvailability);
-
                       final user = viewModel.users[index];
-                      final timeData = _getTimeData(user.time);
-                      // final daysSet = _getDaysSet(testAvailability);
-                      final dayButtons = _buildDayButtons(testDaysSet);
+
+                      final daysSet = _getDaysSet(user.availability);
+
+                      final dayButtons = _buildDayButtons(daysSet);
 
                       return BookingCartWidgetHome(
                         primaryButtonColor: AppColor.primaryColor,
@@ -96,7 +83,7 @@ class _FamilySearchViewState extends State<FamilySearchView> {
                           context,
                           user,
                           dayButtons,
-                          timeData,
+                          _getTimeData(user.time),
                         ),
                         profile: user.profile,
                         name: "${user.firstName} ${user.lastName}",
@@ -149,24 +136,36 @@ class _FamilySearchViewState extends State<FamilySearchView> {
     };
   }
 
-  // Convert availability data to a set of day abbreviations
-  Set<String> _getDaysSet(Map<String, Map<String, bool>> availability) {
+  Set<String> _getDaysSet(Map<String, dynamic>? availability) {
     final daysSet = <String>{};
+    if (availability == null || availability.isEmpty) {
+      print('No availability data found'); // Debugging line for empty data
+      return daysSet; // Return an empty set if no availability
+    }
+
+    print('Availability data: $availability'); // Debugging line
+
     availability.forEach((timeOfDay, daysMap) {
-      daysMap.forEach((day, value) {
-        if (value) {
-          // Assuming 'day' is a full day name; adjust this if it's an abbreviation or different format.
-          String dayAbbreviation = day.substring(0, 1).toUpperCase();
-          daysSet.add(dayAbbreviation);
-        }
-      });
+      if (daysMap is Map) {
+        daysMap.forEach((day, value) {
+          if (value == true) {
+            String dayAbbreviation = day.substring(0, 1).toUpperCase();
+            daysSet.add(dayAbbreviation);
+          }
+        });
+      } else {
+        print(
+            'Invalid availability data for $timeOfDay: $daysMap'); // Debugging line
+      }
     });
-    // print('Days set: $daysSet'); // Debugging line
+
+    print('Days set: $daysSet'); // Debugging line
     return daysSet;
   }
 
-  // Create DayButtonFamily widgets from daysSet
+// Function to build the day buttons
   List<Widget> _buildDayButtons(Set<String> daysSet) {
+    print('Building day buttons for: $daysSet'); // Debugging line
     return daysSet.map((dayAbbreviation) {
       return Padding(
         padding: const EdgeInsets.all(4.0),
