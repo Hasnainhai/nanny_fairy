@@ -117,6 +117,7 @@ class _HomeSearchViewState extends State<HomeSearchView> {
                                 familyId: user.uid,
                                 ratings: user.averageRating,
                                 totalRatings: user.totalRatings,
+                                passion: passions,
                               ),
                             ),
                           );

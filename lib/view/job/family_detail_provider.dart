@@ -19,13 +19,15 @@ class FamilyDetailProvider extends StatefulWidget {
       required this.bio,
       required this.familyId,
       this.ratings,
-      this.totalRatings});
+      this.totalRatings,
+      required this.passion});
   final String? profile;
   final String name;
   final String bio;
   final String familyId;
   final double? ratings;
   final int? totalRatings;
+  final List<String> passion;
 
   @override
   State<FamilyDetailProvider> createState() => _FamilyDetailProviderState();
@@ -119,13 +121,16 @@ class _FamilyDetailProviderState extends State<FamilyDetailProvider> {
                         context,
                         MaterialPageRoute(
                           builder: (c) => PaymentView(
-                              profile: widget.profile!,
-                              userName: widget.name,
-                              familyId: widget.familyId,
-                              currentUserName:
-                                  getProviderInfoRepo.providerName!,
-                              currentUserProfile:
-                                  getProviderInfoRepo.providerProfile!),
+                            profile: widget.profile!,
+                            userName: widget.name,
+                            familyId: widget.familyId,
+                            currentUserName: getProviderInfoRepo.providerName!,
+                            currentUserProfile:
+                                getProviderInfoRepo.providerProfile!,
+                            ratings: widget.ratings.toString(),
+                            totalRatings: widget.totalRatings.toString(),
+                            passions: widget.passion,
+                          ),
                         ),
                       );
                     },
@@ -391,6 +396,9 @@ class _FamilyDetailProviderState extends State<FamilyDetailProvider> {
                           familyId: widget.familyId,
                           currentUserProfile:
                               getProviderInfoRepo.providerProfile.toString(),
+                          familyTotalRatings: widget.totalRatings.toString(),
+                          familyRatings: widget.ratings.toString(),
+                          familyPassion: widget.passion,
                         ),
                       ),
                     );

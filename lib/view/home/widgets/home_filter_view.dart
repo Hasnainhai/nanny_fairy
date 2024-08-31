@@ -97,6 +97,7 @@ class _HomeFilterViewState extends State<HomeFilterView> {
                                         familyId: user.uid,
                                         ratings: user.averageRating,
                                         totalRatings: user.totalRatings,
+                                        passion: passions,
                                       ),
                                     ),
                                   );

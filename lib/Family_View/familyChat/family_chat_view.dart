@@ -11,6 +11,7 @@ import 'package:nanny_fairy/utils/utils.dart';
 import 'package:uuid/uuid.dart';
 import '../../res/components/colors.dart';
 import '../../res/components/rounded_button.dart';
+import '../familyRating/family_rating.dart';
 
 class FamilyChatView extends StatefulWidget {
   final String name;
@@ -44,11 +45,11 @@ class FamilyChatView extends StatefulWidget {
 class _FamilyChatViewState extends State<FamilyChatView> {
   final GetFamilyInfoRepo getFamilyInfoRepo = GetFamilyInfoRepo();
   final GetProviderInfoRepo getProviderInfoRepo = GetProviderInfoRepo();
-
   @override
   void initState() {
     getFamilyInfoRepo.fetchCurrentFamilyInfo();
     getProviderInfoRepo.fetchCurrentFamilyInfo();
+    _initializeButtonText();
     super.initState();
   }
 
@@ -57,12 +58,59 @@ class _FamilyChatViewState extends State<FamilyChatView> {
   bool _isLoading = false;
   String _buttonText = 'Hiring';
   bool _isLocked = false;
+  Future<void> _initializeButtonText() async {
+    try {
+      // Fetch the status from the provider's order data
+      String? status = await fetchProviderOrderStatus();
+
+      // Update _buttonText based on the fetched status
+      setState(() {
+        _buttonText = status ?? 'Hiring';
+      });
+    } catch (e) {
+      // Handle errors
+      setState(() {
+        _buttonText = 'Error';
+      });
+      print('Error initializing button text: $e');
+    }
+  }
+
+  Future<String?> fetchProviderOrderStatus() async {
+    String? status;
+
+    try {
+      // Reference to provider's order in the database
+      DatabaseReference providerOrderRef = FirebaseDatabase.instance
+          .ref()
+          .child('Providers')
+          .child(widget.id)
+          .child('Orders')
+          .child(familyId);
+
+      // Fetch the provider's order data
+      DataSnapshot snapshot = await providerOrderRef.get();
+
+      if (snapshot.exists) {
+        Map<dynamic, dynamic> providerData =
+            snapshot.value as Map<dynamic, dynamic>;
+        status = providerData['status'] as String?;
+      }
+    } catch (e) {
+      print('Error fetching provider order status: $e');
+    }
+
+    return status;
+  }
 
   Future<void> hiringProvider() async {
     try {
       setState(() {
         _isLoading = true;
+        _isLocked = true;
       });
+
+      String familyId = FirebaseAuth.instance.currentUser!.uid;
 
       // Reference to provider's order in the database
       DatabaseReference providerOrderRef = FirebaseDatabase.instance
@@ -70,7 +118,7 @@ class _FamilyChatViewState extends State<FamilyChatView> {
           .child('Providers')
           .child(widget.id)
           .child('Orders')
-          .child(uUid);
+          .child(familyId);
 
       // Reference to family's order in the database
       DatabaseReference familyOrderRef = FirebaseDatabase.instance
@@ -78,47 +126,52 @@ class _FamilyChatViewState extends State<FamilyChatView> {
           .child('Family')
           .child(familyId)
           .child('Orders')
-          .child(uUid);
+          .child(widget.id);
 
       // Data for the provider's order
       Map<String, dynamic> providerData = {
         'providerId': widget.id,
-        'orderId': uUid,
+        'orderId': familyId,
         'providerName': widget.name,
         'providerPic': widget.profilePic,
         'providerRatings': widget.providerRatings,
         'providerTotalRatings': widget.providerTotalRatings,
         'education': widget.education,
         'horlyRate': widget.horlyRate,
-        'status': 'Pending', // Set status to Pending
+        'status': 'Pending',
       };
 
       // Data for the family's order
       Map<String, dynamic> familyData = {
         'familyId': familyId,
-        'orderId': uUid,
-        'familyName': getFamilyInfoRepo.familyName,
-        'familyProfile': getFamilyInfoRepo.familyProfile,
+        'orderId': widget.id,
+        'familyName': widget.currentUserName,
+        'familyProfile': widget.currentUserProfilePic,
         'status': 'Pending', // Set status to Pending
       };
 
       // Set data for the provider's order
-      await providerOrderRef.set(providerData);
+      await providerOrderRef.set(familyData);
 
       // Set data for the family's order
-      await familyOrderRef.set(familyData);
+      await familyOrderRef.set(providerData);
 
       setState(() {
+        _buttonText = 'Pending'; // Update button text after creating order
         _isLoading = false;
+        _isLocked = false;
       });
-      Utils.toastMessage('Order successfully created!');
+
+      Utils.toastMessage(
+          'Order successfully created! Waiting for provider response.');
       print('Order successfully created!');
     } catch (e) {
       setState(() {
         _isLoading = false;
+        _isLocked = false;
       });
-      print('Error $e');
-      Utils.flushBarErrorMessage('Error $e', context);
+      print('Error: $e');
+      Utils.flushBarErrorMessage('Error: $e', context);
     }
   }
 
@@ -275,60 +328,89 @@ class _FamilyChatViewState extends State<FamilyChatView> {
                 ),
               ],
             ),
-            InkWell(
-              onTap: _isLocked
-                  ? null
-                  : () {
-                      familyHiringPopup();
-                    },
-              child: Container(
-                height: 26,
-                width: 82,
-                color: AppColor.whiteColor,
-                child: Center(
-                  child: Text(
-                    _buttonText,
-                    style: const TextStyle(
-                      fontSize: 10,
-                      color: AppColor.primaryColor,
-                      fontWeight: FontWeight.w500,
+            _buttonText == "Hiring"
+                ? InkWell(
+                    onTap: _isLocked
+                        ? null
+                        : () {
+                            familyHiringPopup();
+                          },
+                    child: Container(
+                      height: 26,
+                      width: 82,
+                      color: AppColor.whiteColor,
+                      child: Center(
+                        child: Text(
+                          _buttonText,
+                          style: const TextStyle(
+                            fontSize: 10,
+                            color: AppColor.primaryColor,
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
+                      ),
                     ),
-                  ),
-                ),
-              ),
-            ),
-            // InkWell(
-            //   onTap: () {
-            //     final familyId = FirebaseAuth.instance.currentUser!.uid;
-            //     Navigator.push(
-            //         context,
-            //         MaterialPageRoute(
-            //             builder: (context) => FamilyRating(
-            //                   providerId: widget.id,
-            //                   familyId: familyId,
-            //                   familyProfile: widget.currentUserProfilePic,
-            //                   familyName: widget.currentUserName,
-            //                   providerProfile: widget.profilePic,
-            //                   providerName: widget.name,
-            //                 )));
-            //     // Navigator.pushNamed(context, RoutesName.addRating);
-            //   },
-            //   child: Container(
-            //     height: 26,
-            //     width: 82,
-            //     color: AppColor.whiteColor,
-            //     child: const Center(
-            //       child: Text(
-            //         'Write Review',
-            //         style: TextStyle(
-            //           fontSize: 10,
-            //           color: AppColor.primaryColor,
-            //           fontWeight: FontWeight.w500,
-            //         ),
-            //       ),
-            //     ),
-            //   ),
-            // ),
+                  )
+                : _buttonText == "Pending"
+                    ? InkWell(
+                        onTap: _isLocked
+                            ? null
+                            : () {
+                                Utils.toastMessage(
+                                    'Please wait provider response');
+                              },
+                        child: Container(
+                          height: 26,
+                          width: 82,
+                          color: AppColor.whiteColor,
+                          child: Center(
+                            child: Text(
+                              _buttonText,
+                              style: const TextStyle(
+                                fontSize: 10,
+                                color: AppColor.primaryColor,
+                                fontWeight: FontWeight.w500,
+                              ),
+                            ),
+                          ),
+                        ),
+                      )
+                    : _buttonText == "Completed"
+                        ? InkWell(
+                            onTap: () {
+                              final familyId =
+                                  FirebaseAuth.instance.currentUser!.uid;
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => FamilyRating(
+                                    providerId: widget.id,
+                                    familyId: familyId,
+                                    familyProfile: widget.currentUserProfilePic,
+                                    familyName: widget.currentUserName,
+                                    providerProfile: widget.profilePic,
+                                    providerName: widget.name,
+                                  ),
+                                ),
+                              );
+                            },
+                            child: Container(
+                              height: 26,
+                              width: 82,
+                              color: AppColor.whiteColor,
+                              child: const Center(
+                                child: Text(
+                                  'Write Review',
+                                  style: TextStyle(
+                                    fontSize: 10,
+                                    color: AppColor.primaryColor,
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          )
+                        : Text('    '),
           ],
         ),
       ),
