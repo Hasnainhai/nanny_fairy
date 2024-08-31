@@ -48,9 +48,7 @@ class _PaymentViewState extends State<PaymentView> {
   bool secondButton = false;
 
   bool _isLoading = false;
-  @override
-
-// Payment success popup
+  // Payment success popup
   void paymentDonePopup() {
     showDialog(
       context: context,
@@ -92,9 +90,9 @@ class _PaymentViewState extends State<PaymentView> {
                         isSeen: true,
                         currentUserName: widget.currentUserName,
                         currentUserProfile: widget.currentUserProfile,
-                        familyTotalRatings: '',
-                        familyRatings: '',
-                        familyPassion: [],
+                        familyTotalRatings: widget.totalRatings,
+                        familyRatings: widget.ratings,
+                        familyPassion: widget.passions,
                       ),
                     ),
                   );
