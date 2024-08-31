@@ -2,8 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../../../res/components/colors.dart';
 
-class NotificationsWidget extends StatelessWidget {
-  const NotificationsWidget({super.key, required this.providerName, required this.notificationDetail});
+class FamilyNotificationsWidget extends StatelessWidget {
+  const FamilyNotificationsWidget(
+      {super.key,
+      required this.providerName,
+      required this.notificationDetail});
 
   final String providerName;
   final String notificationDetail;
@@ -59,7 +62,7 @@ class NotificationsWidget extends StatelessWidget {
           ),
         ),
         subtitle: Text(
-         notificationDetail,
+          notificationDetail,
           style: GoogleFonts.getFont(
             "Poppins",
             textStyle: const TextStyle(

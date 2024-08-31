@@ -2,17 +2,18 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:nanny_fairy/view/notifications/widgets/notifications_widget.dart';
+import 'package:nanny_fairy/Family_View/familyNotifications/widgets/family_notification_widget.dart';
 import '../../res/components/colors.dart';
 
-class NotificationsView extends StatefulWidget {
-  const NotificationsView({super.key});
+class FamilyNotificationsView extends StatefulWidget {
+  const FamilyNotificationsView({super.key});
 
   @override
-  State<NotificationsView> createState() => _NotificationsViewState();
+  State<FamilyNotificationsView> createState() =>
+      _FamilyNotificationsViewState();
 }
 
-class _NotificationsViewState extends State<NotificationsView> {
+class _FamilyNotificationsViewState extends State<FamilyNotificationsView> {
   final String familyId = FirebaseAuth.instance.currentUser!.uid;
 
   List<Map<String, dynamic>> _orders = [];
@@ -112,7 +113,7 @@ class _NotificationsViewState extends State<NotificationsView> {
 
                     return Padding(
                       padding: const EdgeInsets.only(bottom: 16),
-                      child: NotificationsWidget(
+                      child: FamilyNotificationsWidget(
                         providerName: providerName,
                         notificationDetail: notificationDetail,
                       ),
