@@ -19,6 +19,8 @@ class ProviderSearchModel {
   final IdPics idPics;
   final Reference reference;
   final Time time;
+  final double averageRating;
+  final int totalRatings;
 
   ProviderSearchModel({
     required this.uid,
@@ -39,6 +41,8 @@ class ProviderSearchModel {
     required this.idPics,
     required this.reference,
     required this.time,
+    required this.averageRating,
+    required this.totalRatings,
   });
 
   factory ProviderSearchModel.fromMap(Map<String, dynamic> data, String uid) {
@@ -49,6 +53,11 @@ class ProviderSearchModel {
           Map<String, dynamic>.from(data['IdPics'] ?? {});
       Map<String, dynamic> timeData =
           Map<String, dynamic>.from(data['Time'] ?? {});
+
+      double averageRating = calculateAverageRating(data['reviews'] ?? {});
+      int totalRatings = (data['reviews'] != null)
+          ? Map<String, dynamic>.from(data['reviews']).length
+          : 0;
 
       return ProviderSearchModel(
         uid: uid,
@@ -70,6 +79,8 @@ class ProviderSearchModel {
         idPics: IdPics.fromMap(idPicsData),
         reference: Reference.fromMap(referenceData),
         time: Time.fromMap(timeData),
+        averageRating: averageRating,
+        totalRatings: totalRatings,
       );
     } catch (e) {
       debugPrint('Error processing provider $uid: $e');
@@ -92,6 +103,15 @@ class ProviderSearchModel {
       }
     });
     return parsedAvailability;
+  }
+
+  static double calculateAverageRating(Map<dynamic, dynamic> reviews) {
+    if (reviews.isEmpty) return 0.0;
+    double totalRating = 0.0;
+    reviews.forEach((key, review) {
+      totalRating += review['countRatingStars'] ?? 0.0;
+    });
+    return totalRating / reviews.length;
   }
 }
 

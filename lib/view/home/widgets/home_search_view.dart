@@ -90,7 +90,7 @@ class _HomeSearchViewState extends State<HomeSearchView> {
           ),
           // SizedBox(height: 16.0),
           SizedBox(
-            height: MediaQuery.of(context).size.height / 1.6,
+            height: MediaQuery.of(context).size.height / 1.3,
             child: Consumer<SearchViewModel>(
               builder: (context, viewModel, child) {
                 if (viewModel.isLoading) {
@@ -115,6 +115,8 @@ class _HomeSearchViewState extends State<HomeSearchView> {
                                 bio: user.bio,
                                 profile: user.profile,
                                 familyId: user.uid,
+                                ratings: user.averageRating,
+                                totalRatings: user.totalRatings,
                                 passion: passions,
                               ),
                             ),
@@ -123,6 +125,8 @@ class _HomeSearchViewState extends State<HomeSearchView> {
                         name: "${user.firstName} ${user.lastName}",
                         profilePic: user.profile,
                         passion: passions,
+                        ratings: user.averageRating,
+                        totalRatings: user.totalRatings,
                       );
                     },
                   );

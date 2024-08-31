@@ -139,8 +139,7 @@ class _FamilySearchViewState extends State<FamilySearchView> {
 
                       // Handle availability field
                       Set<String> daysSet = {};
-                      if (user.availability != null &&
-                          user.availability.isNotEmpty) {
+                      if (user.availability.isNotEmpty) {
                         debugPrint(
                             'Availability Map: ${user.availability.toString()}'); // Print availability map
                         daysSet = user.availability.keys.toSet();
@@ -185,6 +184,8 @@ class _FamilySearchViewState extends State<FamilySearchView> {
                                 degree: user.education,
                                 dayButtons: dayButtons,
                                 timeData: timeData,
+                                ratings: user.averageRating,
+                                totalRatings: user.totalRatings,
                               ),
                             ),
                           );
@@ -195,6 +196,8 @@ class _FamilySearchViewState extends State<FamilySearchView> {
                         skill: '',
                         hoursRate: user.hoursrate,
                         dayButtons: dayButtons,
+                        totalRatings: user.totalRatings,
+                        ratings: user.averageRating,
                       );
                     },
                   );

@@ -152,7 +152,7 @@ class _FamilyDefaultViewState extends State<FamilyDefaultView> {
               ),
               const VerticalSpeacing(16.0),
               SizedBox(
-                height: MediaQuery.of(context).size.height * 0.4,
+                height: MediaQuery.of(context).size.height * 1.3,
                 child: FutureBuilder(
                   future: familyhomeController.getPopularJobs(),
                   builder: (context, snapshot) {
