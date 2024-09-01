@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'dart:convert';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
@@ -5,7 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
 class ProviderDistanceRepository extends ChangeNotifier {
-  List<Map<String, dynamic>> _distanceFilteredFamilies = [];
+  final List<Map<String, dynamic>> _distanceFilteredFamilies = [];
   List<Map<String, dynamic>> get distanceFilteredFamilies =>
       _distanceFilteredFamilies;
 
@@ -17,7 +19,6 @@ class ProviderDistanceRepository extends ChangeNotifier {
     final data = snapshot.snapshot.value as Map<dynamic, dynamic>?;
 
     if (data == null) {
-      print("No families data found.");
       return [];
     }
 
@@ -29,7 +30,6 @@ class ProviderDistanceRepository extends ChangeNotifier {
       }
     });
 
-    print("Fetched families data: ${familyList.length} families found.");
     return familyList;
   }
 
@@ -47,14 +47,12 @@ class ProviderDistanceRepository extends ChangeNotifier {
       final address = snapshot.snapshot.value as String?;
 
       if (address != null) {
-        print("Provider address found: $address");
         return address;
       } else {
-        print('No address found for the current provider.');
         return null;
       }
     } catch (e) {
-      print('Error fetching provider address: $e');
+      debugPrint('Error fetching provider address: $e');
       return null;
     }
   }
@@ -91,39 +89,27 @@ class ProviderDistanceRepository extends ChangeNotifier {
         return; // Exit if no provider address is found
       }
 
-      print("Filtering families based on distance...");
-
       // Clear the previous list to avoid adding duplicate entries
       _distanceFilteredFamilies.clear();
 
       for (var family in families) {
         String? familyAddress = family['address'] as String?;
         if (familyAddress == null) {
-          print('Family address is null, skipping this family.');
           continue; // Skip this family if the address is null
         }
 
         double distance = await getDistanceInKm(providerAddress, familyAddress);
 
-        print(
-            "Distance from provider to family '${family['firstName']} ${family['lastName']}': $distance km");
-
         if (distance <= maxDistanceKm) {
           _distanceFilteredFamilies.add(family);
-          print(
-              "Family '${family['firstName']} ${family['lastName']}' added to filtered list.");
         }
       }
       Navigator.of(context).pop();
 
       // Notify listeners that the filtered list has been updated
       notifyListeners();
-
-      print(
-          "Filtering completed. ${_distanceFilteredFamilies.length} families matched the criteria.");
     } catch (e) {
       Navigator.of(context).pop();
-      print("Error in storing the list data: $e");
     }
   }
 
@@ -139,7 +125,6 @@ class ProviderDistanceRepository extends ChangeNotifier {
         '&key=AIzaSyCBUyZVjnq9IGxH9Zu6ACNRIJXtkfZ2iuQ'; // Replace with your actual API key
 
     http.Response response = await http.get(Uri.parse(url));
-    print("Distance API Response: ${response.body}");
 
     if (response.statusCode == 200) {
       var jsonResponse = jsonDecode(response.body);
@@ -153,12 +138,9 @@ class ProviderDistanceRepository extends ChangeNotifier {
             ['value']; // Distance in meters
         return distance / 1000; // Convert to kilometers
       } else {
-        print("Invalid response from Distance Matrix API.");
         throw Exception('No valid data found in the API response.');
       }
     } else {
-      print(
-          "Failed to fetch data from Distance Matrix API: ${response.statusCode}");
       throw Exception('Failed to fetch data: ${response.statusCode}');
     }
   }
