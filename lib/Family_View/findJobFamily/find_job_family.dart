@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:nanny_fairy/Family_View/findJobFamily/widgets/find_job_family_widget.dart';
-import 'package:nanny_fairy/view/job/widgets/find_job.dart';
 import '../../res/components/colors.dart';
 import '../../res/components/widgets/vertical_spacing.dart';
 

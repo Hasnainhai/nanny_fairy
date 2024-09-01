@@ -200,8 +200,7 @@ class _JobSearchBarState extends State<JobSearchbar> {
 
                               try {
                                 await distanceRepo.filterProvidersByDistance(
-                                  double.parse(selectedKM),
-                                );
+                                    double.parse(selectedKM), context);
                                 uiState
                                     .switchToJobType(JobUIType.DistanceSection);
                               } catch (e) {

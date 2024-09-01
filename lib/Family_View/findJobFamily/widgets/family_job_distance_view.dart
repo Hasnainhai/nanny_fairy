@@ -1,12 +1,12 @@
+// ignore_for_file: unnecessary_null_comparison
+
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:nanny_fairy/FamilyController/family_home_controller.dart';
 import 'package:nanny_fairy/Family_View/findJobFamily/provider_detail.dart';
 import 'package:nanny_fairy/Family_View/homeFamily/widgets/bookCart_home_widget.dart';
 import 'package:nanny_fairy/Repository/family_home_ui_repository.dart';
 import 'package:nanny_fairy/ViewModel/family_distance_view_model.dart';
 import 'package:nanny_fairy/res/components/colors.dart';
-import 'package:nanny_fairy/res/components/widgets/family_home_ui_enums.dart';
 import 'package:nanny_fairy/res/components/widgets/vertical_spacing.dart';
 import 'package:provider/provider.dart';
 
@@ -99,11 +99,6 @@ class _FamilyJobDistanceFilterViewState
                                   .distanceFilteredProviders
                                   .map((provider) {
                                 try {
-                                  List<String> passions =
-                                      (provider['FamilyPassions']
-                                                  as List<dynamic>?)
-                                              ?.cast<String>() ??
-                                          [];
                                   Map<String, String> ratingsData =
                                       getRatingsAndTotalRatings(provider);
                                   Map<dynamic, dynamic> reviews =
@@ -155,7 +150,6 @@ class _FamilyJobDistanceFilterViewState
                                   );
                                 } catch (e) {
                                   // Handle potential errors with data mapping
-                                  print('Error processing provider data: $e');
                                   return const SizedBox(); // Return an empty widget on error
                                 }
                               }).toList(),

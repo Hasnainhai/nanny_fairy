@@ -204,8 +204,7 @@ class _FamilySearchBarProviderState extends State<FamilySearchBarProvider> {
                             try {
                               // Call the method to filter providers by distance
                               await distanceViewModel.filterProvidersByDistance(
-                                double.parse(selectedKM),
-                              );
+                                  double.parse(selectedKM), context);
 
                               uiState.switchToType(
                                 FamilyHomeUiEnums.DistanceSection,

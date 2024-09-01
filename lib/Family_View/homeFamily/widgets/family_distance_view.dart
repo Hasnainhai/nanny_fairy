@@ -1,13 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:nanny_fairy/FamilyController/family_home_controller.dart';
 import 'package:nanny_fairy/Family_View/findJobFamily/provider_detail.dart';
 import 'package:nanny_fairy/Family_View/homeFamily/widgets/bookCart_home_widget.dart';
 import 'package:nanny_fairy/Repository/family_home_ui_repository.dart';
 import 'package:nanny_fairy/ViewModel/family_distance_view_model.dart';
 import 'package:nanny_fairy/res/components/colors.dart';
 import 'package:nanny_fairy/res/components/widgets/family_home_ui_enums.dart';
-import 'package:nanny_fairy/res/components/widgets/shimmer_effect.dart';
 import 'package:nanny_fairy/res/components/widgets/vertical_spacing.dart';
 import 'package:provider/provider.dart';
 

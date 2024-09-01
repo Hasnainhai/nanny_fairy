@@ -20,10 +20,6 @@ class _ProviderJobDistanceSectionState
     extends State<ProviderJobDistanceSection> {
   @override
   Widget build(BuildContext context) {
-    // Accessing the ViewModel
-    // final providerDistanceViewModel =
-    //     Provider.of<ProviderDistanceViewModel>(context, listen: false);
-
     return Consumer2<HomeUiSwithchRepository, ProviderDistanceViewModel>(
       builder: (context, uistate, providerDistanceViewModel, child) {
         return Column(

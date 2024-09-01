@@ -323,52 +323,6 @@ class _FamilyJobFilterPopupState extends State<FamilyJobFilterPopup> {
                       ),
                       const VerticalSpeacing(16),
                       const Text(
-                        "Select Radius",
-                        style: TextStyle(
-                          fontFamily: 'CenturyGothic',
-                          fontSize: 18,
-                          fontWeight: FontWeight.w400,
-                          color: AppColor.blackColor,
-                        ),
-                      ),
-                      const VerticalSpeacing(20),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          FilterButton(
-                            label: "2KM",
-                            isSelected: button10,
-                            onTap: () {
-                              setState(() {
-                                button10 = !button10;
-                              });
-                            },
-                          ),
-                          FilterButton(
-                            label: "4KM",
-                            isSelected: button8,
-                            onTap: () {
-                              setState(() {
-                                button8 = !button8;
-                              });
-                            },
-                          ),
-                          FilterButton(
-                            label: "8KM",
-                            isSelected: button9,
-                            onTap: () {
-                              setState(() {
-                                button9 = !button9;
-                              });
-                            },
-                          ),
-                        ],
-                      ),
-                      const VerticalSpeacing(
-                        30,
-                      ),
-                      const VerticalSpeacing(16),
-                      const Text(
                         "Availability",
                         style: TextStyle(
                           fontFamily: 'CenturyGothic',
@@ -377,7 +331,7 @@ class _FamilyJobFilterPopupState extends State<FamilyJobFilterPopup> {
                           color: AppColor.blackColor,
                         ),
                       ),
-                      const VerticalSpeacing(20),
+                      const VerticalSpeacing(16),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
