@@ -71,10 +71,21 @@ class _FamilySearchViewState extends State<FamilySearchView> {
                     itemCount: viewModel.users.length,
                     itemBuilder: (context, index) {
                       final user = viewModel.users[index];
+                      Map<String, Map<String, bool>> testAvailability = {
+                        "Morning": {
+                          "Monday": true,
+                          "Tuesday": true,
+                          "Friday": true,
+                          "Sunday": false,
+                        },
+                        "Afternoon": {
+                          "Wednesday": true,
+                          "Thursday": false,
+                        }
+                      };
+                      Set<String> testDaysSet = _getDaysSet(testAvailability);
 
-                      final daysSet = _getDaysSet(user.availability);
-
-                      final dayButtons = _buildDayButtons(daysSet);
+                      final dayButtons = _buildDayButtons(testDaysSet);
 
                       return BookingCartWidgetHome(
                         primaryButtonColor: AppColor.primaryColor,

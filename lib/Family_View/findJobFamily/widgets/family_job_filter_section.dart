@@ -74,6 +74,21 @@ class _FamilyJobFilterSectionState extends State<FamilyJobFilterSection> {
                     itemCount: viewModel.filteredProviders.length,
                     itemBuilder: (context, index) {
                       final user = viewModel.filteredProviders[index];
+                      Map<String, Map<String, bool>> testAvailability = {
+                        "Morning": {
+                          "Monday": true,
+                          "Tuesday": true,
+                          "Friday": true,
+                          "Sunday": false,
+                        },
+                        "Afternoon": {
+                          "Wednesday": true,
+                          "Thursday": false,
+                        }
+                      };
+                      Set<String> testDaysSet = _getDaysSet(testAvailability);
+
+                      final dayButtons = _buildDayButtons(testDaysSet);
 
                       // Handle time field
                       Map<String, String> timeData = {};
@@ -107,47 +122,23 @@ class _FamilyJobFilterSectionState extends State<FamilyJobFilterSection> {
                         };
                       }
 
-                      // Create day buttons based on the available days
-                      Set<String> daysSet =
-                          {}; // Populate this set based on your data
-                      List<Widget> dayButtons = daysSet.map((dayAbbreviation) {
-                        return Padding(
-                          padding: const EdgeInsets.all(4.0),
-                          child: DayButtonFamily(day: dayAbbreviation),
-                        );
-                      }).toList();
-
                       return BookingCartWidgetHome(
                         primaryButtonColor: AppColor.primaryColor,
                         primaryButtonTxt: 'View',
-                        ontapView: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (c) => ProviderDetails(
-                                familyId: user.uid,
-                                profile: user.profile,
-                                name: "${user.firstName} ${user.lastName}",
-                                bio: user.bio,
-                                horseRate: user.hoursrate,
-                                experience: user.reference.experience,
-                                degree: user.education,
-                                dayButtons: dayButtons,
-                                timeData: timeData,
-                                ratings: user.averageRating,
-                                totalRatings: user.totalRatings,
-                              ),
-                            ),
-                          );
-                        },
+                        ontapView: () => _navigateToProviderDetails(
+                          context,
+                          user,
+                          dayButtons,
+                          _getTimeData(user.time),
+                        ),
                         profile: user.profile,
                         name: "${user.firstName} ${user.lastName}",
                         degree: user.education,
                         skill: '',
                         hoursRate: user.hoursrate,
                         dayButtons: dayButtons,
-                        ratings: user.averageRating,
                         totalRatings: user.totalRatings,
+                        ratings: user.averageRating,
                       );
                     },
                   );
@@ -156,6 +147,100 @@ class _FamilyJobFilterSectionState extends State<FamilyJobFilterSection> {
             ),
           ),
         ],
+      ),
+    );
+  }
+
+  Map<String, String> _getTimeData(dynamic time) {
+    if (time is Map) {
+      final timeMap = time as Map<String, dynamic>;
+      return timeMap
+          .map((key, value) => MapEntry(key.toString(), value.toString()));
+    } else if (time is Time) {
+      final timeObject = time as Time;
+      return {
+        "MorningStart": timeObject.morningStart,
+        "MorningEnd": timeObject.morningEnd,
+        "AfternoonStart": timeObject.afternoonStart,
+        "AfternoonEnd": timeObject.afternoonEnd,
+        "EveningStart": timeObject.eveningStart,
+        "EveningEnd": timeObject.eveningEnd,
+      };
+    }
+    return _defaultTimeData();
+  }
+
+  Map<String, String> _defaultTimeData() {
+    return {
+      "MorningStart": "N/A",
+      "MorningEnd": "N/A",
+      "AfternoonStart": "N/A",
+      "AfternoonEnd": "N/A",
+      "EveningStart": "N/A",
+      "EveningEnd": "N/A",
+    };
+  }
+
+  Set<String> _getDaysSet(Map<String, dynamic>? availability) {
+    final daysSet = <String>{};
+    if (availability == null || availability.isEmpty) {
+      print('No availability data found'); // Debugging line for empty data
+      return daysSet; // Return an empty set if no availability
+    }
+
+    print('Availability data: $availability'); // Debugging line
+
+    availability.forEach((timeOfDay, daysMap) {
+      if (daysMap is Map) {
+        daysMap.forEach((day, value) {
+          if (value == true) {
+            String dayAbbreviation = day.substring(0, 1).toUpperCase();
+            daysSet.add(dayAbbreviation);
+          }
+        });
+      } else {
+        print(
+            'Invalid availability data for $timeOfDay: $daysMap'); // Debugging line
+      }
+    });
+
+    print('Days set: $daysSet'); // Debugging line
+    return daysSet;
+  }
+
+// Function to build the day buttons
+  List<Widget> _buildDayButtons(Set<String> daysSet) {
+    print('Building day buttons for: $daysSet'); // Debugging line
+    return daysSet.map((dayAbbreviation) {
+      return Padding(
+        padding: const EdgeInsets.all(4.0),
+        child: DayButtonFamily(day: dayAbbreviation),
+      );
+    }).toList();
+  }
+
+  void _navigateToProviderDetails(
+    BuildContext context,
+    ProviderSearchModel user,
+    List<Widget> dayButtons,
+    Map<String, String> timeData,
+  ) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (c) => ProviderDetails(
+          familyId: user.uid,
+          profile: user.profile,
+          name: "${user.firstName} ${user.lastName}",
+          bio: user.bio,
+          horseRate: user.hoursrate,
+          experience: user.reference.experience,
+          degree: user.education,
+          dayButtons: dayButtons,
+          timeData: timeData,
+          ratings: user.averageRating,
+          totalRatings: user.totalRatings,
+        ),
       ),
     );
   }

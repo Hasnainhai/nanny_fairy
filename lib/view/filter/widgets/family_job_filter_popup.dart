@@ -37,6 +37,7 @@ class _FamilyJobFilterPopupState extends State<FamilyJobFilterPopup> {
   RangeValues _values = const RangeValues(5, 1000);
   List<String> selectedPassions = [];
   List<String> selecteDays = [];
+  double minRating = 4;
 // Example conversion logic
   Map<String, Map<String, bool>> convertDaysToAvailability(List<String> days) {
     try {
@@ -520,7 +521,11 @@ class _FamilyJobFilterPopupState extends State<FamilyJobFilterPopup> {
                                 Icons.star_rate_rounded,
                                 color: Colors.amber,
                               ),
-                          onRatingUpdate: (rating) {}),
+                          onRatingUpdate: (rating) {
+                            setState(() {
+                              minRating = rating;
+                            });
+                          }),
                       const VerticalSpeacing(
                         50,
                       ),
@@ -547,6 +552,7 @@ class _FamilyJobFilterPopupState extends State<FamilyJobFilterPopup> {
                                   maxRate: _values.end,
                                   selectedPassions: selectedPassions,
                                   selectedAvailability: availabilityMap,
+                                  minRating: minRating,
                                 );
                                 debugPrint(
                                     "check the function:${viewModel.filteredProviders}");
