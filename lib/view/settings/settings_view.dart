@@ -163,7 +163,7 @@ class _SettingsViewState extends State<SettingsView> {
                 boxShadow: [
                   BoxShadow(
                     color: const Color(0xff1B81BC)
-                        .withOpacity(0.1), // Drop shadow color with 4% opacity
+                        .withOpacity(0.1), // Drop shadow color with 10% opacity
                     blurRadius: 2,
                     offset: const Offset(1, 2),
                     spreadRadius: 1,
@@ -173,75 +173,78 @@ class _SettingsViewState extends State<SettingsView> {
               child: Padding(
                 padding:
                     const EdgeInsets.only(left: 10.0, right: 10.0, top: 10.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const VerticalSpeacing(16.0),
-                    Text(
-                      'email address',
-                      style: GoogleFonts.getFont(
-                        "Poppins",
-                        textStyle: const TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.w400,
-                          color: AppColor.blackColor,
+                child: SingleChildScrollView(
+                  // Added SingleChildScrollView here
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const VerticalSpeacing(16.0),
+                      Text(
+                        'email address',
+                        style: GoogleFonts.getFont(
+                          "Poppins",
+                          textStyle: const TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.w400,
+                            color: AppColor.blackColor,
+                          ),
                         ),
                       ),
-                    ),
-                    FutureBuilder<Map<dynamic, dynamic>>(
-                        future: getProviderInfo.getFamilyInfo(),
-                        builder: (context, snapshot) {
-                          if (snapshot.connectionState ==
-                              ConnectionState.waiting) {
-                            return const Center(
-                              child: CircularProgressIndicator(),
-                            );
-                          } else if (snapshot.hasError) {
-                            return Center(
-                                child: Text('Error: ${snapshot.error}'));
-                          } else if (snapshot.hasData) {
-                            Map<dynamic, dynamic> provider =
-                                snapshot.data as Map<dynamic, dynamic>;
-                            return Text(
-                              provider['email'],
-                              style: GoogleFonts.getFont(
-                                "Poppins",
-                                textStyle: const TextStyle(
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.w400,
-                                  color: AppColor.blackColor,
+                      FutureBuilder<Map<dynamic, dynamic>>(
+                          future: getProviderInfo.getFamilyInfo(),
+                          builder: (context, snapshot) {
+                            if (snapshot.connectionState ==
+                                ConnectionState.waiting) {
+                              return const Center(
+                                child: CircularProgressIndicator(),
+                              );
+                            } else if (snapshot.hasError) {
+                              return Center(
+                                  child: Text('Error: ${snapshot.error}'));
+                            } else if (snapshot.hasData) {
+                              Map<dynamic, dynamic> provider =
+                                  snapshot.data as Map<dynamic, dynamic>;
+                              return Text(
+                                provider['email'],
+                                style: GoogleFonts.getFont(
+                                  "Poppins",
+                                  textStyle: const TextStyle(
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.w400,
+                                    color: AppColor.blackColor,
+                                  ),
                                 ),
-                              ),
+                              );
+                            }
+                            return const Center(
+                              child: Text('No email'),
                             );
-                          }
-                          return const Center(
-                            child: Text('No email'),
-                          );
-                        }),
-                    const VerticalSpeacing(16.0),
-                    Text(
-                      'watchwood',
-                      style: GoogleFonts.getFont(
-                        "Poppins",
-                        textStyle: const TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.w400,
-                          color: AppColor.blackColor,
+                          }),
+                      const VerticalSpeacing(16.0),
+                      Text(
+                        'watchwood',
+                        style: GoogleFonts.getFont(
+                          "Poppins",
+                          textStyle: const TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.w400,
+                            color: AppColor.blackColor,
+                          ),
                         ),
                       ),
-                    ),
-                    Text(
-                      '***********',
-                      style: GoogleFonts.getFont(
-                        "Poppins",
-                        textStyle: const TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.w400,
-                          color: AppColor.blackColor,
+                      Text(
+                        '***********',
+                        style: GoogleFonts.getFont(
+                          "Poppins",
+                          textStyle: const TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.w400,
+                            color: AppColor.blackColor,
+                          ),
                         ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ),
             ),
@@ -250,6 +253,4 @@ class _SettingsViewState extends State<SettingsView> {
       ),
     );
   }
-
 }
-
