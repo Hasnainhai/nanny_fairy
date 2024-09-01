@@ -60,13 +60,34 @@ class ProviderDistanceRepository extends ChangeNotifier {
   }
 
   // Function to filter families based on distance from the current provider address
-  Future<void> filterFamiliesByDistance(double maxDistanceKm) async {
+  Future<void> filterFamiliesByDistance(
+      double maxDistanceKm, BuildContext context) async {
+    showDialog(
+      context: context,
+      barrierDismissible:
+          false, // Prevents dialog from being dismissed by tapping outside
+      builder: (BuildContext context) {
+        return const Dialog(
+          child: Padding(
+            padding: EdgeInsets.all(16.0),
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                CircularProgressIndicator(),
+                SizedBox(width: 16),
+                Text("Getting Families..."),
+              ],
+            ),
+          ),
+        );
+      },
+    );
     List<Map<String, dynamic>> families = await fetchFamiliesData();
     String? providerAddress = await getProviderAddress();
 
     try {
       if (providerAddress == null) {
-        print("Provider address is null, cannot filter families by distance.");
+        Navigator.of(context).pop();
         return; // Exit if no provider address is found
       }
 
@@ -93,6 +114,7 @@ class ProviderDistanceRepository extends ChangeNotifier {
               "Family '${family['firstName']} ${family['lastName']}' added to filtered list.");
         }
       }
+      Navigator.of(context).pop();
 
       // Notify listeners that the filtered list has been updated
       notifyListeners();
@@ -100,6 +122,7 @@ class ProviderDistanceRepository extends ChangeNotifier {
       print(
           "Filtering completed. ${_distanceFilteredFamilies.length} families matched the criteria.");
     } catch (e) {
+      Navigator.of(context).pop();
       print("Error in storing the list data: $e");
     }
   }

@@ -205,6 +205,7 @@ class _FamilySearchBarState extends State<FamilySearchBar> {
                               // Call the method to filter providers by distance
                               await distanceViewModel.filterProvidersByDistance(
                                 double.parse(selectedKM),
+                                context,
                               );
 
                               uiState.switchToJobType(

@@ -11,10 +11,12 @@ class ProviderDistanceViewModel extends ChangeNotifier {
   bool get isLoading => _isLoading;
   List<Map<String, dynamic>> get distanceFilteredFamilies =>
       _providerDistanceRepository.distanceFilteredFamilies;
-  Future<void> filterFamiliesByDistance(double maxDistanceKm) async {
+  Future<void> filterFamiliesByDistance(
+      double maxDistanceKm, BuildContext context) async {
     _setLoading(true);
     try {
-      await _providerDistanceRepository.filterFamiliesByDistance(maxDistanceKm);
+      await _providerDistanceRepository.filterFamiliesByDistance(
+          maxDistanceKm, context);
       notifyListeners();
     } finally {
       _setLoading(false);

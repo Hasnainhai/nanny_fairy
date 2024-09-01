@@ -92,31 +92,64 @@ class FamilyDistanceRepository extends ChangeNotifier {
   }
 
   // Function to filter providers based on distance from the current family address
-  Future<void> filterProvidersByDistance(double maxDistanceKm) async {
-    List<Map<String, dynamic>> providers = await fetchProvidersData();
-    String? familyAddress = await getFamilyAddress();
+  Future<void> filterProvidersByDistance(
+      BuildContext context, double maxDistanceKm) async {
+    showDialog(
+      context: context,
+      barrierDismissible:
+          false, // Prevents dialog from being dismissed by tapping outside
+      builder: (BuildContext context) {
+        return const Dialog(
+          child: Padding(
+            padding: EdgeInsets.all(16.0),
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                CircularProgressIndicator(),
+                SizedBox(width: 16),
+                Text("Getting Providers..."),
+              ],
+            ),
+          ),
+        );
+      },
+    );
+    try {
+      List<Map<String, dynamic>> providers = await fetchProvidersData();
+      String? familyAddress = await getFamilyAddress();
 
-    if (familyAddress == null) {
-      return; // Exit if no family address is found
-    }
-
-    _distanceFilterProviders.clear(); // Clear previous results
-
-    for (var provider in providers) {
-      String? providerAddress = provider['address'] as String?;
-      if (providerAddress == null) {
-        print('Provider address is null, skipping this provider.');
-        continue;
+      if (familyAddress == null) {
+        Navigator.of(context).pop();
+        return; // Exit if no family address is found
       }
 
-      double distance = await getDistanceInKm(familyAddress, providerAddress);
-      debugPrint(
-          " This Provider ${provider['firstName'] + provider['lastName']} has been added ");
-      if (distance <= maxDistanceKm) {
-        _distanceFilterProviders.add(provider);
-      }
-    }
+      _distanceFilterProviders.clear(); // Clear previous results
 
-    notifyListeners(); // Notify listeners that the data has been updated
+      for (var provider in providers) {
+        String? providerAddress = provider['address'] as String?;
+        if (providerAddress == null) {
+          print('Provider address is null, skipping this provider.');
+          continue;
+        }
+
+        double distance = await getDistanceInKm(familyAddress, providerAddress);
+        debugPrint(
+            " This Provider ${provider['firstName'] + provider['lastName']} has been added ");
+        if (distance <= maxDistanceKm) {
+          _distanceFilterProviders.add(provider);
+        }
+      }
+
+      notifyListeners(); // Notify listeners that the data has been updated
+    } finally {
+      Navigator.of(context)
+          .pop(); // Ensure the loading dialog is hidden once processing is done
+    }
+  }
+
+  void _showLoadingDialog(BuildContext context) {}
+
+  void _hideLoadingDialog(BuildContext context) {
+    Navigator.of(context).pop(); // Closes the loading dialog
   }
 }

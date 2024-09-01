@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:nanny_fairy/Repository/home_ui_repostory.dart';
-import 'package:nanny_fairy/Repository/provider_distance_repository.dart';
 import 'package:nanny_fairy/ViewModel/provider_distance_view_model.dart';
 import 'package:nanny_fairy/ViewModel/search_view_model.dart';
 import 'package:nanny_fairy/res/components/widgets/ui_enums.dart';
@@ -199,7 +198,7 @@ class _SearchBarProviderState extends State<SearchBarProvider> {
 
                               try {
                                 await distanceRepo.filterFamiliesByDistance(
-                                    double.parse(selectedKM));
+                                    double.parse(selectedKM), context);
                                 uiState.switchToType(UIType.DistanceSection);
                               } catch (e) {
                                 ScaffoldMessenger.of(context).showSnackBar(
