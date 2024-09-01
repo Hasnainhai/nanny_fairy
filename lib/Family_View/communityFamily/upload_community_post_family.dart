@@ -74,6 +74,8 @@ class _UploadComunityPostFamilyState extends State<UploadComunityPostFamily> {
     super.initState();
   }
 
+  final bool status = false;
+
   @override
   Widget build(BuildContext context) {
     final communityContrillerFamily =
@@ -239,6 +241,7 @@ class _UploadComunityPostFamilyState extends State<UploadComunityPostFamily> {
                             contentController.text,
                             getFamilyInfoRepo.familyProfile!,
                             getFamilyInfoRepo.familyName!,
+                            status,
                           );
                         } else {
                           Utils.flushBarErrorMessage(
