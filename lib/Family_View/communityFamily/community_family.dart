@@ -110,7 +110,9 @@ class _CommunityViewFamilyState extends State<CommunityViewFamily> {
                       const Center(child: Text('No posts found'))
                     else
                       Column(
-                        children: familyCommunityController.posts.map((post) {
+                        children: familyCommunityController.posts
+                            .where((post) => post['status'] == true)
+                            .map((post) {
                           return FutureBuilder<int>(
                             future: familyCommunityController
                                 .fetchTotalComments(post['postId']),
