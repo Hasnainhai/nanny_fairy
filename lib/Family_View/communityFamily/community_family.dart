@@ -7,7 +7,6 @@ import 'package:nanny_fairy/Family_View/communityFamily/widgets/community_card_f
 import 'package:nanny_fairy/res/components/widgets/vertical_spacing.dart';
 import 'package:nanny_fairy/utils/routes/routes_name.dart';
 import 'package:provider/provider.dart';
-import '../../FamilyController/family_home_controller.dart';
 import '../../res/components/colors.dart';
 
 class CommunityViewFamily extends StatefulWidget {
