@@ -115,7 +115,7 @@ class _BookedViewState extends State<BookedView> {
                         name: order['familyName'] ?? '',
                         passion: passion,
                         profilePic: order['familyProfile'] ?? '',
-                        ratings: order['familyRatings'] ?? '',
+                        ratings: order['FamilyRatings'] ?? '',
                         totalRatings: order['familyTotalRatings'] ?? '',
                       );
                     },

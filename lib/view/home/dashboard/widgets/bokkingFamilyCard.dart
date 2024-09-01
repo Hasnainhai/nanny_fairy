@@ -134,7 +134,7 @@ class _BookingFamilyCardState extends State<BookingFamilyCard> {
                           ),
                         ),
                         Text(
-                          '⭐${widget.ratings}${widget.totalRatings} Reviews)',
+                          '⭐${widget.ratings}(${widget.totalRatings} Reviews)',
                           style: GoogleFonts.getFont(
                             "Poppins",
                             textStyle: const TextStyle(
