@@ -15,6 +15,7 @@ class FamilyFilterRepository extends ChangeNotifier {
   Future<void> filterProviders({
     required double minRate,
     required double maxRate,
+    required double minRating,
     required List<String> selectedPassions,
     required Map<String, Map<String, bool>> selectedAvailability,
   }) async {
@@ -33,73 +34,106 @@ class FamilyFilterRepository extends ChangeNotifier {
       }
       debugPrint("All Providers: ${allProviders.length}");
 
-      List<ProviderSearchModel> initialFilteredProviders = [];
-
       // Filter by hourly rate
-      for (var provider in allProviders) {
+      _filteredProviders = allProviders.where((provider) {
         double rate = double.tryParse(provider.hoursrate) ?? 0.0;
-        if (rate >= minRate && rate <= maxRate) {
-          initialFilteredProviders.add(provider);
+        return rate >= minRate && rate <= maxRate;
+      }).toList();
+      debugPrint("After rate filter: ${_filteredProviders.length}");
+
+      // Filter by average rating
+      if (minRating != null) {
+        List<ProviderSearchModel> ratingFilteredProviders =
+            _filteredProviders.where((provider) {
+          return provider.averageRating >= minRating;
+        }).toList();
+
+        if (ratingFilteredProviders.isNotEmpty) {
+          _filteredProviders = ratingFilteredProviders;
         }
-      }
-      debugPrint("After rate filter: ${initialFilteredProviders.length}");
-
-      // Further filter by passions
-      List<ProviderSearchModel> passionFilteredProviders = [];
-      for (var provider in initialFilteredProviders) {
-        if (selectedPassions.isEmpty ||
-            provider.passions.any((passion) => selectedPassions
-                .map((e) => e.toLowerCase())
-                .contains(passion.toLowerCase()))) {
-          passionFilteredProviders.add(provider);
-        }
-      }
-      debugPrint("After passions filter: ${passionFilteredProviders.length}");
-
-      // Final filter by availability
-      List<ProviderSearchModel> availabilityFilteredProviders = [];
-      for (var provider in passionFilteredProviders) {
-        bool matchesAvailability = true;
-
-        if (selectedAvailability.isNotEmpty) {
-          for (var entry in selectedAvailability.entries) {
-            String timeOfDay = entry.key;
-            debugPrint("Checking availability for $timeOfDay");
-
-            bool hasMatchingAvailability =
-                provider.availability[timeOfDay]?.entries.any((dayEntry) {
-                      String day = dayEntry.key;
-                      bool isAvailable = dayEntry.value;
-                      bool selectedAvailable = entry.value[day] ?? false;
-                      debugPrint(
-                          "Provider availability on $day during $timeOfDay: $isAvailable, selected availability: $selectedAvailable");
-                      return selectedAvailable == isAvailable;
-                    }) ??
-                    false;
-
-            if (!hasMatchingAvailability) {
-              matchesAvailability = false;
-              break;
-            }
-          }
-        }
-
-        if (matchesAvailability) {
-          availabilityFilteredProviders.add(provider);
-        }
+        debugPrint("After rating filter: ${_filteredProviders.length}");
       }
 
-      // Use availability filter result or fallback to passions filter result
-      _filteredProviders = availabilityFilteredProviders.isEmpty
-          ? passionFilteredProviders
-          : availabilityFilteredProviders;
+      // Filter by passions
+      if (selectedPassions.isNotEmpty) {
+        List<ProviderSearchModel> passionFilteredProviders =
+            _filteredProviders.where((provider) {
+          return selectedPassions.every((selectedPassion) {
+            return provider.passions
+                .map((p) => p.toLowerCase())
+                .contains(selectedPassion.toLowerCase());
+          });
+        }).toList();
 
-      debugPrint(
-          "After availability filter: ${availabilityFilteredProviders.length}");
+        if (passionFilteredProviders.isNotEmpty) {
+          _filteredProviders = passionFilteredProviders;
+        }
+        debugPrint("After passions filter: ${_filteredProviders.length}");
+      }
+
+      if (selectedAvailability.isNotEmpty) {
+        List<ProviderSearchModel> availabilityFilteredProviders =
+            _filteredProviders.where((provider) {
+          return selectedAvailability.entries.every((timeOfDayEntry) {
+            String timeOfDay = timeOfDayEntry.key;
+            Map<String, bool> days = timeOfDayEntry.value;
+
+            return days.entries.every((dayEntry) {
+              String day = dayEntry.key;
+              bool isSelectedAvailable = dayEntry.value;
+
+              // Check if the provider has the same availability for the given day and timeOfDay
+              bool providerAvailable =
+                  provider.availability[timeOfDay]?[day] ?? false;
+              return providerAvailable == isSelectedAvailable;
+            });
+          });
+        }).toList();
+
+        if (availabilityFilteredProviders.isNotEmpty) {
+          _filteredProviders = availabilityFilteredProviders;
+        }
+        debugPrint("After availability filter: ${_filteredProviders.length}");
+      }
+
+      // If no providers matched, fallback to the most relaxed filter
       if (_filteredProviders.isEmpty) {
-        debugPrint(
-            "No providers match the availability filter, showing only rate and passion filtered results");
+        _filteredProviders = allProviders.where((provider) {
+          return (minRate != null &&
+                  double.tryParse(provider.hoursrate) != null &&
+                  double.parse(provider.hoursrate) >= minRate) ||
+              (minRating != null && provider.averageRating >= minRating) ||
+              (selectedPassions.isNotEmpty &&
+                  selectedPassions.every((selectedPassion) {
+                    return provider.passions
+                        .map((p) => p.toLowerCase())
+                        .contains(selectedPassion.toLowerCase());
+                  })) ||
+              (selectedAvailability.isNotEmpty &&
+                  selectedAvailability.entries.every((timeOfDayEntry) {
+                    String timeOfDay = timeOfDayEntry.key;
+                    Map<String, bool> days = timeOfDayEntry.value;
+
+                    return days.entries.every((dayEntry) {
+                      String day = dayEntry.key;
+                      bool isSelectedAvailable = dayEntry.value;
+
+                      // Check if the provider has the same availability for the given day and timeOfDay
+                      bool providerAvailable = provider
+                              .availability[timeOfDay]?.entries
+                              .any((providerDayEntry) {
+                            return providerDayEntry.key == day &&
+                                providerDayEntry.value == isSelectedAvailable;
+                          }) ??
+                          false;
+
+                      return providerAvailable;
+                    });
+                  }));
+        }).toList();
       }
+
+      debugPrint("Final filtered providers: ${_filteredProviders.length}");
     } catch (e) {
       debugPrint("Error filtering providers: $e");
     }
