@@ -20,14 +20,14 @@ class CommunityViewViewModel extends ChangeNotifier {
     String content,
     String providerName,
     String providerProfile,
-
+    bool status,
 
     // String postId,
   ) async {
     _setLoading(true);
     try {
       await _communityRepoProvider.uploadCommunityPost(
-          context, post, title,content, providerName,providerProfile, );
+          context, post, title, content, providerName, providerProfile, status);
     } catch (e) {
       debugPrint('Error uploading Post: ${e.toString()}');
     } finally {
