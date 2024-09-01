@@ -71,6 +71,7 @@ class _UploadComunityPostState extends State<UploadComunityPost> {
     getProviderInfoRepo.fetchCurrentFamilyInfo();
   }
 
+  final bool status = false;
   @override
   Widget build(BuildContext context) {
     final communityController = Provider.of<CommunityViewViewModel>(context);
@@ -234,7 +235,8 @@ class _UploadComunityPostState extends State<UploadComunityPost> {
                               titleController.text,
                               contentController.text,
                               getProviderInfoRepo.providerName!,
-                              getProviderInfoRepo.providerProfile!);
+                              getProviderInfoRepo.providerProfile!,
+                              status);
                         } else {
                           Utils.flushBarErrorMessage(
                               "Please upload post", context);
