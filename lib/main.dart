@@ -58,91 +58,69 @@ class MyApp extends StatelessWidget {
     return MultiProvider(
         providers: [
           ChangeNotifierProvider(
-            create: (_) => FamilyDistanceViewModel(FamilyDistanceRepository()),
-          ),
+              create: (_) =>
+                  FamilyDistanceViewModel(FamilyDistanceRepository())),
           ChangeNotifierProvider(
-            create: (_) =>
-                ProviderDistanceViewModel(ProviderDistanceRepository()),
-          ),
-          Provider<AuthRepository>(
-            create: (_) => AuthRepository(),
-          ),
-          Provider<AuthRepositoryFamily>(
-            create: (_) => AuthRepositoryFamily(),
-          ),
+              create: (_) =>
+                  ProviderDistanceViewModel(ProviderDistanceRepository())),
+          Provider<AuthRepository>(create: (_) => AuthRepository()),
+          Provider<AuthRepositoryFamily>(create: (_) => AuthRepositoryFamily()),
           Provider<ProviderHomeRepository>(
             create: (_) => ProviderHomeRepository(),
           ),
-          Provider<FamilyHomeRepository>(
-            create: (_) => FamilyHomeRepository(),
-          ),
+          Provider<FamilyHomeRepository>(create: (_) => FamilyHomeRepository()),
           ChangeNotifierProvider<SearchRepository>(
-            create: (_) => SearchRepository(),
-          ),
+              create: (_) => SearchRepository()),
           ChangeNotifierProvider<FamilyFilterRepository>(
-            create: (context) => FamilyFilterRepository(),
-          ),
+              create: (context) => FamilyFilterRepository()),
           ChangeNotifierProvider<FilteredRepository>(
-            create: (context) =>
-                FilteredRepository(context.read<SearchRepository>()),
-          ),
+              create: (context) =>
+                  FilteredRepository(context.read<SearchRepository>())),
           ChangeNotifierProvider<AuthViewModel>(
-            create: (context) => AuthViewModel(context.read<AuthRepository>()),
-          ),
+              create: (context) =>
+                  AuthViewModel(context.read<AuthRepository>())),
           ChangeNotifierProvider<FamilyAuthController>(
-            create: (context) =>
-                FamilyAuthController(context.read<AuthRepositoryFamily>()),
-          ),
+              create: (context) =>
+                  FamilyAuthController(context.read<AuthRepositoryFamily>())),
           ChangeNotifierProvider<ProviderHomeViewModel>(
-            create: (context) =>
-                ProviderHomeViewModel(context.read<ProviderHomeRepository>()),
-          ),
+              create: (context) => ProviderHomeViewModel(
+                  context.read<ProviderHomeRepository>())),
           ChangeNotifierProvider<FamilyHomeController>(
-            create: (context) =>
-                FamilyHomeController(context.read<FamilyHomeRepository>()),
-          ),
+              create: (context) =>
+                  FamilyHomeController(context.read<FamilyHomeRepository>())),
           ChangeNotifierProvider<HomeUiSwithchRepository>(
-            create: (_) => HomeUiSwithchRepository(),
-          ),
-          ChangeNotifierProvider(
-            create: (_) => FamilyHomeUiRepository(),
-          ),
+              create: (_) => HomeUiSwithchRepository()),
+          ChangeNotifierProvider(create: (_) => FamilyHomeUiRepository()),
           ChangeNotifierProvider<FilteredViewModel>(
-            create: (context) =>
-                FilteredViewModel(context.read<FilteredRepository>()),
-          ),
+              create: (context) =>
+                  FilteredViewModel(context.read<FilteredRepository>())),
           ChangeNotifierProvider<SearchViewModel>(
             create: (context) =>
                 SearchViewModel(context.read<SearchRepository>()),
           ),
           ChangeNotifierProvider(
-            create: (_) => FamilySearchViewModel(FamilySearchRepository()),
-          ),
+              create: (_) => FamilySearchViewModel(FamilySearchRepository())),
           Provider<CommunityRepoFamily>(
             create: (_) => CommunityRepoFamily(),
           ),
           ChangeNotifierProvider<FamilyCommunityController>(
-            create: (context) =>
-                FamilyCommunityController(context.read<CommunityRepoFamily>()),
-          ),
+              create: (context) => FamilyCommunityController(
+                  context.read<CommunityRepoFamily>())),
           Provider<CommunityRepoProvider>(
             create: (_) => CommunityRepoProvider(),
           ),
           ChangeNotifierProvider<CommunityViewViewModel>(
-            create: (context) =>
-                CommunityViewViewModel(context.read<CommunityRepoProvider>()),
-          ),
+              create: (context) => CommunityViewViewModel(
+                  context.read<CommunityRepoProvider>())),
           ChangeNotifierProvider<FamilyFilterController>(
-            create: (context) =>
-                FamilyFilterController(context.read<FamilyFilterRepository>()),
-          ),
+              create: (context) => FamilyFilterController(
+                  context.read<FamilyFilterRepository>())),
           Provider<GetProviderInfoRepo>(
             create: (_) => GetProviderInfoRepo(),
           ),
           ChangeNotifierProvider<GetProviderInfoViewModel>(
-            create: (context) =>
-                GetProviderInfoViewModel(context.read<GetProviderInfoRepo>()),
-          ),
+              create: (context) => GetProviderInfoViewModel(
+                  context.read<GetProviderInfoRepo>())),
           Provider<GetFamilyInfoRepo>(
             create: (_) => GetFamilyInfoRepo(),
           ),
