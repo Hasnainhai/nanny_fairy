@@ -86,16 +86,15 @@ class _SearchBarProviderState extends State<SearchBarProvider> {
                     padding: const EdgeInsets.only(top: 2),
                     child: Focus(
                       focusNode: _searchFocusNode,
-                      child:
-                          Consumer2<SearchViewModel, HomeUiSwithchRepository>(
+                      child: Consumer2<ProviderDistanceViewModel,
+                          HomeUiSwithchRepository>(
                         builder: (context, viewModel, uiState, child) {
                           searchController.addListener(() {
                             if (searchController.text.isNotEmpty) {
-                              viewModel
-                                  .searchUsersByPassion(searchController.text);
-                              uiState.switchToType(UIType.SearchSection);
+                              // viewModel.searchFamiliesByPassion(
+                              //     searchController.text);
                             } else {
-                              uiState.switchToType(UIType.DefaultSection);
+                              viewModel.filterFamiliesByDistance(2, context);
                             }
                           });
                           return TextFormField(
@@ -199,7 +198,7 @@ class _SearchBarProviderState extends State<SearchBarProvider> {
                               try {
                                 await distanceRepo.filterFamiliesByDistance(
                                     double.parse(selectedKM), context);
-                                uiState.switchToType(UIType.DistanceSection);
+                                // uiState.switchToType(UIType.DistanceSection);
                               } catch (e) {
                                 ScaffoldMessenger.of(context).showSnackBar(
                                   const SnackBar(

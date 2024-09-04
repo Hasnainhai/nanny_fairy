@@ -11,6 +11,10 @@ class ProviderDistanceViewModel extends ChangeNotifier {
   bool get isLoading => _isLoading;
   List<Map<String, dynamic>> get distanceFilteredFamilies =>
       _providerDistanceRepository.distanceFilteredFamilies;
+
+  // List<Map<String, dynamic>> get searchedFamilies =>
+  //     _providerDistanceRepository.searchedFamilies;
+
   Future<void> filterFamiliesByDistance(
       double maxDistanceKm, BuildContext context) async {
     _setLoading(true);
@@ -22,6 +26,11 @@ class ProviderDistanceViewModel extends ChangeNotifier {
       _setLoading(false);
     }
   }
+
+  // void searchFamiliesByPassion(String query) {
+  //   _providerDistanceRepository.searchFamiliesByPassion(query);
+  //   notifyListeners();
+  // }
 
   void _setLoading(bool value) {
     _isLoading = value;
