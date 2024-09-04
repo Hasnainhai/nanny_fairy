@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:nanny_fairy/ViewModel/auth_view_model.dart';
 import 'package:nanny_fairy/res/components/rounded_button.dart';
 import 'package:nanny_fairy/res/components/widgets/custom_text_field.dart';
 import 'package:nanny_fairy/res/components/widgets/vertical_spacing.dart';
-import 'package:nanny_fairy/utils/routes/routes_name.dart';
 import 'package:nanny_fairy/utils/utils.dart';
 import 'package:provider/provider.dart';
 import '../../../res/components/colors.dart';
@@ -184,6 +182,24 @@ class _SelectPreferenceState extends State<SelectPreference> {
                     children: [
                       Expanded(
                           child: TextFieldCustom(
+                        keyboardType: TextInputType.phone,
+                        prefixIcon: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            const SizedBox(width: 10),
+                            Text(
+                              '+31',
+                              style: GoogleFonts.getFont(
+                                "Poppins",
+                                textStyle: const TextStyle(
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w400,
+                                  color: AppColor.blackColor,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
                         maxLines: 1,
                         controller: landController,
                         hintText: 'Land',
@@ -191,8 +207,26 @@ class _SelectPreferenceState extends State<SelectPreference> {
                       const SizedBox(width: 10.0),
                       Expanded(
                           child: TextFieldCustom(
-                        controller: phoneController,
+                        keyboardType: TextInputType.phone,
+                        prefixIcon: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            const SizedBox(width: 10),
+                            Text(
+                              '+31',
+                              style: GoogleFonts.getFont(
+                                "Poppins",
+                                textStyle: const TextStyle(
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w400,
+                                  color: AppColor.blackColor,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
                         maxLines: 1,
+                        controller: phoneController,
                         hintText: 'Mobile Number',
                       )),
                     ],
