@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:nanny_fairy/Repository/home_ui_repostory.dart';
+import 'package:nanny_fairy/ViewModel/provider_distance_view_model.dart';
 import 'package:nanny_fairy/ViewModel/provider_home_view_model.dart';
 import 'package:nanny_fairy/res/components/colors.dart';
 import 'package:nanny_fairy/res/components/widgets/shimmer_effect.dart';
 import 'package:nanny_fairy/res/components/widgets/vertical_spacing.dart';
 import 'package:nanny_fairy/utils/routes/routes_name.dart';
 import 'package:nanny_fairy/view/booked/widgets/booking_widget.dart';
+import 'package:nanny_fairy/view/home/widgets/distance_filter.dart';
 import 'package:nanny_fairy/view/home/widgets/home_feature_widget.dart';
 import 'package:nanny_fairy/view/job/family_detail_provider.dart';
 import 'package:provider/provider.dart';
@@ -39,6 +42,18 @@ class _HomeDefaultViewState extends State<HomeDefaultView> {
       totalRating += review['countRatingStars'] ?? 0.0;
     });
     return totalRating / reviews.length;
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+
+    // Delay the UI-related actions until after the first frame is rendered
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      final distanceViewModel =
+          Provider.of<ProviderDistanceViewModel>(context, listen: false);
+      distanceViewModel.filterFamiliesByDistance(2, context);
+    });
   }
 
   @override
@@ -176,78 +191,75 @@ class _HomeDefaultViewState extends State<HomeDefaultView> {
                 ],
               ),
               const VerticalSpeacing(16.0),
-              SizedBox(
-                height: MediaQuery.of(context).size.height * 0.3,
-                child: FutureBuilder(
-                  future: homeViewModel.getPopularJobs(),
-                  builder: (context, snapshot) {
-                    if (snapshot.connectionState == ConnectionState.waiting) {
-                      return const ShimmerUi();
-                    } else if (snapshot.hasError) {
-                      return Center(child: Text('Error: ${snapshot.error}'));
-                    } else if (snapshot.hasData) {
-                      Map<dynamic, dynamic> bookings =
-                          snapshot.data as Map<dynamic, dynamic>;
-                      List<Widget> bookingWidgets = [];
+              Consumer2<HomeUiSwithchRepository, ProviderDistanceViewModel>(
+                  builder: (context, uiState, familyhomeController, child) {
+                return Column(
+                  children: [
+                    const VerticalSpeacing(16.0),
+                    Column(
+                      children: [
+                        const VerticalSpeacing(16.0),
+                        SizedBox(
+                          height: MediaQuery.of(context).size.height * 0.3,
+                          child: familyhomeController
+                                  .distanceFilteredFamilies.isEmpty
+                              ? const Center(child: Text('No data available'))
+                              : SingleChildScrollView(
+                                  scrollDirection: Axis.vertical,
+                                  child: Column(
+                                    children: familyhomeController
+                                        .distanceFilteredFamilies
+                                        .map((family) {
+                                      List<String> passions =
+                                          (family['FamilyPassions']
+                                                  as List<dynamic>)
+                                              .cast<String>();
+                                      Map<String, String> ratingsData =
+                                          getRatingsAndTotalRatings(family);
+                                      Map<dynamic, dynamic> reviews =
+                                          family['reviews'] ?? {};
+                                      double averageRating =
+                                          calculateAverageRating(reviews);
 
-                      bookings.forEach(
-                        (key, value) {
-                          List<String> passions =
-                              value['FamilyPassions'] != null
-                                  ? (value['FamilyPassions'] as List<dynamic>)
-                                      .cast<String>()
-                                  : [];
-                          Map<String, String> ratingsData =
-                              getRatingsAndTotalRatings(value);
-                          Map<dynamic, dynamic> reviews =
-                              value['reviews'] ?? {};
-                          double averageRating =
-                              calculateAverageRating(reviews);
-                          bookingWidgets.add(
-                            BookingCartWidget(
-                              primaryButtonTxt: 'View',
-                              ontapView: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (c) => FamilyDetailProvider(
-                                      name:
-                                          " ${value['firstName']} ${value['lastName']}",
-                                      bio: value['bio'] ?? '',
-                                      profile: value['profile'],
-                                      familyId: value['uid'],
-                                      ratings: averageRating,
-                                      totalRatings: int.parse(
-                                        ratingsData['totalRatings']!,
-                                      ),
-                                      passion: passions,
-                                    ),
+                                      return BookingCartWidget(
+                                        primaryButtonTxt: 'View',
+                                        ontapView: () {
+                                          Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                              builder: (c) =>
+                                                  FamilyDetailProvider(
+                                                name:
+                                                    "${family['firstName']} ${family['lastName']}",
+                                                bio: family['bio'] ?? '',
+                                                profile: family['profile'],
+                                                familyId: family['uid'],
+                                                ratings: averageRating,
+                                                totalRatings: int.parse(
+                                                    ratingsData[
+                                                        'totalRatings']!),
+                                                passion: passions,
+                                              ),
+                                            ),
+                                          );
+                                        },
+                                        name:
+                                            "${family['firstName']} ${family['lastName']}",
+                                        profilePic: family['profile'],
+                                        passion: passions,
+                                        ratings: averageRating,
+                                        totalRatings: int.parse(
+                                            ratingsData['totalRatings']!),
+                                      );
+                                    }).toList(),
                                   ),
-                                );
-                              },
-                              name:
-                                  "${value['firstName']} ${value['lastName']}",
-                              profilePic: value['profile'],
-                              passion: passions,
-                              ratings: averageRating,
-                              totalRatings:
-                                  int.parse(ratingsData['totalRatings']!),
-                            ),
-                          );
-                        },
-                      );
-                      return SingleChildScrollView(
-                        scrollDirection: Axis.vertical,
-                        child: Column(
-                          children: bookingWidgets,
+                                ),
                         ),
-                      );
-                    } else {
-                      return const Center(child: Text('No data available'));
-                    }
-                  },
-                ),
-              ),
+                      ],
+                    ),
+                  ],
+                );
+              }),
             ],
           ),
         ),

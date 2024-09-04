@@ -60,10 +60,10 @@ class ProviderDistanceRepository extends ChangeNotifier {
   // Function to filter families based on distance from the current provider address
   Future<void> filterFamiliesByDistance(
       double maxDistanceKm, BuildContext context) async {
+    // Show loading dialog
     showDialog(
       context: context,
-      barrierDismissible:
-          false, // Prevents dialog from being dismissed by tapping outside
+      barrierDismissible: false,
       builder: (BuildContext context) {
         return const Dialog(
           child: Padding(
@@ -80,22 +80,24 @@ class ProviderDistanceRepository extends ChangeNotifier {
         );
       },
     );
+
     List<Map<String, dynamic>> families = await fetchFamiliesData();
     String? providerAddress = await getProviderAddress();
 
     try {
       if (providerAddress == null) {
-        Navigator.of(context).pop();
-        return; // Exit if no provider address is found
+        if (Navigator.of(context).mounted) {
+          Navigator.of(context).pop();
+        }
+        return;
       }
 
-      // Clear the previous list to avoid adding duplicate entries
       _distanceFilteredFamilies.clear();
 
       for (var family in families) {
         String? familyAddress = family['address'] as String?;
         if (familyAddress == null) {
-          continue; // Skip this family if the address is null
+          continue;
         }
 
         double distance = await getDistanceInKm(providerAddress, familyAddress);
@@ -104,12 +106,17 @@ class ProviderDistanceRepository extends ChangeNotifier {
           _distanceFilteredFamilies.add(family);
         }
       }
-      Navigator.of(context).pop();
 
-      // Notify listeners that the filtered list has been updated
+      if (Navigator.of(context).mounted) {
+        Navigator.of(context).pop();
+      }
+
       notifyListeners();
     } catch (e) {
-      Navigator.of(context).pop();
+      if (Navigator.of(context).mounted) {
+        Navigator.of(context).pop();
+      }
+      debugPrint('Error filtering families: $e');
     }
   }
 
