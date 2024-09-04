@@ -3,8 +3,6 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:nanny_fairy/res/components/rounded_button.dart';
 import 'package:nanny_fairy/res/components/widgets/vertical_spacing.dart';
 import 'package:nanny_fairy/utils/routes/routes_name.dart';
-import 'package:nanny_fairy/view/auth/signup/select_passion_view.dart';
-import 'package:nanny_fairy/view/auth/signup/select_preference.dart';
 import '../../res/components/colors.dart';
 
 class LoginOrSignupView extends StatelessWidget {
