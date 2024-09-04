@@ -59,125 +59,32 @@ class _HomeDefaultViewState extends State<HomeDefaultView> {
   @override
   Widget build(BuildContext context) {
     final homeViewModel = Provider.of<ProviderHomeViewModel>(context);
-
-    return Column(
-      children: [
-        Padding(
-          padding: const EdgeInsets.only(left: 16.0, right: 16.0),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    final distanceViewModel =
+        Provider.of<ProviderDistanceViewModel>(context, listen: false);
+    return distanceViewModel.isLoading
+        ? Center(
+            child: CircularProgressIndicator(),
+          )
+        : Column(
             children: [
-              Text(
-                'This month',
-                style: GoogleFonts.getFont(
-                  "Poppins",
-                  textStyle: const TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.w600,
-                    color: AppColor.blackColor,
-                  ),
-                ),
-              ),
-              Text(
-                'All reports',
-                style: GoogleFonts.getFont(
-                  "Poppins",
-                  textStyle: const TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.w600,
-                    color: AppColor.primaryColor,
-                  ),
-                ),
-              ),
-            ],
-          ),
-        ),
-        const VerticalSpeacing(10),
-        SizedBox(
-          height: 140,
-          child: SingleChildScrollView(
-            scrollDirection: Axis.horizontal,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                const SizedBox(width: 16),
-                FutureBuilder(
-                    future: homeViewModel.getPopularJobs(),
-                    builder: (context, snapshot) {
-                      if (snapshot.connectionState == ConnectionState.waiting) {
-                        return Shimmer.fromColors(
-                            baseColor: Colors.grey[300]!,
-                            highlightColor: Colors.grey[100]!,
-                            child: const HomeFeatureContainer(
-                              txColor: AppColor.blackColor,
-                              img: 'images/families.png',
-                              title: '12',
-                              subTitle: 'Total Families',
-                              bgColor: AppColor.whiteColor,
-                            ));
-                      } else if (snapshot.hasData) {
-                        return HomeFeatureContainer(
-                          txColor: AppColor.blackColor,
-                          img: 'images/families.png',
-                          title: snapshot.data!.length.toString(),
-                          subTitle: 'Total Families',
-                          bgColor: AppColor.whiteColor,
-                        );
-                      } else {
-                        return const HomeFeatureContainer(
-                          txColor: AppColor.blackColor,
-                          img: 'images/families.png',
-                          title: '0',
-                          subTitle: 'Total Families',
-                          bgColor: AppColor.whiteColor,
-                        );
-                      }
-                    }),
-                const SizedBox(width: 16),
-                const HomeFeatureContainer(
-                  txColor: AppColor.blackColor,
-                  bgColor: AppColor.whiteColor,
-                  img: 'images/chats.png',
-                  title: '10',
-                  subTitle: 'Total Chats',
-                ),
-                const SizedBox(width: 16),
-                const HomeFeatureContainer(
-                  txColor: AppColor.blackColor,
-                  bgColor: AppColor.whiteColor,
-                  img: 'images/families.png',
-                  title: '100k',
-                  subTitle: 'Total Families',
-                ),
-              ],
-            ),
-          ),
-        ),
-        const VerticalSpeacing(16.0),
-        Padding(
-          padding: const EdgeInsets.only(left: 16.0, right: 16.0),
-          child: Column(
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    'popular jobs',
-                    style: GoogleFonts.getFont(
-                      "Poppins",
-                      textStyle: const TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.w600,
-                        color: AppColor.blackColor,
+              Padding(
+                padding: const EdgeInsets.only(left: 16.0, right: 16.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      'This month',
+                      style: GoogleFonts.getFont(
+                        "Poppins",
+                        textStyle: const TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.w600,
+                          color: AppColor.blackColor,
+                        ),
                       ),
                     ),
-                  ),
-                  InkWell(
-                    onTap: () {
-                      Navigator.pushNamed(context, RoutesName.jobView);
-                    },
-                    child: Text(
-                      'see all',
+                    Text(
+                      'All reports',
                       style: GoogleFonts.getFont(
                         "Poppins",
                         textStyle: const TextStyle(
@@ -187,69 +94,173 @@ class _HomeDefaultViewState extends State<HomeDefaultView> {
                         ),
                       ),
                     ),
+                  ],
+                ),
+              ),
+              const VerticalSpeacing(10),
+              SizedBox(
+                height: 140,
+                child: SingleChildScrollView(
+                  scrollDirection: Axis.horizontal,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      const SizedBox(width: 16),
+                      FutureBuilder(
+                          future: homeViewModel.getPopularJobs(),
+                          builder: (context, snapshot) {
+                            if (snapshot.connectionState ==
+                                ConnectionState.waiting) {
+                              return Shimmer.fromColors(
+                                  baseColor: Colors.grey[300]!,
+                                  highlightColor: Colors.grey[100]!,
+                                  child: const HomeFeatureContainer(
+                                    txColor: AppColor.blackColor,
+                                    img: 'images/families.png',
+                                    title: '12',
+                                    subTitle: 'Total Families',
+                                    bgColor: AppColor.whiteColor,
+                                  ));
+                            } else if (snapshot.hasData) {
+                              return HomeFeatureContainer(
+                                txColor: AppColor.blackColor,
+                                img: 'images/families.png',
+                                title: snapshot.data!.length.toString(),
+                                subTitle: 'Total Families',
+                                bgColor: AppColor.whiteColor,
+                              );
+                            } else {
+                              return const HomeFeatureContainer(
+                                txColor: AppColor.blackColor,
+                                img: 'images/families.png',
+                                title: '0',
+                                subTitle: 'Total Families',
+                                bgColor: AppColor.whiteColor,
+                              );
+                            }
+                          }),
+                      const SizedBox(width: 16),
+                      const HomeFeatureContainer(
+                        txColor: AppColor.blackColor,
+                        bgColor: AppColor.whiteColor,
+                        img: 'images/chats.png',
+                        title: '10',
+                        subTitle: 'Total Chats',
+                      ),
+                      const SizedBox(width: 16),
+                      const HomeFeatureContainer(
+                        txColor: AppColor.blackColor,
+                        bgColor: AppColor.whiteColor,
+                        img: 'images/families.png',
+                        title: '100k',
+                        subTitle: 'Total Families',
+                      ),
+                    ],
                   ),
-                ],
+                ),
               ),
               const VerticalSpeacing(16.0),
-              Consumer2<HomeUiSwithchRepository, ProviderDistanceViewModel>(
-                  builder: (context, uiState, familyhomeController, child) {
-                return SizedBox(
-                  height: MediaQuery.of(context).size.height * 0.3,
-                  child: familyhomeController.distanceFilteredFamilies.isEmpty
-                      ? const Center(child: Text('No data available'))
-                      : SingleChildScrollView(
-                          scrollDirection: Axis.vertical,
-                          child: Column(
-                            children: familyhomeController
-                                .distanceFilteredFamilies
-                                .map((family) {
-                              List<String> passions =
-                                  (family['FamilyPassions'] as List<dynamic>)
-                                      .cast<String>();
-                              Map<String, String> ratingsData =
-                                  getRatingsAndTotalRatings(family);
-                              Map<dynamic, dynamic> reviews =
-                                  family['reviews'] ?? {};
-                              double averageRating =
-                                  calculateAverageRating(reviews);
-
-                              return BookingCartWidget(
-                                primaryButtonTxt: 'View',
-                                ontapView: () {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (c) => FamilyDetailProvider(
-                                        name:
-                                            "${family['firstName']} ${family['lastName']}",
-                                        bio: family['bio'] ?? '',
-                                        profile: family['profile'],
-                                        familyId: family['uid'],
-                                        ratings: averageRating,
-                                        totalRatings: int.parse(
-                                            ratingsData['totalRatings']!),
-                                        passion: passions,
-                                      ),
-                                    ),
-                                  );
-                                },
-                                name:
-                                    "${family['firstName']} ${family['lastName']}",
-                                profilePic: family['profile'],
-                                passion: passions,
-                                ratings: averageRating,
-                                totalRatings:
-                                    int.parse(ratingsData['totalRatings']!),
-                              );
-                            }).toList(),
+              Padding(
+                padding: const EdgeInsets.only(left: 16.0, right: 16.0),
+                child: Column(
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          'popular jobs',
+                          style: GoogleFonts.getFont(
+                            "Poppins",
+                            textStyle: const TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.w600,
+                              color: AppColor.blackColor,
+                            ),
                           ),
                         ),
-                );
-              }),
+                        InkWell(
+                          onTap: () {
+                            Navigator.pushNamed(context, RoutesName.jobView);
+                          },
+                          child: Text(
+                            'see all',
+                            style: GoogleFonts.getFont(
+                              "Poppins",
+                              textStyle: const TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.w600,
+                                color: AppColor.primaryColor,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                    const VerticalSpeacing(16.0),
+                    Consumer2<HomeUiSwithchRepository,
+                            ProviderDistanceViewModel>(
+                        builder:
+                            (context, uiState, familyhomeController, child) {
+                      return SizedBox(
+                        height: MediaQuery.of(context).size.height * 0.3,
+                        child: familyhomeController
+                                .distanceFilteredFamilies.isEmpty
+                            ? const Center(child: Text('No data available'))
+                            : SingleChildScrollView(
+                                scrollDirection: Axis.vertical,
+                                child: Column(
+                                  children: familyhomeController
+                                      .distanceFilteredFamilies
+                                      .map((family) {
+                                    List<String> passions =
+                                        (family['FamilyPassions']
+                                                as List<dynamic>)
+                                            .cast<String>();
+                                    Map<String, String> ratingsData =
+                                        getRatingsAndTotalRatings(family);
+                                    Map<dynamic, dynamic> reviews =
+                                        family['reviews'] ?? {};
+                                    double averageRating =
+                                        calculateAverageRating(reviews);
+
+                                    return BookingCartWidget(
+                                      primaryButtonTxt: 'View',
+                                      ontapView: () {
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (c) =>
+                                                FamilyDetailProvider(
+                                              name:
+                                                  "${family['firstName']} ${family['lastName']}",
+                                              bio: family['bio'] ?? '',
+                                              profile: family['profile'],
+                                              familyId: family['uid'],
+                                              ratings: averageRating,
+                                              totalRatings: int.parse(
+                                                  ratingsData['totalRatings']!),
+                                              passion: passions,
+                                            ),
+                                          ),
+                                        );
+                                      },
+                                      name:
+                                          "${family['firstName']} ${family['lastName']}",
+                                      profilePic: family['profile'],
+                                      passion: passions,
+                                      ratings: averageRating,
+                                      totalRatings: int.parse(
+                                          ratingsData['totalRatings']!),
+                                    );
+                                  }).toList(),
+                                ),
+                              ),
+                      );
+                    }),
+                  ],
+                ),
+              ),
             ],
-          ),
-        ),
-      ],
-    );
+          );
   }
 }

@@ -164,9 +164,9 @@ class _HomeViewState extends State<HomeView> {
                   case UIType.DefaultSection:
                     selectedWidget = const HomeDefaultView();
                     break;
-                  case UIType.DistanceSection:
-                    selectedWidget = const HomeDistanceView();
-                    break;
+                  // case UIType.DistanceSection:
+                  //   selectedWidget = const HomeDistanceView();
+                  //   break;
 
                   case UIType.FilterSection:
                     selectedWidget = const HomeFilterView();
