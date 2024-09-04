@@ -19,6 +19,7 @@ class UploadImage extends StatefulWidget {
 class _UploadImageState extends State<UploadImage> {
   TextEditingController bioController = TextEditingController();
   File? profilePic;
+  bool _isWordCountValid = false;
   void pickProfile() async {
     File? img = await pickFrontImg(
       context,
@@ -28,6 +29,12 @@ class _UploadImageState extends State<UploadImage> {
         profilePic = img;
       },
     );
+  }
+
+  int _wordCount(String text) {
+    return text.trim().isEmpty || text.length < 50
+        ? 0
+        : text.trim().split(RegExp(r'\s+')).length;
   }
 
   @override
@@ -75,14 +82,12 @@ class _UploadImageState extends State<UploadImage> {
                         borderRadius: BorderRadius.circular(12),
                         border: Border.all(
                           strokeAlign: BorderSide.strokeAlignCenter,
-                          color: const Color(0xff1B81BC).withOpacity(
-                              0.10), // Stroke color with 10% opacity
+                          color: _isWordCountValid ? Colors.red : Colors.white,
                           width: 1,
                         ),
                         boxShadow: [
                           BoxShadow(
-                            color: const Color(0xff1B81BC).withOpacity(
-                                0.1), // Drop shadow color with 4% opacity
+                            color: const Color(0xff1B81BC).withOpacity(0.1),
                             blurRadius: 2,
                             offset: const Offset(1, 2),
                             spreadRadius: 1,
@@ -94,9 +99,29 @@ class _UploadImageState extends State<UploadImage> {
                         child: TextField(
                           maxLines: 10,
                           controller: bioController,
+                          onChanged: (bioController) {
+                            setState(() {
+                              _isWordCountValid =
+                                  _wordCount(bioController) >= 50;
+                            });
+                          },
                           decoration: const InputDecoration(
                             hintText: 'Type...',
                             border: InputBorder.none,
+                          ),
+                        ),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(top: 8.0, left: 10.0),
+                      child: Text(
+                        'Please enter at least 50 words',
+                        style: GoogleFonts.getFont(
+                          "Poppins",
+                          textStyle: TextStyle(
+                            fontSize: 12,
+                            fontWeight: FontWeight.w400,
+                            color: _isWordCountValid ? Colors.red : Colors.grey,
                           ),
                         ),
                       ),
@@ -105,12 +130,18 @@ class _UploadImageState extends State<UploadImage> {
                     RoundedButton(
                         title: 'Continue',
                         onpress: () {
-                          if (bioController.text.isNotEmpty) {
+                          bool isValid = true;
+                          _isWordCountValid ? isValid : _isWordCountValid;
+                          if (bioController.text.isNotEmpty &&
+                              isValid &&
+                              profilePic != null) {
                             authViewModel.saveProfileAndBio(
                                 context, profilePic, bioController.text);
                           } else {
                             Utils.flushBarErrorMessage(
-                                "Please Enter Image", context);
+                              "Please complete the form correctly.",
+                              context,
+                            );
                           }
                         }),
                   ],
