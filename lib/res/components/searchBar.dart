@@ -17,12 +17,7 @@ class SearchBarProvider extends StatefulWidget {
 
 class _SearchBarProviderState extends State<SearchBarProvider> {
   String selectedKM = '2';
-  final List<String> kM = [
-    '2',
-    '4',
-    '8',
-    '12',
-  ];
+  final List<String> kM = ['2', '4', '8', '12'];
 
   final FocusNode _searchFocusNode = FocusNode();
   final FocusNode _dropdownFocusNode = FocusNode();
@@ -46,7 +41,16 @@ class _SearchBarProviderState extends State<SearchBarProvider> {
   }
 
   void _onSearchChanged() {
-    // The logic will be moved to the Consumer inside the build method
+    final viewModel = context.read<ProviderDistanceViewModel>();
+    final searchText = searchController.text;
+
+    if (searchText.isNotEmpty) {
+      viewModel.searchFamiliesByPassion(
+          searchText, double.parse(selectedKM), context);
+    } else {
+      viewModel.distanceFilteredFamilies.clear();
+      viewModel.filterFamiliesByDistance(double.parse(selectedKM), context);
+    }
   }
 
   @override
@@ -89,14 +93,6 @@ class _SearchBarProviderState extends State<SearchBarProvider> {
                       child: Consumer2<ProviderDistanceViewModel,
                           HomeUiSwithchRepository>(
                         builder: (context, viewModel, uiState, child) {
-                          searchController.addListener(() {
-                            if (searchController.text.isNotEmpty) {
-                              // viewModel.searchFamiliesByPassion(
-                              //     searchController.text);
-                            } else {
-                              viewModel.filterFamiliesByDistance(2, context);
-                            }
-                          });
                           return TextFormField(
                             controller: searchController,
                             decoration: const InputDecoration(
@@ -198,7 +194,6 @@ class _SearchBarProviderState extends State<SearchBarProvider> {
                               try {
                                 await distanceRepo.filterFamiliesByDistance(
                                     double.parse(selectedKM), context);
-                                // uiState.switchToType(UIType.DistanceSection);
                               } catch (e) {
                                 ScaffoldMessenger.of(context).showSnackBar(
                                   const SnackBar(

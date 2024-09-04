@@ -50,44 +50,11 @@ class ProviderDistanceRepository extends ChangeNotifier {
 
   Future<void> filterFamiliesByDistance(
       double maxDistanceKm, BuildContext context) async {
-    bool isDialogShown = false;
-    bool dialogShowing = false;
-
     try {
-      // Show loading dialog
-      // isDialogShown = true;
-      // dialogShowing = true;
-      // showDialog(
-      //   context: context,
-      //   barrierDismissible: false,
-      //   builder: (BuildContext context) {
-      //     return const Dialog(
-      //       child: Padding(
-      //         padding: EdgeInsets.all(16.0),
-      //         child: Row(
-      //           mainAxisSize: MainAxisSize.min,
-      //           children: [
-      //             CircularProgressIndicator(),
-      //             SizedBox(width: 16),
-      //             Text("Getting Families..."),
-      //           ],
-      //         ),
-      //       ),
-      //     );
-      //   },
-      // );
-
       List<Map<String, dynamic>> families = await fetchFamiliesData();
       String? providerAddress = await getProviderAddress();
-      debugPrint("this is families address : $families");
-      debugPrint("this is provider address : $providerAddress");
 
       if (providerAddress == null) {
-        // Hide dialog if it is shown
-        // if (dialogShowing) {
-        //   Navigator.of(context, rootNavigator: true).pop();
-        //   dialogShowing = false;
-        // }
         return;
       }
 
@@ -95,35 +62,60 @@ class ProviderDistanceRepository extends ChangeNotifier {
 
       for (var family in families) {
         String? familyAddress = family['address'] as String?;
-        debugPrint("this is inside the loop: $familyAddress");
 
         if (familyAddress == null) {
           continue;
         }
 
         double distance = await getDistanceInKm(providerAddress, familyAddress);
-        debugPrint("this is family map : $family");
 
         if (distance <= maxDistanceKm) {
           _distanceFilteredFamilies.add(family);
         }
       }
 
-      // // Hide dialog if it is shown
-      // if (dialogShowing) {
-      //   Navigator.of(context, rootNavigator: true).pop();
-      //   dialogShowing = false;
-      // }
-
       notifyListeners();
     } catch (e) {
       debugPrint('Error filtering families: $e');
-    } finally {
-      // Ensure the dialog is hidden even if an error occurred
-      // if (dialogShowing) {
-      //   Navigator.of(context, rootNavigator: true).pop();
-      //   dialogShowing = false;
-      // }
+    }
+  }
+
+  Future<void> filterFamiliesByPassion(
+      String passion, double distance, BuildContext context) async {
+    try {
+      // Clear the list first to reset the state
+      _distanceFilteredFamilies.clear();
+
+      // Fetch the data once
+      List<Map<String, dynamic>> families = await fetchFamiliesData();
+
+      if (passion.isEmpty) {
+        // If the search text is empty, do not filter by passion, but by distance
+        await filterFamiliesByDistance(distance, context);
+      } else {
+        // Otherwise, filter the families by passion
+        for (var family in families) {
+          List<dynamic>? familyPassions =
+              family['FamilyPassions'] as List<dynamic>?;
+
+          if (familyPassions != null) {
+            // Check if any passion in the family's passions contains the input substring
+            bool matches = familyPassions.any((p) =>
+                p.toString().toLowerCase().contains(passion.toLowerCase()));
+
+            if (matches) {
+              _distanceFilteredFamilies.add(family);
+            }
+          }
+        }
+      }
+
+      // Notify listeners outside of the loop to reduce redundant updates
+      notifyListeners();
+
+      debugPrint("Filtered families by passion: $_distanceFilteredFamilies");
+    } catch (e) {
+      debugPrint('Error filtering families by passion: $e');
     }
   }
 
