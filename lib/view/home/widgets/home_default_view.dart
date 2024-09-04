@@ -193,71 +193,57 @@ class _HomeDefaultViewState extends State<HomeDefaultView> {
               const VerticalSpeacing(16.0),
               Consumer2<HomeUiSwithchRepository, ProviderDistanceViewModel>(
                   builder: (context, uiState, familyhomeController, child) {
-                return Column(
-                  children: [
-                    const VerticalSpeacing(16.0),
-                    Column(
-                      children: [
-                        const VerticalSpeacing(16.0),
-                        SizedBox(
-                          height: MediaQuery.of(context).size.height * 0.3,
-                          child: familyhomeController
-                                  .distanceFilteredFamilies.isEmpty
-                              ? const Center(child: Text('No data available'))
-                              : SingleChildScrollView(
-                                  scrollDirection: Axis.vertical,
-                                  child: Column(
-                                    children: familyhomeController
-                                        .distanceFilteredFamilies
-                                        .map((family) {
-                                      List<String> passions =
-                                          (family['FamilyPassions']
-                                                  as List<dynamic>)
-                                              .cast<String>();
-                                      Map<String, String> ratingsData =
-                                          getRatingsAndTotalRatings(family);
-                                      Map<dynamic, dynamic> reviews =
-                                          family['reviews'] ?? {};
-                                      double averageRating =
-                                          calculateAverageRating(reviews);
+                return SizedBox(
+                  height: MediaQuery.of(context).size.height * 0.3,
+                  child: familyhomeController.distanceFilteredFamilies.isEmpty
+                      ? const Center(child: Text('No data available'))
+                      : SingleChildScrollView(
+                          scrollDirection: Axis.vertical,
+                          child: Column(
+                            children: familyhomeController
+                                .distanceFilteredFamilies
+                                .map((family) {
+                              List<String> passions =
+                                  (family['FamilyPassions'] as List<dynamic>)
+                                      .cast<String>();
+                              Map<String, String> ratingsData =
+                                  getRatingsAndTotalRatings(family);
+                              Map<dynamic, dynamic> reviews =
+                                  family['reviews'] ?? {};
+                              double averageRating =
+                                  calculateAverageRating(reviews);
 
-                                      return BookingCartWidget(
-                                        primaryButtonTxt: 'View',
-                                        ontapView: () {
-                                          Navigator.push(
-                                            context,
-                                            MaterialPageRoute(
-                                              builder: (c) =>
-                                                  FamilyDetailProvider(
-                                                name:
-                                                    "${family['firstName']} ${family['lastName']}",
-                                                bio: family['bio'] ?? '',
-                                                profile: family['profile'],
-                                                familyId: family['uid'],
-                                                ratings: averageRating,
-                                                totalRatings: int.parse(
-                                                    ratingsData[
-                                                        'totalRatings']!),
-                                                passion: passions,
-                                              ),
-                                            ),
-                                          );
-                                        },
+                              return BookingCartWidget(
+                                primaryButtonTxt: 'View',
+                                ontapView: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (c) => FamilyDetailProvider(
                                         name:
                                             "${family['firstName']} ${family['lastName']}",
-                                        profilePic: family['profile'],
-                                        passion: passions,
+                                        bio: family['bio'] ?? '',
+                                        profile: family['profile'],
+                                        familyId: family['uid'],
                                         ratings: averageRating,
                                         totalRatings: int.parse(
                                             ratingsData['totalRatings']!),
-                                      );
-                                    }).toList(),
-                                  ),
-                                ),
+                                        passion: passions,
+                                      ),
+                                    ),
+                                  );
+                                },
+                                name:
+                                    "${family['firstName']} ${family['lastName']}",
+                                profilePic: family['profile'],
+                                passion: passions,
+                                ratings: averageRating,
+                                totalRatings:
+                                    int.parse(ratingsData['totalRatings']!),
+                              );
+                            }).toList(),
+                          ),
                         ),
-                      ],
-                    ),
-                  ],
                 );
               }),
             ],
