@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:intl/intl.dart';
 import 'package:nanny_fairy/ViewModel/auth_view_model.dart';
 import 'package:nanny_fairy/res/components/rounded_button.dart';
 import 'package:nanny_fairy/res/components/widgets/custom_text_field.dart';
@@ -38,6 +39,22 @@ class _RegisterDetailsState extends State<RegisterDetails> {
     setState(() {
       isChecked2 = value ?? false;
     });
+  }
+
+  Future<void> selectDate(BuildContext context) async {
+    DateTime? pickedDate = await showDatePicker(
+      context: context,
+      initialDate: DateTime.now(),
+      firstDate: DateTime(1900),
+      lastDate: DateTime.now(),
+    );
+
+    if (pickedDate != null) {
+      String formattedDate = DateFormat('yyyy-MM-dd').format(pickedDate);
+      setState(() {
+        dobController.text = formattedDate;
+      });
+    }
   }
 
   @override
@@ -133,6 +150,7 @@ class _RegisterDetailsState extends State<RegisterDetails> {
                   children: [
                     Expanded(
                         child: TextFieldCustom(
+                            keyboardType: TextInputType.streetAddress,
                             controller: houseNumberController,
                             prefixIcon: const Icon(Icons.home_outlined),
                             maxLines: 1,
@@ -140,6 +158,7 @@ class _RegisterDetailsState extends State<RegisterDetails> {
                     const SizedBox(width: 12),
                     Expanded(
                         child: TextFieldCustom(
+                            keyboardType: TextInputType.phone,
                             controller: postCodeController,
                             prefixIcon: const Icon(Icons.lock_outline),
                             maxLines: 1,
@@ -148,6 +167,7 @@ class _RegisterDetailsState extends State<RegisterDetails> {
                 ),
                 const VerticalSpeacing(16),
                 TextFieldCustom(
+                    keyboardType: TextInputType.phone,
                     controller: phoneController,
                     prefixIcon: const Icon(Icons.phone),
                     maxLines: 1,
@@ -155,7 +175,9 @@ class _RegisterDetailsState extends State<RegisterDetails> {
                 const VerticalSpeacing(16),
                 TextFieldCustom(
                     controller: dobController,
-                    prefixIcon: const Icon(Icons.calendar_month_outlined),
+                    prefixIcon: InkWell(
+                        onTap: () => selectDate(context),
+                        child: const Icon(Icons.calendar_month_outlined)),
                     maxLines: 1,
                     hintText: 'Date of birth'),
                 const VerticalSpeacing(16),

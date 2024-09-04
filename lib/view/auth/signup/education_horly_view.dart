@@ -118,6 +118,7 @@ class _EducationHorlyViewState extends State<EducationHorlyView> {
                         ),
                         const VerticalSpeacing(16.0),
                         TextFieldCustom(
+
                           controller: educationController,
                           prefixIcon: const Icon(Icons.school_outlined),
                           maxLines: 1,
@@ -171,6 +172,7 @@ class _EducationHorlyViewState extends State<EducationHorlyView> {
                         ),
                         const VerticalSpeacing(16.0),
                         TextFieldCustom(
+                          keyboardType: TextInputType.phone,
                           controller: hoursRateController,
                           prefixIcon: const Icon(Icons.euro_outlined),
                           maxLines: 1,
