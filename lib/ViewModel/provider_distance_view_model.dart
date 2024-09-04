@@ -27,10 +27,12 @@ class ProviderDistanceViewModel extends ChangeNotifier {
     }
   }
 
-  // void searchFamiliesByPassion(String query) {
-  //   _providerDistanceRepository.searchFamiliesByPassion(query);
-  //   notifyListeners();
-  // }
+  void searchFamiliesByPassion(
+      String query, double maxDistanceKm, BuildContext context) async {
+    await _providerDistanceRepository.filterFamiliesByPassion(
+        query, maxDistanceKm, context);
+    notifyListeners(); // Ensure listeners are notified after the filtering is done
+  }
 
   void _setLoading(bool value) {
     _isLoading = value;
