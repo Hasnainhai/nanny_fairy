@@ -32,9 +32,10 @@ class _UploadImageState extends State<UploadImage> {
   }
 
   int _wordCount(String text) {
-    return text.trim().isEmpty || text.length < 50
-        ? 0
-        : text.trim().split(RegExp(r'\s+')).length;
+    if (text.trim().isEmpty) {
+      return 0;
+    }
+    return text.trim().split(RegExp(r'\s+')).length;
   }
 
   @override
@@ -82,7 +83,9 @@ class _UploadImageState extends State<UploadImage> {
                         borderRadius: BorderRadius.circular(12),
                         border: Border.all(
                           strokeAlign: BorderSide.strokeAlignCenter,
-                          color: _isWordCountValid ? Colors.red : Colors.white,
+                          color: !_isWordCountValid
+                              ? Colors.red
+                              : Colors.white, // Show red if invalid
                           width: 1,
                         ),
                         boxShadow: [
@@ -99,10 +102,12 @@ class _UploadImageState extends State<UploadImage> {
                         child: TextField(
                           maxLines: 10,
                           controller: bioController,
-                          onChanged: (bioController) {
+                          onChanged: (value) {
                             setState(() {
+                              int wordCount = _wordCount(value);
+                              // Valid if word count is between 50 and 60
                               _isWordCountValid =
-                                  _wordCount(bioController) >= 50;
+                                  wordCount >= 50 && wordCount <= 60;
                             });
                           },
                           decoration: const InputDecoration(
@@ -112,16 +117,19 @@ class _UploadImageState extends State<UploadImage> {
                         ),
                       ),
                     ),
-                    Padding(
-                      padding: const EdgeInsets.only(top: 8.0, left: 10.0),
-                      child: Text(
-                        'Please enter at least 50 words',
-                        style: GoogleFonts.getFont(
-                          "Poppins",
-                          textStyle: TextStyle(
-                            fontSize: 12,
-                            fontWeight: FontWeight.w400,
-                            color: _isWordCountValid ? Colors.red : Colors.grey,
+                    Visibility(
+                      visible: !_isWordCountValid,
+                      child: Padding(
+                        padding: const EdgeInsets.only(top: 8.0, left: 10.0),
+                        child: Text(
+                          'Please enter between 50 and 60 words',
+                          style: GoogleFonts.getFont(
+                            "Poppins",
+                            textStyle: const TextStyle(
+                              fontSize: 12,
+                              fontWeight: FontWeight.w400,
+                              color: Colors.red, // Red color for the error text
+                            ),
                           ),
                         ),
                       ),
@@ -130,11 +138,9 @@ class _UploadImageState extends State<UploadImage> {
                     RoundedButton(
                         title: 'Continue',
                         onpress: () {
-                          bool isValid = true;
-                          _isWordCountValid ? isValid : _isWordCountValid;
-                          if (bioController.text.isNotEmpty &&
-                              isValid &&
-                              profilePic != null) {
+                          bool isValid =
+                              _isWordCountValid && profilePic != null;
+                          if (bioController.text.isNotEmpty && isValid) {
                             authViewModel.saveProfileAndBio(
                                 context, profilePic, bioController.text);
                           } else {
