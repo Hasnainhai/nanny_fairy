@@ -142,11 +142,7 @@ class _HomeViewState extends State<HomeView> {
                 Positioned(
                   top: 135,
                   left: (MediaQuery.of(context).size.width - 320) / 2,
-                  child: SearchBarProvider(
-                    onTapFilter: () {
-                      Navigator.pushNamed(context, RoutesName.filterPopup);
-                    },
-                  ),
+                  child: const SearchBarProvider(),
                 ),
               ],
             ),

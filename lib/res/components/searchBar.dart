@@ -2,14 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:nanny_fairy/Repository/home_ui_repostory.dart';
 import 'package:nanny_fairy/ViewModel/provider_distance_view_model.dart';
-import 'package:nanny_fairy/ViewModel/search_view_model.dart';
-import 'package:nanny_fairy/res/components/widgets/ui_enums.dart';
+import 'package:nanny_fairy/view/filter/filter_popup.dart';
+
 import 'package:provider/provider.dart';
 import 'colors.dart';
 
 class SearchBarProvider extends StatefulWidget {
-  const SearchBarProvider({super.key, required this.onTapFilter});
-  final Function() onTapFilter;
+  const SearchBarProvider({
+    super.key,
+  });
 
   @override
   State<SearchBarProvider> createState() => _SearchBarProviderState();
@@ -115,7 +116,14 @@ class _SearchBarProviderState extends State<SearchBarProvider> {
         ),
         const SizedBox(width: 5.0),
         GestureDetector(
-          onTap: widget.onTapFilter,
+          onTap: () {
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (c) => FilterPopUp(
+                          maxDistance: selectedKM,
+                        )));
+          },
           child: Container(
             height: 50,
             width: 56,
