@@ -198,7 +198,7 @@ class _HomeDefaultViewState extends State<HomeDefaultView> {
                   ),
                   const VerticalSpeacing(16.0),
                   SizedBox(
-                    height: MediaQuery.of(context).size.height / 2,
+                    height: MediaQuery.of(context).size.height / 3,
                     child: families.isEmpty
                         ? const ShimmerUi()
                         : SingleChildScrollView(
