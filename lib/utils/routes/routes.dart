@@ -7,7 +7,6 @@ import 'package:nanny_fairy/Family_View/filters/filter_family_popup.dart';
 import 'package:nanny_fairy/Family_View/homeFamily/home_view_family.dart';
 import 'package:nanny_fairy/Family_View/findJobFamily/job_view_family.dart';
 import 'package:nanny_fairy/Family_View/homeFamily/dashboard_family/dashboard_family.dart';
-import 'package:nanny_fairy/Family_View/payment_family/payment_family.dart';
 import 'package:nanny_fairy/Family_View/profileFamily/my_profile_family.dart';
 import 'package:nanny_fairy/Family_View/settingsFamily/setting_family.dart';
 import 'package:nanny_fairy/Family_View/signup/create_account_family.dart';
@@ -31,15 +30,12 @@ import 'package:nanny_fairy/view/auth/uploadId/upload_id.dart';
 import 'package:nanny_fairy/view/booked/booked_view.dart';
 import 'package:nanny_fairy/view/community/community_view.dart';
 import 'package:nanny_fairy/view/community/upload_comunity_post.dart';
-import 'package:nanny_fairy/view/filter/filter_popup.dart';
 import 'package:nanny_fairy/view/home/dashboard/dashboard.dart';
 import 'package:nanny_fairy/view/home/home_view.dart';
-import 'package:nanny_fairy/view/job/job_view.dart';
 import 'package:nanny_fairy/view/notifications/notifications_view.dart';
 import 'package:nanny_fairy/view/onboarding/splash_view.dart';
 import 'package:nanny_fairy/view/profile/my_profile.dart';
 import 'package:nanny_fairy/view/profile/profile_view.dart';
-import 'package:nanny_fairy/view/rating/add_rating.dart';
 import 'package:nanny_fairy/view/rating/rating.dart';
 import 'package:nanny_fairy/view/settings/settings_view.dart';
 
@@ -71,9 +67,6 @@ class Routes {
       case RoutesName.refrenceView:
         return MaterialPageRoute(
             builder: (BuildContext context) => const RefrenceView());
-      case RoutesName.jobView:
-        return MaterialPageRoute(
-            builder: (BuildContext context) => const JobView());
 
       case RoutesName.bookedView:
         return MaterialPageRoute(

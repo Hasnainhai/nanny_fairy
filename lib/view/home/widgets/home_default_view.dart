@@ -10,6 +10,7 @@ import 'package:nanny_fairy/utils/routes/routes_name.dart';
 import 'package:nanny_fairy/view/booked/widgets/booking_widget.dart';
 import 'package:nanny_fairy/view/home/home_view.dart';
 import 'package:nanny_fairy/view/home/widgets/home_feature_widget.dart';
+import 'package:nanny_fairy/view/home/widgets/provider_all_job.dart';
 import 'package:nanny_fairy/view/job/family_detail_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:shimmer/shimmer.dart';
@@ -164,46 +165,53 @@ class _HomeDefaultViewState extends State<HomeDefaultView> {
               const VerticalSpeacing(16.0),
               Padding(
                 padding: const EdgeInsets.only(left: 16.0, right: 16.0),
-                child: Column(
-                  children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                child: Consumer<ProviderDistanceViewModel>(
+                  builder: (context, viewModel, child) {
+                    final families = viewModel.distanceFilteredFamilies;
+
+                    return Column(
                       children: [
-                        Text(
-                          'popular jobs',
-                          style: GoogleFonts.getFont(
-                            "Poppins",
-                            textStyle: const TextStyle(
-                              fontSize: 16,
-                              fontWeight: FontWeight.w600,
-                              color: AppColor.blackColor,
-                            ),
-                          ),
-                        ),
-                        InkWell(
-                          onTap: () {
-                            Navigator.pushNamed(context, RoutesName.jobView);
-                          },
-                          child: Text(
-                            'see all',
-                            style: GoogleFonts.getFont(
-                              "Poppins",
-                              textStyle: const TextStyle(
-                                fontSize: 16,
-                                fontWeight: FontWeight.w600,
-                                color: AppColor.primaryColor,
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              'popular jobs',
+                              style: GoogleFonts.getFont(
+                                "Poppins",
+                                textStyle: const TextStyle(
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w600,
+                                  color: AppColor.blackColor,
+                                ),
                               ),
                             ),
-                          ),
+                            InkWell(
+                              onTap: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (c) => ProviderAllJob(
+                                      distanceFilteredFamilies: families,
+                                    ),
+                                  ),
+                                );
+                              },
+                              child: Text(
+                                'see all',
+                                style: GoogleFonts.getFont(
+                                  "Poppins",
+                                  textStyle: const TextStyle(
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.w600,
+                                    color: AppColor.primaryColor,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
                         ),
-                      ],
-                    ),
-                    const VerticalSpeacing(16.0),
-                    Consumer<ProviderDistanceViewModel>(
-                      builder: (context, viewModel, child) {
-                        final families = viewModel.distanceFilteredFamilies;
-
-                        return SizedBox(
+                        const VerticalSpeacing(16.0),
+                        SizedBox(
                           height: MediaQuery.of(context).size.height / 3,
                           child: families.isEmpty
                               ? const ShimmerUi()
@@ -255,10 +263,10 @@ class _HomeDefaultViewState extends State<HomeDefaultView> {
                                     }).toList(),
                                   ),
                                 ),
-                        );
-                      },
-                    ),
-                  ],
+                        ),
+                      ],
+                    );
+                  },
                 ),
               ),
             ],
