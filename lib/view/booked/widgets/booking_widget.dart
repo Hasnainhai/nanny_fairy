@@ -159,8 +159,7 @@ class _BookingCartWidgetState extends State<BookingCartWidget> {
                         const VerticalSpeacing(10),
                         SizedBox(
                           height: 30,
-                          width: MediaQuery.of(context).size.width /
-                              2.2, // Adjust the height as needed
+                          // Adjust the height as needed
                           child: ListView.builder(
                             scrollDirection: Axis.horizontal,
                             itemCount: widget.passion.length,
