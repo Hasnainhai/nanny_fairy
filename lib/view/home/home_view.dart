@@ -28,23 +28,26 @@ class _HomeViewState extends State<HomeView> {
   void initState() {
     super.initState();
     // Fetch users when the widget initializes
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      Provider.of<ProviderHomeViewModel>(context, listen: false)
-          .getPopularJobs();
-      Provider.of<ProviderHomeViewModel>(context, listen: false)
-          .getCurrentUser();
-      final distanceViewModel =
-          Provider.of<ProviderDistanceViewModel>(context, listen: false);
-      distanceViewModel.filterFamiliesByDistance(
-          providerDistance == null ? 2 : double.parse(providerDistance!),
-          context);
-    });
   }
 
   @override
   Widget build(BuildContext context) {
     final homeViewModel = Provider.of<ProviderHomeViewModel>(context);
+    final distanceViewModel =
+        Provider.of<ProviderDistanceViewModel>(context, listen: false);
+    Future.delayed(const Duration(seconds: 3), () {
+      // Fetch users after the delay
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        // Call your methods here
 
+        Provider.of<ProviderHomeViewModel>(context, listen: false)
+            .getCurrentUser();
+
+        distanceViewModel.filterFamiliesByDistance(
+            providerDistance == null ? 2 : double.parse(providerDistance!),
+            context);
+      });
+    });
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: SingleChildScrollView(
