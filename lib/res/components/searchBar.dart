@@ -3,6 +3,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:nanny_fairy/Repository/home_ui_repostory.dart';
 import 'package:nanny_fairy/ViewModel/provider_distance_view_model.dart';
 import 'package:nanny_fairy/view/filter/filter_popup.dart';
+import 'package:nanny_fairy/view/home/home_view.dart';
 
 import 'package:provider/provider.dart';
 import 'colors.dart';
@@ -183,7 +184,7 @@ class _SearchBarProviderState extends State<SearchBarProvider> {
                     builder: (context, uiState, distanceRepo, child) {
                       return DropdownButtonHideUnderline(
                         child: DropdownButton<String>(
-                          value: selectedKM,
+                          value: providerDistance ?? selectedKM,
                           icon: const SizedBox.shrink(),
                           style: GoogleFonts.getFont(
                             "Poppins",
@@ -197,11 +198,15 @@ class _SearchBarProviderState extends State<SearchBarProvider> {
                             if (newValue != null) {
                               setState(() {
                                 selectedKM = newValue;
+                                providerDistance = newValue;
                               });
 
                               try {
                                 await distanceRepo.filterFamiliesByDistance(
-                                    double.parse(selectedKM), context);
+                                    providerDistance == null
+                                        ? double.parse(selectedKM)
+                                        : double.parse(providerDistance!),
+                                    context);
                               } catch (e) {
                                 ScaffoldMessenger.of(context).showSnackBar(
                                   const SnackBar(

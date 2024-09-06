@@ -8,7 +8,7 @@ import 'package:nanny_fairy/res/components/widgets/shimmer_effect.dart';
 import 'package:nanny_fairy/res/components/widgets/vertical_spacing.dart';
 import 'package:nanny_fairy/utils/routes/routes_name.dart';
 import 'package:nanny_fairy/view/booked/widgets/booking_widget.dart';
-import 'package:nanny_fairy/view/home/widgets/distance_filter.dart';
+import 'package:nanny_fairy/view/home/home_view.dart';
 import 'package:nanny_fairy/view/home/widgets/home_feature_widget.dart';
 import 'package:nanny_fairy/view/job/family_detail_provider.dart';
 import 'package:provider/provider.dart';
@@ -52,7 +52,9 @@ class _HomeDefaultViewState extends State<HomeDefaultView> {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       final distanceViewModel =
           Provider.of<ProviderDistanceViewModel>(context, listen: false);
-      distanceViewModel.filterFamiliesByDistance(2, context);
+      distanceViewModel.filterFamiliesByDistance(
+          providerDistance == null ? 2 : double.parse(providerDistance!),
+          context);
     });
   }
 
@@ -202,7 +204,7 @@ class _HomeDefaultViewState extends State<HomeDefaultView> {
                         final families = viewModel.distanceFilteredFamilies;
 
                         return SizedBox(
-                          height: MediaQuery.of(context).size.height * 0.3,
+                          height: MediaQuery.of(context).size.height / 3,
                           child: families.isEmpty
                               ? const ShimmerUi()
                               : SingleChildScrollView(

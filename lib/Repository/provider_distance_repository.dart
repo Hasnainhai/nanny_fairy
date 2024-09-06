@@ -3,7 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'package:nanny_fairy/view/home/home_view.dart';
+import 'package:nanny_fairy/view/home/widgets/provider_all_job.dart';
 
 class ProviderDistanceRepository extends ChangeNotifier {
   final List<Map<String, dynamic>> _distanceFilteredFamilies = [];
@@ -166,30 +166,21 @@ class ProviderDistanceRepository extends ChangeNotifier {
       );
 
       // Clear the list first to reset the state
-      debugPrint("Clearing distance filtered families list...");
       _distanceFilteredFamilies.clear();
 
       // Filter families by distance first
-      debugPrint("Filtering families by distance...");
       await filterFamiliesByDistance(maxDistance, context);
-      debugPrint("Families filtered by distance: $_distanceFilteredFamilies");
 
-      if (_distanceFilteredFamilies.isEmpty) {
-        debugPrint("No families found within the specified distance.");
-      }
+      if (_distanceFilteredFamilies.isEmpty) {}
 
       if (passions.isEmpty) {
-        debugPrint("No passions provided, filtering by rating only...");
         // If no passions are provided, filter by rating only
         _distanceFilteredFamilies.retainWhere((family) {
           Map<dynamic, dynamic> reviews = family['reviews'] ?? {};
           double averageRating = calculateAverageRating(reviews);
-          debugPrint(
-              "Family: ${family['firstName']} | Average Rating: $averageRating");
+
           return averageRating >= rating;
         });
-
-        debugPrint("Families filtered by rating: $_distanceFilteredFamilies");
 
         // Close the loading dialog
         Navigator.of(context).pop();
@@ -201,13 +192,11 @@ class ProviderDistanceRepository extends ChangeNotifier {
       List<Map<String, dynamic>> matchedFamilies = [];
 
       // Apply the passion and rating filters on the distance-filtered families
-      debugPrint("Applying passion and rating filters...");
       for (var family in _distanceFilteredFamilies) {
         List<dynamic>? familyPassions =
             family['FamilyPassions'] as List<dynamic>?;
 
         if (familyPassions == null || familyPassions.isEmpty) {
-          debugPrint("Family: ${family['firstName']} has no passions.");
           continue; // Skip families with no passions
         }
 
@@ -215,21 +204,16 @@ class ProviderDistanceRepository extends ChangeNotifier {
         bool passionMatches = familyPassions.any((passion) {
           bool match = passions.any((query) =>
               passion.toString().toLowerCase().contains(query.toLowerCase()));
-          debugPrint(
-              "Checking family: ${family['firstName']} | Passion: $passion | Matches: $match");
+
           return match;
         });
 
         // Check if the family's rating meets the required threshold
         Map<dynamic, dynamic> reviews = family['reviews'] ?? {};
         double averageRating = calculateAverageRating(reviews);
-        debugPrint(
-            "Family: ${family['firstName']} | Average Rating: $averageRating");
 
         // If both the passions and rating match, add the family to the matched list
         if (passionMatches && averageRating >= rating) {
-          debugPrint(
-              "Adding family: ${family['firstName']} to the matched list.");
           matchedFamilies.add(family);
         }
       }
@@ -238,14 +222,14 @@ class ProviderDistanceRepository extends ChangeNotifier {
       _distanceFilteredFamilies.clear();
       _distanceFilteredFamilies.addAll(matchedFamilies);
 
-      debugPrint(
-          "Families filtered by passion and rating: $_distanceFilteredFamilies");
-
       // Close the loading dialog
-      Navigator.pushAndRemoveUntil(
+      Navigator.push(
         context,
-        MaterialPageRoute(builder: (context) => HomeView()),
-        (Route<dynamic> route) => false,
+        MaterialPageRoute(
+          builder: (c) => ProviderAllJob(
+            distanceFilteredFamilies: _distanceFilteredFamilies,
+          ),
+        ),
       );
 
       // Notify listeners after filtering

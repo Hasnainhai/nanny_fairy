@@ -6,14 +6,13 @@ import 'package:nanny_fairy/res/components/colors.dart';
 import 'package:nanny_fairy/res/components/searchbar.dart';
 import 'package:nanny_fairy/res/components/widgets/ui_enums.dart';
 import 'package:nanny_fairy/res/components/widgets/vertical_spacing.dart';
-import 'package:nanny_fairy/utils/routes/routes_name.dart';
-import 'package:nanny_fairy/view/home/widgets/distance_filter.dart';
+
 import 'package:nanny_fairy/view/home/widgets/home_default_view.dart';
 import 'package:nanny_fairy/view/home/widgets/home_filter_view.dart';
 import 'package:nanny_fairy/view/home/widgets/home_search_view.dart';
 import 'package:provider/provider.dart';
 import 'package:shimmer/shimmer.dart';
-
+String? providerDistance;
 class HomeView extends StatefulWidget {
   const HomeView({super.key});
 
