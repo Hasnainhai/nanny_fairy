@@ -173,13 +173,21 @@ class _RegisterDetailsState extends State<RegisterDetails> {
                     maxLines: 1,
                     hintText: 'Enter telephone number'),
                 const VerticalSpeacing(16),
-                TextFieldCustom(
-                    controller: dobController,
-                    prefixIcon: InkWell(
+                GestureDetector(
+                  onTap: () => selectDate(context),
+                  child: AbsorbPointer(
+                    absorbing: true,
+                    child: TextFieldCustom(
+                      controller: dobController,
+                      prefixIcon: InkWell(
                         onTap: () => selectDate(context),
-                        child: const Icon(Icons.calendar_month_outlined)),
-                    maxLines: 1,
-                    hintText: 'Date of birth'),
+                        child: const Icon(Icons.calendar_month_outlined),
+                      ),
+                      maxLines: 1,
+                      hintText: 'Date of birth',
+                    ),
+                  ),
+                ),
                 const VerticalSpeacing(16),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.start,

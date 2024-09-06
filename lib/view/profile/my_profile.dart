@@ -142,7 +142,7 @@ class _MyProfileState extends State<MyProfile> {
                       ProfileItem(
                         icon: Icons.description,
                         label: 'Description',
-                        value: provider['bio'],
+                        value: provider['bio'] ?? 'null',
                       ),
                       const Divider(),
                       const VerticalSpeacing(10.0),

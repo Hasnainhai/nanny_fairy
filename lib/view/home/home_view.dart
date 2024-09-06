@@ -7,7 +7,6 @@ import 'package:nanny_fairy/res/components/colors.dart';
 import 'package:nanny_fairy/res/components/searchbar.dart';
 import 'package:nanny_fairy/res/components/widgets/ui_enums.dart';
 import 'package:nanny_fairy/res/components/widgets/vertical_spacing.dart';
-
 import 'package:nanny_fairy/view/home/widgets/home_default_view.dart';
 import 'package:nanny_fairy/view/home/widgets/home_filter_view.dart';
 import 'package:nanny_fairy/view/home/widgets/home_search_view.dart';
@@ -114,8 +113,9 @@ class _HomeViewState extends State<HomeView> {
                           child: ListTile(
                             leading: CircleAvatar(
                               radius: 40,
-                              foregroundImage:
-                                  NetworkImage(provider['profile']),
+                              foregroundImage: NetworkImage(provider[
+                                      'profile'] ??
+                                  'https://play-lh.googleusercontent.com/jInS55DYPnTZq8GpylyLmK2L2cDmUoahVacfN_Js_TsOkBEoizKmAl5-p8iFeLiNjtE=w526-h296-rw'),
                               backgroundImage: const NetworkImage(
                                   'https://play-lh.googleusercontent.com/jInS55DYPnTZq8GpylyLmK2L2cDmUoahVacfN_Js_TsOkBEoizKmAl5-p8iFeLiNjtE=w526-h296-rw'),
                             ),
@@ -131,7 +131,7 @@ class _HomeViewState extends State<HomeView> {
                               ),
                             ),
                             subtitle: Text(
-                              "${provider['firstName']} ${provider['lastName']}",
+                              "${provider['firstName'] ?? 'Name'} ${provider['lastName']?? 'Name'}",
                               style: GoogleFonts.getFont(
                                 "Poppins",
                                 textStyle: const TextStyle(
