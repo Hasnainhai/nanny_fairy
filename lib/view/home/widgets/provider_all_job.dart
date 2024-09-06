@@ -36,80 +36,92 @@ class _ProviderAllJobState extends State<ProviderAllJob> {
     return totalRating / reviews.length;
   }
 
+  Future<bool> _onWillPop() async {
+    Navigator.pushNamedAndRemoveUntil(
+      context,
+      RoutesName.dashboard,
+      (route) => false,
+    );
+    return false;
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        leading: IconButton(
-          icon: const Icon(
-            Icons.west,
-            color: AppColor.blackColor,
-          ),
-          onPressed: () {
-            Navigator.pushNamedAndRemoveUntil(
-              context,
-              RoutesName.dashboard,
-              (route) => false,
-            );
-          },
-        ),
-        title: Text(
-          'All Jobs',
-          style: GoogleFonts.getFont(
-            "Poppins",
-            textStyle: const TextStyle(
-              fontSize: 20,
-              fontWeight: FontWeight.w400,
+    return WillPopScope(
+      onWillPop: _onWillPop,
+      child: Scaffold(
+        appBar: AppBar(
+          leading: IconButton(
+            icon: const Icon(
+              Icons.west,
               color: AppColor.blackColor,
             ),
+            onPressed: () {
+              Navigator.pushNamedAndRemoveUntil(
+                context,
+                RoutesName.dashboard,
+                (route) => false,
+              );
+            },
           ),
+          title: Text(
+            'All Jobs',
+            style: GoogleFonts.getFont(
+              "Poppins",
+              textStyle: const TextStyle(
+                fontSize: 20,
+                fontWeight: FontWeight.w400,
+                color: AppColor.blackColor,
+              ),
+            ),
+          ),
+          centerTitle: true,
         ),
-        centerTitle: true,
-      ),
-      body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.all(20.0),
-          child: SizedBox(
-            height: MediaQuery.of(context).size.height,
-            child: SingleChildScrollView(
-              scrollDirection: Axis.vertical,
-              child: Column(
-                children: widget.distanceFilteredFamilies.map((family) {
-                  List<String> passions =
-                      (family['FamilyPassions'] as List<dynamic>)
-                          .cast<String>();
-                  Map<String, String> ratingsData =
-                      getRatingsAndTotalRatings(family);
-                  Map<dynamic, dynamic> reviews = family['reviews'] ?? {};
-                  double averageRating = calculateAverageRating(reviews);
+        body: SafeArea(
+          child: Padding(
+            padding: const EdgeInsets.all(20.0),
+            child: SizedBox(
+              height: MediaQuery.of(context).size.height,
+              child: SingleChildScrollView(
+                scrollDirection: Axis.vertical,
+                child: Column(
+                  children: widget.distanceFilteredFamilies.map((family) {
+                    List<String> passions =
+                        (family['FamilyPassions'] as List<dynamic>)
+                            .cast<String>();
+                    Map<String, String> ratingsData =
+                        getRatingsAndTotalRatings(family);
+                    Map<dynamic, dynamic> reviews = family['reviews'] ?? {};
+                    double averageRating = calculateAverageRating(reviews);
 
-                  return BookingCartWidget(
-                    primaryButtonTxt: 'View',
-                    ontapView: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (c) => FamilyDetailProvider(
-                            name:
-                                "${family['firstName']} ${family['lastName']}",
-                            bio: family['bio'] ?? '',
-                            profile: family['profile'],
-                            familyId: family['uid'],
-                            ratings: averageRating,
-                            totalRatings:
-                                int.parse(ratingsData['totalRatings']!),
-                            passion: passions,
+                    return BookingCartWidget(
+                      primaryButtonTxt: 'View',
+                      ontapView: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (c) => FamilyDetailProvider(
+                              name:
+                                  "${family['firstName']} ${family['lastName']}",
+                              bio: family['bio'] ?? '',
+                              profile: family['profile'],
+                              familyId: family['uid'],
+                              ratings: averageRating,
+                              totalRatings:
+                                  int.parse(ratingsData['totalRatings']!),
+                              passion: passions,
+                            ),
                           ),
-                        ),
-                      );
-                    },
-                    name: "${family['firstName']} ${family['lastName']}",
-                    profilePic: family['profile'],
-                    passion: passions,
-                    ratings: averageRating,
-                    totalRatings: int.parse(ratingsData['totalRatings']!),
-                  );
-                }).toList(),
+                        );
+                      },
+                      name: "${family['firstName']} ${family['lastName']}",
+                      profilePic: family['profile'],
+                      passion: passions,
+                      ratings: averageRating,
+                      totalRatings: int.parse(ratingsData['totalRatings']!),
+                    );
+                  }).toList(),
+                ),
               ),
             ),
           ),

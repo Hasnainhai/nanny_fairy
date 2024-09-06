@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:nanny_fairy/Repository/home_ui_repostory.dart';
+import 'package:nanny_fairy/ViewModel/provider_distance_view_model.dart';
 import 'package:nanny_fairy/ViewModel/provider_home_view_model.dart';
 import 'package:nanny_fairy/res/components/colors.dart';
 import 'package:nanny_fairy/res/components/searchbar.dart';
@@ -12,7 +13,9 @@ import 'package:nanny_fairy/view/home/widgets/home_filter_view.dart';
 import 'package:nanny_fairy/view/home/widgets/home_search_view.dart';
 import 'package:provider/provider.dart';
 import 'package:shimmer/shimmer.dart';
+
 String? providerDistance;
+
 class HomeView extends StatefulWidget {
   const HomeView({super.key});
 
@@ -30,6 +33,11 @@ class _HomeViewState extends State<HomeView> {
           .getPopularJobs();
       Provider.of<ProviderHomeViewModel>(context, listen: false)
           .getCurrentUser();
+      final distanceViewModel =
+          Provider.of<ProviderDistanceViewModel>(context, listen: false);
+      distanceViewModel.filterFamiliesByDistance(
+          providerDistance == null ? 2 : double.parse(providerDistance!),
+          context);
     });
   }
 

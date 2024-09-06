@@ -8,6 +8,8 @@ import 'package:nanny_fairy/view/home/widgets/provider_all_job.dart';
 
 class ProviderDistanceRepository extends ChangeNotifier {
   final List<Map<String, dynamic>> _distanceFilteredFamilies = [];
+  bool _isLoading = false;
+  bool get isLoading => _isLoading;
   List<Map<String, dynamic>> get distanceFilteredFamilies =>
       _distanceFilteredFamilies;
 
@@ -53,6 +55,7 @@ class ProviderDistanceRepository extends ChangeNotifier {
   Future<void> filterFamiliesByDistance(
       double maxDistanceKm, BuildContext context) async {
     try {
+      notifyListeners();
       List<Map<String, dynamic>> families = await fetchFamiliesData();
       String? providerAddress = await getProviderAddress();
 
@@ -75,6 +78,8 @@ class ProviderDistanceRepository extends ChangeNotifier {
           _distanceFilteredFamilies.add(family);
         }
       }
+      debugPrint("this is length of list:${_distanceFilteredFamilies.length}");
+      _isLoading = false;
 
       notifyListeners();
     } catch (e) {
@@ -86,6 +91,7 @@ class ProviderDistanceRepository extends ChangeNotifier {
       String passion, double distance, BuildContext context) async {
     try {
       // Clear the list first to reset the state
+
       _distanceFilteredFamilies.clear();
 
       // Fetch the data once
@@ -111,7 +117,6 @@ class ProviderDistanceRepository extends ChangeNotifier {
           }
         }
       }
-
       // Notify listeners outside of the loop to reduce redundant updates
       notifyListeners();
 
