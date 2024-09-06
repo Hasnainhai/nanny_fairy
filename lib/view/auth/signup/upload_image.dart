@@ -19,7 +19,7 @@ class UploadImage extends StatefulWidget {
 class _UploadImageState extends State<UploadImage> {
   TextEditingController bioController = TextEditingController();
   File? profilePic;
-  bool _isWordCountValid = false;
+  bool _isWordCountValid = true;
   void pickProfile() async {
     File? img = await pickFrontImg(
       context,
@@ -107,7 +107,7 @@ class _UploadImageState extends State<UploadImage> {
                               int wordCount = _wordCount(value);
                               // Valid if word count is between 50 and 60
                               _isWordCountValid =
-                                  wordCount >= 50 && wordCount <= 60;
+                                  wordCount >= 20 && wordCount <= 30;
                             });
                           },
                           decoration: const InputDecoration(
@@ -122,7 +122,7 @@ class _UploadImageState extends State<UploadImage> {
                       child: Padding(
                         padding: const EdgeInsets.only(top: 8.0, left: 10.0),
                         child: Text(
-                          'Please enter between 50 and 60 words',
+                          'Please enter less than 20 words',
                           style: GoogleFonts.getFont(
                             "Poppins",
                             textStyle: const TextStyle(
