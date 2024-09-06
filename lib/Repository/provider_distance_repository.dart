@@ -3,9 +3,13 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:nanny_fairy/view/home/home_view.dart';
+import 'package:nanny_fairy/view/home/widgets/provider_all_job.dart';
 
 class ProviderDistanceRepository extends ChangeNotifier {
   final List<Map<String, dynamic>> _distanceFilteredFamilies = [];
+  bool _isLoading = false;
+  bool get isLoading => _isLoading;
   List<Map<String, dynamic>> get distanceFilteredFamilies =>
       _distanceFilteredFamilies;
 
@@ -51,6 +55,7 @@ class ProviderDistanceRepository extends ChangeNotifier {
   Future<void> filterFamiliesByDistance(
       double maxDistanceKm, BuildContext context) async {
     try {
+      notifyListeners();
       List<Map<String, dynamic>> families = await fetchFamiliesData();
       String? providerAddress = await getProviderAddress();
 
@@ -73,6 +78,8 @@ class ProviderDistanceRepository extends ChangeNotifier {
           _distanceFilteredFamilies.add(family);
         }
       }
+      debugPrint("this is length of list:${_distanceFilteredFamilies.length}");
+      _isLoading = false;
 
       notifyListeners();
     } catch (e) {
@@ -84,6 +91,7 @@ class ProviderDistanceRepository extends ChangeNotifier {
       String passion, double distance, BuildContext context) async {
     try {
       // Clear the list first to reset the state
+
       _distanceFilteredFamilies.clear();
 
       // Fetch the data once
@@ -109,7 +117,6 @@ class ProviderDistanceRepository extends ChangeNotifier {
           }
         }
       }
-
       // Notify listeners outside of the loop to reduce redundant updates
       notifyListeners();
 
@@ -148,5 +155,116 @@ class ProviderDistanceRepository extends ChangeNotifier {
     } else {
       throw Exception('Failed to fetch data: ${response.statusCode}');
     }
+  }
+
+  Future<void> filterUsersByMultiplePassionsAndTotalRating(double maxDistance,
+      BuildContext context, List<String> passions, double rating) async {
+    try {
+      // Show the loading dialog
+      showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (BuildContext context) {
+          return const Center(
+            child: CircularProgressIndicator(),
+          );
+        },
+      );
+
+      // Clear the list first to reset the state
+      _distanceFilteredFamilies.clear();
+
+      // Filter families by distance first
+      await filterFamiliesByDistance(
+          providerDistance == null
+              ? maxDistance
+              : double.parse(providerDistance!),
+          context);
+
+      if (_distanceFilteredFamilies.isEmpty) {}
+
+      if (passions.isEmpty) {
+        // If no passions are provided, filter by rating only
+        _distanceFilteredFamilies.retainWhere((family) {
+          Map<dynamic, dynamic> reviews = family['reviews'] ?? {};
+          double averageRating = calculateAverageRating(reviews);
+
+          return averageRating >= rating;
+        });
+
+        // Close the loading dialog
+        Navigator.of(context).pop();
+        notifyListeners();
+        return;
+      }
+
+      // List to store families that match the passions and rating
+      List<Map<String, dynamic>> matchedFamilies = [];
+
+      // Apply the passion and rating filters on the distance-filtered families
+      for (var family in _distanceFilteredFamilies) {
+        List<dynamic>? familyPassions =
+            family['FamilyPassions'] as List<dynamic>?;
+
+        if (familyPassions == null || familyPassions.isEmpty) {
+          continue; // Skip families with no passions
+        }
+
+        // Check if the family has any matching passions
+        bool passionMatches = familyPassions.any((passion) {
+          bool match = passions.any((query) =>
+              passion.toString().toLowerCase().contains(query.toLowerCase()));
+
+          return match;
+        });
+
+        // Check if the family's rating meets the required threshold
+        Map<dynamic, dynamic> reviews = family['reviews'] ?? {};
+        double averageRating = calculateAverageRating(reviews);
+
+        // If both the passions and rating match, add the family to the matched list
+        if (passionMatches && averageRating >= rating) {
+          matchedFamilies.add(family);
+        }
+      }
+
+      // Update the filtered families list with the matched families
+      _distanceFilteredFamilies.clear();
+      _distanceFilteredFamilies.addAll(matchedFamilies);
+
+      // Close the loading dialog
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (c) => ProviderAllJob(
+            distanceFilteredFamilies: _distanceFilteredFamilies,
+          ),
+        ),
+      );
+
+      // Notify listeners after filtering
+      notifyListeners();
+    } catch (e) {
+      // Close the loading dialog in case of error
+      Navigator.of(context).pop();
+
+      debugPrint('Error filtering families by passion and rating: $e');
+      notifyListeners();
+    }
+  }
+
+  double calculateAverageRating(Map<dynamic, dynamic> reviews) {
+    if (reviews.isEmpty) {
+      return 0.0; // No reviews, no rating
+    }
+
+    double totalRating = 0.0;
+    reviews.forEach((key, review) {
+      if (review['countRatingStars'] != null) {
+        totalRating += review['countRatingStars'];
+      }
+    });
+
+    return totalRating / reviews.length; // Average rating
   }
 }

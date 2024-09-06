@@ -1,18 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:nanny_fairy/Repository/home_ui_repostory.dart';
+import 'package:nanny_fairy/ViewModel/provider_distance_view_model.dart';
 import 'package:nanny_fairy/ViewModel/provider_home_view_model.dart';
 import 'package:nanny_fairy/res/components/colors.dart';
 import 'package:nanny_fairy/res/components/searchbar.dart';
 import 'package:nanny_fairy/res/components/widgets/ui_enums.dart';
 import 'package:nanny_fairy/res/components/widgets/vertical_spacing.dart';
-import 'package:nanny_fairy/utils/routes/routes_name.dart';
-import 'package:nanny_fairy/view/home/widgets/distance_filter.dart';
+
 import 'package:nanny_fairy/view/home/widgets/home_default_view.dart';
 import 'package:nanny_fairy/view/home/widgets/home_filter_view.dart';
 import 'package:nanny_fairy/view/home/widgets/home_search_view.dart';
 import 'package:provider/provider.dart';
 import 'package:shimmer/shimmer.dart';
+
+String? providerDistance;
 
 class HomeView extends StatefulWidget {
   const HomeView({super.key});
@@ -26,18 +28,26 @@ class _HomeViewState extends State<HomeView> {
   void initState() {
     super.initState();
     // Fetch users when the widget initializes
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      Provider.of<ProviderHomeViewModel>(context, listen: false)
-          .getPopularJobs();
-      Provider.of<ProviderHomeViewModel>(context, listen: false)
-          .getCurrentUser();
-    });
   }
 
   @override
   Widget build(BuildContext context) {
     final homeViewModel = Provider.of<ProviderHomeViewModel>(context);
+    final distanceViewModel =
+        Provider.of<ProviderDistanceViewModel>(context, listen: false);
+    Future.delayed(const Duration(seconds: 3), () {
+      // Fetch users after the delay
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        // Call your methods here
 
+        Provider.of<ProviderHomeViewModel>(context, listen: false)
+            .getCurrentUser();
+
+        distanceViewModel.filterFamiliesByDistance(
+            providerDistance == null ? 2 : double.parse(providerDistance!),
+            context);
+      });
+    });
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: SingleChildScrollView(
@@ -142,11 +152,7 @@ class _HomeViewState extends State<HomeView> {
                 Positioned(
                   top: 135,
                   left: (MediaQuery.of(context).size.width - 320) / 2,
-                  child: SearchBarProvider(
-                    onTapFilter: () {
-                      Navigator.pushNamed(context, RoutesName.filterPopup);
-                    },
-                  ),
+                  child: const SearchBarProvider(),
                 ),
               ],
             ),

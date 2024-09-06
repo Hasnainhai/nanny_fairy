@@ -34,6 +34,18 @@ class ProviderDistanceViewModel extends ChangeNotifier {
     notifyListeners(); // Ensure listeners are notified after the filtering is done
   }
 
+  void filteredFamiliesByMultipleQueries(double maxDistanceKm,
+      BuildContext context, List<String> queries, double totalRating) async {
+    await _providerDistanceRepository
+        .filterUsersByMultiplePassionsAndTotalRating(
+      maxDistanceKm,
+      context,
+      queries,
+      totalRating,
+    );
+    notifyListeners(); // Ensure listeners are notified after the filtering is done
+  }
+
   void _setLoading(bool value) {
     _isLoading = value;
     notifyListeners();
