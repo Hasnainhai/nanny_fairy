@@ -60,6 +60,7 @@ class AuthRepository {
       );
     }
   }
+
   Future<void> loginAccount({
     required String email,
     required String password,
@@ -88,7 +89,7 @@ class AuthRepository {
       Navigator.pushNamedAndRemoveUntil(
         context,
         RoutesName.dashboard,
-            (route) => false,
+        (route) => false,
       );
     } on FirebaseAuthException catch (e) {
       // Remove the loading indicator
@@ -354,7 +355,6 @@ class AuthRepository {
       );
     } catch (e) {
       Navigator.of(context).pop();
-
       // Handle any errors that occur during save
       debugPrint('Error saving images: $e');
       Utils.flushBarErrorMessage('Failed to save Images', context);
