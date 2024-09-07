@@ -185,7 +185,7 @@ class _FamilySearchBarProviderState extends State<FamilySearchBarProvider> {
                   builder: (context, uiState, distanceViewModel, child) {
                     return DropdownButtonHideUnderline(
                       child: DropdownButton<String>(
-                        value: selectedKM,
+                        value: familyDistance ?? selectedKM,
                         icon: const SizedBox.shrink(),
                         style: GoogleFonts.getFont(
                           "Poppins",
