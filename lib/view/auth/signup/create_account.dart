@@ -122,11 +122,13 @@ class _CreateAccountState extends State<CreateAccount> {
                             maxLines: 1,
                             hintText: 'Enter Email'),
                         TextFieldCustom(
+                            obscureText: true,
                             controller: passwordController,
                             prefixIcon: const Icon(Icons.lock_outline),
                             maxLines: 1,
                             hintText: 'Set A Password'),
                         TextFieldCustom(
+                            obscureText: true,
                             controller: confromPasswordController,
                             prefixIcon: const Icon(Icons.lock_outline),
                             maxLines: 1,

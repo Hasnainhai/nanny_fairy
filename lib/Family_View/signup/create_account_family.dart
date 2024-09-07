@@ -29,6 +29,7 @@ class _CreateAccountFamilyState extends State<CreateAccountFamily> {
     emailController.dispose();
     confromPasswordController.dispose();
   }
+
   @override
   Widget build(BuildContext context) {
     final authViewModelFamily = Provider.of<FamilyAuthController>(context);
@@ -115,19 +116,21 @@ class _CreateAccountFamilyState extends State<CreateAccountFamily> {
                         const EdgeInsets.only(left: 16.0, right: 16.0, top: 50),
                     child: Column(
                       children: [
-                         TextFieldCustom(
-                          controller: emailController,
-                            prefixIcon: Icon(Icons.mail_outline),
+                        TextFieldCustom(
+                            controller: emailController,
+                            prefixIcon: const Icon(Icons.mail_outline),
                             maxLines: 1,
                             hintText: 'Enter Email'),
-                         TextFieldCustom(
-                          controller: passwordController,
-                            prefixIcon: Icon(Icons.lock_outline),
+                        TextFieldCustom(
+                            obscureText: true,
+                            controller: passwordController,
+                            prefixIcon: const Icon(Icons.lock_outline),
                             maxLines: 1,
                             hintText: 'Set A Password'),
-                         TextFieldCustom(
-                           controller: confromPasswordController,
-                            prefixIcon: Icon(Icons.lock_outline),
+                        TextFieldCustom(
+                            obscureText: true,
+                            controller: confromPasswordController,
+                            prefixIcon: const Icon(Icons.lock_outline),
                             maxLines: 1,
                             hintText: 'Confirm Password'),
                         const VerticalSpeacing(30),
@@ -141,11 +144,8 @@ class _CreateAccountFamilyState extends State<CreateAccountFamily> {
                                   password: passwordController.text,
                                   context: context);
                             } else {
-
-                              Utils.toastMessage(
-                                  "Your password did not match");
+                              Utils.toastMessage("Your password did not match");
                             }
-
                           },
                         ),
                       ],
