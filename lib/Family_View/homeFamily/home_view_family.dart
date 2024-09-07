@@ -24,34 +24,41 @@ class HomeViewFamily extends StatefulWidget {
 }
 
 class _HomeViewFamilyState extends State<HomeViewFamily> {
+  bool _hasFetchedProviders = false;
+
   @override
   void initState() {
     super.initState();
-    // Fetch users when the widget initializes
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      Provider.of<GetFamilyInfoController>(context, listen: false)
-          .getFamilyInfo();
+
+    // Adding a 2-second delay before executing the code
+    Future.delayed(Duration(seconds: 2), () {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        if (!_hasFetchedProviders) {
+          Provider.of<GetFamilyInfoController>(context, listen: false)
+              .getFamilyInfo();
+
+          Provider.of<FamilyDistanceViewModel>(context, listen: false)
+              .filterProvidersByDistance(
+                  familyDistance == null ? 12 : double.parse(familyDistance!),
+                  context)
+              .then((_) {
+            if (mounted) {
+              setState(() {
+                _hasFetchedProviders = true;
+              });
+            }
+          }).catchError((e) {
+            debugPrint("Error filtering providers: $e");
+          });
+        }
+      });
     });
   }
 
   @override
   Widget build(BuildContext context) {
     final familyHomeView = Provider.of<GetFamilyInfoController>(context);
-    final distanceViewModel =
-        Provider.of<FamilyDistanceViewModel>(context, listen: false);
-    Future.delayed(const Duration(seconds: 3), () {
-      // Fetch users after the delay
-      WidgetsBinding.instance.addPostFrameCallback((_) {
-        // Call your methods here
 
-        // Provider.of<ProviderHomeViewModel>(context, listen: false)
-        //     .getCurrentUser();
-
-        distanceViewModel.filterProvidersByDistance(
-            familyDistance == null ? 12 : double.parse(familyDistance!),
-            context);
-      });
-    });
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: SingleChildScrollView(
@@ -134,8 +141,8 @@ class _HomeViewFamilyState extends State<HomeViewFamily> {
               ],
             ),
             const VerticalSpeacing(20.0),
-            Consumer<FamilyHomeUiRepository>(
-              builder: (context, uiState, _) {
+            Consumer2<FamilyHomeUiRepository, FamilyDistanceViewModel>(
+              builder: (context, uiState, familyDistanceViewModel, _) {
                 Widget selectedWidget;
 
                 switch (uiState.selectedType) {
@@ -151,11 +158,16 @@ class _HomeViewFamilyState extends State<HomeViewFamily> {
                 return selectedWidget;
               },
             ),
-            // FamilyDefaultView(),
           ],
         ),
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    // Clean up any resources if necessary
+    super.dispose();
   }
 }
 

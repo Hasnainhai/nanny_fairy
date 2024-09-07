@@ -5,10 +5,11 @@ import 'package:flutter/material.dart'; // Add this import for ChangeNotifier
 import 'package:http/http.dart' as http;
 
 class FamilyDistanceRepository extends ChangeNotifier {
-  // Extend ChangeNotifier
   List<Map<String, dynamic>> _distanceFilterProviders = [];
   List<Map<String, dynamic>> get distanceFilterProviders =>
       _distanceFilterProviders;
+
+  bool _isActive = true;
 
   // Function to fetch provider data from Firebase
   Future<List<Map<String, dynamic>>> fetchProvidersData() async {
@@ -23,7 +24,6 @@ class FamilyDistanceRepository extends ChangeNotifier {
     }
 
     List<Map<String, dynamic>> providerList = [];
-
     data.forEach((key, value) {
       if (value is Map<dynamic, dynamic>) {
         providerList.add(Map<String, dynamic>.from(value));
@@ -60,11 +60,7 @@ class FamilyDistanceRepository extends ChangeNotifier {
   }
 
   // Function to get the distance in kilometers between two addresses
-
-  // Function to filter providers based on distance from the current family address
-  // Function to get the distance in kilometers between two addresses
   Future<double> getDistanceInKm(String origin, String destination) async {
-    // Validate addresses
     if (origin.isEmpty || destination.isEmpty) {
       throw Exception('Origin or destination address is empty');
     }
@@ -100,7 +96,7 @@ class FamilyDistanceRepository extends ChangeNotifier {
     }
   }
 
-// In filterProvidersByDistance, ensure providerAddress and familyAddress are not null or empty
+  // Function to filter providers based on distance from the current family address
   Future<void> filterProvidersByDistance(
       BuildContext context, double maxDistanceKm) async {
     try {
@@ -113,68 +109,102 @@ class FamilyDistanceRepository extends ChangeNotifier {
       }
 
       _distanceFilterProviders.clear(); // Clear previous results
+      Map<String, Map<String, dynamic>> uniqueProviders =
+          {}; // Map to store unique providers
 
       for (var provider in providers) {
-        String? providerAddress = provider['address'] as String?;
-        debugPrint(
-            "This is destination address $providerAddress of ${provider['firstName']}");
+        String? providerUid = provider['uid']?.toString().trim();
+        String? providerAddress =
+            provider['address']?.toString().trim(); // Trim the address
 
-        if (providerAddress == null || providerAddress.isEmpty) {
-          print('Provider address is null or empty, skipping this provider.');
+        debugPrint(
+            "Checking provider ${provider['firstName']} ${provider['lastName']} with address: $providerAddress");
+
+        // Skip if provider UID or address is invalid
+        if (providerUid == null ||
+            providerAddress == null ||
+            providerAddress.isEmpty ||
+            provider['bio'] == null) {
+          print(
+              'Provider ${provider['firstName']} ${provider['lastName']} with address $providerAddress is null, empty, or invalid. Skipping.');
           continue;
         }
 
+        // Fetch the distance between the family address and the provider address
         double distance = await getDistanceInKm(familyAddress, providerAddress);
+        debugPrint(
+            "Distance between family and provider ${provider['firstName']} is $distance km");
 
+        // Check if the provider is within the specified distance
         if (distance <= maxDistanceKm) {
+          if (uniqueProviders.containsKey(providerUid)) {
+            print(
+                'Duplicate provider found: ${provider['firstName']} ${provider['lastName']}');
+          }
+
+          // Add or update the provider in the map (overwrite if duplicate UID)
+          uniqueProviders[providerUid] = provider;
           debugPrint(
-              " This Provider ${provider['firstName'] + provider['lastName']} has been added ");
-          _distanceFilterProviders.add(provider);
+              "Adding/updating provider ${provider['firstName']} ${provider['lastName']} with distance $distance km");
         }
       }
 
-      notifyListeners(); // Notify listeners that the data has been updated
+      // Convert map values to list
+      _distanceFilterProviders.addAll(uniqueProviders.values);
+      debugPrint(
+          "this is length of the distanceFilterProvider list:${_distanceFilterProviders.length}");
+
+      if (_isActive) {
+        notifyListeners(); // Notify listeners that the data has been updated
+      }
     } catch (e) {
       print('Error filtering providers by distance: $e');
     }
   }
 
+  // Function to filter providers by passion and distance
   Future<void> filterFamiliesByPassion(
       String passion, double distance, BuildContext context) async {
     try {
-      // Clear the list first to reset the state
+      _distanceFilterProviders.clear(); // Clear previous results
 
-      _distanceFilterProviders.clear();
-
-      // Fetch the data once
       List<Map<String, dynamic>> providers = await fetchProvidersData();
+      Set<String> seenProviderAddresses =
+          {}; // To track processed providers by address
 
       if (passion.isEmpty) {
-        // If the search text is empty, do not filter by passion, but by distance
         await filterProvidersByDistance(context, distance);
       } else {
-        // Otherwise, filter the families by passion
         for (var provider in providers) {
           List<dynamic>? providerPassions =
               provider['Passions'] as List<dynamic>?;
 
-          if (providerPassions != null) {
-            // Check if any passion in the family's passions contains the input substring
-            bool matches = providerPassions.any((p) =>
-                p.toString().toLowerCase().contains(passion.toLowerCase()));
-
-            if (matches) {
-              _distanceFilterProviders.add(provider);
-            }
+          if (providerPassions != null &&
+              providerPassions.any((p) =>
+                  p.toString().toLowerCase().contains(passion.toLowerCase())) &&
+              !seenProviderAddresses.contains(provider['address'])) {
+            _distanceFilterProviders.add(provider);
+            seenProviderAddresses.add(
+                provider['address']); // Add to the set to prevent duplicates
           }
         }
       }
-      // Notify listeners outside of the loop to reduce redundant updates
-      notifyListeners();
 
-      debugPrint("Filtered providers by passion: $_distanceFilterProviders");
+      if (_isActive) {
+        notifyListeners(); // Notify listeners after filtering
+      }
     } catch (e) {
       debugPrint('Error filtering providers by passion: $e');
     }
+  }
+
+  // Method to deactivate the repository
+  void deactivate() {
+    _isActive = false;
+  }
+
+  // Method to activate the repository
+  void activate() {
+    _isActive = true;
   }
 }
