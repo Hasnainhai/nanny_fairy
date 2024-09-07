@@ -8,7 +8,6 @@ import 'package:nanny_fairy/utils/routes/routes_name.dart';
 import 'package:provider/provider.dart';
 import '../../res/components/colors.dart';
 import '../../res/components/widgets/vertical_spacing.dart';
-import '../../view/rating/rating.dart';
 
 class ProfileViewFamily extends StatefulWidget {
   const ProfileViewFamily({super.key});
@@ -227,7 +226,7 @@ class _ProfileViewFamilyState extends State<ProfileViewFamily> {
                     // Navigate to the login view and remove all previous routes
                     Navigator.pushNamedAndRemoveUntil(
                       context,
-                      RoutesName.loginFamily,
+                      RoutesName.loginOrSignup,
                       (Route<dynamic> route) => false,
                     );
                   },
