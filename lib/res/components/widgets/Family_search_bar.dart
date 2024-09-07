@@ -51,14 +51,12 @@ class _FamilySearchBarProviderState extends State<FamilySearchBarProvider> {
       viewModel.filterProvidersByPassions(
           searchText, double.parse(selectedKM), context);
     } else {
-      viewModel.distanceFilteredProviders.clear();
       viewModel.filterProvidersByDistance(double.parse(selectedKM), context);
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    FamilyDistanceRepository distanceRepository = FamilyDistanceRepository();
     return Row(
       children: [
         GestureDetector(

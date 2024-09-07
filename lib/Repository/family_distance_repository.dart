@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart'; // Add this import for ChangeNotifier
 import 'package:http/http.dart' as http;
+import 'package:nanny_fairy/Family_View/findJobFamily/family_all_jobs_view.dart';
 
 class FamilyDistanceRepository extends ChangeNotifier {
   List<Map<String, dynamic>> _distanceFilterProviders = [];
@@ -206,5 +207,45 @@ class FamilyDistanceRepository extends ChangeNotifier {
   // Method to activate the repository
   void activate() {
     _isActive = true;
+  }
+
+  Future<void> filterFamiliesBySinglePassion(
+      String passion, double distance, BuildContext context) async {
+    try {
+      debugPrint("filterFamiliesBySinglePassion called with passion: $passion");
+
+      List<Map<String, dynamic>> providers = await fetchProvidersData();
+      debugPrint("Fetched providers: ${providers.length}");
+
+      List<Map<String, dynamic>> providersSinglePassionData = [];
+
+      if (passion.isEmpty) {
+        await filterProvidersByDistance(context, distance);
+      } else {
+        for (var provider in providers) {
+          List<dynamic>? providerPassions =
+              provider['Passions'] as List<dynamic>?;
+
+          if (providerPassions != null && providerPassions.contains(passion)) {
+            providersSinglePassionData.add(provider);
+          }
+        }
+        debugPrint(
+            "Filtered providers by passion: ${providersSinglePassionData.length}");
+
+        if (providersSinglePassionData.isNotEmpty) {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (c) => FamilyAllJobsView(
+                providers: providersSinglePassionData,
+              ),
+            ),
+          );
+        }
+      }
+    } catch (e) {
+      debugPrint('Error filtering providers by single passion: $e');
+    }
   }
 }

@@ -9,10 +9,8 @@ import 'package:nanny_fairy/Family_View/homeFamily/widgets/home_Family_feature_w
 import 'package:nanny_fairy/Repository/family_home_ui_repository.dart';
 import 'package:nanny_fairy/ViewModel/family_distance_view_model.dart';
 import 'package:nanny_fairy/res/components/colors.dart';
-import 'package:nanny_fairy/res/components/widgets/family_home_ui_enums.dart';
-import 'package:nanny_fairy/res/components/widgets/shimmer_effect.dart';
+
 import 'package:nanny_fairy/res/components/widgets/vertical_spacing.dart';
-import 'package:nanny_fairy/utils/routes/routes_name.dart';
 import 'package:provider/provider.dart';
 
 class FamilyDefaultView extends StatefulWidget {
@@ -69,64 +67,110 @@ class _FamilyDefaultViewState extends State<FamilyDefaultView> {
           ),
         ),
         const VerticalSpeacing(10),
-        SizedBox(
-          height: 120,
-          child: SingleChildScrollView(
-            scrollDirection: Axis.horizontal,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                const SizedBox(width: 16),
-                HomeFeatureContainerFamily(
-                  bgColor: const Color(0xff51A1BA),
-                  img: 'images/cleaning.png',
-                  title: 'Cleaning',
-                  txColor: AppColor.whiteColor,
-                  ontap: () {},
+        Consumer<FamilyDistanceViewModel>(
+          builder: (context, familyDistanceViewModel, child) {
+            return SizedBox(
+              height: 120,
+              child: SingleChildScrollView(
+                scrollDirection: Axis.horizontal,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    const SizedBox(width: 16),
+                    HomeFeatureContainerFamily(
+                      bgColor: const Color(0xff51A1BA),
+                      img: 'images/cleaning.png',
+                      title: 'Cleaning',
+                      txColor: AppColor.whiteColor,
+                      ontap: () {
+                        familyDistanceViewModel.filterProvidersBySinglePassions(
+                            "Cleaning",
+                            familyDistance == null
+                                ? 12
+                                : double.parse(familyDistance!),
+                            context);
+                      },
+                    ),
+                    const SizedBox(width: 16),
+                    HomeFeatureContainerFamily(
+                      txColor: AppColor.whiteColor,
+                      bgColor: const Color(0xffFEAA48),
+                      img: 'images/homeSitter.png',
+                      title: 'Home Sitter',
+                      ontap: () {
+                        familyDistanceViewModel.filterProvidersBySinglePassions(
+                            "Home Sitter",
+                            familyDistance == null
+                                ? 12
+                                : double.parse(familyDistance!),
+                            context);
+                      },
+                    ),
+                    const SizedBox(width: 16),
+                    HomeFeatureContainerFamily(
+                      txColor: AppColor.whiteColor,
+                      bgColor: const Color(0xffDDC912),
+                      img: 'images/cleaning.png',
+                      title: 'Elderly care',
+                      ontap: () {
+                        familyDistanceViewModel.filterProvidersBySinglePassions(
+                            "Elderly care",
+                            familyDistance == null
+                                ? 12
+                                : double.parse(familyDistance!),
+                            context);
+                      },
+                    ),
+                    const SizedBox(width: 16),
+                    HomeFeatureContainerFamily(
+                      txColor: AppColor.whiteColor,
+                      bgColor: const Color(0xffFEAA48),
+                      img: 'images/homeSitter.png',
+                      title: 'Animal care',
+                      ontap: () {
+                        familyDistanceViewModel.filterProvidersBySinglePassions(
+                            "Animal care",
+                            familyDistance == null
+                                ? 12
+                                : double.parse(familyDistance!),
+                            context);
+                      },
+                    ),
+                    const SizedBox(width: 16),
+                    HomeFeatureContainerFamily(
+                      txColor: AppColor.whiteColor,
+                      bgColor: const Color(0xffDDC912),
+                      img: 'images/cleaning.png',
+                      title: 'Homework',
+                      ontap: () {
+                        familyDistanceViewModel.filterProvidersBySinglePassions(
+                            "Homework",
+                            familyDistance == null
+                                ? 12
+                                : double.parse(familyDistance!),
+                            context);
+                      },
+                    ),
+                    const SizedBox(width: 16),
+                    HomeFeatureContainerFamily(
+                      txColor: AppColor.whiteColor,
+                      bgColor: const Color(0xffDDC912),
+                      img: 'images/cleaning.png',
+                      title: 'Music lesson',
+                      ontap: () {
+                        familyDistanceViewModel.filterProvidersBySinglePassions(
+                            "Music lesson",
+                            familyDistance == null
+                                ? 12
+                                : double.parse(familyDistance!),
+                            context);
+                      },
+                    ),
+                  ],
                 ),
-                const SizedBox(width: 16),
-                HomeFeatureContainerFamily(
-                  txColor: AppColor.whiteColor,
-                  bgColor: const Color(0xffFEAA48),
-                  img: 'images/homeSitter.png',
-                  title: 'Home Sitter',
-                  ontap: () {},
-                ),
-                const SizedBox(width: 16),
-                HomeFeatureContainerFamily(
-                  txColor: AppColor.whiteColor,
-                  bgColor: const Color(0xffDDC912),
-                  img: 'images/cleaning.png',
-                  title: 'Elderly care',
-                  ontap: () {},
-                ),
-                const SizedBox(width: 16),
-                HomeFeatureContainerFamily(
-                  txColor: AppColor.whiteColor,
-                  bgColor: const Color(0xffFEAA48),
-                  img: 'images/homeSitter.png',
-                  title: 'Animal care',
-                  ontap: () {},
-                ),
-                const SizedBox(width: 16),
-                HomeFeatureContainerFamily(
-                  txColor: AppColor.whiteColor,
-                  bgColor: Color(0xffDDC912),
-                  img: 'images/cleaning.png',
-                  title: 'Homework',
-                  ontap: () {},
-                ),
-                const SizedBox(width: 16),
-                HomeFeatureContainerFamily(
-                  txColor: AppColor.whiteColor,
-                  bgColor: Color(0xffDDC912),
-                  img: 'images/cleaning.png',
-                  title: 'Music lesson',
-                  ontap: () {},
-                ),
-              ],
-            ),
-          ),
+              ),
+            );
+          },
         ),
         Padding(
           padding: const EdgeInsets.only(left: 16.0, right: 16.0),
@@ -155,12 +199,12 @@ class _FamilyDefaultViewState extends State<FamilyDefaultView> {
                               ),
                               InkWell(
                                 onTap: () {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (c) => const FamilyAllJobsView(),
-                                    ),
-                                  );
+                                  // Navigator.push(
+                                  //   context,
+                                  //   MaterialPageRoute(
+                                  //     builder: (c) => const FamilyAllJobsView(),
+                                  //   ),
+                                  // );
                                 },
                                 child: Text(
                                   'See All',

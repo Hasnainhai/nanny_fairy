@@ -36,6 +36,18 @@ class FamilyDistanceViewModel extends ChangeNotifier {
     }
   }
 
+  Future<void> filterProvidersBySinglePassions(
+      String passion, double maxDistanceKm, BuildContext context) async {
+    _setLoading(true);
+    try {
+      await _familyDistanceRepository.filterFamiliesBySinglePassion(
+          passion, maxDistanceKm, context);
+      notifyListeners(); // Notify listeners to update the UI
+    } finally {
+      _setLoading(false);
+    }
+  }
+
   void _setLoading(bool value) {
     _isLoading = value;
     notifyListeners();
