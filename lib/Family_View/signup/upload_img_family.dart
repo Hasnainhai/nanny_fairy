@@ -21,6 +21,7 @@ class UploadImageFamily extends StatefulWidget {
 class _UploadImageFamilyState extends State<UploadImageFamily> {
   TextEditingController bioController = TextEditingController();
   File? profilePic;
+  bool _isWordCountValid = true;
   void pickProfile() async {
     File? img = await pickFrontImg(
       context,
@@ -30,6 +31,13 @@ class _UploadImageFamilyState extends State<UploadImageFamily> {
         profilePic = img;
       },
     );
+  }
+
+  int _wordCount(String text) {
+    if (text.trim().isEmpty) {
+      return 0;
+    }
+    return text.trim().split(RegExp(r'\s+')).length;
   }
 
   @override
@@ -77,14 +85,14 @@ class _UploadImageFamilyState extends State<UploadImageFamily> {
                         borderRadius: BorderRadius.circular(12),
                         border: Border.all(
                           strokeAlign: BorderSide.strokeAlignCenter,
-                          color: const Color(0xff1B81BC).withOpacity(
-                              0.10), // Stroke color with 10% opacity
+                          color: !_isWordCountValid
+                              ? Colors.red
+                              : Colors.white, // Show red if invalid
                           width: 1,
                         ),
                         boxShadow: [
                           BoxShadow(
-                            color: const Color(0xff1B81BC).withOpacity(
-                                0.1), // Drop shadow color with 4% opacity
+                            color: const Color(0xff1B81BC).withOpacity(0.1),
                             blurRadius: 2,
                             offset: const Offset(1, 2),
                             spreadRadius: 1,
@@ -96,9 +104,34 @@ class _UploadImageFamilyState extends State<UploadImageFamily> {
                         child: TextField(
                           maxLines: 10,
                           controller: bioController,
+                          onChanged: (value) {
+                            setState(() {
+                              int wordCount = _wordCount(value);
+                              // Valid if word count is between 50 and 60
+                              _isWordCountValid =
+                                  wordCount >= 20 && wordCount <= 30;
+                            });
+                          },
                           decoration: const InputDecoration(
                             hintText: 'Type...',
                             border: InputBorder.none,
+                          ),
+                        ),
+                      ),
+                    ),
+                    Visibility(
+                      visible: !_isWordCountValid,
+                      child: Padding(
+                        padding: const EdgeInsets.only(top: 8.0, left: 10.0),
+                        child: Text(
+                          'Please enter less than 20 words',
+                          style: GoogleFonts.getFont(
+                            "Poppins",
+                            textStyle: const TextStyle(
+                              fontSize: 12,
+                              fontWeight: FontWeight.w400,
+                              color: Colors.red, // Red color for the error text
+                            ),
                           ),
                         ),
                       ),
@@ -107,12 +140,16 @@ class _UploadImageFamilyState extends State<UploadImageFamily> {
                     RoundedButton(
                         title: 'Continue',
                         onpress: () {
-                          if (bioController.text.isNotEmpty) {
+                          bool isValid =
+                              _isWordCountValid && profilePic != null;
+                          if (bioController.text.isNotEmpty && isValid) {
                             authViewModel.saveProfileAndBio(
                                 context, profilePic, bioController.text);
                           } else {
                             Utils.flushBarErrorMessage(
-                                "Please Enter Image", context);
+                              "Please complete the form correctly.",
+                              context,
+                            );
                           }
                         }),
                   ],

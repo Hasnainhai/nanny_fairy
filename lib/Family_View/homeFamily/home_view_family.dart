@@ -1,10 +1,8 @@
 // ignore_for_file: use_build_context_synchronously
-
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:nanny_fairy/FamilyController/get_family_info_controller.dart';
 import 'package:nanny_fairy/Family_View/homeFamily/widgets/family_default_view.dart';
-
 import 'package:nanny_fairy/Repository/family_home_ui_repository.dart';
 import 'package:nanny_fairy/ViewModel/family_distance_view_model.dart';
 import 'package:nanny_fairy/res/components/colors.dart';
@@ -93,7 +91,8 @@ class _HomeViewFamilyState extends State<HomeViewFamily> {
                           child: ListTile(
                             leading: CircleAvatar(
                               radius: 40,
-                              foregroundImage: NetworkImage(family['profile']),
+                              foregroundImage: NetworkImage(family['profile'] ??
+                                  'https://play-lh.googleusercontent.com/jInS55DYPnTZq8GpylyLmK2L2cDmUoahVacfN_Js_TsOkBEoizKmAl5-p8iFeLiNjtE=w526-h296-rw'),
                               backgroundImage: const NetworkImage(
                                   'https://play-lh.googleusercontent.com/jInS55DYPnTZq8GpylyLmK2L2cDmUoahVacfN_Js_TsOkBEoizKmAl5-p8iFeLiNjtE=w526-h296-rw'),
                             ),
@@ -109,7 +108,7 @@ class _HomeViewFamilyState extends State<HomeViewFamily> {
                               ),
                             ),
                             subtitle: Text(
-                              "${family['firstName']} ${family['lastName']}",
+                              "${family['firstName'] ?? 'Name'} ${family['lastName'] ?? 'Name'}",
                               style: GoogleFonts.getFont(
                                 "Poppins",
                                 textStyle: const TextStyle(

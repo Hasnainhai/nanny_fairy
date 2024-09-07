@@ -285,9 +285,10 @@ class AuthRepositoryFamily {
       Navigator.of(context).pop();
       Utils.toastMessage('Images saved successfully!');
       debugPrint(userId);
-      Navigator.pushNamed(
+      Navigator.pushNamedAndRemoveUntil(
         context,
         RoutesName.uploadImgFamily,
+        (route) => false,
       );
     } catch (e) {
       Navigator.of(context).pop();
