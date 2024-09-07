@@ -31,7 +31,7 @@ class _HomeViewFamilyState extends State<HomeViewFamily> {
     super.initState();
 
     // Adding a 2-second delay before executing the code
-    Future.delayed(Duration(seconds: 2), () {
+    Future.delayed(const Duration(seconds: 2), () {
       WidgetsBinding.instance.addPostFrameCallback((_) {
         if (!_hasFetchedProviders) {
           Provider.of<GetFamilyInfoController>(context, listen: false)
@@ -39,7 +39,7 @@ class _HomeViewFamilyState extends State<HomeViewFamily> {
 
           Provider.of<FamilyDistanceViewModel>(context, listen: false)
               .filterProvidersByDistance(
-                  familyDistance == null ? 12 : double.parse(familyDistance!),
+                  familyDistance == null ? 2 : double.parse(familyDistance!),
                   context)
               .then((_) {
             if (mounted) {

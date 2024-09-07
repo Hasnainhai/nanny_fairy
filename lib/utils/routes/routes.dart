@@ -5,7 +5,6 @@ import 'package:nanny_fairy/Family_View/communityFamily/upload_community_post_fa
 import 'package:nanny_fairy/Family_View/familyNotifications/family_notifications.dart';
 import 'package:nanny_fairy/Family_View/filters/filter_family_popup.dart';
 import 'package:nanny_fairy/Family_View/homeFamily/home_view_family.dart';
-import 'package:nanny_fairy/Family_View/findJobFamily/job_view_family.dart';
 import 'package:nanny_fairy/Family_View/homeFamily/dashboard_family/dashboard_family.dart';
 import 'package:nanny_fairy/Family_View/profileFamily/my_profile_family.dart';
 import 'package:nanny_fairy/Family_View/settingsFamily/setting_family.dart';
@@ -132,9 +131,6 @@ class Routes {
       //   return MaterialPageRoute(
       //       builder: (BuildContext context) => const CommunityDetailView());
 
-      case RoutesName.jobViewFamily:
-        return MaterialPageRoute(
-            builder: (BuildContext context) => const JobViewFamily());
       case RoutesName.createAccount:
         return MaterialPageRoute(
             builder: (BuildContext context) => CreateAccount());
