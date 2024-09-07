@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:nanny_fairy/ViewModel/provider_distance_view_model.dart';
 import 'package:nanny_fairy/res/components/colors.dart';
 import 'package:nanny_fairy/utils/routes/routes_name.dart';
 import 'package:nanny_fairy/view/booked/widgets/booking_widget.dart';
 import 'package:nanny_fairy/view/job/family_detail_provider.dart';
+import 'package:provider/provider.dart';
 
 class ProviderAllJob extends StatefulWidget {
   List<Map<String, dynamic>> distanceFilteredFamilies = [];
@@ -37,6 +39,10 @@ class _ProviderAllJobState extends State<ProviderAllJob> {
   }
 
   Future<bool> _onWillPop() async {
+    final distanceViewModel =
+        Provider.of<ProviderDistanceViewModel>(context, listen: false);
+    distanceViewModel.distanceFilteredFamilies.clear();
+
     Navigator.pushNamedAndRemoveUntil(
       context,
       RoutesName.dashboard,
@@ -47,6 +53,9 @@ class _ProviderAllJobState extends State<ProviderAllJob> {
 
   @override
   Widget build(BuildContext context) {
+    final distanceViewModel =
+        Provider.of<ProviderDistanceViewModel>(context, listen: false);
+    // ignore: deprecated_member_use
     return WillPopScope(
       onWillPop: _onWillPop,
       child: Scaffold(
@@ -57,6 +66,7 @@ class _ProviderAllJobState extends State<ProviderAllJob> {
               color: AppColor.blackColor,
             ),
             onPressed: () {
+              distanceViewModel.distanceFilteredFamilies.clear();
               Navigator.pushNamedAndRemoveUntil(
                 context,
                 RoutesName.dashboard,

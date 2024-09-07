@@ -510,8 +510,8 @@ class _FilterPopUpFamilyState extends State<FilterPopUpFamily> {
                                     "check the function:${viewModel.filteredProviders}");
                                 // Update UI based on the state
 
-                                uiState.switchToType(
-                                    FamilyHomeUiEnums.FilterSection);
+                                // uiState.switchToType(
+                                //     FamilyHomeUiEnums.FilterSection);
                                 Navigator.pop(context);
                               } catch (e) {
                                 debugPrint("Error applying filters: $e");

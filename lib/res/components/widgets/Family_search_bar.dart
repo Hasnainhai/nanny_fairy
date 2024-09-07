@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:nanny_fairy/Family_View/homeFamily/home_view_family.dart';
 import 'package:nanny_fairy/Repository/family_distance_repository.dart';
 import 'package:nanny_fairy/Repository/family_home_ui_repository.dart';
 import 'package:nanny_fairy/ViewModel/family_distance_view_model.dart';
@@ -19,12 +20,7 @@ class FamilySearchBarProvider extends StatefulWidget {
 
 class _FamilySearchBarProviderState extends State<FamilySearchBarProvider> {
   String selectedKM = '2';
-  final List<String> kM = [
-    '2',
-    '4',
-    '8',
-    '12',
-  ];
+  final List<String> kM = ['2', '4', '8', '12'];
 
   final FocusNode _searchFocusNode = FocusNode();
   final FocusNode _dropdownFocusNode = FocusNode();
@@ -48,7 +44,16 @@ class _FamilySearchBarProviderState extends State<FamilySearchBarProvider> {
   }
 
   void _onSearchChanged() {
-    // The logic will be moved to the Consumer inside the build method
+    final viewModel = context.read<FamilyDistanceViewModel>();
+    final searchText = searchController.text;
+
+    if (searchText.isNotEmpty) {
+      viewModel.filterProvidersByPassions(
+          searchText, double.parse(selectedKM), context);
+    } else {
+      viewModel.distanceFilteredProviders.clear();
+      viewModel.filterProvidersByDistance(double.parse(selectedKM), context);
+    }
   }
 
   @override
@@ -89,21 +94,8 @@ class _FamilySearchBarProviderState extends State<FamilySearchBarProvider> {
                     padding: const EdgeInsets.only(top: 2),
                     child: Focus(
                       focusNode: _searchFocusNode,
-                      child: Consumer2<FamilySearchViewModel,
-                          FamilyHomeUiRepository>(
-                        builder: (context, viewModel, uiState, child) {
-                          searchController.addListener(() {
-                            if (searchController.text.isNotEmpty) {
-                              viewModel.fetchUsers();
-                              viewModel
-                                  .searchUsersByPassion(searchController.text);
-                              uiState.switchToType(
-                                  FamilyHomeUiEnums.SearchSection);
-                            } else {
-                              uiState.switchToType(
-                                  FamilyHomeUiEnums.DefaultSection);
-                            }
-                          });
+                      child: Consumer<FamilyDistanceViewModel>(
+                        builder: (context, viewModel, child) {
                           return TextFormField(
                             controller: searchController,
                             decoration: const InputDecoration(
@@ -200,16 +192,18 @@ class _FamilySearchBarProviderState extends State<FamilySearchBarProvider> {
                           if (newValue != null) {
                             setState(() {
                               selectedKM = newValue;
+                              familyDistance = selectedKM;
                             });
                             try {
                               // Call the method to filter providers by distance
                               await distanceViewModel.filterProvidersByDistance(
                                   double.parse(selectedKM), context);
 
-                              uiState.switchToType(
-                                FamilyHomeUiEnums.DistanceSection,
-                              );
+                              // uiState.switchToType(
+                              //   FamilyHomeUiEnums.DistanceSection,
+                              // );
                             } catch (e) {
+                              debugPrint("this is error in dropdown:$e");
                               ScaffoldMessenger.of(context).showSnackBar(
                                 const SnackBar(
                                   content:

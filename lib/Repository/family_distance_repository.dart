@@ -15,7 +15,7 @@ class FamilyDistanceRepository extends ChangeNotifier {
     final databaseReference =
         FirebaseDatabase.instance.ref().child('Providers');
     DatabaseEvent snapshot = await databaseReference.once();
-
+    debugPrint("this is address of providers:${snapshot.snapshot.value}");
     final data = snapshot.snapshot.value as Map<dynamic, dynamic>?;
 
     if (data == null) {
@@ -44,6 +44,7 @@ class FamilyDistanceRepository extends ChangeNotifier {
 
     try {
       DatabaseEvent snapshot = await databaseReference.once();
+      debugPrint("this is address of family:${snapshot.snapshot.value}");
       final address = snapshot.snapshot.value as String?;
 
       if (address != null) {
@@ -59,7 +60,15 @@ class FamilyDistanceRepository extends ChangeNotifier {
   }
 
   // Function to get the distance in kilometers between two addresses
+
+  // Function to filter providers based on distance from the current family address
+  // Function to get the distance in kilometers between two addresses
   Future<double> getDistanceInKm(String origin, String destination) async {
+    // Validate addresses
+    if (origin.isEmpty || destination.isEmpty) {
+      throw Exception('Origin or destination address is empty');
+    }
+
     String encodedOrigin = Uri.encodeComponent(origin);
     String encodedDestination = Uri.encodeComponent(destination);
 
@@ -91,35 +100,15 @@ class FamilyDistanceRepository extends ChangeNotifier {
     }
   }
 
-  // Function to filter providers based on distance from the current family address
+// In filterProvidersByDistance, ensure providerAddress and familyAddress are not null or empty
   Future<void> filterProvidersByDistance(
       BuildContext context, double maxDistanceKm) async {
-    showDialog(
-      context: context,
-      barrierDismissible:
-          false, // Prevents dialog from being dismissed by tapping outside
-      builder: (BuildContext context) {
-        return const Dialog(
-          child: Padding(
-            padding: EdgeInsets.all(16.0),
-            child: Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                CircularProgressIndicator(),
-                SizedBox(width: 16),
-                Text("Getting Providers..."),
-              ],
-            ),
-          ),
-        );
-      },
-    );
     try {
       List<Map<String, dynamic>> providers = await fetchProvidersData();
       String? familyAddress = await getFamilyAddress();
 
-      if (familyAddress == null) {
-        Navigator.of(context).pop();
+      if (familyAddress == null || familyAddress.isEmpty) {
+        print('No valid family address found');
         return; // Exit if no family address is found
       }
 
@@ -127,29 +116,65 @@ class FamilyDistanceRepository extends ChangeNotifier {
 
       for (var provider in providers) {
         String? providerAddress = provider['address'] as String?;
-        if (providerAddress == null) {
-          print('Provider address is null, skipping this provider.');
+        debugPrint(
+            "This is destination address $providerAddress of ${provider['firstName']}");
+
+        if (providerAddress == null || providerAddress.isEmpty) {
+          print('Provider address is null or empty, skipping this provider.');
           continue;
         }
 
         double distance = await getDistanceInKm(familyAddress, providerAddress);
-        debugPrint(
-            " This Provider ${provider['firstName'] + provider['lastName']} has been added ");
+
         if (distance <= maxDistanceKm) {
+          debugPrint(
+              " This Provider ${provider['firstName'] + provider['lastName']} has been added ");
           _distanceFilterProviders.add(provider);
         }
       }
 
       notifyListeners(); // Notify listeners that the data has been updated
-    } finally {
-      Navigator.of(context)
-          .pop(); // Ensure the loading dialog is hidden once processing is done
+    } catch (e) {
+      print('Error filtering providers by distance: $e');
     }
   }
 
-  void _showLoadingDialog(BuildContext context) {}
+  Future<void> filterFamiliesByPassion(
+      String passion, double distance, BuildContext context) async {
+    try {
+      // Clear the list first to reset the state
 
-  void _hideLoadingDialog(BuildContext context) {
-    Navigator.of(context).pop(); // Closes the loading dialog
+      _distanceFilterProviders.clear();
+
+      // Fetch the data once
+      List<Map<String, dynamic>> providers = await fetchProvidersData();
+
+      if (passion.isEmpty) {
+        // If the search text is empty, do not filter by passion, but by distance
+        await filterProvidersByDistance(context, distance);
+      } else {
+        // Otherwise, filter the families by passion
+        for (var provider in providers) {
+          List<dynamic>? providerPassions =
+              provider['Passions'] as List<dynamic>?;
+
+          if (providerPassions != null) {
+            // Check if any passion in the family's passions contains the input substring
+            bool matches = providerPassions.any((p) =>
+                p.toString().toLowerCase().contains(passion.toLowerCase()));
+
+            if (matches) {
+              _distanceFilterProviders.add(provider);
+            }
+          }
+        }
+      }
+      // Notify listeners outside of the loop to reduce redundant updates
+      notifyListeners();
+
+      debugPrint("Filtered providers by passion: $_distanceFilterProviders");
+    } catch (e) {
+      debugPrint('Error filtering providers by passion: $e');
+    }
   }
 }

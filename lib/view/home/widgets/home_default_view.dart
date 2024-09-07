@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:nanny_fairy/Repository/home_ui_repostory.dart';
 import 'package:nanny_fairy/ViewModel/provider_distance_view_model.dart';
 import 'package:nanny_fairy/ViewModel/provider_home_view_model.dart';
 import 'package:nanny_fairy/res/components/colors.dart';
@@ -198,7 +197,7 @@ class _HomeDefaultViewState extends State<HomeDefaultView> {
                   ),
                   const VerticalSpeacing(16.0),
                   SizedBox(
-                    height: MediaQuery.of(context).size.height / 2,
+                    height: MediaQuery.of(context).size.height / 3,
                     child: families.isEmpty
                         ? const ShimmerUi()
                         : SingleChildScrollView(

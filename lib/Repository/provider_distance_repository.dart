@@ -55,7 +55,6 @@ class ProviderDistanceRepository extends ChangeNotifier {
   Future<void> filterFamiliesByDistance(
       double maxDistanceKm, BuildContext context) async {
     try {
-      notifyListeners();
       List<Map<String, dynamic>> families = await fetchFamiliesData();
       String? providerAddress = await getProviderAddress();
 
