@@ -150,6 +150,7 @@ class _LoginViewState extends State<LoginView> {
                       maxLines: 1,
                       hintText: 'hasnainDev@gmail.com'),
                   TextFieldCustom(
+                      obscureText: true,
                       controller: passwordController,
                       maxLines: 1,
                       hintText: '*********'),

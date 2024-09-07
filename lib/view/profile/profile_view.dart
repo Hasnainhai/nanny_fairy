@@ -224,7 +224,7 @@ class _ProfileViewState extends State<ProfileView> {
                     // Navigate to the login view and remove all previous routes
                     Navigator.pushNamedAndRemoveUntil(
                       context,
-                      RoutesName.loginView,
+                      RoutesName.loginOrSignup,
                       (Route<dynamic> route) => false,
                     );
                   },

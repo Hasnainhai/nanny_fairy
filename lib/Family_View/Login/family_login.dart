@@ -150,6 +150,7 @@ class _LoginViewFamilyState extends State<LoginViewFamily> {
                       maxLines: 1,
                       hintText: 'hasnainDev@gmail.com'),
                   TextFieldCustom(
+                    obscureText: true,
                       controller: passwordController,
                       maxLines: 1,
                       hintText: '*********'),
