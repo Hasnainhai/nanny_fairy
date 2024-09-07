@@ -112,7 +112,8 @@ class _ProfileViewState extends State<ProfileView> {
                 children: [
                   CircleAvatar(
                     radius: 40,
-                    foregroundImage: NetworkImage(provider['profile']??'https://play-lh.googleusercontent.com/jInS55DYPnTZq8GpylyLmK2L2cDmUoahVacfN_Js_TsOkBEoizKmAl5-p8iFeLiNjtE=w526-h296-rw'),
+                    foregroundImage: NetworkImage(provider['profile'] ??
+                        'https://play-lh.googleusercontent.com/jInS55DYPnTZq8GpylyLmK2L2cDmUoahVacfN_Js_TsOkBEoizKmAl5-p8iFeLiNjtE=w526-h296-rw'),
                     backgroundImage: const NetworkImage(
                         'https://play-lh.googleusercontent.com/jInS55DYPnTZq8GpylyLmK2L2cDmUoahVacfN_Js_TsOkBEoizKmAl5-p8iFeLiNjtE=w526-h296-rw'),
                   ),

@@ -131,7 +131,7 @@ class _HomeViewState extends State<HomeView> {
                               ),
                             ),
                             subtitle: Text(
-                              "${provider['firstName'] ?? 'Name'} ${provider['lastName']?? 'Name'}",
+                              "${provider['firstName'] ?? 'Name'} ${provider['lastName'] ?? 'Name'}",
                               style: GoogleFonts.getFont(
                                 "Poppins",
                                 textStyle: const TextStyle(
