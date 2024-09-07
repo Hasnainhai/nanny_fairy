@@ -139,9 +139,42 @@ class FamilyDistanceRepository extends ChangeNotifier {
     }
   }
 
-  // void _showLoadingDialog(BuildContext context) {}
+  Future<void> filterFamiliesByPassion(
+      String passion, double distance, BuildContext context) async {
+    try {
+      // Clear the list first to reset the state
 
-  // void _hideLoadingDialog(BuildContext context) {
-  //   Navigator.of(context).pop(); // Closes the loading dialog
-  // }
+      _distanceFilterProviders.clear();
+
+      // Fetch the data once
+      List<Map<String, dynamic>> providers = await fetchProvidersData();
+
+      if (passion.isEmpty) {
+        // If the search text is empty, do not filter by passion, but by distance
+        await filterProvidersByDistance(context, distance);
+      } else {
+        // Otherwise, filter the families by passion
+        for (var provider in providers) {
+          List<dynamic>? providerPassions =
+              provider['Passions'] as List<dynamic>?;
+
+          if (providerPassions != null) {
+            // Check if any passion in the family's passions contains the input substring
+            bool matches = providerPassions.any((p) =>
+                p.toString().toLowerCase().contains(passion.toLowerCase()));
+
+            if (matches) {
+              _distanceFilterProviders.add(provider);
+            }
+          }
+        }
+      }
+      // Notify listeners outside of the loop to reduce redundant updates
+      notifyListeners();
+
+      debugPrint("Filtered providers by passion: $_distanceFilterProviders");
+    } catch (e) {
+      debugPrint('Error filtering providers by passion: $e');
+    }
+  }
 }
