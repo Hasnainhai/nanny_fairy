@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:nanny_fairy/FamilyController/family_home_controller.dart';
+import 'package:nanny_fairy/Family_View/findJobFamily/family_all_jobs_view.dart';
 import 'package:nanny_fairy/Family_View/findJobFamily/provider_detail.dart';
 import 'package:nanny_fairy/Family_View/homeFamily/home_view_family.dart';
 import 'package:nanny_fairy/Family_View/homeFamily/widgets/bookCart_home_widget.dart';
@@ -68,47 +69,60 @@ class _FamilyDefaultViewState extends State<FamilyDefaultView> {
           ),
         ),
         const VerticalSpeacing(10),
-        const SizedBox(
+        SizedBox(
           height: 120,
           child: SingleChildScrollView(
             scrollDirection: Axis.horizontal,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                SizedBox(width: 16),
+                const SizedBox(width: 16),
                 HomeFeatureContainerFamily(
-                  bgColor: Color(0xff51A1BA),
+                  bgColor: const Color(0xff51A1BA),
                   img: 'images/cleaning.png',
                   title: 'Cleaning',
                   txColor: AppColor.whiteColor,
+                  ontap: () {},
                 ),
-                SizedBox(width: 16),
+                const SizedBox(width: 16),
                 HomeFeatureContainerFamily(
                   txColor: AppColor.whiteColor,
-                  bgColor: Color(0xffFEAA48),
+                  bgColor: const Color(0xffFEAA48),
                   img: 'images/homeSitter.png',
-                  title: 'Sitter',
+                  title: 'Home Sitter',
+                  ontap: () {},
                 ),
-                SizedBox(width: 16),
+                const SizedBox(width: 16),
+                HomeFeatureContainerFamily(
+                  txColor: AppColor.whiteColor,
+                  bgColor: const Color(0xffDDC912),
+                  img: 'images/cleaning.png',
+                  title: 'Elderly care',
+                  ontap: () {},
+                ),
+                const SizedBox(width: 16),
+                HomeFeatureContainerFamily(
+                  txColor: AppColor.whiteColor,
+                  bgColor: const Color(0xffFEAA48),
+                  img: 'images/homeSitter.png',
+                  title: 'Animal care',
+                  ontap: () {},
+                ),
+                const SizedBox(width: 16),
                 HomeFeatureContainerFamily(
                   txColor: AppColor.whiteColor,
                   bgColor: Color(0xffDDC912),
                   img: 'images/cleaning.png',
-                  title: 'Eiderly',
+                  title: 'Homework',
+                  ontap: () {},
                 ),
-                SizedBox(width: 16),
-                HomeFeatureContainerFamily(
-                  txColor: AppColor.whiteColor,
-                  bgColor: Color(0xffFEAA48),
-                  img: 'images/homeSitter.png',
-                  title: 'Sitter',
-                ),
-                SizedBox(width: 16),
+                const SizedBox(width: 16),
                 HomeFeatureContainerFamily(
                   txColor: AppColor.whiteColor,
                   bgColor: Color(0xffDDC912),
                   img: 'images/cleaning.png',
-                  title: 'Eiderly',
+                  title: 'Music lesson',
+                  ontap: () {},
                 ),
               ],
             ),
@@ -141,8 +155,12 @@ class _FamilyDefaultViewState extends State<FamilyDefaultView> {
                               ),
                               InkWell(
                                 onTap: () {
-                                  uiState.switchToType(
-                                      FamilyHomeUiEnums.DefaultSection);
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (c) => const FamilyAllJobsView(),
+                                    ),
+                                  );
                                 },
                                 child: Text(
                                   'See All',

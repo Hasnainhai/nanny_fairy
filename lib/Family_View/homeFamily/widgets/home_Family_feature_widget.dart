@@ -4,15 +4,19 @@ import '../../../res/components/colors.dart';
 import '../../../res/components/widgets/vertical_spacing.dart';
 
 class HomeFeatureContainerFamily extends StatelessWidget {
-  const HomeFeatureContainerFamily(
-      {super.key,
-        required this.img,
-        required this.title,
-     required this.bgColor, required this.txColor});
+  const HomeFeatureContainerFamily({
+    super.key,
+    required this.img,
+    required this.title,
+    required this.bgColor,
+    required this.txColor,
+    required this.ontap,
+  });
   final String img;
   final String title;
   final Color bgColor;
   final Color txColor;
+  final VoidCallback ontap;
 
   @override
   Widget build(BuildContext context) {
@@ -59,13 +63,12 @@ class HomeFeatureContainerFamily extends StatelessWidget {
               style: GoogleFonts.getFont(
                 "Poppins",
                 textStyle: const TextStyle(
-                  fontSize: 14,
+                  fontSize: 12,
                   fontWeight: FontWeight.w400,
                   color: AppColor.whiteColor,
                 ),
               ),
             ),
-
           ],
         ),
       ),
