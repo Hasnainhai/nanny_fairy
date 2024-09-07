@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:intl/intl.dart';
 import 'package:nanny_fairy/FamilyController/family_auth_controller.dart';
 import 'package:nanny_fairy/ViewModel/auth_view_model.dart';
 import 'package:nanny_fairy/res/components/rounded_button.dart';
@@ -54,6 +55,22 @@ class _RegisterDetailsFamilyState extends State<RegisterDetailsFamily> {
     dobController.dispose();
   }
 
+  Future<void> selectDate(BuildContext context) async {
+    DateTime? pickedDate = await showDatePicker(
+      context: context,
+      initialDate: DateTime.now(),
+      firstDate: DateTime(1900),
+      lastDate: DateTime.now(),
+    );
+
+    if (pickedDate != null) {
+      String formattedDate = DateFormat('yyyy-MM-dd').format(pickedDate);
+      setState(() {
+        dobController.text = formattedDate;
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final authViewModelFamily = Provider.of<FamilyAuthController>(context);
@@ -104,62 +121,77 @@ class _RegisterDetailsFamilyState extends State<RegisterDetailsFamily> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 const VerticalSpeacing(30.0),
-                 Row(
+                Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Expanded(
                         child: TextFieldCustom(
-                          controller: firstNameController,
-
-                            prefixIcon: Icon(Icons.person_outline),
+                            controller: firstNameController,
+                            prefixIcon: const Icon(Icons.person_outline),
                             maxLines: 1,
                             hintText: 'Enter Name')),
-                    SizedBox(width: 12),
+                    const SizedBox(width: 12),
                     Expanded(
                         child: TextFieldCustom(
                             controller: lastNameController,
-                            prefixIcon: Icon(Icons.person_outline),
+                            prefixIcon: const Icon(Icons.person_outline),
                             maxLines: 1,
                             hintText: 'Enter last')),
                   ],
                 ),
                 const VerticalSpeacing(10),
-                 TextFieldCustom(
-                     controller: addressController,
-                    prefixIcon: Icon(Icons.location_on_outlined),
+                TextFieldCustom(
+                    keyboardType: TextInputType.streetAddress,
+                    controller: addressController,
+                    prefixIcon: const Icon(Icons.location_on_outlined),
                     maxLines: 1,
                     hintText: 'Enter Address'),
                 const VerticalSpeacing(10),
-                 Row(
+                Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Expanded(
                         child: TextFieldCustom(
-                          controller: houseNumberController,
-                            prefixIcon: Icon(Icons.home_outlined),
+                            keyboardType:
+                                const TextInputType.numberWithOptions(),
+                            controller: houseNumberController,
+                            prefixIcon: const Icon(Icons.home_outlined),
                             maxLines: 1,
                             hintText: 'House Number')),
-                    SizedBox(width: 12),
+                    const SizedBox(width: 12),
                     Expanded(
                         child: TextFieldCustom(
-                          controller: postCodeController,
-                            prefixIcon: Icon(Icons.lock_outline),
+                            keyboardType:
+                                const TextInputType.numberWithOptions(),
+                            controller: postCodeController,
+                            prefixIcon: const Icon(Icons.lock_outline),
                             maxLines: 1,
                             hintText: 'Post Code')),
                   ],
                 ),
                 const VerticalSpeacing(10),
-                 TextFieldCustom(
-                   controller: phoneController,
-                    prefixIcon: Icon(Icons.phone),
+                TextFieldCustom(
+                    keyboardType: TextInputType.phone,
+                    controller: phoneController,
+                    prefixIcon: const Icon(Icons.phone),
                     maxLines: 1,
                     hintText: 'Enter telephone number'),
                 const VerticalSpeacing(10),
-                 TextFieldCustom(
-                   controller: dobController,
-                    prefixIcon: Icon(Icons.calendar_month_outlined),
-                    maxLines: 1,
-                    hintText: 'Date of birth'),
+                GestureDetector(
+                  onTap: () => selectDate(context),
+                  child: AbsorbPointer(
+                    absorbing: true,
+                    child: TextFieldCustom(
+                      controller: dobController,
+                      prefixIcon: InkWell(
+                        onTap: () => selectDate(context),
+                        child: const Icon(Icons.calendar_month_outlined),
+                      ),
+                      maxLines: 1,
+                      hintText: 'Date of birth',
+                    ),
+                  ),
+                ),
                 const VerticalSpeacing(10),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.start,

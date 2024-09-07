@@ -114,13 +114,14 @@ class _ProfileViewFamilyState extends State<ProfileViewFamily> {
                 children: [
                   CircleAvatar(
                     radius: 40,
-                    foregroundImage: NetworkImage(provider['profile']),
+                    foregroundImage:
+                        NetworkImage(provider['profile'] ?? defaultProfile),
                     backgroundImage: const NetworkImage(
                         'https://play-lh.googleusercontent.com/jInS55DYPnTZq8GpylyLmK2L2cDmUoahVacfN_Js_TsOkBEoizKmAl5-p8iFeLiNjtE=w526-h296-rw'),
                   ),
                   const VerticalSpeacing(16),
                   Text(
-                    "${provider['firstName']} ${provider['lastName']}",
+                    "${provider['firstName'] ?? 'Name'} ${provider['lastName'] ?? 'Name'}",
                     style: GoogleFonts.getFont(
                       "Poppins",
                       textStyle: const TextStyle(
