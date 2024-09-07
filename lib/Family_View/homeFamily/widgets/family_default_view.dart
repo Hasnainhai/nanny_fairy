@@ -86,7 +86,7 @@ class _FamilyDefaultViewState extends State<FamilyDefaultView> {
                         familyDistanceViewModel.filterProvidersBySinglePassions(
                             "Cleaning",
                             familyDistance == null
-                                ? 12
+                                ? 2
                                 : double.parse(familyDistance!),
                             context);
                       },
@@ -101,7 +101,7 @@ class _FamilyDefaultViewState extends State<FamilyDefaultView> {
                         familyDistanceViewModel.filterProvidersBySinglePassions(
                             "Home Sitter",
                             familyDistance == null
-                                ? 12
+                                ? 2
                                 : double.parse(familyDistance!),
                             context);
                       },
@@ -116,7 +116,7 @@ class _FamilyDefaultViewState extends State<FamilyDefaultView> {
                         familyDistanceViewModel.filterProvidersBySinglePassions(
                             "Elderly care",
                             familyDistance == null
-                                ? 12
+                                ? 2
                                 : double.parse(familyDistance!),
                             context);
                       },
@@ -131,7 +131,7 @@ class _FamilyDefaultViewState extends State<FamilyDefaultView> {
                         familyDistanceViewModel.filterProvidersBySinglePassions(
                             "Animal care",
                             familyDistance == null
-                                ? 12
+                                ? 2
                                 : double.parse(familyDistance!),
                             context);
                       },
@@ -141,12 +141,12 @@ class _FamilyDefaultViewState extends State<FamilyDefaultView> {
                       txColor: AppColor.whiteColor,
                       bgColor: const Color(0xffDDC912),
                       img: 'images/cleaning.png',
-                      title: 'Homework',
+                      title: 'Home work',
                       ontap: () {
                         familyDistanceViewModel.filterProvidersBySinglePassions(
-                            "Homework",
+                            "Home work",
                             familyDistance == null
-                                ? 12
+                                ? 2
                                 : double.parse(familyDistance!),
                             context);
                       },
@@ -161,7 +161,7 @@ class _FamilyDefaultViewState extends State<FamilyDefaultView> {
                         familyDistanceViewModel.filterProvidersBySinglePassions(
                             "Music lesson",
                             familyDistance == null
-                                ? 12
+                                ? 2
                                 : double.parse(familyDistance!),
                             context);
                       },
@@ -199,12 +199,15 @@ class _FamilyDefaultViewState extends State<FamilyDefaultView> {
                               ),
                               InkWell(
                                 onTap: () {
-                                  // Navigator.push(
-                                  //   context,
-                                  //   MaterialPageRoute(
-                                  //     builder: (c) => const FamilyAllJobsView(),
-                                  //   ),
-                                  // );
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (c) => FamilyAllJobsView(
+                                        providers: familyDistanceController
+                                            .distanceFilteredProviders,
+                                      ),
+                                    ),
+                                  );
                                 },
                                 child: Text(
                                   'See All',

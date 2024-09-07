@@ -214,36 +214,41 @@ class FamilyDistanceRepository extends ChangeNotifier {
     try {
       debugPrint("filterFamiliesBySinglePassion called with passion: $passion");
 
+      // Fetch all providers
       List<Map<String, dynamic>> providers = await fetchProvidersData();
       debugPrint("Fetched providers: ${providers.length}");
 
       List<Map<String, dynamic>> providersSinglePassionData = [];
 
+      // If no passion is provided, filter by distance only
       if (passion.isEmpty) {
         await filterProvidersByDistance(context, distance);
       } else {
+        // Iterate through all providers
         for (var provider in providers) {
           List<dynamic>? providerPassions =
               provider['Passions'] as List<dynamic>?;
 
+          // If the provider's passions list is not null and contains the passion, add them to the result
           if (providerPassions != null && providerPassions.contains(passion)) {
             providersSinglePassionData.add(provider);
           }
         }
+
+        // Log the number of filtered providers
         debugPrint(
             "Filtered providers by passion: ${providersSinglePassionData.length}");
-
-        if (providersSinglePassionData.isNotEmpty) {
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (c) => FamilyAllJobsView(
-                providers: providersSinglePassionData,
-              ),
-            ),
-          );
-        }
       }
+
+      // Navigate to the view regardless of whether the list is empty or not
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (c) => FamilyAllJobsView(
+            providers: providersSinglePassionData, // Can be empty or populated
+          ),
+        ),
+      );
     } catch (e) {
       debugPrint('Error filtering providers by single passion: $e');
     }

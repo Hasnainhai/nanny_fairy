@@ -47,11 +47,20 @@ class _FamilySearchBarProviderState extends State<FamilySearchBarProvider> {
     final viewModel = context.read<FamilyDistanceViewModel>();
     final searchText = searchController.text;
 
+    // Debugging output
+    print('Search text: "$searchText"');
+
     if (searchText.isNotEmpty) {
+      print('Filtering by passions: $searchText');
       viewModel.filterProvidersByPassions(
           searchText, double.parse(selectedKM), context);
     } else {
-      viewModel.filterProvidersByDistance(double.parse(selectedKM), context);
+      print('Filtering by distance: $selectedKM km');
+      viewModel.filterProvidersByDistance(
+          familyDistance == null
+              ? double.parse(selectedKM)
+              : double.parse(familyDistance!),
+          context);
     }
   }
 
