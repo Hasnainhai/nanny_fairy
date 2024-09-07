@@ -213,7 +213,6 @@ class _HomeDefaultViewState extends State<HomeDefaultView> {
                                     family['reviews'] ?? {};
                                 double averageRating =
                                     calculateAverageRating(reviews);
-
                                 return BookingCartWidget(
                                   primaryButtonTxt: 'View',
                                   ontapView: () {
