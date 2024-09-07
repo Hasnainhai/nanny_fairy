@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:nanny_fairy/Family_View/homeFamily/home_view_family.dart';
 import 'package:nanny_fairy/Repository/family_distance_repository.dart';
 import 'package:nanny_fairy/Repository/family_home_ui_repository.dart';
 import 'package:nanny_fairy/ViewModel/family_distance_view_model.dart';
@@ -97,8 +98,8 @@ class _FamilySearchBarProviderState extends State<FamilySearchBarProvider> {
                               viewModel.fetchUsers();
                               viewModel
                                   .searchUsersByPassion(searchController.text);
-                              uiState.switchToType(
-                                  FamilyHomeUiEnums.SearchSection);
+                              // uiState.switchToType(
+                              //     FamilyHomeUiEnums.SearchSection);
                             } else {
                               uiState.switchToType(
                                   FamilyHomeUiEnums.DefaultSection);
@@ -200,16 +201,18 @@ class _FamilySearchBarProviderState extends State<FamilySearchBarProvider> {
                           if (newValue != null) {
                             setState(() {
                               selectedKM = newValue;
+                              familyDistance = selectedKM;
                             });
                             try {
                               // Call the method to filter providers by distance
                               await distanceViewModel.filterProvidersByDistance(
                                   double.parse(selectedKM), context);
 
-                              uiState.switchToType(
-                                FamilyHomeUiEnums.DistanceSection,
-                              );
+                              // uiState.switchToType(
+                              //   FamilyHomeUiEnums.DistanceSection,
+                              // );
                             } catch (e) {
+                              debugPrint("this is error in dropdown:$e");
                               ScaffoldMessenger.of(context).showSnackBar(
                                 const SnackBar(
                                   content:

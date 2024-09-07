@@ -4,17 +4,17 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:nanny_fairy/FamilyController/get_family_info_controller.dart';
 import 'package:nanny_fairy/Family_View/homeFamily/widgets/family_default_view.dart';
-import 'package:nanny_fairy/Family_View/homeFamily/widgets/family_distance_view.dart';
-import 'package:nanny_fairy/Family_View/homeFamily/widgets/family_filter_view.dart';
-import 'package:nanny_fairy/Family_View/homeFamily/widgets/family_search__view.dart';
-import 'package:nanny_fairy/Repository/family_distance_repository.dart';
+
 import 'package:nanny_fairy/Repository/family_home_ui_repository.dart';
+import 'package:nanny_fairy/ViewModel/family_distance_view_model.dart';
 import 'package:nanny_fairy/res/components/colors.dart';
 import 'package:nanny_fairy/res/components/widgets/family_search_bar.dart';
 import 'package:nanny_fairy/res/components/widgets/family_home_ui_enums.dart';
 import 'package:nanny_fairy/res/components/widgets/vertical_spacing.dart';
 import 'package:provider/provider.dart';
 import '../../utils/routes/routes_name.dart';
+
+String? familyDistance;
 
 class HomeViewFamily extends StatefulWidget {
   const HomeViewFamily({super.key});
@@ -37,7 +37,21 @@ class _HomeViewFamilyState extends State<HomeViewFamily> {
   @override
   Widget build(BuildContext context) {
     final familyHomeView = Provider.of<GetFamilyInfoController>(context);
-    FamilyDistanceRepository distanceRepository = FamilyDistanceRepository();
+    final distanceViewModel =
+        Provider.of<FamilyDistanceViewModel>(context, listen: false);
+    Future.delayed(const Duration(seconds: 3), () {
+      // Fetch users after the delay
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        // Call your methods here
+
+        // Provider.of<ProviderHomeViewModel>(context, listen: false)
+        //     .getCurrentUser();
+
+        distanceViewModel.filterProvidersByDistance(
+            familyDistance == null ? 12 : double.parse(familyDistance!),
+            context);
+      });
+    });
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: SingleChildScrollView(
@@ -125,18 +139,13 @@ class _HomeViewFamilyState extends State<HomeViewFamily> {
                 Widget selectedWidget;
 
                 switch (uiState.selectedType) {
-                  case FamilyHomeUiEnums.SearchSection:
-                    selectedWidget = const FamilySearchView();
-                    break;
                   case FamilyHomeUiEnums.DefaultSection:
                     selectedWidget = const FamilyDefaultView();
                     break;
-                  case FamilyHomeUiEnums.FilterSection:
-                    selectedWidget = const FamilyFilterView();
-                    break;
-                  case FamilyHomeUiEnums.DistanceSection:
-                    selectedWidget = const FamilyDistanceFilterView();
-                    break;
+
+                  // case FamilyHomeUiEnums.DistanceSection:
+                  //   selectedWidget = const FamilyDistanceFilterView();
+                  //   break;
                 }
 
                 return selectedWidget;
