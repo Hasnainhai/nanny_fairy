@@ -10,6 +10,7 @@ import 'package:nanny_fairy/res/components/widgets/family_search_bar.dart';
 import 'package:nanny_fairy/res/components/widgets/family_home_ui_enums.dart';
 import 'package:nanny_fairy/res/components/widgets/vertical_spacing.dart';
 import 'package:provider/provider.dart';
+import 'package:shimmer/shimmer.dart';
 import '../../utils/routes/routes_name.dart';
 
 String? familyDistance;
@@ -32,22 +33,22 @@ class _HomeViewFamilyState extends State<HomeViewFamily> {
     Future.delayed(const Duration(seconds: 2), () {
       WidgetsBinding.instance.addPostFrameCallback((_) {
         if (!_hasFetchedProviders) {
-          Provider.of<GetFamilyInfoController>(context, listen: false)
-              .getFamilyInfo();
+          // Provider.of<GetFamilyInfoController>(context, listen: false)
+          //     .getFamilyInfo();
 
-          Provider.of<FamilyDistanceViewModel>(context, listen: false)
-              .filterProvidersByDistance(
-                  familyDistance == null ? 2 : double.parse(familyDistance!),
-                  context)
-              .then((_) {
-            if (mounted) {
-              setState(() {
-                _hasFetchedProviders = true;
-              });
-            }
-          }).catchError((e) {
-            debugPrint("Error filtering providers: $e");
-          });
+          // Provider.of<FamilyDistanceViewModel>(context, listen: false)
+          //     .filterProvidersByDistance(
+          //         familyDistance == null ? 2 : double.parse(familyDistance!),
+          //         context)
+          //     .then((_) {
+          //   if (mounted) {
+          //     setState(() {
+          //       _hasFetchedProviders = true;
+          //     });
+          //   }
+          // }).catchError((e) {
+          //   debugPrint("Error filtering providers: $e");
+          // });
         }
       });
     });
@@ -79,8 +80,40 @@ class _HomeViewFamilyState extends State<HomeViewFamily> {
                     future: familyHomeView.getFamilyInfo(),
                     builder: (context, snapshot) {
                       if (snapshot.connectionState == ConnectionState.waiting) {
-                        return const Center(
-                          child: CircularProgressIndicator(),
+                        return Center(
+                          child: Shimmer.fromColors(
+                            baseColor: Colors.grey[300]!,
+                            highlightColor: Colors.grey[100]!,
+                            child: ListTile(
+                              leading: const CircleAvatar(
+                                radius: 40,
+                                backgroundImage: const NetworkImage(
+                                    'https://play-lh.googleusercontent.com/jInS55DYPnTZq8GpylyLmK2L2cDmUoahVacfN_Js_TsOkBEoizKmAl5-p8iFeLiNjtE=w526-h296-rw'),
+                              ),
+                              title: Text(
+                                'WellCome',
+                                style: GoogleFonts.getFont(
+                                  "Poppins",
+                                  textStyle: const TextStyle(
+                                    fontSize: 12,
+                                    fontWeight: FontWeight.w500,
+                                    color: AppColor.whiteColor,
+                                  ),
+                                ),
+                              ),
+                              subtitle: Text(
+                                "Name",
+                                style: GoogleFonts.getFont(
+                                  "Poppins",
+                                  textStyle: const TextStyle(
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.w500,
+                                    color: AppColor.whiteColor,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
                         );
                       } else if (snapshot.hasError) {
                         return Center(child: Text('Error: ${snapshot.error}'));

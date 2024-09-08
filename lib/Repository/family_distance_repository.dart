@@ -253,4 +253,146 @@ class FamilyDistanceRepository extends ChangeNotifier {
       debugPrint('Error filtering providers by single passion: $e');
     }
   }
+
+  Future<void> filterProviders({
+    required BuildContext context, // Pass context for navigation
+    required double maxDistanceKm, // For distance filtering
+    required double minRate,
+    required double maxRate,
+    required double minRating,
+    required List<String> selectedPassions,
+    required Map<String, Map<String, bool>> selectedAvailability,
+  }) async {
+    List<Map<String, dynamic>> _filteredProviders = [];
+
+    // Show loading dialog
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) {
+        return const Center(
+          child: CircularProgressIndicator(),
+        );
+      },
+    );
+
+    try {
+      // Step 1: Fetch the family address for distance calculation
+      String? familyAddress = await getFamilyAddress();
+      if (familyAddress == null || familyAddress.isEmpty) {
+        print('No valid family address found');
+        Navigator.of(context).pop(); // Close the loading dialog
+        return;
+      }
+
+      // Step 2: Fetch all provider data directly from Firebase as a list of maps
+      List<Map<String, dynamic>> providers = await fetchProvidersData();
+      debugPrint("All Providers: ${providers.length}");
+
+      // Step 3: Filter out providers without a valid bio
+      List<Map<String, dynamic>> providersWithBio = providers.where((provider) {
+        String? bio = provider['bio']?.toString().trim();
+        return bio != null && bio.isNotEmpty;
+      }).toList();
+      debugPrint("After bio filter: ${providersWithBio.length}");
+
+      // Step 4: Filter providers by distance
+      List<Map<String, dynamic>> distanceFilteredProviders = [];
+      for (var provider in providersWithBio) {
+        String? providerAddress = provider['address']?.toString().trim();
+        if (providerAddress != null && providerAddress.isNotEmpty) {
+          double distance =
+              await getDistanceInKm(familyAddress, providerAddress);
+          debugPrint(
+              "Distance to provider ${provider['firstName']}: $distance km");
+
+          if (distance <= maxDistanceKm) {
+            distanceFilteredProviders.add(provider);
+          }
+        }
+      }
+      debugPrint("After distance filter: ${distanceFilteredProviders.length}");
+
+      // Step 5: Filter by hourly rate
+      List<Map<String, dynamic>> rateFilteredProviders =
+          distanceFilteredProviders.where((provider) {
+        double rate =
+            double.tryParse(provider['hoursrate']?.toString() ?? '0') ?? 0.0;
+        return rate >= minRate && rate <= maxRate;
+      }).toList();
+      debugPrint("After rate filter: ${rateFilteredProviders.length}");
+
+      // Step 6: Filter by average rating
+      List<Map<String, dynamic>> ratingFilteredProviders =
+          rateFilteredProviders.where((provider) {
+        double rating =
+            double.tryParse(provider['averageRating']?.toString() ?? '0') ??
+                0.0;
+        return rating >= minRating;
+      }).toList();
+      debugPrint("After rating filter: ${ratingFilteredProviders.length}");
+
+      // Step 7: Filter by passions (at least one passion must match)
+      List<Map<String, dynamic>> passionFilteredProviders = [];
+      for (var provider in ratingFilteredProviders) {
+        List<dynamic> providerPassions = provider['Passions'] ?? [];
+        List<String> lowercaseProviderPassions =
+            providerPassions.map((p) => p.toString().toLowerCase()).toList();
+
+        // Check if at least one selectedPassion matches the provider's passions
+        bool anyPassionMatch = false;
+        for (String selectedPassion in selectedPassions) {
+          bool isMatch =
+              lowercaseProviderPassions.contains(selectedPassion.toLowerCase());
+          debugPrint('Checking passion: $selectedPassion, Match: $isMatch');
+
+          if (isMatch) {
+            anyPassionMatch = true; // If any passion matches, set to true
+            break; // Exit the loop early since we only need one match
+          }
+        }
+
+        // If at least one passion matches, add the provider to the filtered list
+        if (anyPassionMatch) {
+          passionFilteredProviders.add(provider);
+        }
+      }
+      debugPrint(
+          "After passions filter (any match): ${passionFilteredProviders.length}");
+
+      // Step 8: Fallback to distance filter if no providers match
+      if (passionFilteredProviders.isEmpty &&
+          ratingFilteredProviders.isEmpty &&
+          rateFilteredProviders.isEmpty) {
+        debugPrint(
+            "No providers match after all filters. Showing only distance filtered providers...");
+        _filteredProviders =
+            distanceFilteredProviders; // Only show distance-filtered providers
+      } else {
+        _filteredProviders = passionFilteredProviders.isNotEmpty
+            ? passionFilteredProviders
+            : ratingFilteredProviders.isNotEmpty
+                ? ratingFilteredProviders
+                : rateFilteredProviders;
+      }
+
+      debugPrint("Final filtered providers: ${_filteredProviders.length}");
+
+      // Step 9: Close the loading dialog
+      Navigator.of(context).pop();
+
+      // Step 10: Navigate to FamilyAllJobsView with the filtered providers
+      Navigator.of(context).push(
+        MaterialPageRoute(
+          builder: (context) =>
+              FamilyAllJobsView(providers: _filteredProviders),
+        ),
+      );
+    } catch (e) {
+      debugPrint("Error filtering providers: $e");
+      Navigator.of(context).pop(); // Close the loading dialog in case of error
+    }
+
+    notifyListeners();
+  }
 }

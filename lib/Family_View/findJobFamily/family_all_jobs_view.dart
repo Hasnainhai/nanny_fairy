@@ -76,7 +76,7 @@ class _FamilyAllJobsViewState extends State<FamilyAllJobsView> {
         child: Padding(
           padding: const EdgeInsets.all(20.0),
           child: SizedBox(
-            height: MediaQuery.of(context).size.height / 3,
+            height: MediaQuery.of(context).size.height,
             child: widget.providers.isEmpty
                 ? const Center(child: Text('No data available'))
                 : SingleChildScrollView(

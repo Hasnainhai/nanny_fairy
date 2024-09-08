@@ -48,6 +48,31 @@ class FamilyDistanceViewModel extends ChangeNotifier {
     }
   }
 
+  Future<void> filterProviders(
+      BuildContext context,
+      double maxDistanceKm,
+      double minRate,
+      double minRating,
+      double maxRate,
+      List<String> selectedPassions,
+      Map<String, Map<String, bool>> selectedAvailability) async {
+    _setLoading(true);
+    try {
+      await _familyDistanceRepository.filterProviders(
+        context: context,
+        maxDistanceKm: maxDistanceKm,
+        minRate: minRate,
+        minRating: minRating,
+        maxRate: maxRate,
+        selectedPassions: selectedPassions,
+        selectedAvailability: selectedAvailability,
+      );
+      notifyListeners(); // Notify listeners to update the UI
+    } finally {
+      _setLoading(false);
+    }
+  }
+
   void _setLoading(bool value) {
     _isLoading = value;
     notifyListeners();
