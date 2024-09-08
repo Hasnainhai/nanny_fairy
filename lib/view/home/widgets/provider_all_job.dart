@@ -66,7 +66,6 @@ class _ProviderAllJobState extends State<ProviderAllJob> {
               color: AppColor.blackColor,
             ),
             onPressed: () {
-              distanceViewModel.distanceFilteredFamilies.clear();
               Navigator.pushNamedAndRemoveUntil(
                 context,
                 RoutesName.dashboard,

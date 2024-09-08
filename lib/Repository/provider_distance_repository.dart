@@ -67,7 +67,7 @@ class ProviderDistanceRepository extends ChangeNotifier {
       for (var family in families) {
         String? familyAddress = family['address'] as String?;
 
-        if (familyAddress == null) {
+        if (familyAddress == null || family['bio'] == null) {
           continue;
         }
 
