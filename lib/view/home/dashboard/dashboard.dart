@@ -1,9 +1,12 @@
 // ignore_for_file: file_names, use_build_context_synchronously, unnecessary_null_comparison
 import 'package:flutter/material.dart';
+import 'package:nanny_fairy/ViewModel/provider_distance_view_model.dart';
+import 'package:nanny_fairy/ViewModel/provider_home_view_model.dart';
 import 'package:nanny_fairy/view/booked/booked_view.dart';
 import 'package:nanny_fairy/view/community/community_view.dart';
 import 'package:nanny_fairy/view/home/home_view.dart';
 import 'package:nanny_fairy/view/profile/profile_view.dart';
+import 'package:provider/provider.dart';
 import '../../../res/components/colors.dart';
 import '../../chat/chat_list.dart';
 
@@ -31,6 +34,21 @@ class _DashBoardScreenState extends State<DashBoardScreen>
     super.initState();
 
     tabController = TabController(length: 5, vsync: this);
+    final distanceViewModel =
+        Provider.of<ProviderDistanceViewModel>(context, listen: false);
+    Future.delayed(const Duration(seconds: 2), () {
+      // Fetch users after the delay
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        // Call your methods here
+
+        Provider.of<ProviderHomeViewModel>(context, listen: false)
+            .getCurrentUser();
+
+        distanceViewModel.filterFamiliesByDistance(
+            providerDistance == null ? 2 : double.parse(providerDistance!),
+            context);
+      });
+    });
   }
 
   // popUp
@@ -105,7 +123,7 @@ class _DashBoardScreenState extends State<DashBoardScreen>
         ],
       ),
       bottomNavigationBar: BottomNavigationBar(
-        items:  const [
+        items: const [
           BottomNavigationBarItem(
             icon: ImageIcon(
               AssetImage('images/home.png'),
@@ -113,7 +131,7 @@ class _DashBoardScreenState extends State<DashBoardScreen>
             label: 'Home',
           ),
           BottomNavigationBarItem(
-            icon:ImageIcon(
+            icon: ImageIcon(
               AssetImage('images/chatting.png'),
             ),
             label: ('chat'),

@@ -225,7 +225,7 @@ class _FamilyDefaultViewState extends State<FamilyDefaultView> {
                           ),
                           const VerticalSpeacing(16.0),
                           SizedBox(
-                            height: MediaQuery.of(context).size.height / 3,
+                            height: MediaQuery.of(context).size.height / 2.6,
                             child: familyDistanceController
                                     .distanceFilteredProviders.isEmpty
                                 ? const Center(child: Text('No data available'))

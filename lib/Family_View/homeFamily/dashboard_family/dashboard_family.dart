@@ -1,9 +1,12 @@
 // ignore_for_file: file_names, use_build_context_synchronously, unnecessary_null_comparison
 
 import 'package:flutter/material.dart';
+import 'package:nanny_fairy/FamilyController/get_family_info_controller.dart';
 import 'package:nanny_fairy/Family_View/bookFamily/book_view_family.dart';
 import 'package:nanny_fairy/Family_View/familyChat/family_chat_list.dart';
 import 'package:nanny_fairy/Family_View/homeFamily/home_view_family.dart';
+import 'package:nanny_fairy/ViewModel/family_distance_view_model.dart';
+import 'package:provider/provider.dart';
 
 import '../../../res/components/colors.dart';
 import '../../communityFamily/community_family.dart';
@@ -18,6 +21,8 @@ class DashBoardFamilyScreen extends StatefulWidget {
 
 class _DashBoardFamilyScreenState extends State<DashBoardFamilyScreen>
     with SingleTickerProviderStateMixin {
+  bool _hasFetchedProviders = false;
+
   TabController? tabController;
   int selectIndex = 0;
   onItemClick(int index) {
@@ -33,6 +38,28 @@ class _DashBoardFamilyScreenState extends State<DashBoardFamilyScreen>
     super.initState();
 
     tabController = TabController(length: 5, vsync: this);
+    Future.delayed(const Duration(seconds: 2), () {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        if (!_hasFetchedProviders) {
+          Provider.of<GetFamilyInfoController>(context, listen: false)
+              .getFamilyInfo();
+
+          Provider.of<FamilyDistanceViewModel>(context, listen: false)
+              .filterProvidersByDistance(
+                  familyDistance == null ? 2 : double.parse(familyDistance!),
+                  context)
+              .then((_) {
+            if (mounted) {
+              setState(() {
+                _hasFetchedProviders = true;
+              });
+            }
+          }).catchError((e) {
+            debugPrint("Error filtering providers: $e");
+          });
+        }
+      });
+    });
   }
 
   // popUp
