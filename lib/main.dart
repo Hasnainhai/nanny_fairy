@@ -125,9 +125,8 @@ class MyApp extends StatelessWidget {
             create: (_) => GetFamilyInfoRepo(),
           ),
           ChangeNotifierProvider<GetFamilyInfoController>(
-            create: (context) =>
-                GetFamilyInfoController(context.read<GetFamilyInfoRepo>()),
-          ),
+              create: (context) =>
+                  GetFamilyInfoController(context.read<GetFamilyInfoRepo>())),
           ChangeNotifierProvider(
             create: (_) => FamilyChatController(
               familyChatRepository: FamilyChatRepository(),
