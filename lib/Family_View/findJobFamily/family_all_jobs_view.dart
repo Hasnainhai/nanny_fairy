@@ -5,6 +5,7 @@ import 'package:nanny_fairy/Family_View/findJobFamily/provider_detail.dart';
 import 'package:nanny_fairy/Family_View/homeFamily/home_view_family.dart';
 import 'package:nanny_fairy/Family_View/homeFamily/widgets/bookCart_home_widget.dart';
 import 'package:nanny_fairy/res/components/colors.dart';
+import 'package:nanny_fairy/res/components/widgets/shimmer_effect.dart';
 import 'package:nanny_fairy/utils/routes/routes_name.dart';
 
 class FamilyAllJobsView extends StatefulWidget {
@@ -78,7 +79,7 @@ class _FamilyAllJobsViewState extends State<FamilyAllJobsView> {
           child: SizedBox(
             height: MediaQuery.of(context).size.height,
             child: widget.providers.isEmpty
-                ? const Center(child: Text('No data available'))
+                ? const ShimmerUi()
                 : SingleChildScrollView(
                     scrollDirection: Axis.vertical,
                     child: Column(
