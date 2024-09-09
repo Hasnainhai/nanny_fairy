@@ -76,7 +76,6 @@ class FamilyDistanceRepository extends ChangeNotifier {
         '&key=AIzaSyCBUyZVjnq9IGxH9Zu6ACNRIJXtkfZ2iuQ'; // Replace with your actual API key
 
     http.Response response = await http.get(Uri.parse(url));
-    print(response.body);
 
     if (response.statusCode == 200) {
       var jsonResponse = jsonDecode(response.body);

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:nanny_fairy/ViewModel/provider_distance_view_model.dart';
 import 'package:nanny_fairy/res/components/colors.dart';
+import 'package:nanny_fairy/res/components/widgets/shimmer_effect.dart';
 import 'package:nanny_fairy/utils/routes/routes_name.dart';
 import 'package:nanny_fairy/view/booked/widgets/booking_widget.dart';
 import 'package:nanny_fairy/view/job/family_detail_provider.dart';
@@ -91,47 +92,53 @@ class _ProviderAllJobState extends State<ProviderAllJob> {
             padding: const EdgeInsets.all(20.0),
             child: SizedBox(
               height: MediaQuery.of(context).size.height,
-              child: SingleChildScrollView(
-                scrollDirection: Axis.vertical,
-                child: Column(
-                  children: widget.distanceFilteredFamilies.map((family) {
-                    List<String> passions =
-                        (family['FamilyPassions'] as List<dynamic>)
-                            .cast<String>();
-                    Map<String, String> ratingsData =
-                        getRatingsAndTotalRatings(family);
-                    Map<dynamic, dynamic> reviews = family['reviews'] ?? {};
-                    double averageRating = calculateAverageRating(reviews);
+              child: widget.distanceFilteredFamilies.isEmpty
+                  ? const ShimmerUi()
+                  : SingleChildScrollView(
+                      scrollDirection: Axis.vertical,
+                      child: Column(
+                        children: widget.distanceFilteredFamilies.map((family) {
+                          List<String> passions =
+                              (family['FamilyPassions'] as List<dynamic>)
+                                  .cast<String>();
+                          Map<String, String> ratingsData =
+                              getRatingsAndTotalRatings(family);
+                          Map<dynamic, dynamic> reviews =
+                              family['reviews'] ?? {};
+                          double averageRating =
+                              calculateAverageRating(reviews);
 
-                    return BookingCartWidget(
-                      primaryButtonTxt: 'View',
-                      ontapView: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (c) => FamilyDetailProvider(
-                              name:
-                                  "${family['firstName']} ${family['lastName']}",
-                              bio: family['bio'] ?? '',
-                              profile: family['profile'],
-                              familyId: family['uid'],
-                              ratings: averageRating,
-                              totalRatings:
-                                  int.parse(ratingsData['totalRatings']!),
-                              passion: passions,
-                            ),
-                          ),
-                        );
-                      },
-                      name: "${family['firstName']} ${family['lastName']}",
-                      profilePic: family['profile'],
-                      passion: passions,
-                      ratings: averageRating,
-                      totalRatings: int.parse(ratingsData['totalRatings']!),
-                    );
-                  }).toList(),
-                ),
-              ),
+                          return BookingCartWidget(
+                            primaryButtonTxt: 'View',
+                            ontapView: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (c) => FamilyDetailProvider(
+                                    name:
+                                        "${family['firstName']} ${family['lastName']}",
+                                    bio: family['bio'] ?? '',
+                                    profile: family['profile'],
+                                    familyId: family['uid'],
+                                    ratings: averageRating,
+                                    totalRatings:
+                                        int.parse(ratingsData['totalRatings']!),
+                                    passion: passions,
+                                  ),
+                                ),
+                              );
+                            },
+                            name:
+                                "${family['firstName']} ${family['lastName']}",
+                            profilePic: family['profile'],
+                            passion: passions,
+                            ratings: averageRating,
+                            totalRatings:
+                                int.parse(ratingsData['totalRatings']!),
+                          );
+                        }).toList(),
+                      ),
+                    ),
             ),
           ),
         ),
