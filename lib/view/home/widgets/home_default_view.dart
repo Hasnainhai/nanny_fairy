@@ -168,13 +168,38 @@ class _HomeDefaultViewState extends State<HomeDefaultView> {
                 //   subTitle: 'Total Chats',
                 // ),
                 const SizedBox(width: 16),
-                const HomeFeatureContainer(
-                  txColor: AppColor.blackColor,
-                  bgColor: AppColor.whiteColor,
-                  img: 'images/families.png',
-                  title: '100k',
-                  subTitle: 'Total Families',
-                ),
+                FutureBuilder(
+                    future: homeViewModel.getPosts(),
+                    builder: (context, snapshot) {
+                      if (snapshot.connectionState == ConnectionState.waiting) {
+                        return Shimmer.fromColors(
+                            baseColor: Colors.grey[300]!,
+                            highlightColor: Colors.grey[100]!,
+                            child: const HomeFeatureContainer(
+                              txColor: AppColor.blackColor,
+                              img: 'images/families.png',
+                              title: '12',
+                              subTitle: 'Total Families',
+                              bgColor: AppColor.whiteColor,
+                            ));
+                      } else if (snapshot.hasData) {
+                        return HomeFeatureContainer(
+                          txColor: AppColor.blackColor,
+                          img: 'images/families.png',
+                          title: snapshot.data!.length.toString(),
+                          subTitle: 'Total Posts',
+                          bgColor: AppColor.whiteColor,
+                        );
+                      } else {
+                        return const HomeFeatureContainer(
+                          txColor: AppColor.blackColor,
+                          img: 'images/families.png',
+                          title: '0',
+                          subTitle: 'Total Posts',
+                          bgColor: AppColor.whiteColor,
+                        );
+                      }
+                    }),
               ],
             ),
           ),
@@ -185,7 +210,12 @@ class _HomeDefaultViewState extends State<HomeDefaultView> {
           child: Consumer<ProviderDistanceViewModel>(
             builder: (context, viewModel, child) {
               final families = viewModel.distanceFilteredFamilies;
-
+              bool isEmpty = false;
+              Future.delayed(const Duration(seconds: 5), () {
+                if (families.isEmpty) {
+                  isEmpty = true;
+                }
+              });
               return Column(
                 children: [
                   Row(
@@ -228,55 +258,113 @@ class _HomeDefaultViewState extends State<HomeDefaultView> {
                     ],
                   ),
                   const VerticalSpeacing(16.0),
-                  SizedBox(
-                    height: MediaQuery.of(context).size.height / 2.6,
-                    child: families.isEmpty
-                        ? const ShimmerUi()
-                        : SingleChildScrollView(
-                            scrollDirection: Axis.vertical,
-                            child: Column(
-                              children: families.map((family) {
-                                List<String> passions =
-                                    (family['FamilyPassions'] as List<dynamic>)
-                                        .cast<String>();
-                                Map<String, String> ratingsData =
-                                    getRatingsAndTotalRatings(family);
-                                Map<dynamic, dynamic> reviews =
-                                    family['reviews'] ?? {};
-                                double averageRating =
-                                    calculateAverageRating(reviews);
-                                return BookingCartWidget(
-                                  primaryButtonTxt: 'View',
-                                  ontapView: () {
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (c) => FamilyDetailProvider(
-                                          name:
-                                              "${family['firstName']} ${family['lastName']}",
-                                          bio: family['bio'] ?? '',
-                                          profile: family['profile'],
-                                          familyId: family['uid'],
-                                          ratings: averageRating,
-                                          totalRatings: int.parse(
-                                              ratingsData['totalRatings']!),
-                                          passion: passions,
-                                        ),
-                                      ),
-                                    );
-                                  },
-                                  name:
-                                      "${family['firstName']} ${family['lastName']}",
-                                  profilePic: family['profile'],
-                                  passion: passions,
-                                  ratings: averageRating,
-                                  totalRatings:
-                                      int.parse(ratingsData['totalRatings']!),
-                                );
-                              }).toList(),
-                            ),
-                          ),
-                  ),
+                  isEmpty == false
+                      ? SizedBox(
+                          height: MediaQuery.of(context).size.height / 2.6,
+                          child: families.isEmpty
+                              ? const ShimmerUi()
+                              : SingleChildScrollView(
+                                  scrollDirection: Axis.vertical,
+                                  child: Column(
+                                    children: families.map((family) {
+                                      List<String> passions =
+                                          (family['FamilyPassions']
+                                                  as List<dynamic>)
+                                              .cast<String>();
+                                      Map<String, String> ratingsData =
+                                          getRatingsAndTotalRatings(family);
+                                      Map<dynamic, dynamic> reviews =
+                                          family['reviews'] ?? {};
+                                      double averageRating =
+                                          calculateAverageRating(reviews);
+                                      return BookingCartWidget(
+                                        primaryButtonTxt: 'View',
+                                        ontapView: () {
+                                          Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                              builder: (c) =>
+                                                  FamilyDetailProvider(
+                                                name:
+                                                    "${family['firstName']} ${family['lastName']}",
+                                                bio: family['bio'] ?? '',
+                                                profile: family['profile'],
+                                                familyId: family['uid'],
+                                                ratings: averageRating,
+                                                totalRatings: int.parse(
+                                                    ratingsData[
+                                                        'totalRatings']!),
+                                                passion: passions,
+                                              ),
+                                            ),
+                                          );
+                                        },
+                                        name:
+                                            "${family['firstName']} ${family['lastName']}",
+                                        profilePic: family['profile'],
+                                        passion: passions,
+                                        ratings: averageRating,
+                                        totalRatings: int.parse(
+                                            ratingsData['totalRatings']!),
+                                      );
+                                    }).toList(),
+                                  ),
+                                ),
+                        )
+                      : SizedBox(
+                          height: MediaQuery.of(context).size.height / 2.6,
+                          child: families.isEmpty
+                              ? const Center(
+                                  child: Text("No Families Found"),
+                                )
+                              : SingleChildScrollView(
+                                  scrollDirection: Axis.vertical,
+                                  child: Column(
+                                    children: families.map((family) {
+                                      List<String> passions =
+                                          (family['FamilyPassions']
+                                                  as List<dynamic>)
+                                              .cast<String>();
+                                      Map<String, String> ratingsData =
+                                          getRatingsAndTotalRatings(family);
+                                      Map<dynamic, dynamic> reviews =
+                                          family['reviews'] ?? {};
+                                      double averageRating =
+                                          calculateAverageRating(reviews);
+                                      return BookingCartWidget(
+                                        primaryButtonTxt: 'View',
+                                        ontapView: () {
+                                          Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                              builder: (c) =>
+                                                  FamilyDetailProvider(
+                                                name:
+                                                    "${family['firstName']} ${family['lastName']}",
+                                                bio: family['bio'] ?? '',
+                                                profile: family['profile'],
+                                                familyId: family['uid'],
+                                                ratings: averageRating,
+                                                totalRatings: int.parse(
+                                                    ratingsData[
+                                                        'totalRatings']!),
+                                                passion: passions,
+                                              ),
+                                            ),
+                                          );
+                                        },
+                                        name:
+                                            "${family['firstName']} ${family['lastName']}",
+                                        profilePic: family['profile'],
+                                        passion: passions,
+                                        ratings: averageRating,
+                                        totalRatings: int.parse(
+                                            ratingsData['totalRatings']!),
+                                      );
+                                    }).toList(),
+                                  ),
+                                ),
+                        ),
                 ],
               );
             },

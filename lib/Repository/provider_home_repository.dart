@@ -28,4 +28,14 @@ class ProviderHomeRepository {
         await _providerRef.child(FirebaseAuth.instance.currentUser!.uid).once();
     return snapshot.snapshot.value as Map<dynamic, dynamic>;
   }
+
+  Future<Map<dynamic, dynamic>> getPosts() async {
+    Query query = FirebaseDatabase.instance
+        .ref()
+        .child('ProviderCommunityPosts')
+        .orderByChild('userId')
+        .equalTo(FirebaseAuth.instance.currentUser!.uid);
+    DatabaseEvent snapshot = await query.once();
+    return snapshot.snapshot.value as Map<dynamic, dynamic>;
+  }
 }

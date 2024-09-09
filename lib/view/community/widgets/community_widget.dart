@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:nanny_fairy/utils/routes/routes_name.dart';
 import '../../../res/components/colors.dart';
 import '../../../res/components/widgets/vertical_spacing.dart';
 
 class CommunituCartWidget extends StatelessWidget {
-  const CommunituCartWidget({super.key, required this.post, required this.title, required this.content, required this.totalComments});
-
+  const CommunituCartWidget(
+      {super.key,
+      required this.post,
+      required this.title,
+      required this.content,
+      required this.totalComments});
 
   final String post;
   final String title;
@@ -93,20 +96,22 @@ class CommunituCartWidget extends StatelessWidget {
               ],
             ),
             const VerticalSpeacing(10.0),
-            Wrap(
-              children: [
-                Text(
-                  content,
-                  style: GoogleFonts.getFont(
-                    "Poppins",
-                    textStyle: const TextStyle(
-                      fontSize: 14,
-                      fontWeight: FontWeight.w400,
-                      color: AppColor.grayColor,
+            Expanded(
+              child: Wrap(
+                children: [
+                  Text(
+                    content,
+                    style: GoogleFonts.getFont(
+                      "Poppins",
+                      textStyle: const TextStyle(
+                        fontSize: 14,
+                        fontWeight: FontWeight.w400,
+                        color: AppColor.grayColor,
+                      ),
                     ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ],
         ),
