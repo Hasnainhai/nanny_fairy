@@ -111,7 +111,8 @@ class _BookingCartWidgetHomeState extends State<BookingCartWidgetHome> {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 const SizedBox(width: 10),
                 Container(
@@ -235,20 +236,21 @@ class _BookingCartWidgetHomeState extends State<BookingCartWidgetHome> {
                     ),
                   ],
                 ),
+                const SizedBox(width: 20),
                 InkWell(
                   onTap: () {
                     widget.ontapView();
                   },
                   child: Container(
                     height: 30,
-                    width: 78,
+                    width: 68,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(32),
                       color: AppColor.primaryColor,
                     ),
                     child: Padding(
                       padding: const EdgeInsets.symmetric(
-                          vertical: 8, horizontal: 12),
+                          vertical: 8, horizontal: 8),
                       child: Center(
                         child: Text(
                           widget.primaryButtonTxt,
