@@ -38,7 +38,6 @@ class CommunituCartWidgetFamily extends StatelessWidget {
           ),
         ],
       ),
-      height: 309,
       width: double.infinity,
       child: Padding(
         padding: const EdgeInsets.all(12.0),

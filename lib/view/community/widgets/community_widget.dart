@@ -38,7 +38,6 @@ class CommunituCartWidget extends StatelessWidget {
           ),
         ],
       ),
-      height: 309,
       width: double.infinity,
       child: Padding(
         padding: const EdgeInsets.all(12.0),
@@ -96,22 +95,20 @@ class CommunituCartWidget extends StatelessWidget {
               ],
             ),
             const VerticalSpeacing(10.0),
-            Expanded(
-              child: Wrap(
-                children: [
-                  Text(
-                    content,
-                    style: GoogleFonts.getFont(
-                      "Poppins",
-                      textStyle: const TextStyle(
-                        fontSize: 14,
-                        fontWeight: FontWeight.w400,
-                        color: AppColor.grayColor,
-                      ),
+            Wrap(
+              children: [
+                Text(
+                  content,
+                  style: GoogleFonts.getFont(
+                    "Poppins",
+                    textStyle: const TextStyle(
+                      fontSize: 14,
+                      fontWeight: FontWeight.w400,
+                      color: AppColor.grayColor,
                     ),
                   ),
-                ],
-              ),
+                ),
+              ],
             ),
           ],
         ),
