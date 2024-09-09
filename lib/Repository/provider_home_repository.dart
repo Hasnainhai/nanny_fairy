@@ -10,6 +10,16 @@ class ProviderHomeRepository {
     return snapshot.snapshot.value as Map<dynamic, dynamic>;
   }
 
+  Future<Map<dynamic, dynamic>> getChats() async {
+    DatabaseEvent snapshot = await FirebaseDatabase.instance
+        .ref()
+        .child('Providers')
+        .child(FirebaseAuth.instance.currentUser!.uid)
+        .child("chats")
+        .once();
+    return snapshot.snapshot.value as Map<dynamic, dynamic>;
+  }
+
   final DatabaseReference _providerRef =
       FirebaseDatabase.instance.ref().child('Providers');
 

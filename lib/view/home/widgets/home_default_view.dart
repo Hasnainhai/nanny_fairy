@@ -128,13 +128,45 @@ class _HomeDefaultViewState extends State<HomeDefaultView> {
                       }
                     }),
                 const SizedBox(width: 16),
-                const HomeFeatureContainer(
-                  txColor: AppColor.blackColor,
-                  bgColor: AppColor.whiteColor,
-                  img: 'images/chats.png',
-                  title: '10',
-                  subTitle: 'Total Chats',
-                ),
+                FutureBuilder(
+                    future: homeViewModel.getChats(),
+                    builder: (context, snapshot) {
+                      if (snapshot.connectionState == ConnectionState.waiting) {
+                        return Shimmer.fromColors(
+                            baseColor: Colors.grey[300]!,
+                            highlightColor: Colors.grey[100]!,
+                            child: const HomeFeatureContainer(
+                              txColor: AppColor.blackColor,
+                              img: 'images/families.png',
+                              title: '12',
+                              subTitle: 'Total Families',
+                              bgColor: AppColor.whiteColor,
+                            ));
+                      } else if (snapshot.hasData) {
+                        return HomeFeatureContainer(
+                          txColor: AppColor.blackColor,
+                          img: 'images/chats.png',
+                          title: snapshot.data!.length.toString(),
+                          subTitle: 'Total Chats',
+                          bgColor: AppColor.whiteColor,
+                        );
+                      } else {
+                        return const HomeFeatureContainer(
+                          txColor: AppColor.blackColor,
+                          img: 'images/chats.png',
+                          title: '0',
+                          subTitle: 'Total Chats',
+                          bgColor: AppColor.whiteColor,
+                        );
+                      }
+                    }),
+                // const HomeFeatureContainer(
+                //   txColor: AppColor.blackColor,
+                //   bgColor: AppColor.whiteColor,
+                //   img: 'images/chats.png',
+                //   title: '10',
+                //   subTitle: 'Total Chats',
+                // ),
                 const SizedBox(width: 16),
                 const HomeFeatureContainer(
                   txColor: AppColor.blackColor,
