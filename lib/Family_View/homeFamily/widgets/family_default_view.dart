@@ -9,6 +9,7 @@ import 'package:nanny_fairy/Family_View/homeFamily/widgets/home_Family_feature_w
 import 'package:nanny_fairy/Repository/family_home_ui_repository.dart';
 import 'package:nanny_fairy/ViewModel/family_distance_view_model.dart';
 import 'package:nanny_fairy/res/components/colors.dart';
+import 'package:nanny_fairy/res/components/widgets/shimmer_effect.dart';
 
 import 'package:nanny_fairy/res/components/widgets/vertical_spacing.dart';
 import 'package:provider/provider.dart';
@@ -228,7 +229,7 @@ class _FamilyDefaultViewState extends State<FamilyDefaultView> {
                             height: MediaQuery.of(context).size.height / 2.6,
                             child: familyDistanceController
                                     .distanceFilteredProviders.isEmpty
-                                ? const Center(child: Text('No data available'))
+                                ? const ShimmerUi()
                                 : SingleChildScrollView(
                                     scrollDirection: Axis.vertical,
                                     child: Column(
@@ -300,7 +301,7 @@ class _FamilyDefaultViewState extends State<FamilyDefaultView> {
                                           );
                                         } catch (e) {
                                           // Handle potential errors with data mapping
-                                          print(
+                                          debugPrint(
                                               'Error processing provider data: $e');
                                           return const SizedBox(); // Return an empty widget on error
                                         }
