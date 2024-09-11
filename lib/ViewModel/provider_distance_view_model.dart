@@ -27,6 +27,15 @@ class ProviderDistanceViewModel extends ChangeNotifier {
     }
   }
 
+  Future<void> fetchFamiliesFromFirebaseData() async {
+    try {
+      await _providerDistanceRepository.fetchFamiliesFromFirebaseData();
+      notifyListeners();
+    } finally {
+      _setLoading(false);
+    }
+  }
+
   void searchFamiliesByPassion(
       String query, double maxDistanceKm, BuildContext context) async {
     await _providerDistanceRepository.filterFamiliesByPassion(

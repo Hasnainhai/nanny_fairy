@@ -33,6 +33,19 @@ class ProviderDistanceRepository extends ChangeNotifier {
     return familyList;
   }
 
+  Future<void> fetchFamiliesFromFirebaseData() async {
+    final databaseReference = FirebaseDatabase.instance.ref().child('Family');
+    DatabaseEvent snapshot = await databaseReference.once();
+
+    final data = snapshot.snapshot.value as Map<dynamic, dynamic>;
+    _distanceFilteredFamilies.clear();
+    data.forEach((key, value) {
+      if (value is Map<dynamic, dynamic>) {
+        _distanceFilteredFamilies.add(Map<String, dynamic>.from(value));
+      }
+    });
+  }
+
   Future<String?> getProviderAddress() async {
     var auth = FirebaseAuth.instance;
     final databaseReference = FirebaseDatabase.instance
@@ -55,14 +68,14 @@ class ProviderDistanceRepository extends ChangeNotifier {
   Future<void> filterFamiliesByDistance(
       double maxDistanceKm, BuildContext context) async {
     try {
+      _distanceFilteredFamilies.clear();
+
       List<Map<String, dynamic>> families = await fetchFamiliesData();
       String? providerAddress = await getProviderAddress();
 
       if (providerAddress == null) {
         return;
       }
-
-      _distanceFilteredFamilies.clear();
 
       for (var family in families) {
         String? familyAddress = family['address'] as String?;

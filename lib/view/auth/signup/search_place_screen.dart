@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:nanny_fairy/Models/predicate_model.dart';
-import 'package:nanny_fairy/view/chat/widgets/predicate_request.dart';
+import 'package:nanny_fairy/ViewModel/place_view_model.dart';
 import 'package:nanny_fairy/view/chat/widgets/predicate_tile.dart';
+import 'package:provider/provider.dart';
 
 class SearchPlacesScreen extends StatefulWidget {
   const SearchPlacesScreen({super.key});
@@ -11,39 +11,41 @@ class SearchPlacesScreen extends StatefulWidget {
 }
 
 class _SearchPlacesScreenState extends State<SearchPlacesScreen> {
-  List<PredictedPlaces> placePredictedList = [];
-  findPlaceAutoCompleteSearch(String inputText) async {
-    if (inputText.length > 1) {
-      String components = 'country:PK|administrative_area:GB';
-      String urlAutoCompleteSearch =
-          'https://maps.googleapis.com/maps/api/place/queryautocomplete/json?input=$inputText&key=AIzaSyCBUyZVjnq9IGxH9Zu6ACNRIJXtkfZ2iuQ&components=$components';
-      var responseAutoCompleteSearch =
-          await RequestAssistant.getRequest(urlAutoCompleteSearch);
-      debugPrint("this is search Response : $responseAutoCompleteSearch");
-      if (responseAutoCompleteSearch == 'failed') {
-        return;
-      }
-      if (responseAutoCompleteSearch['status'] == "OK") {
-        var placePredictions = responseAutoCompleteSearch["predictions"];
-        if (placePredictions is List) {
-          var placePredictionsList = placePredictions
-              .map((jsonData) => PredictedPlaces.fromJson(jsonData))
-              .toList();
-          debugPrint(
-            "Place Predictions List: ${placePredictionsList.toString()}",
-          );
+  // List<PredictedPlaces> placePredictedList = [];
+  // findPlaceAutoCompleteSearch(String inputText) async {
+  //   if (inputText.length > 1) {
+  //     String components = 'country:PK|administrative_area:GB';
+  //     String urlAutoCompleteSearch =
+  //         'https://maps.googleapis.com/maps/api/place/queryautocomplete/json?input=$inputText&key=AIzaSyCBUyZVjnq9IGxH9Zu6ACNRIJXtkfZ2iuQ&components=$components';
+  //     var responseAutoCompleteSearch =
+  //         await RequestAssistant.getRequest(urlAutoCompleteSearch);
+  //     debugPrint("this is search Response : $responseAutoCompleteSearch");
+  //     if (responseAutoCompleteSearch == 'failed') {
+  //       return;
+  //     }
+  //     if (responseAutoCompleteSearch['status'] == "OK") {
+  //       var placePredictions = responseAutoCompleteSearch["predictions"];
+  //       if (placePredictions is List) {
+  //         var placePredictionsList = placePredictions
+  //             .map((jsonData) => PredictedPlaces.fromJson(jsonData))
+  //             .toList();
+  //         debugPrint(
+  //           "Place Predictions List: ${placePredictionsList.toString()}",
+  //         );
 
-          setState(() {
-            placePredictedList = placePredictionsList;
-          });
-          debugPrint("Updated Place Predicted List: $placePredictedList");
-        }
-      }
-    }
-  }
+  //         setState(() {
+  //           placePredictedList = placePredictionsList;
+  //         });
+  //         debugPrint("Updated Place Predicted List: $placePredictedList");
+  //       }
+  //     }
+  //   }
+  // }
 
   @override
   Widget build(BuildContext context) {
+    final distanceViewModel =
+        Provider.of<PlaceViewModel>(context, listen: false);
     return GestureDetector(
       onTap: () {
         FocusScope.of(context).unfocus();
@@ -93,7 +95,7 @@ class _SearchPlacesScreenState extends State<SearchPlacesScreen> {
                   ),
                   child: TextField(
                     onChanged: (value) {
-                      findPlaceAutoCompleteSearch(value);
+                      distanceViewModel.findPlaceAutoCompleteSearch(value);
                     },
                     decoration: const InputDecoration(
                       hintText: 'Search Address Here',
@@ -112,36 +114,40 @@ class _SearchPlacesScreenState extends State<SearchPlacesScreen> {
               const SizedBox(
                 height: 24,
               ),
-              //display place predications result
-              (placePredictedList.isNotEmpty)
-                  ? Expanded(
-                      child: ListView.separated(
-                          itemBuilder: (context, index) {
-                            return Padding(
-                              padding:
-                                  const EdgeInsets.only(left: 20, right: 20),
-                              child: PlacePredicationTile(
-                                predicatedPlaceses: placePredictedList[index],
-                              ),
-                            );
-                          },
-                          physics: const ClampingScrollPhysics(),
-                          separatorBuilder: (BuildContext context, int index) {
-                            return const SizedBox(
-                              height: 30,
-                              child: Padding(
-                                padding: EdgeInsets.only(left: 20, right: 20),
-                                child: Divider(
-                                  height: 0,
-                                  color: Colors.grey,
-                                  thickness: 0,
+              Consumer<PlaceViewModel>(builder: (context, viewModel, child) {
+                return (viewModel.placePredictedList.isNotEmpty)
+                    ? Expanded(
+                        child: ListView.separated(
+                            itemBuilder: (context, index) {
+                              return Padding(
+                                padding:
+                                    const EdgeInsets.only(left: 20, right: 20),
+                                child: PlacePredicationTile(
+                                  predicatedPlaceses:
+                                      viewModel.placePredictedList[index],
                                 ),
-                              ),
-                            );
-                          },
-                          itemCount: placePredictedList.length),
-                    )
-                  : Container(),
+                              );
+                            },
+                            physics: const ClampingScrollPhysics(),
+                            separatorBuilder:
+                                (BuildContext context, int index) {
+                              return const SizedBox(
+                                height: 30,
+                                child: Padding(
+                                  padding: EdgeInsets.only(left: 20, right: 20),
+                                  child: Divider(
+                                    height: 0,
+                                    color: Colors.grey,
+                                    thickness: 0,
+                                  ),
+                                ),
+                              );
+                            },
+                            itemCount: viewModel.placePredictedList.length),
+                      )
+                    : Container();
+              }),
+              //display place predications result
             ],
           ),
         ),
