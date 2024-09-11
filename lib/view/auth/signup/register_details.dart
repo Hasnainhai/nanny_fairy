@@ -180,14 +180,27 @@ class _RegisterDetailsState extends State<RegisterDetails> {
                         padding: const EdgeInsets.all(12.0),
                         child: Row(
                           children: [
-                            Text(
-                              viewModel.providerAddress ??
-                                  'Select Your Address',
-                              style: const TextStyle(
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.w500,
-                                  color: Color.fromARGB(255, 95, 94, 94)),
-                            ),
+                            viewModel.providerAddress == null
+                                ? const Text(
+                                    'Select Your Address',
+                                    style: TextStyle(
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.w500,
+                                      color: Color.fromARGB(
+                                        255,
+                                        95,
+                                        94,
+                                        94,
+                                      ),
+                                    ),
+                                  )
+                                : Text(
+                                    viewModel.providerAddress!,
+                                    style: const TextStyle(
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.w400,
+                                        color: Color.fromARGB(255, 95, 94, 94)),
+                                  ),
                           ],
                         ),
                       ),
