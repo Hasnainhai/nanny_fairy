@@ -34,21 +34,19 @@ class _DashBoardScreenState extends State<DashBoardScreen>
     super.initState();
 
     tabController = TabController(length: 5, vsync: this);
-    final distanceViewModel =
-        Provider.of<ProviderDistanceViewModel>(context, listen: false);
-    Future.delayed(const Duration(seconds: 2), () {
-      // Fetch users after the delay
-      WidgetsBinding.instance.addPostFrameCallback((_) {
-        // Call your methods here
+    Provider.of<ProviderHomeViewModel>(context, listen: false).getCurrentUser();
+  }
 
-        Provider.of<ProviderHomeViewModel>(context, listen: false)
-            .getCurrentUser();
+  // Method that should be called when Dashboard is selected
+  void _onDashboardSelected() {
+    // Check if the widget is still mounted
+    WidgetsBinding.instance.addPostFrameCallback((_) {});
+  }
 
-        distanceViewModel.filterFamiliesByDistance(
-            providerDistance == null ? 2 : double.parse(providerDistance!),
-            context);
-      });
-    });
+  @override
+  void dispose() {
+    tabController?.dispose();
+    super.dispose();
   }
 
   // popUp

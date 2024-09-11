@@ -2,7 +2,9 @@ import 'dart:async';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
+import 'package:nanny_fairy/ViewModel/provider_distance_view_model.dart';
 import 'package:nanny_fairy/utils/routes/routes_name.dart';
+import 'package:provider/provider.dart';
 import '../../res/components/colors.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -34,7 +36,10 @@ class _SplashScreenState extends State<SplashScreen> {
         // Check if bio exists in the Providers collection
         final hasBio = await checkIfBioExists(userId, 'Providers');
         if (hasBio) {
-          // Navigate to the Provider Dashboard
+          // Navigate to the
+          //Provider Dashboard
+          Provider.of<ProviderDistanceViewModel>(context, listen: false)
+              .fetchFamiliesFromFirebaseData();
           Navigator.pushNamedAndRemoveUntil(
             context,
             RoutesName.dashboard,

@@ -2,10 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:nanny_fairy/ViewModel/auth_view_model.dart';
+import 'package:nanny_fairy/ViewModel/place_view_model.dart';
 import 'package:nanny_fairy/res/components/rounded_button.dart';
 import 'package:nanny_fairy/res/components/widgets/custom_text_field.dart';
 import 'package:nanny_fairy/res/components/widgets/vertical_spacing.dart';
 import 'package:nanny_fairy/utils/utils.dart';
+import 'package:nanny_fairy/view/auth/signup/search_Place_screen.dart';
+import 'package:nanny_fairy/view/chat/widgets/predicate_tile.dart';
 import 'package:provider/provider.dart';
 import '../../../res/components/colors.dart';
 import '../../../res/components/widgets/rounded_check_box.dart';
@@ -72,7 +75,8 @@ class _RegisterDetailsState extends State<RegisterDetails> {
   @override
   Widget build(BuildContext context) {
     final authViewModel = Provider.of<AuthViewModel>(context);
-
+    final distanceViewModel =
+        Provider.of<PlaceViewModel>(context, listen: false);
     return Scaffold(
       backgroundColor: AppColor.primaryColor,
       appBar: PreferredSize(
@@ -139,11 +143,75 @@ class _RegisterDetailsState extends State<RegisterDetails> {
                   ],
                 ),
                 const VerticalSpeacing(16),
-                TextFieldCustom(
-                    controller: addressController,
-                    prefixIcon: const Icon(Icons.location_on_outlined),
-                    maxLines: 1,
-                    hintText: 'Enter Address'),
+                Consumer<PlaceViewModel>(builder: (context, viewModel, child) {
+                  return InkWell(
+                    onTap: () {
+                      viewModel.placePredictedList.clear();
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (c) => const SearchPlacesScreen(),
+                        ),
+                      );
+                    },
+                    child: Container(
+                      height: 50,
+                      margin: const EdgeInsets.symmetric(vertical: 10),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(6),
+                        color: AppColor.whiteColor,
+                        border: Border.all(
+                          strokeAlign: BorderSide.strokeAlignCenter,
+                          color: const Color(0xff1B81BC).withOpacity(
+                              0.10), // Stroke color with 10% opacity
+                          width: 1,
+                        ),
+                        boxShadow: [
+                          BoxShadow(
+                            color: const Color(0xff1B81BC).withOpacity(
+                                0.1), // Drop shadow color with 4% opacity
+                            blurRadius: 2,
+                            offset: const Offset(1, 2),
+                            spreadRadius: 1,
+                          ),
+                        ],
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.all(12.0),
+                        child: Row(
+                          children: [
+                            viewModel.providerAddress == null
+                                ? const Text(
+                                    'Select Your Address',
+                                    style: TextStyle(
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.w500,
+                                      color: Color.fromARGB(
+                                        255,
+                                        95,
+                                        94,
+                                        94,
+                                      ),
+                                    ),
+                                  )
+                                : Text(
+                                    viewModel.providerAddress!,
+                                    style: const TextStyle(
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.w400,
+                                        color: Color.fromARGB(255, 95, 94, 94)),
+                                  ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  );
+                }),
+                // TextFieldCustom(
+                //     controller: addressController,
+                //     prefixIcon: const Icon(Icons.location_on_outlined),
+                //     maxLines: 1,
+                //     hintText: 'Enter Address'),
                 const VerticalSpeacing(16),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -246,7 +314,7 @@ class _RegisterDetailsState extends State<RegisterDetails> {
                         authViewModel.saveDetails(
                             firstName: firstNameController.text,
                             lastName: lastNameController.text,
-                            address: addressController.text,
+                            address: distanceViewModel.providerAddress!,
                             houseNumber: houseNumberController.text,
                             postCode: postCodeController.text,
                             phoneNumber: phoneController.text,

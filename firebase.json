@@ -14,15 +14,15 @@
   ],
   "hosting": {
     "public": "public",
-    "ignore": ["firebase.json", "/.", "/node_modules/*"],
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**"
+    ],
     "rewrites": [
       {
-        "source": "/paymentSuccess",
-        "function": "paymentSuccess"
-      },
-      {
-        "source": "/paymentFailed",
-        "function": "paymentFailed"
+        "source": "**",
+        "destination": "/index.html"
       }
     ]
   }

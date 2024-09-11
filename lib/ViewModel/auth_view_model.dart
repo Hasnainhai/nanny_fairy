@@ -28,6 +28,7 @@ class AuthViewModel extends ChangeNotifier {
       _setLoading(false);
     }
   }
+
   Future<void> loginAccount({
     required String email,
     required String password,

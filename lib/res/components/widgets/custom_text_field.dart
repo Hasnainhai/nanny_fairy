@@ -34,7 +34,7 @@ class _TextFieldCustomState extends State<TextFieldCustom> {
       margin: const EdgeInsets.symmetric(vertical: 10),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(6),
-        color:  AppColor.whiteColor,
+        color: AppColor.whiteColor,
         border: Border.all(
           strokeAlign: BorderSide.strokeAlignCenter,
           color: const Color(0xff1B81BC)

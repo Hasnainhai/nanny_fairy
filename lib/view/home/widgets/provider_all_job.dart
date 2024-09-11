@@ -42,7 +42,6 @@ class _ProviderAllJobState extends State<ProviderAllJob> {
   Future<bool> _onWillPop() async {
     final distanceViewModel =
         Provider.of<ProviderDistanceViewModel>(context, listen: false);
-    distanceViewModel.distanceFilteredFamilies.clear();
 
     Navigator.pushNamedAndRemoveUntil(
       context,
