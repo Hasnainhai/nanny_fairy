@@ -35,8 +35,6 @@ class _DashBoardScreenState extends State<DashBoardScreen>
 
     tabController = TabController(length: 5, vsync: this);
     Provider.of<ProviderHomeViewModel>(context, listen: false).getCurrentUser();
-    Provider.of<ProviderDistanceViewModel>(context, listen: false)
-        .fetchFamiliesFromFirebaseData();
   }
 
   // Method that should be called when Dashboard is selected

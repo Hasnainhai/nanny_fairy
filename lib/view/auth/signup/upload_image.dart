@@ -2,6 +2,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:nanny_fairy/ViewModel/auth_view_model.dart';
+import 'package:nanny_fairy/ViewModel/provider_distance_view_model.dart';
 import 'package:nanny_fairy/res/components/rounded_button.dart';
 import 'package:nanny_fairy/res/components/widgets/image_picker.dart';
 import 'package:nanny_fairy/res/components/widgets/vertical_spacing.dart';
@@ -143,6 +144,9 @@ class _UploadImageState extends State<UploadImage> {
                           if (bioController.text.isNotEmpty && isValid) {
                             authViewModel.saveProfileAndBio(
                                 context, profilePic, bioController.text);
+                            Provider.of<ProviderDistanceViewModel>(context,
+                                    listen: false)
+                                .fetchFamiliesFromFirebaseData();
                           } else {
                             Utils.flushBarErrorMessage(
                               "Please complete the form correctly.",
