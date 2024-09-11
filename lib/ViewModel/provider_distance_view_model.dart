@@ -38,8 +38,7 @@ class ProviderDistanceViewModel extends ChangeNotifier {
 
   void searchFamiliesByPassion(
       String query, double maxDistanceKm, BuildContext context) async {
-    await _providerDistanceRepository.filterFamiliesByPassion(
-        query, maxDistanceKm, context);
+    await _providerDistanceRepository.filterFamiliesByPassion(query, context);
     notifyListeners(); // Ensure listeners are notified after the filtering is done
   }
 

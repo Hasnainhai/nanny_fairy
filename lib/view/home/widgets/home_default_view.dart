@@ -262,7 +262,8 @@ class _HomeDefaultViewState extends State<HomeDefaultView> {
                       ? SizedBox(
                           height: MediaQuery.of(context).size.height / 2.6,
                           child: families.isEmpty
-                              ? const ShimmerUi()
+                              ? const Text(
+                                  "No Families avaliable with in Range")
                               : SingleChildScrollView(
                                   scrollDirection: Axis.vertical,
                                   child: Column(

@@ -7,7 +7,7 @@ import 'package:nanny_fairy/view/home/home_view.dart';
 import 'package:nanny_fairy/view/home/widgets/provider_all_job.dart';
 
 class ProviderDistanceRepository extends ChangeNotifier {
-  final List<Map<String, dynamic>> _distanceFilteredFamilies = [];
+  List<Map<String, dynamic>> _distanceFilteredFamilies = [];
   bool _isLoading = false;
   bool get isLoading => _isLoading;
   List<Map<String, dynamic>> get distanceFilteredFamilies =>
@@ -67,6 +67,9 @@ class ProviderDistanceRepository extends ChangeNotifier {
 
   Future<void> filterFamiliesByDistance(
       double maxDistanceKm, BuildContext context) async {
+    // Show the loading dialog
+    _showLoadingDialog(context);
+
     try {
       _distanceFilteredFamilies.clear();
 
@@ -74,6 +77,7 @@ class ProviderDistanceRepository extends ChangeNotifier {
       String? providerAddress = await getProviderAddress();
 
       if (providerAddress == null) {
+        Navigator.of(context).pop(); // Close the dialog
         return;
       }
 
@@ -90,49 +94,69 @@ class ProviderDistanceRepository extends ChangeNotifier {
           _distanceFilteredFamilies.add(family);
         }
       }
-      debugPrint("this is length of list:${_distanceFilteredFamilies.length}");
-      _isLoading = false;
 
+      debugPrint("This is length of list: ${_distanceFilteredFamilies.length}");
+      Navigator.of(context).pop(); // Close the dialog when done
       notifyListeners();
     } catch (e) {
       debugPrint('Error filtering families: $e');
+      Navigator.of(context).pop(); // Close the dialog on error
     }
   }
 
+// Show Loading Dialog
+  void _showLoadingDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      barrierDismissible: false, // Prevents dialog from closing on tap outside
+      builder: (BuildContext context) {
+        return const Dialog(
+          child: Padding(
+            padding: const EdgeInsets.all(20.0),
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: const [
+                CircularProgressIndicator(),
+                SizedBox(width: 20),
+                Text("Loading..."),
+              ],
+            ),
+          ),
+        );
+      },
+    );
+  }
+
   Future<void> filterFamiliesByPassion(
-      String passion, double distance, BuildContext context) async {
+      String passion, BuildContext context) async {
     try {
-      // Clear the list first to reset the state
+      // Create a temporary set to store unique families filtered by passion
+      Set<Map<String, dynamic>> filteredByPassion = {};
 
-      _distanceFilteredFamilies.clear();
+      // Iterate through the already distance-filtered families
+      for (var family in _distanceFilteredFamilies) {
+        List<dynamic>? familyPassions =
+            family['FamilyPassions'] as List<dynamic>?;
 
-      // Fetch the data once
-      List<Map<String, dynamic>> families = await fetchFamiliesData();
+        if (familyPassions != null) {
+          // Check if any passion in the family's passions contains the input substring
+          bool matches = familyPassions.any((p) =>
+              p.toString().toLowerCase().contains(passion.toLowerCase()));
 
-      if (passion.isEmpty) {
-        // If the search text is empty, do not filter by passion, but by distance
-        await filterFamiliesByDistance(distance, context);
-      } else {
-        // Otherwise, filter the families by passion
-        for (var family in families) {
-          List<dynamic>? familyPassions =
-              family['FamilyPassions'] as List<dynamic>?;
-
-          if (familyPassions != null) {
-            // Check if any passion in the family's passions contains the input substring
-            bool matches = familyPassions.any((p) =>
-                p.toString().toLowerCase().contains(passion.toLowerCase()));
-
-            if (matches) {
-              _distanceFilteredFamilies.add(family);
-            }
+          if (matches) {
+            filteredByPassion.add(family); // Add to Set to avoid duplicates
           }
         }
       }
-      // Notify listeners outside of the loop to reduce redundant updates
+
+      // Replace the filtered list with families matching the passion
+      _distanceFilteredFamilies = filteredByPassion.toList();
+
+      // Notify listeners once filtering is complete
       notifyListeners();
 
-      debugPrint("Filtered families by passion: $_distanceFilteredFamilies");
+      debugPrint(
+          "Filtered families by passion: ${_distanceFilteredFamilies.length}");
     } catch (e) {
       debugPrint('Error filtering families by passion: $e');
     }
