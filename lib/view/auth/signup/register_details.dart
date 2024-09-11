@@ -146,7 +146,7 @@ class _RegisterDetailsState extends State<RegisterDetails> {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (c) => SearchPlacesScreen(),
+                        builder: (c) => const SearchPlacesScreen(),
                       ),
                     );
                   },
@@ -295,7 +295,7 @@ class _RegisterDetailsState extends State<RegisterDetails> {
                         authViewModel.saveDetails(
                             firstName: firstNameController.text,
                             lastName: lastNameController.text,
-                            address: addressController.text,
+                            address: providerAddress!,
                             houseNumber: houseNumberController.text,
                             postCode: postCodeController.text,
                             phoneNumber: phoneController.text,
