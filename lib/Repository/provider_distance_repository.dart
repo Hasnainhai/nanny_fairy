@@ -38,15 +38,26 @@ class ProviderDistanceRepository extends ChangeNotifier {
     DatabaseEvent snapshot = await databaseReference.once();
 
     final data = snapshot.snapshot.value as Map<dynamic, dynamic>?;
+
     _distanceFilteredFamilies.clear();
+
     if (data == null) {
       return;
     }
+
     data.forEach((key, value) {
       if (value is Map<dynamic, dynamic>) {
-        _distanceFilteredFamilies.add(Map<String, dynamic>.from(value));
+        // Check if the 'bio' field exists, is not null, and is not empty
+        if (value.containsKey('bio') &&
+            value['bio'] != null &&
+            value['bio'].toString().isNotEmpty) {
+          _distanceFilteredFamilies.add(Map<String, dynamic>.from(value));
+        }
       }
     });
+
+    // Optionally notify listeners if this data is being used to update the UI
+    notifyListeners();
   }
 
   Future<String?> getProviderAddress() async {

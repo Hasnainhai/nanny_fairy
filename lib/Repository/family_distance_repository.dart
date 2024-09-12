@@ -38,18 +38,29 @@ class FamilyDistanceRepository extends ChangeNotifier {
     final databaseReference =
         FirebaseDatabase.instance.ref().child('Providers');
     DatabaseEvent snapshot = await databaseReference.once();
-    debugPrint("this is address of providers:${snapshot.snapshot.value}");
+
+    debugPrint("This is address of providers: ${snapshot.snapshot.value}");
     final data = snapshot.snapshot.value as Map<dynamic, dynamic>?;
 
     if (data == null) {
       return;
     }
 
+    _distanceFilterProviders.clear();
+
     data.forEach((key, value) {
       if (value is Map<dynamic, dynamic>) {
-        _distanceFilterProviders.add(Map<String, dynamic>.from(value));
+        // Check if the 'bio' field exists and is not null
+        if (value.containsKey('bio') &&
+            value['bio'] != null &&
+            value['bio'].toString().isNotEmpty) {
+          _distanceFilterProviders.add(Map<String, dynamic>.from(value));
+        }
       }
     });
+
+    // Optionally notify listeners if this data is being used to update the UI
+    notifyListeners();
   }
 
   // Function to get the current family address
@@ -114,15 +125,39 @@ class FamilyDistanceRepository extends ChangeNotifier {
     }
   }
 
+  void _showLoadingDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      barrierDismissible: false, // Prevents dialog from closing on tap outside
+      builder: (BuildContext context) {
+        return const Dialog(
+          child: Padding(
+            padding: EdgeInsets.all(20.0),
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                CircularProgressIndicator(),
+                SizedBox(width: 20),
+                Text("Loading..."),
+              ],
+            ),
+          ),
+        );
+      },
+    );
+  }
+
   // Function to filter providers based on distance from the current family address
   Future<void> filterProvidersByDistance(
       BuildContext context, double maxDistanceKm) async {
+    _showLoadingDialog(context);
     try {
       List<Map<String, dynamic>> providers = await fetchProvidersData();
       String? familyAddress = await getFamilyAddress();
 
       if (familyAddress == null || familyAddress.isEmpty) {
         print('No valid family address found');
+        Navigator.of(context).pop();
         return; // Exit if no family address is found
       }
 
@@ -171,48 +206,48 @@ class FamilyDistanceRepository extends ChangeNotifier {
       _distanceFilterProviders.addAll(uniqueProviders.values);
       debugPrint(
           "this is length of the distanceFilterProvider list:${_distanceFilterProviders.length}");
-
+      Navigator.of(context).pop();
       if (_isActive) {
         notifyListeners(); // Notify listeners that the data has been updated
       }
     } catch (e) {
       print('Error filtering providers by distance: $e');
+      Navigator.of(context).pop();
     }
   }
 
   // Function to filter providers by passion and distance
   Future<void> filterFamiliesByPassion(
-      String passion, double distance, BuildContext context) async {
+      String passion, BuildContext context) async {
     try {
-      _distanceFilterProviders.clear(); // Clear previous results
+      // Create a temporary set to store unique families filtered by passion
+      Set<Map<String, dynamic>> filteredByPassion = {};
 
-      List<Map<String, dynamic>> providers = await fetchProvidersData();
-      Set<String> seenProviderAddresses =
-          {}; // To track processed providers by address
+      // Iterate through the already distance-filtered families
+      for (var family in _distanceFilterProviders) {
+        List<dynamic>? familyPassions = family['Passions'] as List<dynamic>?;
 
-      if (passion.isEmpty) {
-        await filterProvidersByDistance(context, distance);
-      } else {
-        for (var provider in providers) {
-          List<dynamic>? providerPassions =
-              provider['Passions'] as List<dynamic>?;
+        if (familyPassions != null) {
+          // Check if any passion in the family's passions contains the input substring
+          bool matches = familyPassions.any((p) =>
+              p.toString().toLowerCase().contains(passion.toLowerCase()));
 
-          if (providerPassions != null &&
-              providerPassions.any((p) =>
-                  p.toString().toLowerCase().contains(passion.toLowerCase())) &&
-              !seenProviderAddresses.contains(provider['address'])) {
-            _distanceFilterProviders.add(provider);
-            seenProviderAddresses.add(
-                provider['address']); // Add to the set to prevent duplicates
+          if (matches) {
+            filteredByPassion.add(family); // Add to Set to avoid duplicates
           }
         }
       }
 
-      if (_isActive) {
-        notifyListeners(); // Notify listeners after filtering
-      }
+      // Replace the filtered list with families matching the passion
+      _distanceFilterProviders = filteredByPassion.toList();
+
+      // Notify listeners once filtering is complete
+      notifyListeners();
+
+      debugPrint(
+          "Filtered families by passion: ${_distanceFilterProviders.length}");
     } catch (e) {
-      debugPrint('Error filtering providers by passion: $e');
+      debugPrint('Error filtering families by passion: $e');
     }
   }
 

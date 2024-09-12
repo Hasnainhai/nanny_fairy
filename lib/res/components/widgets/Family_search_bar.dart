@@ -1,12 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:nanny_fairy/Family_View/homeFamily/home_view_family.dart';
-import 'package:nanny_fairy/Repository/family_distance_repository.dart';
 import 'package:nanny_fairy/Repository/family_home_ui_repository.dart';
 import 'package:nanny_fairy/ViewModel/family_distance_view_model.dart';
-import 'package:nanny_fairy/ViewModel/family_search_view_model.dart';
 import 'package:nanny_fairy/res/components/colors.dart';
-import 'package:nanny_fairy/res/components/widgets/family_home_ui_enums.dart';
 import 'package:provider/provider.dart';
 
 class FamilySearchBarProvider extends StatefulWidget {
@@ -19,8 +16,8 @@ class FamilySearchBarProvider extends StatefulWidget {
 }
 
 class _FamilySearchBarProviderState extends State<FamilySearchBarProvider> {
-  String selectedKM = '2';
-  final List<String> kM = ['2', '4', '8', '12'];
+  String selectedKM = 'All';
+  final List<String> kM = ['All', "2", '4', '8', '12'];
 
   final FocusNode _searchFocusNode = FocusNode();
   final FocusNode _dropdownFocusNode = FocusNode();
@@ -52,8 +49,9 @@ class _FamilySearchBarProviderState extends State<FamilySearchBarProvider> {
 
     if (searchText.isNotEmpty) {
       print('Filtering by passions: $searchText');
-      viewModel.filterProvidersByPassions(
-          searchText, double.parse(selectedKM), context);
+      viewModel.filterProvidersByPassions(searchText, context);
+    } else if (selectedKM == "All") {
+      viewModel.fetchProviderDataFromFiebase();
     } else {
       print('Filtering by distance: $selectedKM km');
       viewModel.filterProvidersByDistance(
@@ -203,8 +201,14 @@ class _FamilySearchBarProviderState extends State<FamilySearchBarProvider> {
                             });
                             try {
                               // Call the method to filter providers by distance
-                              await distanceViewModel.filterProvidersByDistance(
-                                  double.parse(selectedKM), context);
+                              if (selectedKM != "All") {
+                                await distanceViewModel
+                                    .filterProvidersByDistance(
+                                        double.parse(selectedKM), context);
+                              } else {
+                                distanceViewModel
+                                    .fetchProviderDataFromFiebase();
+                              }
 
                               // uiState.switchToType(
                               //   FamilyHomeUiEnums.DistanceSection,

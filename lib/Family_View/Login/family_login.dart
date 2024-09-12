@@ -3,6 +3,7 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:nanny_fairy/FamilyController/family_auth_controller.dart';
+import 'package:nanny_fairy/ViewModel/family_distance_view_model.dart';
 import 'package:nanny_fairy/res/components/loading_manager.dart';
 import 'package:nanny_fairy/res/components/rounded_button.dart';
 import 'package:nanny_fairy/res/components/widgets/custom_text_field.dart';
@@ -62,6 +63,8 @@ class _LoginViewFamilyState extends State<LoginViewFamily> {
               password: passwordController.text,
               context: context,
             );
+            Provider.of<FamilyDistanceViewModel>(context, listen: false)
+                .fetchProviderDataFromFiebase();
           } else {
             // If the user is not a family, show a snackbar message
             Utils.snackBar(
@@ -150,7 +153,7 @@ class _LoginViewFamilyState extends State<LoginViewFamily> {
                       maxLines: 1,
                       hintText: 'hasnainDev@gmail.com'),
                   TextFieldCustom(
-                    obscureText: true,
+                      obscureText: true,
                       controller: passwordController,
                       maxLines: 1,
                       hintText: '*********'),

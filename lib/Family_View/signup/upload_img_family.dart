@@ -3,9 +3,9 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:nanny_fairy/FamilyController/family_auth_controller.dart';
+import 'package:nanny_fairy/ViewModel/family_distance_view_model.dart';
 import 'package:nanny_fairy/res/components/rounded_button.dart';
 import 'package:nanny_fairy/res/components/widgets/vertical_spacing.dart';
-import 'package:nanny_fairy/utils/routes/routes_name.dart';
 import 'package:provider/provider.dart';
 import '../../../res/components/colors.dart';
 import '../../res/components/widgets/image_picker.dart';
@@ -143,6 +143,9 @@ class _UploadImageFamilyState extends State<UploadImageFamily> {
                           bool isValid =
                               _isWordCountValid && profilePic != null;
                           if (bioController.text.isNotEmpty && isValid) {
+                            Provider.of<FamilyDistanceViewModel>(context,
+                                    listen: false)
+                                .fetchProviderDataFromFiebase();
                             authViewModel.saveProfileAndBio(
                                 context, profilePic, bioController.text);
                           } else {

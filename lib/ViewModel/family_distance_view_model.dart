@@ -24,12 +24,21 @@ class FamilyDistanceViewModel extends ChangeNotifier {
     }
   }
 
-  Future<void> filterProvidersByPassions(
-      String passion, double maxDistanceKm, BuildContext context) async {
+  Future<void> fetchProviderDataFromFiebase() async {
     _setLoading(true);
     try {
-      await _familyDistanceRepository.filterFamiliesByPassion(
-          passion, maxDistanceKm, context);
+      await _familyDistanceRepository.fetchProvidersDataFromFirebase();
+      notifyListeners(); // Notify listeners to update the UI
+    } finally {
+      _setLoading(false);
+    }
+  }
+
+  Future<void> filterProvidersByPassions(
+      String passion, BuildContext context) async {
+    _setLoading(true);
+    try {
+      await _familyDistanceRepository.filterFamiliesByPassion(passion, context);
       notifyListeners(); // Notify listeners to update the UI
     } finally {
       _setLoading(false);
