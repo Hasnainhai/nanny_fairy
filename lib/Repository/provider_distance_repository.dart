@@ -37,8 +37,11 @@ class ProviderDistanceRepository extends ChangeNotifier {
     final databaseReference = FirebaseDatabase.instance.ref().child('Family');
     DatabaseEvent snapshot = await databaseReference.once();
 
-    final data = snapshot.snapshot.value as Map<dynamic, dynamic>;
+    final data = snapshot.snapshot.value as Map<dynamic, dynamic>?;
     _distanceFilteredFamilies.clear();
+    if (data == null) {
+      return;
+    }
     data.forEach((key, value) {
       if (value is Map<dynamic, dynamic>) {
         _distanceFilteredFamilies.add(Map<String, dynamic>.from(value));
@@ -112,10 +115,10 @@ class ProviderDistanceRepository extends ChangeNotifier {
       builder: (BuildContext context) {
         return const Dialog(
           child: Padding(
-            padding: const EdgeInsets.all(20.0),
+            padding: EdgeInsets.all(20.0),
             child: Row(
               mainAxisSize: MainAxisSize.min,
-              children: const [
+              children: [
                 CircularProgressIndicator(),
                 SizedBox(width: 20),
                 Text("Loading..."),

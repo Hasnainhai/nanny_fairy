@@ -34,6 +34,24 @@ class FamilyDistanceRepository extends ChangeNotifier {
     return providerList;
   }
 
+  Future<void> fetchProvidersDataFromFirebase() async {
+    final databaseReference =
+        FirebaseDatabase.instance.ref().child('Providers');
+    DatabaseEvent snapshot = await databaseReference.once();
+    debugPrint("this is address of providers:${snapshot.snapshot.value}");
+    final data = snapshot.snapshot.value as Map<dynamic, dynamic>?;
+
+    if (data == null) {
+      return;
+    }
+
+    data.forEach((key, value) {
+      if (value is Map<dynamic, dynamic>) {
+        _distanceFilterProviders.add(Map<String, dynamic>.from(value));
+      }
+    });
+  }
+
   // Function to get the current family address
   Future<String?> getFamilyAddress() async {
     var auth = FirebaseAuth.instance;
