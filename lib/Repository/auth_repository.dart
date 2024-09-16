@@ -300,6 +300,7 @@ class AuthRepository {
     BuildContext context,
     File? frontPic,
     File? backImage,
+    String status,
   ) async {
     showDialog(
       context: context,
@@ -318,6 +319,7 @@ class AuthRepository {
 
       String frontUrl = "";
       String backUrl = "";
+      String status = "Unverified";
 
       if (frontPic != null) {
         CommonFirebaseStorage commonStorage = CommonFirebaseStorage();
@@ -345,6 +347,7 @@ class AuthRepository {
       userRef.set({
         "frontPic": frontUrl,
         "backPic": backUrl,
+        "status": status,
       });
       Navigator.of(context).pop();
       Utils.toastMessage('Images saved successfully!');

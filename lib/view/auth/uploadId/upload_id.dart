@@ -233,7 +233,8 @@ class _UploadIdState extends State<UploadId> {
             RoundedButton(
                 title: 'Continue',
                 onpress: () {
-                  authViewModel.saveIdImages(context, frontImage, backImage);
+                  authViewModel.saveIdImages(
+                      context, frontImage, backImage, 'Unverified');
                   // Navigator.pushNamed(context, RoutesName.uploadImg);
                 }),
           ],

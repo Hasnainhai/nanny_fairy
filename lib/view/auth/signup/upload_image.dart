@@ -143,7 +143,7 @@ class _UploadImageState extends State<UploadImage> {
                               _isWordCountValid && profilePic != null;
                           if (bioController.text.isNotEmpty && isValid) {
                             authViewModel.saveProfileAndBio(
-                                context, profilePic, bioController.text);
+                                context, profilePic, bioController.text,);
                             Provider.of<ProviderDistanceViewModel>(context,
                                     listen: false)
                                 .fetchFamiliesFromFirebaseData();
