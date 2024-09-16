@@ -138,10 +138,11 @@ class AuthViewModel extends ChangeNotifier {
     BuildContext context,
     File? frontPic,
     File? backPic,
+      String status,
   ) async {
     _setLoading(true);
     try {
-      await _authRepository.saveIdImages(context, frontPic, backPic);
+      await _authRepository.saveIdImages(context, frontPic, backPic,status);
     } catch (e) {
       debugPrint('Error saving details: ${e.toString()}');
     } finally {
