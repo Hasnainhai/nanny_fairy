@@ -231,7 +231,8 @@ class _UploadIdFamilyState extends State<UploadIdFamily> {
             RoundedButton(
                 title: 'Continue',
                 onpress: () {
-                  authController.saveIdImages(context, frontImage, backImage);
+                  authController.saveIdImages(
+                      context, frontImage, backImage, 'Unverified');
                 }),
           ],
         ),
