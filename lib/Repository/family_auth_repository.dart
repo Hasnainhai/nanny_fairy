@@ -5,7 +5,6 @@ import 'package:nanny_fairy/utils/routes/routes_name.dart';
 import 'package:nanny_fairy/utils/utils.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:uuid/uuid.dart';
-
 import '../res/components/common_firebase_storge.dart';
 
 class AuthRepositoryFamily {

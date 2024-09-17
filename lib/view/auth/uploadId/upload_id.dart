@@ -1,5 +1,4 @@
 import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:nanny_fairy/ViewModel/auth_view_model.dart';
@@ -7,7 +6,6 @@ import 'package:nanny_fairy/res/components/rounded_button.dart';
 import 'package:nanny_fairy/res/components/widgets/image_picker.dart';
 import 'package:nanny_fairy/res/components/widgets/vertical_spacing.dart';
 import 'package:provider/provider.dart';
-
 import '../../../res/components/colors.dart';
 
 class UploadId extends StatefulWidget {

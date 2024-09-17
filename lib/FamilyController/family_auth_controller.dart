@@ -1,7 +1,5 @@
 import 'dart:io';
-
 import 'package:flutter/material.dart';
-import 'package:nanny_fairy/Repository/auth_repository.dart';
 import 'package:nanny_fairy/Repository/family_auth_repository.dart';
 import 'package:nanny_fairy/utils/utils.dart';
 
@@ -107,11 +105,11 @@ class FamilyAuthController extends ChangeNotifier {
     BuildContext context,
     File? frontPic,
     File? backPic,
-      String status,
+    String status,
   ) async {
     _setLoading(true);
     try {
-      await _authRepository.saveIdImages(context, frontPic, backPic,status);
+      await _authRepository.saveIdImages(context, frontPic, backPic, status);
     } catch (e) {
       debugPrint('Error saving details: ${e.toString()}');
     } finally {
