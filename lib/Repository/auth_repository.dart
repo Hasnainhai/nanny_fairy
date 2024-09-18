@@ -1,7 +1,6 @@
 // ignore_for_file: use_build_context_synchronously
 
 import 'dart:io';
-
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:nanny_fairy/res/components/common_firebase_storge.dart';
@@ -300,6 +299,7 @@ class AuthRepository {
     BuildContext context,
     File? frontPic,
     File? backImage,
+    String status,
   ) async {
     showDialog(
       context: context,
@@ -318,6 +318,7 @@ class AuthRepository {
 
       String frontUrl = "";
       String backUrl = "";
+      String status = "Unverified";
 
       if (frontPic != null) {
         CommonFirebaseStorage commonStorage = CommonFirebaseStorage();
@@ -341,10 +342,10 @@ class AuthRepository {
         Navigator.pop(context);
         return;
       }
-
       userRef.set({
         "frontPic": frontUrl,
         "backPic": backUrl,
+        "status": status,
       });
       Navigator.of(context).pop();
       Utils.toastMessage('Images saved successfully!');

@@ -1,5 +1,4 @@
 import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:nanny_fairy/ViewModel/auth_view_model.dart';
@@ -7,7 +6,6 @@ import 'package:nanny_fairy/res/components/rounded_button.dart';
 import 'package:nanny_fairy/res/components/widgets/image_picker.dart';
 import 'package:nanny_fairy/res/components/widgets/vertical_spacing.dart';
 import 'package:provider/provider.dart';
-
 import '../../../res/components/colors.dart';
 
 class UploadId extends StatefulWidget {
@@ -233,7 +231,8 @@ class _UploadIdState extends State<UploadId> {
             RoundedButton(
                 title: 'Continue',
                 onpress: () {
-                  authViewModel.saveIdImages(context, frontImage, backImage);
+                  authViewModel.saveIdImages(
+                      context, frontImage, backImage, 'Unverified');
                   // Navigator.pushNamed(context, RoutesName.uploadImg);
                 }),
           ],

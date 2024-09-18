@@ -5,7 +5,6 @@ import 'package:nanny_fairy/utils/routes/routes_name.dart';
 import 'package:nanny_fairy/utils/utils.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:uuid/uuid.dart';
-
 import '../res/components/common_firebase_storge.dart';
 
 class AuthRepositoryFamily {
@@ -236,6 +235,7 @@ class AuthRepositoryFamily {
     BuildContext context,
     File? frontPic,
     File? backImage,
+    String status,
   ) async {
     showDialog(
       context: context,
@@ -254,6 +254,7 @@ class AuthRepositoryFamily {
 
       String frontUrl = "";
       String backUrl = "";
+      String status = "Unverified";
 
       if (frontPic != null) {
         CommonFirebaseStorage commonStorage = CommonFirebaseStorage();
@@ -281,6 +282,7 @@ class AuthRepositoryFamily {
       userRef.set({
         "frontPic": frontUrl,
         "backPic": backUrl,
+        "status": status,
       });
       Navigator.of(context).pop();
       Utils.toastMessage('Images saved successfully!');
