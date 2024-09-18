@@ -37,13 +37,31 @@ class ProviderDistanceRepository extends ChangeNotifier {
     final databaseReference = FirebaseDatabase.instance.ref().child('Family');
     DatabaseEvent snapshot = await databaseReference.once();
 
-    final data = snapshot.snapshot.value as Map<dynamic, dynamic>;
+    final data = snapshot.snapshot.value as Map<dynamic, dynamic>?;
+
     _distanceFilteredFamilies.clear();
+
+    if (data == null) {
+      return;
+    }
+
     data.forEach((key, value) {
       if (value is Map<dynamic, dynamic>) {
-        _distanceFilteredFamilies.add(Map<String, dynamic>.from(value));
+        // Check if the 'bio' field exists, is not null, and is not empty
+        if (value.containsKey('bio') &&
+            value['bio'] != null &&
+            value['bio'].toString().isNotEmpty &&
+            value.containsKey('status') &&
+            value['status'] != "Unverified" &&
+            value['status'] != null &&
+            value['status'].toString().isNotEmpty) {
+          _distanceFilteredFamilies.add(Map<String, dynamic>.from(value));
+        }
       }
     });
+
+    // Optionally notify listeners if this data is being used to update the UI
+    notifyListeners();
   }
 
   Future<String?> getProviderAddress() async {
@@ -84,7 +102,10 @@ class ProviderDistanceRepository extends ChangeNotifier {
       for (var family in families) {
         String? familyAddress = family['address'] as String?;
 
-        if (familyAddress == null || family['bio'] == null) {
+        if (familyAddress == null ||
+            family['bio'] == null ||
+            family["status"] == "Unverified" ||
+            family['status'] == null) {
           continue;
         }
 
@@ -112,10 +133,10 @@ class ProviderDistanceRepository extends ChangeNotifier {
       builder: (BuildContext context) {
         return const Dialog(
           child: Padding(
-            padding: const EdgeInsets.all(20.0),
+            padding: EdgeInsets.all(20.0),
             child: Row(
               mainAxisSize: MainAxisSize.min,
-              children: const [
+              children: [
                 CircularProgressIndicator(),
                 SizedBox(width: 20),
                 Text("Loading..."),

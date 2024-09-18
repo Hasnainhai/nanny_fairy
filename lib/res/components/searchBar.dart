@@ -18,8 +18,8 @@ class SearchBarProvider extends StatefulWidget {
 }
 
 class _SearchBarProviderState extends State<SearchBarProvider> {
-  String selectedKM = '2';
-  final List<String> kM = ['2', '4', '8', '12'];
+  String selectedKM = 'All';
+  final List<String> kM = ["All", '2', '4', '8', '12'];
 
   final FocusNode _searchFocusNode = FocusNode();
   final FocusNode _dropdownFocusNode = FocusNode();
@@ -49,6 +49,8 @@ class _SearchBarProviderState extends State<SearchBarProvider> {
     if (searchText.isNotEmpty) {
       viewModel.searchFamiliesByPassion(
           searchText, double.parse(selectedKM), context);
+    } else if (selectedKM == "All") {
+      viewModel.fetchFamiliesFromFirebaseData();
     } else {
       viewModel.distanceFilteredFamilies.clear();
       viewModel.filterFamiliesByDistance(double.parse(selectedKM), context);
@@ -202,11 +204,15 @@ class _SearchBarProviderState extends State<SearchBarProvider> {
                               });
 
                               try {
-                                await distanceRepo.filterFamiliesByDistance(
-                                    providerDistance == null
-                                        ? double.parse(selectedKM)
-                                        : double.parse(providerDistance!),
-                                    context);
+                                if (selectedKM != "All") {
+                                  await distanceRepo.filterFamiliesByDistance(
+                                      providerDistance == null
+                                          ? double.parse(selectedKM)
+                                          : double.parse(providerDistance!),
+                                      context);
+                                } else {
+                                  distanceRepo.fetchFamiliesFromFirebaseData();
+                                }
                               } catch (e) {
                                 ScaffoldMessenger.of(context).showSnackBar(
                                   const SnackBar(

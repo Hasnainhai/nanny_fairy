@@ -229,7 +229,8 @@ class _FamilyDefaultViewState extends State<FamilyDefaultView> {
                             height: MediaQuery.of(context).size.height / 2.6,
                             child: familyDistanceController
                                     .distanceFilteredProviders.isEmpty
-                                ? const ShimmerUi()
+                                ? const Text(
+                                    "No Providers avaliable with in Range")
                                 : SingleChildScrollView(
                                     scrollDirection: Axis.vertical,
                                     child: Column(
