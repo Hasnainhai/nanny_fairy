@@ -251,6 +251,7 @@ class AuthRepositoryFamily {
       final userId = _firebaseAuth.currentUser!.uid;
       final userRef =
           databaseReference.child('Family').child(userId).child("IdPicsFamily");
+      final userRefData = databaseReference.child('Family').child(userId);
 
       String frontUrl = "";
       String backUrl = "";
@@ -282,8 +283,8 @@ class AuthRepositoryFamily {
       userRef.set({
         "frontPic": frontUrl,
         "backPic": backUrl,
-        "status": status,
       });
+      userRefData.update({"status": status});
       Navigator.of(context).pop();
       Utils.toastMessage('Images saved successfully!');
       debugPrint(userId);

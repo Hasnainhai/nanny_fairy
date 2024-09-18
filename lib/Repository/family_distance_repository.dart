@@ -53,7 +53,11 @@ class FamilyDistanceRepository extends ChangeNotifier {
         // Check if the 'bio' field exists and is not null
         if (value.containsKey('bio') &&
             value['bio'] != null &&
-            value['bio'].toString().isNotEmpty) {
+            value['bio'].toString().isNotEmpty &&
+            value.containsKey('status') &&
+            value['status'] != "Unverified" &&
+            value['status'] != null &&
+            value['status'].toString().isNotEmpty) {
           _distanceFilterProviders.add(Map<String, dynamic>.from(value));
         }
       }
@@ -174,10 +178,16 @@ class FamilyDistanceRepository extends ChangeNotifier {
             "Checking provider ${provider['firstName']} ${provider['lastName']} with address: $providerAddress");
 
         // Skip if provider UID or address is invalid
-        if (providerUid == null ||
-            providerAddress == null ||
-            providerAddress.isEmpty ||
-            provider['bio'] == null) {
+        if (providerUid != null &&
+            providerAddress != null &&
+            providerAddress.isNotEmpty &&
+            provider['bio'] != null &&
+            provider.containsKey('status') &&
+            provider['status'] != "Unverified" &&
+            provider['status'] != null &&
+            provider['status'].toString().isNotEmpty) {
+          // This block will only execute if all the conditions are true
+        } else {
           print(
               'Provider ${provider['firstName']} ${provider['lastName']} with address $providerAddress is null, empty, or invalid. Skipping.');
           continue;

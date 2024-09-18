@@ -50,7 +50,11 @@ class ProviderDistanceRepository extends ChangeNotifier {
         // Check if the 'bio' field exists, is not null, and is not empty
         if (value.containsKey('bio') &&
             value['bio'] != null &&
-            value['bio'].toString().isNotEmpty) {
+            value['bio'].toString().isNotEmpty &&
+            value.containsKey('status') &&
+            value['status'] != "Unverified" &&
+            value['status'] != null &&
+            value['status'].toString().isNotEmpty) {
           _distanceFilteredFamilies.add(Map<String, dynamic>.from(value));
         }
       }
@@ -98,7 +102,10 @@ class ProviderDistanceRepository extends ChangeNotifier {
       for (var family in families) {
         String? familyAddress = family['address'] as String?;
 
-        if (familyAddress == null || family['bio'] == null) {
+        if (familyAddress == null ||
+            family['bio'] == null ||
+            family["status"] == "Unverified" ||
+            family['status'] == null) {
           continue;
         }
 

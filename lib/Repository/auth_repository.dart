@@ -315,10 +315,9 @@ class AuthRepository {
       final userId = _firebaseAuth.currentUser!.uid;
       final userRef =
           databaseReference.child('Providers').child(userId).child("IdPics");
-
+      final userRefData = databaseReference.child('Providers').child(userId);
       String frontUrl = "";
       String backUrl = "";
-      String status = "Unverified";
 
       if (frontPic != null) {
         CommonFirebaseStorage commonStorage = CommonFirebaseStorage();
@@ -345,7 +344,9 @@ class AuthRepository {
       userRef.set({
         "frontPic": frontUrl,
         "backPic": backUrl,
-        "status": status,
+      });
+      userRefData.update({
+        "status": 'Unverified',
       });
       Navigator.of(context).pop();
       Utils.toastMessage('Images saved successfully!');
