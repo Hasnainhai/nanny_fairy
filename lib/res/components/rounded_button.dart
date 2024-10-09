@@ -22,7 +22,7 @@ class RoundedButton extends StatelessWidget {
         height: 46.0,
         width: double.infinity,
         decoration: BoxDecoration(
-          color: AppColor.primaryColor,
+          color: AppColor.oceanColor,
           borderRadius: BorderRadius.circular(32),
           
         ),
@@ -39,7 +39,7 @@ class RoundedButton extends StatelessWidget {
               textStyle: const TextStyle(
                 fontSize: 16,
                 fontWeight: FontWeight.w400,
-                color: AppColor.whiteColor,
+                color: AppColor.authCreamColor,
               ),
             ),
           ),
