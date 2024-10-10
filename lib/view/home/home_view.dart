@@ -37,7 +37,7 @@ class _HomeViewState extends State<HomeView> {
                 Container(
                   height: 179,
                   width: double.infinity,
-                  decoration:  const BoxDecoration(
+                  decoration: const BoxDecoration(
                     color: AppColor.lavenderColor,
                     borderRadius: BorderRadius.only(
                       bottomLeft: Radius.circular(20),
