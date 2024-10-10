@@ -8,7 +8,6 @@ import 'package:nanny_fairy/Family_View/homeFamily/widgets/home_Family_feature_w
 import 'package:nanny_fairy/Repository/family_home_ui_repository.dart';
 import 'package:nanny_fairy/ViewModel/family_distance_view_model.dart';
 import 'package:nanny_fairy/res/components/colors.dart';
-import 'package:nanny_fairy/res/components/widgets/shimmer_effect.dart';
 import 'package:nanny_fairy/res/components/widgets/vertical_spacing.dart';
 import 'package:provider/provider.dart';
 
@@ -77,7 +76,7 @@ class _FamilyDefaultViewState extends State<FamilyDefaultView> {
                   children: [
                     const SizedBox(width: 16),
                     HomeFeatureContainerFamily(
-                      bgColor: const Color(0xff51A1BA),
+                      bgColor: AppColor.lavenderColor,
                       img: 'images/cleaning.png',
                       title: 'Cleaning',
                       txColor: AppColor.whiteColor,
@@ -93,7 +92,7 @@ class _FamilyDefaultViewState extends State<FamilyDefaultView> {
                     const SizedBox(width: 16),
                     HomeFeatureContainerFamily(
                       txColor: AppColor.whiteColor,
-                      bgColor: const Color(0xffFEAA48),
+                      bgColor: AppColor.peachColor,
                       img: 'images/homeSitter.png',
                       title: 'Home Sitter',
                       ontap: () {
@@ -215,7 +214,7 @@ class _FamilyDefaultViewState extends State<FamilyDefaultView> {
                                     textStyle: const TextStyle(
                                       fontSize: 16,
                                       fontWeight: FontWeight.w600,
-                                      color: AppColor.primaryColor,
+                                      color: AppColor.lavenderColor,
                                     ),
                                   ),
                                 ),
