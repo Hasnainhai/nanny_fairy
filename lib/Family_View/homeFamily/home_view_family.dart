@@ -58,6 +58,7 @@ class _HomeViewFamilyState extends State<HomeViewFamily> {
     final familyHomeView = Provider.of<GetFamilyInfoController>(context);
 
     return Scaffold(
+      backgroundColor: AppColor.creamyColor,
       resizeToAvoidBottomInset: false,
       body: SingleChildScrollView(
         child: Column(
@@ -69,7 +70,7 @@ class _HomeViewFamilyState extends State<HomeViewFamily> {
                   height: 179,
                   width: double.infinity,
                   decoration: const BoxDecoration(
-                    color: AppColor.primaryColor,
+                    color: AppColor.lavenderColor,
                     borderRadius: BorderRadius.only(
                       bottomLeft: Radius.circular(20),
                       bottomRight: Radius.circular(20),
@@ -96,7 +97,7 @@ class _HomeViewFamilyState extends State<HomeViewFamily> {
                                   textStyle: const TextStyle(
                                     fontSize: 12,
                                     fontWeight: FontWeight.w500,
-                                    color: AppColor.whiteColor,
+                                    color: AppColor.creamyColor,
                                   ),
                                 ),
                               ),
@@ -107,7 +108,7 @@ class _HomeViewFamilyState extends State<HomeViewFamily> {
                                   textStyle: const TextStyle(
                                     fontSize: 14,
                                     fontWeight: FontWeight.w500,
-                                    color: AppColor.whiteColor,
+                                    color: AppColor.creamyColor,
                                   ),
                                 ),
                               ),
@@ -135,7 +136,7 @@ class _HomeViewFamilyState extends State<HomeViewFamily> {
                                 textStyle: const TextStyle(
                                   fontSize: 12,
                                   fontWeight: FontWeight.w500,
-                                  color: AppColor.whiteColor,
+                                  color: AppColor.creamyColor,
                                 ),
                               ),
                             ),
@@ -146,7 +147,7 @@ class _HomeViewFamilyState extends State<HomeViewFamily> {
                                 textStyle: const TextStyle(
                                   fontSize: 14,
                                   fontWeight: FontWeight.w500,
-                                  color: AppColor.whiteColor,
+                                  color: AppColor.creamyColor,
                                 ),
                               ),
                             ),
