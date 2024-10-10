@@ -79,7 +79,7 @@ class _FamilyDefaultViewState extends State<FamilyDefaultView> {
                       bgColor: AppColor.lavenderColor,
                       img: 'images/cleaning.png',
                       title: 'Cleaning',
-                      txColor: AppColor.whiteColor,
+                      txColor: AppColor.creamyColor,
                       ontap: () {
                         familyDistanceViewModel.filterProvidersBySinglePassions(
                             "Cleaning",
@@ -91,7 +91,7 @@ class _FamilyDefaultViewState extends State<FamilyDefaultView> {
                     ),
                     const SizedBox(width: 16),
                     HomeFeatureContainerFamily(
-                      txColor: AppColor.whiteColor,
+                      txColor: AppColor.creamyColor,
                       bgColor: AppColor.peachColor,
                       img: 'images/homeSitter.png',
                       title: 'Home Sitter',
@@ -106,7 +106,7 @@ class _FamilyDefaultViewState extends State<FamilyDefaultView> {
                     ),
                     const SizedBox(width: 16),
                     HomeFeatureContainerFamily(
-                      txColor: AppColor.whiteColor,
+                      txColor: AppColor.creamyColor,
                       bgColor: const Color(0xffDDC912),
                       img: 'images/cleaning.png',
                       title: 'Elderly care',
@@ -121,7 +121,7 @@ class _FamilyDefaultViewState extends State<FamilyDefaultView> {
                     ),
                     const SizedBox(width: 16),
                     HomeFeatureContainerFamily(
-                      txColor: AppColor.whiteColor,
+                      txColor: AppColor.creamyColor,
                       bgColor: const Color(0xffFEAA48),
                       img: 'images/homeSitter.png',
                       title: 'Animal care',
@@ -136,7 +136,7 @@ class _FamilyDefaultViewState extends State<FamilyDefaultView> {
                     ),
                     const SizedBox(width: 16),
                     HomeFeatureContainerFamily(
-                      txColor: AppColor.whiteColor,
+                      txColor: AppColor.creamyColor,
                       bgColor: const Color(0xffDDC912),
                       img: 'images/cleaning.png',
                       title: 'Home work',
@@ -151,7 +151,7 @@ class _FamilyDefaultViewState extends State<FamilyDefaultView> {
                     ),
                     const SizedBox(width: 16),
                     HomeFeatureContainerFamily(
-                      txColor: AppColor.whiteColor,
+                      txColor: AppColor.creamyColor,
                       bgColor: const Color(0xffDDC912),
                       img: 'images/cleaning.png',
                       title: 'Music lesson',
