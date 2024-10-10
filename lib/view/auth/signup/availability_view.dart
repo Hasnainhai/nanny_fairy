@@ -99,8 +99,7 @@ class _AvailabilityViewState extends State<AvailabilityView> {
                     borderRadius: BorderRadius.circular(12),
                     border: Border.all(
                       strokeAlign: BorderSide.strokeAlignCenter,
-                      color: const Color(0xff1B81BC)
-                          .withOpacity(0.10),
+                      color: const Color(0xff1B81BC).withOpacity(0.10),
                       width: 1,
                     ),
                     boxShadow: [
@@ -118,8 +117,7 @@ class _AvailabilityViewState extends State<AvailabilityView> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        const SizedBox(
-                            height: 16),
+                        const SizedBox(height: 16),
                         Text(
                           'Availability',
                           style: GoogleFonts.getFont(
@@ -372,6 +370,7 @@ class _AvailabilityViewState extends State<AvailabilityView> {
     return GestureDetector(
       onTap: () async {
         TimeOfDay? selectedTime = await showTimePicker(
+          barrierColor: AppColor.authCreamColor,
           context: context,
           initialTime: TimeOfDay.now(),
         );
