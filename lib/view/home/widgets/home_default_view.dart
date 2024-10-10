@@ -79,7 +79,7 @@ class _HomeDefaultViewState extends State<HomeDefaultView> {
                   textStyle: const TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.w600,
-                    color: AppColor.primaryColor,
+                    color: AppColor.lavenderColor,
                   ),
                 ),
               ),
@@ -107,7 +107,7 @@ class _HomeDefaultViewState extends State<HomeDefaultView> {
                               img: 'images/families.png',
                               title: '12',
                               subTitle: 'Total Families',
-                              bgColor: AppColor.whiteColor,
+                              bgColor: AppColor.creamyColor,
                             ));
                       } else if (snapshot.hasData) {
                         return HomeFeatureContainer(
@@ -115,7 +115,7 @@ class _HomeDefaultViewState extends State<HomeDefaultView> {
                           img: 'images/families.png',
                           title: snapshot.data!.length.toString(),
                           subTitle: 'Total Families',
-                          bgColor: AppColor.whiteColor,
+                          bgColor: AppColor.creamyColor,
                         );
                       } else {
                         return const HomeFeatureContainer(
@@ -123,7 +123,7 @@ class _HomeDefaultViewState extends State<HomeDefaultView> {
                           img: 'images/families.png',
                           title: '0',
                           subTitle: 'Total Families',
-                          bgColor: AppColor.whiteColor,
+                          bgColor: AppColor.creamyColor,
                         );
                       }
                     }),
@@ -140,7 +140,7 @@ class _HomeDefaultViewState extends State<HomeDefaultView> {
                               img: 'images/families.png',
                               title: '12',
                               subTitle: 'Total Families',
-                              bgColor: AppColor.whiteColor,
+                              bgColor: AppColor.creamyColor,
                             ));
                       } else if (snapshot.hasData) {
                         return HomeFeatureContainer(
@@ -148,7 +148,7 @@ class _HomeDefaultViewState extends State<HomeDefaultView> {
                           img: 'images/chats.png',
                           title: snapshot.data!.length.toString(),
                           subTitle: 'Total Chats',
-                          bgColor: AppColor.whiteColor,
+                          bgColor: AppColor.creamyColor,
                         );
                       } else {
                         return const HomeFeatureContainer(
@@ -156,7 +156,7 @@ class _HomeDefaultViewState extends State<HomeDefaultView> {
                           img: 'images/chats.png',
                           title: '0',
                           subTitle: 'Total Chats',
-                          bgColor: AppColor.whiteColor,
+                          bgColor: AppColor.creamyColor,
                         );
                       }
                     }),
@@ -180,7 +180,7 @@ class _HomeDefaultViewState extends State<HomeDefaultView> {
                               img: 'images/families.png',
                               title: '12',
                               subTitle: 'Total Families',
-                              bgColor: AppColor.whiteColor,
+                              bgColor: AppColor.creamyColor,
                             ));
                       } else if (snapshot.hasData) {
                         return HomeFeatureContainer(
@@ -188,7 +188,7 @@ class _HomeDefaultViewState extends State<HomeDefaultView> {
                           img: 'images/families.png',
                           title: snapshot.data!.length.toString(),
                           subTitle: 'Total Posts',
-                          bgColor: AppColor.whiteColor,
+                          bgColor: AppColor.creamyColor,
                         );
                       } else {
                         return const HomeFeatureContainer(
@@ -196,7 +196,7 @@ class _HomeDefaultViewState extends State<HomeDefaultView> {
                           img: 'images/families.png',
                           title: '0',
                           subTitle: 'Total Posts',
-                          bgColor: AppColor.whiteColor,
+                          bgColor: AppColor.creamyColor,
                         );
                       }
                     }),
@@ -250,7 +250,7 @@ class _HomeDefaultViewState extends State<HomeDefaultView> {
                             textStyle: const TextStyle(
                               fontSize: 16,
                               fontWeight: FontWeight.w600,
-                              color: AppColor.primaryColor,
+                              color: AppColor.lavenderColor,
                             ),
                           ),
                         ),

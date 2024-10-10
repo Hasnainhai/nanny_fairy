@@ -55,12 +55,12 @@ class _DashBoardScreenState extends State<DashBoardScreen>
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          backgroundColor: AppColor.whiteColor,
+          backgroundColor: AppColor.creamyColor,
           shape: const RoundedRectangleBorder(),
           icon: const Icon(
             Icons.no_accounts_outlined,
             size: 80,
-            color: AppColor.primaryColor,
+            color: AppColor.lavenderColor,
           ),
           title: const Text('You don\'t have any account, please'),
           content: Column(
@@ -69,7 +69,7 @@ class _DashBoardScreenState extends State<DashBoardScreen>
             children: [
               ElevatedButton(
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: AppColor.primaryColor,
+                  backgroundColor: AppColor.lavenderColor,
                   shape: const RoundedRectangleBorder(),
                 ),
                 onPressed: () {
@@ -77,7 +77,7 @@ class _DashBoardScreenState extends State<DashBoardScreen>
                 },
                 child: const Text(
                   'LOGIN',
-                  style: TextStyle(color: AppColor.whiteColor),
+                  style: TextStyle(color: AppColor.creamyColor),
                 ),
               ),
               const SizedBox(height: 12.0), // Vertical spacing
@@ -87,7 +87,7 @@ class _DashBoardScreenState extends State<DashBoardScreen>
                   elevation: 0.0,
                   shape: const RoundedRectangleBorder(),
                   side: const BorderSide(
-                    color: AppColor.primaryColor, // Border color
+                    color: AppColor.lavenderColor, // Border color
                     width: 2.0, // Border width
                   ),
                 ),
@@ -96,7 +96,7 @@ class _DashBoardScreenState extends State<DashBoardScreen>
                 },
                 child: const Text(
                   'SIGN UP',
-                  style: TextStyle(color: AppColor.primaryColor),
+                  style: TextStyle(color: AppColor.lavenderColor),
                 ),
               ),
             ],
@@ -109,6 +109,7 @@ class _DashBoardScreenState extends State<DashBoardScreen>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: AppColor.creamyColor,
       body: TabBarView(
         physics: const NeverScrollableScrollPhysics(),
         controller: tabController,
@@ -121,8 +122,10 @@ class _DashBoardScreenState extends State<DashBoardScreen>
         ],
       ),
       bottomNavigationBar: BottomNavigationBar(
+
         items: const [
           BottomNavigationBarItem(
+            backgroundColor: AppColor.creamyColor,
             icon: ImageIcon(
               AssetImage('images/home.png'),
             ),
@@ -150,8 +153,8 @@ class _DashBoardScreenState extends State<DashBoardScreen>
           ),
         ],
         unselectedItemColor: AppColor.grayColor,
-        selectedItemColor: AppColor.primaryColor,
-        backgroundColor: Colors.white,
+        selectedItemColor: AppColor.lavenderColor,
+        backgroundColor: AppColor.creamyColor,
         type: BottomNavigationBarType.fixed,
         showUnselectedLabels: true,
         currentIndex: selectIndex,
