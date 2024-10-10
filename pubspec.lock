@@ -665,10 +665,11 @@ packages:
     dependency: transitive
     description:
       name: stripe_android
-      sha256: "6d65446ac95b5e66535f38606b51e30961b1a3823cd19253902bc0992d6f3dcc"
+
+      sha256: a8faacd135084a39b379331b1c472f53f8e0559a1c78a35a87293a28a8c46a78
       url: "https://pub.dev"
     source: hosted
-    version: "11.2.1"
+    version: "11.2.0"
   stripe_ios:
     dependency: transitive
     description:

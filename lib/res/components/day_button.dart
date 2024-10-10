@@ -42,7 +42,7 @@ class _DayButtonState extends State<DayButton> {
         height: 23,
         width: 22,
         decoration: BoxDecoration(
-          color: _isSelected ? AppColor.primaryColor : AppColor.secondaryBgColor,
+          color: _isSelected ? AppColor.oceanColor : AppColor.authCreamColor,
           borderRadius: BorderRadius.circular(6),
           border: Border.all(color: _isSelected ?  AppColor.blackColor:  AppColor.blackColor,width: 0.5),
         ),
@@ -52,7 +52,7 @@ class _DayButtonState extends State<DayButton> {
             widget.day,
             style: TextStyle(
               fontSize: 14,
-              color: _isSelected ? Colors.white : Colors.black,
+              color: _isSelected ? AppColor.authCreamColor : Colors.black,
               // fontWeight: FontWeight.w500,
             ),
           ),

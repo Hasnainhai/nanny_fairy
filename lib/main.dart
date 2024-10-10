@@ -70,8 +70,7 @@ class MyApp extends StatelessWidget {
           Provider<AuthRepository>(create: (_) => AuthRepository()),
           Provider<AuthRepositoryFamily>(create: (_) => AuthRepositoryFamily()),
           Provider<ProviderHomeRepository>(
-            create: (_) => ProviderHomeRepository(),
-          ),
+              create: (_) => ProviderHomeRepository()),
           Provider<FamilyHomeRepository>(create: (_) => FamilyHomeRepository()),
           ChangeNotifierProvider<SearchRepository>(
               create: (_) => SearchRepository()),
