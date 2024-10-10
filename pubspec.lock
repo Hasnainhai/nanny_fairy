@@ -665,6 +665,7 @@ packages:
     dependency: transitive
     description:
       name: stripe_android
+
       sha256: a8faacd135084a39b379331b1c472f53f8e0559a1c78a35a87293a28a8c46a78
       url: "https://pub.dev"
     source: hosted
