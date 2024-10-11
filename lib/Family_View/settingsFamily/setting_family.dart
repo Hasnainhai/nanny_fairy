@@ -100,13 +100,13 @@ class _SettingsFamilyViewState extends State<SettingsFamilyView> {
                   borderRadius: BorderRadius.circular(12),
                   border: Border.all(
                     strokeAlign: BorderSide.strokeAlignCenter,
-                    color: const Color(0xff1B81BC)
+                    color: AppColor.lavenderColor
                         .withOpacity(0.10), // Stroke color with 10% opacity
                     width: 1,
                   ),
                   boxShadow: [
                     BoxShadow(
-                      color: const Color(0xff1B81BC).withOpacity(
+                      color: AppColor.lavenderColor.withOpacity(
                           0.1), // Drop shadow color with 4% opacity
                       blurRadius: 2,
                       offset: const Offset(1, 2),

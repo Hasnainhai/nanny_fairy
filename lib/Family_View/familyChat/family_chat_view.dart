@@ -398,11 +398,11 @@ class _FamilyChatViewState extends State<FamilyChatView> {
                                     builder: (context) => FamilyRating(
                                       providerId: widget.id,
                                       familyId: familyId,
-                                      familyProfile:
+                                      familyProfile: widget.profilePic,
+                                      familyName: widget.name,
+                                      providerProfile:
                                           widget.currentUserProfilePic,
-                                      familyName: widget.currentUserName,
-                                      providerProfile: widget.profilePic,
-                                      providerName: widget.name,
+                                      providerName: widget.currentUserName,
                                     ),
                                   ),
                                 );
