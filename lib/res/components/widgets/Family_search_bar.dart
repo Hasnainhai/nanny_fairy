@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:nanny_fairy/Repository/family_distance_repository.dart';
+import 'package:nanny_fairy/Family_View/homeFamily/home_view_family.dart';
 import 'package:nanny_fairy/Repository/family_home_ui_repository.dart';
-import 'package:nanny_fairy/ViewModel/family_search_view_model.dart';
+import 'package:nanny_fairy/ViewModel/family_distance_view_model.dart';
 import 'package:nanny_fairy/res/components/colors.dart';
-import 'package:nanny_fairy/res/components/widgets/family_home_ui_enums.dart';
 import 'package:provider/provider.dart';
 
 class FamilySearchBarProvider extends StatefulWidget {
@@ -17,13 +16,8 @@ class FamilySearchBarProvider extends StatefulWidget {
 }
 
 class _FamilySearchBarProviderState extends State<FamilySearchBarProvider> {
-  String selectedKM = '2';
-  final List<String> kM = [
-    '2',
-    '4',
-    '8',
-    '12',
-  ];
+  String selectedKM = 'All';
+  final List<String> kM = ['All', "2", '4', '8', '12'];
 
   final FocusNode _searchFocusNode = FocusNode();
   final FocusNode _dropdownFocusNode = FocusNode();
@@ -47,12 +41,29 @@ class _FamilySearchBarProviderState extends State<FamilySearchBarProvider> {
   }
 
   void _onSearchChanged() {
-    // The logic will be moved to the Consumer inside the build method
+    final viewModel = context.read<FamilyDistanceViewModel>();
+    final searchText = searchController.text;
+
+    // Debugging output
+    print('Search text: "$searchText"');
+
+    if (searchText.isNotEmpty) {
+      print('Filtering by passions: $searchText');
+      viewModel.filterProvidersByPassions(searchText, context);
+    } else if (selectedKM == "All") {
+      viewModel.fetchProviderDataFromFiebase();
+    } else {
+      print('Filtering by distance: $selectedKM km');
+      viewModel.filterProvidersByDistance(
+          familyDistance == null
+              ? double.parse(selectedKM)
+              : double.parse(familyDistance!),
+          context);
+    }
   }
 
   @override
   Widget build(BuildContext context) {
-    FamilyDistanceRepository distanceRepository = FamilyDistanceRepository();
     return Row(
       children: [
         GestureDetector(
@@ -63,15 +74,15 @@ class _FamilySearchBarProviderState extends State<FamilySearchBarProvider> {
             height: 50,
             width: 200,
             decoration: BoxDecoration(
-              color: AppColor.whiteColor,
+              color: AppColor.creamyColor,
               borderRadius: BorderRadius.circular(6),
               border: Border.all(
-                color: const Color(0xff1B81BC).withOpacity(0.10),
+                color: AppColor.lavenderColor.withOpacity(0.10),
                 width: 1,
               ),
               boxShadow: [
                 BoxShadow(
-                  color: const Color(0xff1B81BC).withOpacity(0.1),
+                  color: AppColor.lavenderColor.withOpacity(0.1),
                   blurRadius: 2,
                   offset: const Offset(1, 2),
                   spreadRadius: 1,
@@ -88,21 +99,8 @@ class _FamilySearchBarProviderState extends State<FamilySearchBarProvider> {
                     padding: const EdgeInsets.only(top: 2),
                     child: Focus(
                       focusNode: _searchFocusNode,
-                      child: Consumer2<FamilySearchViewModel,
-                          FamilyHomeUiRepository>(
-                        builder: (context, viewModel, uiState, child) {
-                          searchController.addListener(() {
-                            if (searchController.text.isNotEmpty) {
-                              viewModel.fetchUsers();
-                              viewModel
-                                  .searchUsersByPassion(searchController.text);
-                              uiState.switchToType(
-                                  FamilyHomeUiEnums.SearchSection);
-                            } else {
-                              uiState.switchToType(
-                                  FamilyHomeUiEnums.DefaultSection);
-                            }
-                          });
+                      child: Consumer<FamilyDistanceViewModel>(
+                        builder: (context, viewModel, child) {
                           return TextFormField(
                             controller: searchController,
                             decoration: const InputDecoration(
@@ -130,15 +128,15 @@ class _FamilySearchBarProviderState extends State<FamilySearchBarProvider> {
             height: 50,
             width: 56,
             decoration: BoxDecoration(
-              color: AppColor.whiteColor,
+              color: AppColor.creamyColor,
               borderRadius: BorderRadius.circular(6),
               border: Border.all(
-                color: const Color(0xff1B81BC).withOpacity(0.10),
+                color: AppColor.lavenderColor.withOpacity(0.10),
                 width: 1,
               ),
               boxShadow: [
                 BoxShadow(
-                  color: const Color(0xff1B81BC).withOpacity(0.1),
+                  color: AppColor.lavenderColor.withOpacity(0.1),
                   blurRadius: 2,
                   offset: const Offset(1, 2),
                   spreadRadius: 1,
@@ -148,7 +146,7 @@ class _FamilySearchBarProviderState extends State<FamilySearchBarProvider> {
             child: const Center(
               child: Icon(
                 Icons.filter_alt_outlined,
-                color: AppColor.primaryColor,
+                color: AppColor.lavenderColor,
               ),
             ),
           ),
@@ -162,15 +160,15 @@ class _FamilySearchBarProviderState extends State<FamilySearchBarProvider> {
             height: 50,
             width: 56,
             decoration: BoxDecoration(
-              color: AppColor.whiteColor,
+              color: AppColor.creamyColor,
               borderRadius: BorderRadius.circular(6),
               border: Border.all(
-                color: const Color(0xff1B81BC).withOpacity(0.10),
+                color: AppColor.lavenderColor.withOpacity(0.10),
                 width: 1,
               ),
               boxShadow: [
                 BoxShadow(
-                  color: const Color(0xff1B81BC).withOpacity(0.1),
+                  color: AppColor.lavenderColor.withOpacity(0.1),
                   blurRadius: 2,
                   offset: const Offset(1, 2),
                   spreadRadius: 1,
@@ -180,38 +178,45 @@ class _FamilySearchBarProviderState extends State<FamilySearchBarProvider> {
             child: Center(
               child: Focus(
                 focusNode: _dropdownFocusNode,
-                child: Consumer<FamilyHomeUiRepository>(
-                  builder: (context, uiState, child) {
+                child:
+                    Consumer2<FamilyHomeUiRepository, FamilyDistanceViewModel>(
+                  builder: (context, uiState, distanceViewModel, child) {
                     return DropdownButtonHideUnderline(
                       child: DropdownButton<String>(
-                        value: selectedKM,
+                        dropdownColor: AppColor.creamyColor,
+                        focusColor: AppColor.lavenderColor,
+                        value: familyDistance ?? selectedKM,
                         icon: const SizedBox.shrink(),
                         style: GoogleFonts.getFont(
                           "Poppins",
                           textStyle: const TextStyle(
                             fontSize: 12,
                             fontWeight: FontWeight.w600,
-                            color: AppColor.primaryColor,
+                            color: AppColor.lavenderColor,
                           ),
                         ),
                         onChanged: (String? newValue) async {
                           if (newValue != null) {
                             setState(() {
                               selectedKM = newValue;
+                              familyDistance = selectedKM;
                             });
                             try {
                               // Call the method to filter providers by distance
-                              await distanceRepository
-                                  .filterProvidersByDistance(
-                                double.parse(
-                                  selectedKM,
-                                ), // 2 kilometers
-                              );
+                              if (selectedKM != "All") {
+                                await distanceViewModel
+                                    .filterProvidersByDistance(
+                                        double.parse(selectedKM), context);
+                              } else {
+                                distanceViewModel
+                                    .fetchProviderDataFromFiebase();
+                              }
 
-                              uiState.switchToType(
-                                FamilyHomeUiEnums.DistanceSection,
-                              );
+                              // uiState.switchToType(
+                              //   FamilyHomeUiEnums.DistanceSection,
+                              // );
                             } catch (e) {
+                              debugPrint("this is error in dropdown:$e");
                               ScaffoldMessenger.of(context).showSnackBar(
                                 const SnackBar(
                                   content:

@@ -33,9 +33,9 @@ class _CommunityViewState extends State<CommunityView> {
     return DefaultTabController(
       length: 2,
       child: Scaffold(
-        backgroundColor: AppColor.secondaryBgColor,
+        backgroundColor: AppColor.creamyColor,
         appBar: AppBar(
-          backgroundColor: AppColor.primaryColor,
+          backgroundColor: AppColor.lavenderColor,
           elevation: 0.0,
           automaticallyImplyLeading: false,
           title: Text(
@@ -45,7 +45,7 @@ class _CommunityViewState extends State<CommunityView> {
               textStyle: const TextStyle(
                 fontSize: 18,
                 fontWeight: FontWeight.w400,
-                color: AppColor.whiteColor,
+                color: AppColor.creamyColor,
               ),
             ),
           ),
@@ -61,7 +61,7 @@ class _CommunityViewState extends State<CommunityView> {
                   height: 31,
                   width: 97,
                   decoration: BoxDecoration(
-                    color: AppColor.whiteColor,
+                    color: AppColor.creamyColor,
                     borderRadius: BorderRadius.circular(4),
                   ),
                   child: Center(
@@ -72,7 +72,7 @@ class _CommunityViewState extends State<CommunityView> {
                         textStyle: const TextStyle(
                           fontSize: 12,
                           fontWeight: FontWeight.w400,
-                          color: AppColor.primaryColor,
+                          color: AppColor.lavenderColor,
                         ),
                       ),
                     ),
@@ -82,9 +82,9 @@ class _CommunityViewState extends State<CommunityView> {
             ),
           ],
           bottom: const TabBar(
-            indicatorColor: AppColor.avatarColor,
-            labelColor: AppColor.avatarColor,
-            unselectedLabelColor: AppColor.whiteColor,
+            indicatorColor: AppColor.peachColor,
+            labelColor: AppColor.peachColor,
+            unselectedLabelColor: AppColor.creamyColor,
             tabs: [
               Tab(text: 'Topics'),
               Tab(text: 'My Posts'),
@@ -108,7 +108,11 @@ class _CommunityViewState extends State<CommunityView> {
                       const Center(child: Text('No posts found'))
                     else
                       Column(
-                        children: communityController.posts.map((post) {
+                        children: communityController.posts
+                            .where((post) =>
+                                post['status'] ==
+                                true) // Filter posts with status true
+                            .map((post) {
                           return FutureBuilder<int>(
                             future: communityController
                                 .fetchTotalComments(post['postId']),
@@ -145,7 +149,6 @@ class _CommunityViewState extends State<CommunityView> {
                 ),
               ),
             ),
-
             // My Posts View
             Padding(
               padding: const EdgeInsets.only(top: 10, left: 16.0, right: 16.0),

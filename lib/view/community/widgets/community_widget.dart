@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:nanny_fairy/utils/routes/routes_name.dart';
 import '../../../res/components/colors.dart';
 import '../../../res/components/widgets/vertical_spacing.dart';
 
 class CommunituCartWidget extends StatelessWidget {
-  const CommunituCartWidget({super.key, required this.post, required this.title, required this.content, required this.totalComments});
-
+  const CommunituCartWidget(
+      {super.key,
+      required this.post,
+      required this.title,
+      required this.content,
+      required this.totalComments});
 
   final String post;
   final String title;
@@ -17,7 +20,7 @@ class CommunituCartWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        color: AppColor.whiteColor,
+        color: AppColor.creamyColor,
         borderRadius: BorderRadius.circular(12),
         border: Border.all(
           strokeAlign: BorderSide.strokeAlignCenter,
@@ -35,7 +38,6 @@ class CommunituCartWidget extends StatelessWidget {
           ),
         ],
       ),
-      height: 309,
       width: double.infinity,
       child: Padding(
         padding: const EdgeInsets.all(12.0),
@@ -71,7 +73,7 @@ class CommunituCartWidget extends StatelessWidget {
                     borderRadius: BorderRadius.only(
                         topRight: Radius.circular(12),
                         bottomLeft: Radius.circular(12)),
-                    color: AppColor.avatarColor,
+                    color: AppColor.peachColor,
                   ),
                   child: Padding(
                     padding: const EdgeInsets.all(4.0),
@@ -83,7 +85,7 @@ class CommunituCartWidget extends StatelessWidget {
                           textStyle: const TextStyle(
                             fontSize: 12,
                             fontWeight: FontWeight.w400,
-                            color: AppColor.whiteColor,
+                            color: AppColor.creamyColor,
                           ),
                         ),
                       ),

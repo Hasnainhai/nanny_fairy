@@ -6,13 +6,13 @@ import 'package:nanny_fairy/res/components/colors.dart';
 import 'package:nanny_fairy/res/components/searchbar.dart';
 import 'package:nanny_fairy/res/components/widgets/ui_enums.dart';
 import 'package:nanny_fairy/res/components/widgets/vertical_spacing.dart';
-import 'package:nanny_fairy/utils/routes/routes_name.dart';
-import 'package:nanny_fairy/view/home/widgets/distance_filter.dart';
 import 'package:nanny_fairy/view/home/widgets/home_default_view.dart';
 import 'package:nanny_fairy/view/home/widgets/home_filter_view.dart';
 import 'package:nanny_fairy/view/home/widgets/home_search_view.dart';
 import 'package:provider/provider.dart';
 import 'package:shimmer/shimmer.dart';
+
+String? providerDistance;
 
 class HomeView extends StatefulWidget {
   const HomeView({super.key});
@@ -23,22 +23,10 @@ class HomeView extends StatefulWidget {
 
 class _HomeViewState extends State<HomeView> {
   @override
-  void initState() {
-    super.initState();
-    // Fetch users when the widget initializes
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      Provider.of<ProviderHomeViewModel>(context, listen: false)
-          .getPopularJobs();
-      Provider.of<ProviderHomeViewModel>(context, listen: false)
-          .getCurrentUser();
-    });
-  }
-
-  @override
   Widget build(BuildContext context) {
     final homeViewModel = Provider.of<ProviderHomeViewModel>(context);
-
     return Scaffold(
+      backgroundColor: AppColor.creamyColor,
       resizeToAvoidBottomInset: false,
       body: SingleChildScrollView(
         child: Column(
@@ -50,7 +38,7 @@ class _HomeViewState extends State<HomeView> {
                   height: 179,
                   width: double.infinity,
                   decoration: const BoxDecoration(
-                    color: AppColor.primaryColor,
+                    color: AppColor.lavenderColor,
                     borderRadius: BorderRadius.only(
                       bottomLeft: Radius.circular(20),
                       bottomRight: Radius.circular(20),
@@ -77,7 +65,7 @@ class _HomeViewState extends State<HomeView> {
                                   textStyle: const TextStyle(
                                     fontSize: 12,
                                     fontWeight: FontWeight.w500,
-                                    color: AppColor.whiteColor,
+                                    color: AppColor.creamyColor,
                                   ),
                                 ),
                               ),
@@ -88,7 +76,7 @@ class _HomeViewState extends State<HomeView> {
                                   textStyle: const TextStyle(
                                     fontSize: 14,
                                     fontWeight: FontWeight.w500,
-                                    color: AppColor.whiteColor,
+                                    color: AppColor.creamyColor,
                                   ),
                                 ),
                               ),
@@ -104,8 +92,9 @@ class _HomeViewState extends State<HomeView> {
                           child: ListTile(
                             leading: CircleAvatar(
                               radius: 40,
-                              foregroundImage:
-                                  NetworkImage(provider['profile']),
+                              foregroundImage: NetworkImage(provider[
+                                      'profile'] ??
+                                  'https://play-lh.googleusercontent.com/jInS55DYPnTZq8GpylyLmK2L2cDmUoahVacfN_Js_TsOkBEoizKmAl5-p8iFeLiNjtE=w526-h296-rw'),
                               backgroundImage: const NetworkImage(
                                   'https://play-lh.googleusercontent.com/jInS55DYPnTZq8GpylyLmK2L2cDmUoahVacfN_Js_TsOkBEoizKmAl5-p8iFeLiNjtE=w526-h296-rw'),
                             ),
@@ -116,18 +105,18 @@ class _HomeViewState extends State<HomeView> {
                                 textStyle: const TextStyle(
                                   fontSize: 12,
                                   fontWeight: FontWeight.w500,
-                                  color: AppColor.whiteColor,
+                                  color: AppColor.creamyColor,
                                 ),
                               ),
                             ),
                             subtitle: Text(
-                              "${provider['firstName']} ${provider['lastName']}",
+                              "${provider['firstName'] ?? 'Name'} ${provider['lastName'] ?? 'Name'}",
                               style: GoogleFonts.getFont(
                                 "Poppins",
                                 textStyle: const TextStyle(
                                   fontSize: 14,
                                   fontWeight: FontWeight.w500,
-                                  color: AppColor.whiteColor,
+                                  color: AppColor.creamyColor,
                                 ),
                               ),
                             ),
@@ -142,15 +131,11 @@ class _HomeViewState extends State<HomeView> {
                 Positioned(
                   top: 135,
                   left: (MediaQuery.of(context).size.width - 320) / 2,
-                  child: SearchBarProvider(
-                    onTapFilter: () {
-                      Navigator.pushNamed(context, RoutesName.filterPopup);
-                    },
-                  ),
+                  child: const SearchBarProvider(),
                 ),
               ],
             ),
-            const VerticalSpeacing(50.0),
+            const VerticalSpeacing(20.0),
             // const HomeDefaultView(),
             // const HomeSearchView(),
             Consumer<HomeUiSwithchRepository>(
@@ -164,14 +149,14 @@ class _HomeViewState extends State<HomeView> {
                   case UIType.DefaultSection:
                     selectedWidget = const HomeDefaultView();
                     break;
+                  // case UIType.DistanceSection:
+                  //   selectedWidget = const HomeDistanceView();
+                  //   break;
+
                   case UIType.FilterSection:
                     selectedWidget = const HomeFilterView();
                     break;
-                  case UIType.DistanceSection:
-                    selectedWidget = const HomeDistanceView();
-                    break;
                 }
-
                 return selectedWidget;
               },
             ),

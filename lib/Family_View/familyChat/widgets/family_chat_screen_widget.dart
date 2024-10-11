@@ -4,8 +4,10 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+
 import 'package:nanny_fairy/Repository/family_chat_repository.dart';
 import 'package:nanny_fairy/ViewModel/family_chat_view_model.dart';
+
 import '../../../res/components/colors.dart';
 
 class FamilyChatScreenWidget extends StatefulWidget {
@@ -15,6 +17,10 @@ class FamilyChatScreenWidget extends StatefulWidget {
   final String currentUserProfile;
   final String providerName;
   final String providerProfilePic;
+  final String providerRating;
+  final String providerTotalRating;
+  final String education;
+  final String hourlyRate;
 
   const FamilyChatScreenWidget({
     super.key,
@@ -24,6 +30,10 @@ class FamilyChatScreenWidget extends StatefulWidget {
     required this.currentUserProfile,
     required this.providerName,
     required this.providerProfilePic,
+    required this.providerRating,
+    required this.providerTotalRating,
+    required this.education,
+    required this.hourlyRate,
   });
 
   @override
@@ -187,14 +197,17 @@ class ChatScreenState extends State<FamilyChatScreenWidget> {
               debugPrint("This is the reciever name:${widget.providerName}");
               if (_textController.text.isNotEmpty) {
                 familyChatRepository.saveDataToContactsSubcollection(
-                  _textController.text,
-                  DateTime.now(),
-                  widget.id,
-                  widget.currentUserName,
-                  widget.providerName,
-                  widget.currentUserProfile,
-                  widget.providerProfilePic,
-                );
+                    _textController.text,
+                    DateTime.now(),
+                    widget.id,
+                    widget.currentUserName,
+                    widget.providerName,
+                    widget.currentUserProfile,
+                    widget.providerProfilePic,
+                    widget.providerRating,
+                    widget.providerTotalRating,
+                    widget.education,
+                    widget.hourlyRate);
                 _textController.clear();
               }
             },

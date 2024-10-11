@@ -60,7 +60,7 @@ class ChatScreenState extends State<ChatScreenWidget> {
           padding: const EdgeInsets.all(16.0),
           decoration: BoxDecoration(
             color: senderId == auth.currentUser!.uid
-                ? AppColor.primaryColor
+                ? AppColor.blossomColor
                 : AppColor.blackColor,
             borderRadius: BorderRadius.circular(12.0),
           ),
@@ -175,7 +175,7 @@ class ChatScreenState extends State<ChatScreenWidget> {
           IconButton(
             icon: const Icon(
               Icons.send,
-              color: AppColor.primaryColor,
+              color: AppColor.blossomColor,
             ),
             onPressed: () {
               if (_textController.text.isNotEmpty) {

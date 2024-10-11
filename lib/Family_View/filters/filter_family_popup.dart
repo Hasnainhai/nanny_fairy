@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:nanny_fairy/Family_View/homeFamily/home_view_family.dart';
 import 'package:nanny_fairy/Repository/family_home_ui_repository.dart';
+import 'package:nanny_fairy/ViewModel/family_distance_view_model.dart';
 import 'package:nanny_fairy/ViewModel/family_filter_view_model.dart';
 import 'package:nanny_fairy/res/components/rounded_button.dart';
 import 'package:nanny_fairy/res/components/widgets/family_home_ui_enums.dart';
@@ -36,6 +38,7 @@ class _FilterPopUpFamilyState extends State<FilterPopUpFamily> {
   RangeValues _values = const RangeValues(5, 1000);
   List<String> selectedPassions = [];
   List<String> selecteDays = [];
+  double minRating = 4;
 // Example conversion logic
   Map<String, Map<String, bool>> convertDaysToAvailability(List<String> days) {
     try {
@@ -215,32 +218,33 @@ class _FilterPopUpFamilyState extends State<FilterPopUpFamily> {
                             },
                           ),
                           FilterButton(
-                            label: "Home",
-                            isSelected: selectedPassions.contains("Home"),
+                            label: "Home sitter",
+                            isSelected:
+                                selectedPassions.contains("Home sitter"),
                             onTap: () {
-                              if (selectedPassions.contains("Home")) {
+                              if (selectedPassions.contains("Home sitter")) {
                                 setState(() {
-                                  selectedPassions.remove("Home");
+                                  selectedPassions.remove("Home sitter");
                                 });
                               } else {
                                 setState(() {
-                                  selectedPassions.add("Home");
+                                  selectedPassions.add("Home sitter");
                                 });
                               }
                             },
                           ),
                           FilterButton(
-                            label: "Children Care",
+                            label: "Animal care",
                             isSelected:
-                                selectedPassions.contains("Children Care"),
+                                selectedPassions.contains("Animal care"),
                             onTap: () {
-                              if (selectedPassions.contains("Children Care")) {
+                              if (selectedPassions.contains("Animal care")) {
                                 setState(() {
-                                  selectedPassions.remove("Children Care");
+                                  selectedPassions.remove("Animal care");
                                 });
                               } else {
                                 setState(() {
-                                  selectedPassions.add("Children Care");
+                                  selectedPassions.add("Animal care");
                                 });
                               }
                             },
@@ -254,116 +258,53 @@ class _FilterPopUpFamilyState extends State<FilterPopUpFamily> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           FilterButton(
-                            label: "Music Lesson",
+                            label: "Music lesson",
                             isSelected:
-                                selectedPassions.contains("Music Lesson"),
+                                selectedPassions.contains("Music lesson"),
                             onTap: () {
-                              if (selectedPassions.contains("Music Lesson")) {
+                              if (selectedPassions.contains("Music lesson")) {
                                 setState(() {
-                                  selectedPassions.remove("Music Lesson");
+                                  selectedPassions.remove("Music lesson");
                                 });
                               } else {
                                 setState(() {
-                                  selectedPassions.add("Music Lesson");
+                                  selectedPassions.add("Music lesson");
                                 });
                               }
                             },
                           ),
                           FilterButton(
-                            label: "House Setting",
-                            isSelected:
-                                selectedPassions.contains("House Setting"),
+                            label: "Homework",
+                            isSelected: selectedPassions.contains("Homework"),
                             onTap: () {
-                              if (selectedPassions.contains("House Setting")) {
+                              if (selectedPassions.contains("Homework")) {
                                 setState(() {
-                                  selectedPassions.remove("House Setting");
+                                  selectedPassions.remove("Homework");
                                 });
                               } else {
                                 setState(() {
-                                  selectedPassions.add("House Setting");
+                                  selectedPassions.add("Homework");
                                 });
                               }
                             },
                           ),
                           FilterButton(
-                            label: "Elderly Care",
+                            label: "Elderly care",
                             isSelected:
-                                selectedPassions.contains("Elderly Care"),
+                                selectedPassions.contains("Elderly care"),
                             onTap: () {
-                              if (selectedPassions.contains("Elderly Care")) {
+                              if (selectedPassions.contains("Elderly care")) {
                                 setState(() {
-                                  selectedPassions.remove("Elderly Care");
+                                  selectedPassions.remove("Elderly care");
                                 });
                               } else {
                                 setState(() {
-                                  selectedPassions.add("Elderly Care");
+                                  selectedPassions.add("Elderly care");
                                 });
                               }
                             },
                           ),
                         ],
-                      ),
-                      const VerticalSpeacing(14),
-                      FilterButton(
-                        label: "Pet Care",
-                        isSelected: selectedPassions.contains("Pet Care"),
-                        onTap: () {
-                          if (selectedPassions.contains("Pet Care")) {
-                            setState(() {
-                              selectedPassions.remove("Pet Care");
-                            });
-                          } else {
-                            setState(() {
-                              selectedPassions.add("Pet Care");
-                            });
-                          }
-                        },
-                      ),
-                      const VerticalSpeacing(16),
-                      const Text(
-                        "Select Radius",
-                        style: TextStyle(
-                          fontFamily: 'CenturyGothic',
-                          fontSize: 18,
-                          fontWeight: FontWeight.w400,
-                          color: AppColor.blackColor,
-                        ),
-                      ),
-                      const VerticalSpeacing(20),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          FilterButton(
-                            label: "2KM",
-                            isSelected: button10,
-                            onTap: () {
-                              setState(() {
-                                button10 = !button10;
-                              });
-                            },
-                          ),
-                          FilterButton(
-                            label: "4KM",
-                            isSelected: button8,
-                            onTap: () {
-                              setState(() {
-                                button8 = !button8;
-                              });
-                            },
-                          ),
-                          FilterButton(
-                            label: "8KM",
-                            isSelected: button9,
-                            onTap: () {
-                              setState(() {
-                                button9 = !button9;
-                              });
-                            },
-                          ),
-                        ],
-                      ),
-                      const VerticalSpeacing(
-                        30,
                       ),
                       const VerticalSpeacing(16),
                       const Text(
@@ -519,18 +460,23 @@ class _FilterPopUpFamilyState extends State<FilterPopUpFamily> {
                                 Icons.star_rate_rounded,
                                 color: Colors.amber,
                               ),
-                          onRatingUpdate: (rating) {}),
+                          onRatingUpdate: (rating) {
+                            setState(() {
+                              minRating = rating;
+                            });
+                          }),
                       const VerticalSpeacing(
                         50,
                       ),
-                      Consumer2<FamilyFilterController, FamilyHomeUiRepository>(
+                      Consumer2<FamilyDistanceViewModel,
+                          FamilyHomeUiRepository>(
                         builder: (context, viewModel, uiState, child) {
                           return RoundedButton(
                             title: 'Apply Filters',
                             onpress: () {
-                              setState(() {
-                                isLoading = true;
-                              });
+                              // setState(() {
+                              //   isLoading = true;
+                              // });
                               debugPrint("Button pressed");
 
                               try {
@@ -539,27 +485,31 @@ class _FilterPopUpFamilyState extends State<FilterPopUpFamily> {
                                     convertDaysToAvailability(selecteDays);
                                 debugPrint(
                                     "Availability Map: $availabilityMap");
+                                debugPrint("Passions list: $selectedPassions");
 
                                 // Call methods on the viewModel to perform the search
                                 viewModel.filterProviders(
-                                  minRate: _values.start,
-                                  maxRate: _values.end,
-                                  selectedPassions: selectedPassions,
-                                  selectedAvailability: availabilityMap,
+                                  context,
+                                  familyDistance == null
+                                      ? 2
+                                      : double.parse(familyDistance!),
+                                  _values.start,
+                                  minRating,
+                                  _values.end,
+                                  selectedPassions,
+                                  availabilityMap,
                                 );
-                                debugPrint(
-                                    "check the function:${viewModel.filteredProviders}");
+
                                 // Update UI based on the state
 
-                                uiState.switchToType(
-                                    FamilyHomeUiEnums.FilterSection);
-                                Navigator.pop(context);
+                                // uiState.switchToType(
+                                //     FamilyHomeUiEnums.FilterSection);
                               } catch (e) {
                                 debugPrint("Error applying filters: $e");
                               } finally {
-                                setState(() {
-                                  isLoading = false;
-                                });
+                                // setState(() {
+                                //   isLoading = false;
+                                // });
                               }
                             },
                           );

@@ -37,6 +37,7 @@ class _FamilyJobFilterPopupState extends State<FamilyJobFilterPopup> {
   RangeValues _values = const RangeValues(5, 1000);
   List<String> selectedPassions = [];
   List<String> selecteDays = [];
+  double minRating = 4;
 // Example conversion logic
   Map<String, Map<String, bool>> convertDaysToAvailability(List<String> days) {
     try {
@@ -322,52 +323,6 @@ class _FamilyJobFilterPopupState extends State<FamilyJobFilterPopup> {
                       ),
                       const VerticalSpeacing(16),
                       const Text(
-                        "Select Radius",
-                        style: TextStyle(
-                          fontFamily: 'CenturyGothic',
-                          fontSize: 18,
-                          fontWeight: FontWeight.w400,
-                          color: AppColor.blackColor,
-                        ),
-                      ),
-                      const VerticalSpeacing(20),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          FilterButton(
-                            label: "2KM",
-                            isSelected: button10,
-                            onTap: () {
-                              setState(() {
-                                button10 = !button10;
-                              });
-                            },
-                          ),
-                          FilterButton(
-                            label: "4KM",
-                            isSelected: button8,
-                            onTap: () {
-                              setState(() {
-                                button8 = !button8;
-                              });
-                            },
-                          ),
-                          FilterButton(
-                            label: "8KM",
-                            isSelected: button9,
-                            onTap: () {
-                              setState(() {
-                                button9 = !button9;
-                              });
-                            },
-                          ),
-                        ],
-                      ),
-                      const VerticalSpeacing(
-                        30,
-                      ),
-                      const VerticalSpeacing(16),
-                      const Text(
                         "Availability",
                         style: TextStyle(
                           fontFamily: 'CenturyGothic',
@@ -376,7 +331,7 @@ class _FamilyJobFilterPopupState extends State<FamilyJobFilterPopup> {
                           color: AppColor.blackColor,
                         ),
                       ),
-                      const VerticalSpeacing(20),
+                      const VerticalSpeacing(16),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
@@ -520,7 +475,11 @@ class _FamilyJobFilterPopupState extends State<FamilyJobFilterPopup> {
                                 Icons.star_rate_rounded,
                                 color: Colors.amber,
                               ),
-                          onRatingUpdate: (rating) {}),
+                          onRatingUpdate: (rating) {
+                            setState(() {
+                              minRating = rating;
+                            });
+                          }),
                       const VerticalSpeacing(
                         50,
                       ),
@@ -547,6 +506,7 @@ class _FamilyJobFilterPopupState extends State<FamilyJobFilterPopup> {
                                   maxRate: _values.end,
                                   selectedPassions: selectedPassions,
                                   selectedAvailability: availabilityMap,
+                                  minRating: minRating,
                                 );
                                 debugPrint(
                                     "check the function:${viewModel.filteredProviders}");

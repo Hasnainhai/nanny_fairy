@@ -6,13 +6,9 @@ import 'package:flutter_paypal_checkout/flutter_paypal_checkout.dart';
 import 'package:flutter_stripe/flutter_stripe.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart' as http;
-import 'package:nanny_fairy/Family_View/familyChat/family_chat_view.dart';
-import 'package:nanny_fairy/Family_View/familyChat/widgets/family_chat_screen_widget.dart';
-import 'package:nanny_fairy/Repository/get_family_info_repo.dart';
 import 'package:nanny_fairy/res/components/loading_manager.dart';
 import 'package:nanny_fairy/res/components/rounded_button.dart';
 import 'package:nanny_fairy/utils/utils.dart';
-import '../../Repository/get_provider_info.dart';
 import '../../res/components/colors.dart';
 import '../../res/components/widgets/vertical_spacing.dart';
 import '../chat/chat_view.dart';
@@ -23,6 +19,9 @@ class PaymentView extends StatefulWidget {
   final String familyId;
   final String currentUserName;
   final String currentUserProfile;
+  final String ratings;
+  final String totalRatings;
+  final List<String> passions;
 
   const PaymentView({
     super.key,
@@ -31,6 +30,9 @@ class PaymentView extends StatefulWidget {
     required this.familyId,
     required this.currentUserName,
     required this.currentUserProfile,
+    required this.ratings,
+    required this.totalRatings,
+    required this.passions,
   });
 
   @override
@@ -42,17 +44,13 @@ class _PaymentViewState extends State<PaymentView> {
   bool secondButton = false;
 
   bool _isLoading = false;
-  @override
-
-
-
-// Payment success popup
+  // Payment success popup
   void paymentDonePopup() {
     showDialog(
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          backgroundColor: AppColor.whiteColor,
+          backgroundColor: AppColor.creamyColor,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(12),
           ),
@@ -60,7 +58,7 @@ class _PaymentViewState extends State<PaymentView> {
             mainAxisSize: MainAxisSize.min,
             children: [
               const Icon(Icons.check_circle,
-                  color: AppColor.primaryColor, size: 150),
+                  color: AppColor.lavenderColor, size: 150),
               const VerticalSpeacing(16),
               Text(
                 'Payment Done Congratulations You\n are subscribed now',
@@ -77,18 +75,23 @@ class _PaymentViewState extends State<PaymentView> {
               const VerticalSpeacing(30),
               RoundedButton(
                 title: 'Continue to Chat',
+                buttonColor: AppColor.lavenderColor,
+                titleColor: AppColor.creamyColor,
                 onpress: () {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
                       builder: (c) => ChatView(
-                          profilePic: widget.profile,
-                          userName: widget.userName,
-                          familyId: widget.familyId,
-                          isSeen: true,
-                          currentUserName: widget.currentUserName,
-                          currentUserProfile:
-                              widget.currentUserProfile),
+                        profilePic: widget.profile,
+                        userName: widget.userName,
+                        familyId: widget.familyId,
+                        isSeen: true,
+                        currentUserName: widget.currentUserName,
+                        currentUserProfile: widget.currentUserProfile,
+                        familyTotalRatings: widget.totalRatings,
+                        familyRatings: widget.ratings,
+                        familyPassion: widget.passions,
+                      ),
                     ),
                   );
                 },
@@ -317,8 +320,8 @@ class _PaymentViewState extends State<PaymentView> {
                             width: 135,
                             decoration: BoxDecoration(
                               color: firstButton
-                                  ? AppColor.primaryColor
-                                  : AppColor.secondaryBgColor,
+                                  ? AppColor.lavenderColor
+                                  : AppColor.creamyColor,
                               borderRadius: BorderRadius.circular(10.0),
                               border: Border.all(
                                 width: 1,
@@ -355,7 +358,7 @@ class _PaymentViewState extends State<PaymentView> {
                                       fontSize: 14,
                                       fontWeight: FontWeight.w600,
                                       color: firstButton
-                                          ? AppColor.whiteColor
+                                          ? AppColor.creamyColor
                                           : AppColor.blackColor),
                                 ),
                               ],
@@ -377,8 +380,8 @@ class _PaymentViewState extends State<PaymentView> {
                             width: 135,
                             decoration: BoxDecoration(
                               color: secondButton
-                                  ? AppColor.primaryColor
-                                  : AppColor.secondaryBgColor,
+                                  ? AppColor.lavenderColor
+                                  : AppColor.creamyColor,
                               borderRadius: BorderRadius.circular(10.0),
                               border: Border.all(
                                 width: 1,
@@ -416,7 +419,7 @@ class _PaymentViewState extends State<PaymentView> {
                                     fontSize: 14,
                                     fontWeight: FontWeight.w600,
                                     color: secondButton
-                                        ? AppColor.whiteColor
+                                        ? AppColor.creamyColor
                                         : AppColor.blackColor,
                                   ),
                                 ),
@@ -428,8 +431,10 @@ class _PaymentViewState extends State<PaymentView> {
                     ],
                   ),
                 ),
-                const VerticalSpeacing(46.0),
+                const Spacer(),
                 RoundedButton(
+                  buttonColor: AppColor.lavenderColor,
+                  titleColor: AppColor.creamyColor,
                   title: 'Pay',
                   onpress: () {
                     if (firstButton) {
@@ -439,6 +444,7 @@ class _PaymentViewState extends State<PaymentView> {
                     }
                   },
                 ),
+                const VerticalSpeacing(46.0),
               ],
             ),
           ),
