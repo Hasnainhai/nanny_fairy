@@ -15,37 +15,27 @@ class FamilyChatRepository {
     String receiverName,
     String senderProfilePic,
     String receiverProfilePic,
-    String providerRating,
-    String providerTotalRatings,
-    String education,
-    String hourlyRate,
   ) async {
     try {
       int timestamp = timeSent.millisecondsSinceEpoch;
 
       // Update the last message and time in both the Providers and Family nodes
       Map<String, dynamic> receiverChatContact = {
+        "name": receiverName,
+        "profilePic": receiverProfilePic,
+        "timeSent": DateTime.now().toUtc().toIso8601String(),
+        "lastMessage": text,
+        "providerId": providerId,
+        "isSeen": false,
+      };
+
+      Map<String, dynamic> senderChatContact = {
         "name": senderName,
         "profilePic": senderProfilePic,
         "timeSent": DateTime.now().toUtc().toIso8601String(),
         "lastMessage": text,
         "familyId": auth.currentUser!.uid,
         "isSeen": false,
-      };
-
-      Map<String, dynamic> senderChatContact = {
-        "name": receiverName,
-        "profilePic": receiverProfilePic,
-        "timeSent": DateTime.now().toUtc().toIso8601String(),
-        "lastMessage": text,
-        "Provider": providerId,
-        "isSeen": true,
-        'orderId': auth.currentUser!.uid,
-        'providerRatings': providerRating,
-        'providerTotalRatings': providerTotalRatings,
-        'education': education,
-        'horlyRate': hourlyRate,
-        'status': 'Pending',
       };
 
       // Use update instead of set to avoid overwriting the entire node

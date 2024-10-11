@@ -108,11 +108,7 @@ class _CommunityViewState extends State<CommunityView> {
                       const Center(child: Text('No posts found'))
                     else
                       Column(
-                        children: communityController.posts
-                            .where((post) =>
-                                post['status'] ==
-                                true) // Filter posts with status true
-                            .map((post) {
+                        children: communityController.posts.map((post) {
                           return FutureBuilder<int>(
                             future: communityController
                                 .fetchTotalComments(post['postId']),
@@ -149,6 +145,7 @@ class _CommunityViewState extends State<CommunityView> {
                 ),
               ),
             ),
+
             // My Posts View
             Padding(
               padding: const EdgeInsets.only(top: 10, left: 16.0, right: 16.0),

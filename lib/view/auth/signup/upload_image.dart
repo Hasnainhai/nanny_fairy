@@ -2,7 +2,6 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:nanny_fairy/ViewModel/auth_view_model.dart';
-import 'package:nanny_fairy/ViewModel/provider_distance_view_model.dart';
 import 'package:nanny_fairy/res/components/rounded_button.dart';
 import 'package:nanny_fairy/res/components/widgets/image_picker.dart';
 import 'package:nanny_fairy/res/components/widgets/vertical_spacing.dart';
@@ -20,7 +19,6 @@ class UploadImage extends StatefulWidget {
 class _UploadImageState extends State<UploadImage> {
   TextEditingController bioController = TextEditingController();
   File? profilePic;
-  bool _isWordCountValid = true;
   void pickProfile() async {
     File? img = await pickFrontImg(
       context,
@@ -32,26 +30,19 @@ class _UploadImageState extends State<UploadImage> {
     );
   }
 
-  int _wordCount(String text) {
-    if (text.trim().isEmpty) {
-      return 0;
-    }
-    return text.trim().split(RegExp(r'\s+')).length;
-  }
-
   @override
   Widget build(BuildContext context) {
     final authViewModel = Provider.of<AuthViewModel>(context);
 
     return Scaffold(
-      backgroundColor: AppColor.oceanColor,
+      backgroundColor: AppColor.primaryColor,
       body: Stack(
         children: [
           Container(
             height: MediaQuery.of(context).size.height,
             width: double.infinity,
             decoration: const BoxDecoration(
-              color: AppColor.authCreamColor,
+              color: AppColor.whiteColor,
               borderRadius: BorderRadius.only(
                 topLeft: Radius.circular(30.0),
               ),
@@ -80,18 +71,18 @@ class _UploadImageState extends State<UploadImage> {
                       height: 200,
                       width: double.infinity,
                       decoration: BoxDecoration(
-                        color: AppColor.authCreamColor,
+                        color: AppColor.whiteColor,
                         borderRadius: BorderRadius.circular(12),
                         border: Border.all(
                           strokeAlign: BorderSide.strokeAlignCenter,
-                          color: !_isWordCountValid
-                              ? Colors.red
-                              : AppColor.authCreamColor, // Show red if invalid
+                          color: const Color(0xff1B81BC).withOpacity(
+                              0.10), // Stroke color with 10% opacity
                           width: 1,
                         ),
                         boxShadow: [
                           BoxShadow(
-                            color: const Color(0xff1B81BC).withOpacity(0.1),
+                            color: const Color(0xff1B81BC).withOpacity(
+                                0.1), // Drop shadow color with 4% opacity
                             blurRadius: 2,
                             offset: const Offset(1, 2),
                             spreadRadius: 1,
@@ -103,34 +94,9 @@ class _UploadImageState extends State<UploadImage> {
                         child: TextField(
                           maxLines: 10,
                           controller: bioController,
-                          onChanged: (value) {
-                            setState(() {
-                              int wordCount = _wordCount(value);
-                              // Valid if word count is between 50 and 60
-                              _isWordCountValid =
-                                  wordCount >= 20 && wordCount <= 30;
-                            });
-                          },
                           decoration: const InputDecoration(
                             hintText: 'Type...',
                             border: InputBorder.none,
-                          ),
-                        ),
-                      ),
-                    ),
-                    Visibility(
-                      visible: !_isWordCountValid,
-                      child: Padding(
-                        padding: const EdgeInsets.only(top: 8.0, left: 10.0),
-                        child: Text(
-                          'Please enter less than 20 words',
-                          style: GoogleFonts.getFont(
-                            "Poppins",
-                            textStyle: const TextStyle(
-                              fontSize: 12,
-                              fontWeight: FontWeight.w400,
-                              color: Colors.red, // Red color for the error text
-                            ),
                           ),
                         ),
                       ),
@@ -139,22 +105,12 @@ class _UploadImageState extends State<UploadImage> {
                     RoundedButton(
                         title: 'Continue',
                         onpress: () {
-                          bool isValid =
-                              _isWordCountValid && profilePic != null;
-                          if (bioController.text.isNotEmpty && isValid) {
+                          if (bioController.text.isNotEmpty) {
                             authViewModel.saveProfileAndBio(
-                              context,
-                              profilePic,
-                              bioController.text,
-                            );
-                            Provider.of<ProviderDistanceViewModel>(context,
-                                    listen: false)
-                                .fetchFamiliesFromFirebaseData();
+                                context, profilePic, bioController.text);
                           } else {
                             Utils.flushBarErrorMessage(
-                              "Please complete the form correctly.",
-                              context,
-                            );
+                                "Please Enter Image", context);
                           }
                         }),
                   ],
@@ -164,17 +120,17 @@ class _UploadImageState extends State<UploadImage> {
           ),
           // Top container that acts as AppBar
           Container(
-            color: AppColor.oceanColor,
-            height: 250,
+            color: AppColor.primaryColor,
+            height: 250, // Adjust the height to accommodate the avatar overlap
             child: Column(
               children: [
-                const SizedBox(height: 50),
+                const SizedBox(height: 50), // Adjust to add padding at the top
                 Row(
                   children: [
                     IconButton(
                       icon: const Icon(
                         Icons.west,
-                        color: AppColor.authCreamColor,
+                        color: AppColor.whiteColor,
                       ),
                       onPressed: () {
                         Navigator.pop(context);
@@ -188,7 +144,7 @@ class _UploadImageState extends State<UploadImage> {
                         textStyle: const TextStyle(
                           fontSize: 20,
                           fontWeight: FontWeight.w400,
-                          color: AppColor.authCreamColor,
+                          color: AppColor.whiteColor,
                         ),
                       ),
                     ),
@@ -209,13 +165,13 @@ class _UploadImageState extends State<UploadImage> {
               decoration: BoxDecoration(
                   color: AppColor.avatarColor,
                   borderRadius: BorderRadius.circular(60),
-                  border: Border.all(width: 4, color: AppColor.authCreamColor)),
+                  border: Border.all(width: 4, color: AppColor.whiteColor)),
               child: Center(
                 child: profilePic == null
                     ? Image.asset(
                         'images/profile.png',
                         fit: BoxFit.cover,
-                        color: AppColor.authCreamColor,
+                        color: AppColor.whiteColor,
                       )
                     : Container(
                         height: 120,
@@ -244,7 +200,7 @@ class _UploadImageState extends State<UploadImage> {
                   width: 32,
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(16),
-                      color: AppColor.oceanColor),
+                      color: AppColor.primaryColor),
                   child: Center(
                     child: IconButton(
                       onPressed: () {
@@ -253,7 +209,7 @@ class _UploadImageState extends State<UploadImage> {
                       icon: const Icon(
                         Icons.camera_alt_outlined,
                         size: 18,
-                        color: AppColor.authCreamColor,
+                        color: AppColor.whiteColor,
                       ),
                     ),
                   ),
@@ -264,7 +220,7 @@ class _UploadImageState extends State<UploadImage> {
                   width: 32,
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(16),
-                      color: AppColor.oceanColor),
+                      color: AppColor.primaryColor),
                   child: Center(
                     child: IconButton(
                       onPressed: () {
@@ -273,7 +229,7 @@ class _UploadImageState extends State<UploadImage> {
                       icon: const Icon(
                         Icons.save_as_outlined,
                         size: 18,
-                        color: AppColor.authCreamColor,
+                        color: AppColor.whiteColor,
                       ),
                     ),
                   ),

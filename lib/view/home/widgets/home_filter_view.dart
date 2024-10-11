@@ -4,6 +4,7 @@ import 'package:nanny_fairy/Repository/home_ui_repostory.dart';
 import 'package:nanny_fairy/ViewModel/filter_view_model.dart';
 import 'package:nanny_fairy/res/components/colors.dart';
 import 'package:nanny_fairy/res/components/widgets/ui_enums.dart';
+import 'package:nanny_fairy/res/components/widgets/vertical_spacing.dart';
 import 'package:nanny_fairy/view/booked/widgets/booking_widget.dart';
 import 'package:nanny_fairy/view/job/family_detail_provider.dart';
 import 'package:provider/provider.dart';
@@ -70,8 +71,9 @@ class _HomeFilterViewState extends State<HomeFilterView> {
               padding: const EdgeInsets.only(left: 16.0, right: 16.0),
               child: Column(
                 children: [
+                  const VerticalSpeacing(16.0),
                   SizedBox(
-                    height: MediaQuery.of(context).size.height / 1.3,
+                    height: MediaQuery.of(context).size.height / 1.6,
                     child: filteredViewModel.filteredUsers.isEmpty
                         ? const Center(
                             child: Text('No results found'),
@@ -95,9 +97,6 @@ class _HomeFilterViewState extends State<HomeFilterView> {
                                         bio: user.bio,
                                         profile: user.profile,
                                         familyId: user.uid,
-                                        ratings: user.averageRating,
-                                        totalRatings: user.totalRatings,
-                                        passion: passions,
                                       ),
                                     ),
                                   );
@@ -105,8 +104,6 @@ class _HomeFilterViewState extends State<HomeFilterView> {
                                 name: "${user.firstName} ${user.lastName}",
                                 profilePic: user.profile,
                                 passion: passions,
-                                ratings: user.averageRating,
-                                totalRatings: user.totalRatings,
                               );
                             },
                           ),

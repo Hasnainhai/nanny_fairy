@@ -71,39 +71,6 @@ class _UploadComunityPostState extends State<UploadComunityPost> {
     getProviderInfoRepo.fetchCurrentFamilyInfo();
   }
 
-  // void applyBoldFormatting() {
-  //   final text = contentController.text;
-  //   final selection = contentController.selection;
-  //
-  //   if (selection.isValid) {
-  //     final selectedText = text.substring(selection.start, selection.end);
-  //     final newText =
-  //         '${text.substring(0, selection.start)}**$selectedText**${text.substring(selection.end)}';
-  //     contentController.text = newText;
-  //
-  //     // Move cursor back to the end of the newly formatted text
-  //     contentController.selection = TextSelection.collapsed(
-  //         offset: selection.start + selectedText.length + 4);
-  //   }
-  // }
-  //
-  // void applyItalicFormatting() {
-  //   final text = contentController.text;
-  //   final selection = contentController.selection;
-  //
-  //   if (selection.isValid) {
-  //     final selectedText = text.substring(selection.start, selection.end);
-  //     final newText =
-  //         '${text.substring(0, selection.start)}*$selectedText*${text.substring(selection.end)}';
-  //     contentController.text = newText;
-  //
-  //     // Move cursor back to the end of the newly formatted text
-  //     contentController.selection = TextSelection.collapsed(
-  //         offset: selection.start + selectedText.length + 2);
-  //   }
-  // }
-
-  final bool status = false;
   @override
   Widget build(BuildContext context) {
     final communityController = Provider.of<CommunityViewViewModel>(context);
@@ -256,25 +223,6 @@ class _UploadComunityPostState extends State<UploadComunityPost> {
                       ),
                     ),
                     const VerticalSpeacing(30.0),
-                    // Row(
-                    //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    //   children: [
-                    //     ElevatedButton(
-                    //       onPressed: () {
-                    //         // Apply bold formatting
-                    //         applyBoldFormatting();
-                    //       },
-                    //       child: const Text('Bold'),
-                    //     ),
-                    //     ElevatedButton(
-                    //       onPressed: () {
-                    //         // Apply italic formatting
-                    //         applyItalicFormatting();
-                    //       },
-                    //       child: const Text('Italic'),
-                    //     ),
-                    //   ],
-                    // ),
                     RoundedButton(
                       title: 'Continue',
                       onpress: () {
@@ -286,15 +234,14 @@ class _UploadComunityPostState extends State<UploadComunityPost> {
                               titleController.text,
                               contentController.text,
                               getProviderInfoRepo.providerName!,
-                              getProviderInfoRepo.providerProfile!,
-                              status);
+                              getProviderInfoRepo.providerProfile!);
                         } else {
                           Utils.flushBarErrorMessage(
                               "Please upload post", context);
                         }
                         // showCommunityDialog(context);
                       },
-                    ),
+                    )
                   ],
                 ),
               ),

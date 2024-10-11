@@ -3,6 +3,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:nanny_fairy/FamilyController/get_family_info_controller.dart';
 import 'package:nanny_fairy/Family_View/profileFamily/widgets/edit_profile_family.dart';
 import 'package:nanny_fairy/res/components/widgets/vertical_spacing.dart';
+import 'package:nanny_fairy/utils/routes/routes_name.dart';
 import 'package:provider/provider.dart';
 import '../../res/components/colors.dart';
 
@@ -55,7 +56,7 @@ class _MyProfileFamilyState extends State<MyProfileFamily> {
         ),
         actions: [
           IconButton(
-            onPressed: () async {
+            onPressed: () async{
               final familyData = await getFamilyInfo
                   .getFamilyInfo(); // Await the Future to complete
               if (familyData != null) {
@@ -86,7 +87,7 @@ class _MyProfileFamilyState extends State<MyProfileFamily> {
           ),
         ),
         child: Padding(
-          padding: const EdgeInsets.all(16.0),
+          padding: EdgeInsets.all(16.0),
           child: SingleChildScrollView(
               scrollDirection: Axis.vertical,
               child: FutureBuilder<Map<dynamic, dynamic>>(
@@ -105,47 +106,46 @@ class _MyProfileFamilyState extends State<MyProfileFamily> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         ProfileItem(
-                          icon: Icons.person,
-                          label: 'Name',
-                          value:
-                              "${family['firstName'] ?? 'Name'} ${family['lastName'] ?? 'Name'}",
-                        ),
-                        const Divider(),
-                        const VerticalSpeacing(10.0),
+                            icon: Icons.person,
+                            label: 'Name',
+                            value:
+                                "${family['firstName']} ${family['lastName']}"),
+                        Divider(),
+                        VerticalSpeacing(10.0),
                         ProfileItem(
                           icon: Icons.location_on,
                           label: 'Address',
-                          value: family['address'] ?? 'address',
+                          value: family['address'],
                         ),
-                        const Divider(),
-                        const VerticalSpeacing(10.0),
+                        Divider(),
+                        VerticalSpeacing(10.0),
                         ProfileItem(
                           icon: Icons.phone,
                           label: 'Telephone Number',
-                          value: family['phoneNumber'] ?? 'phone',
+                          value: family['phoneNumber'],
                         ),
-                        const Divider(),
-                        const VerticalSpeacing(10.0),
+                        Divider(),
+                        VerticalSpeacing(10.0),
                         ProfileItem(
                           icon: Icons.cake,
                           label: 'Date of Birth',
-                          value: family['dob'] ?? 'dob',
+                          value: family['dob'],
                         ),
-                        const Divider(),
-                        const VerticalSpeacing(10.0),
+                        Divider(),
+                        VerticalSpeacing(10.0),
                         ProfileItem(
                           icon: Icons.email,
                           label: 'Email Address',
-                          value: family['email'] ?? 'email',
+                          value: family['email'],
                         ),
-                        const Divider(),
-                        const VerticalSpeacing(10.0),
+                        Divider(),
+                        VerticalSpeacing(10.0),
                         ProfileItem(
                           icon: Icons.description,
                           label: 'Description',
-                          value: family['bio'] ?? 'bio',
+                          value: family['bio'],
                         ),
-                        const VerticalSpeacing(16.0),
+                        VerticalSpeacing(16.0),
                       ],
                     );
                   } else {

@@ -17,17 +17,17 @@ class FamilyCommunityController extends ChangeNotifier {
   List<Map<String, dynamic>> get posts => _posts;
 
   Future<void> uploadPostFamily(
-      BuildContext context,
-      File? post,
-      String title,
-      String content,
-      String familyProfile,
-      String familyName,
-      bool status) async {
+    BuildContext context,
+    File? post,
+    String title,
+    String content,
+    String familyProfile,
+    String familyName,
+  ) async {
     _setLoading(true);
     try {
       await _communityRepoFamily.uploadFamilyPost(
-          context, post, title, content, familyProfile, familyName, status);
+          context, post, title, content, familyProfile, familyName);
     } catch (e) {
       debugPrint('Error uploading Post: ${e.toString()}');
     } finally {

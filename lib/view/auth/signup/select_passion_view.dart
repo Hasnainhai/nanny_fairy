@@ -4,6 +4,7 @@ import 'package:nanny_fairy/ViewModel/auth_view_model.dart';
 import 'package:nanny_fairy/res/components/colors.dart';
 import 'package:nanny_fairy/res/components/rounded_button.dart';
 import 'package:nanny_fairy/res/components/widgets/vertical_spacing.dart';
+import 'package:nanny_fairy/utils/routes/routes_name.dart';
 import 'package:nanny_fairy/utils/utils.dart';
 import 'package:provider/provider.dart';
 
@@ -39,7 +40,7 @@ class _SelectPassionViewState extends State<SelectPassionView> {
   Widget build(BuildContext context) {
     final authViewModel = Provider.of<AuthViewModel>(context);
     return Scaffold(
-      backgroundColor: AppColor.oceanColor,
+      backgroundColor: AppColor.primaryColor,
       appBar: PreferredSize(
         preferredSize: const Size.square(70),
         child: AppBar(
@@ -48,7 +49,7 @@ class _SelectPassionViewState extends State<SelectPassionView> {
           leading: IconButton(
             icon: const Icon(
               Icons.west,
-              color: AppColor.authCreamColor,
+              color: AppColor.whiteColor,
             ),
             onPressed: () {
               Navigator.pop(context);
@@ -61,7 +62,7 @@ class _SelectPassionViewState extends State<SelectPassionView> {
               textStyle: const TextStyle(
                 fontSize: 20,
                 fontWeight: FontWeight.w400,
-                color: AppColor.authCreamColor,
+                color: AppColor.whiteColor,
               ),
             ),
           ),
@@ -72,7 +73,7 @@ class _SelectPassionViewState extends State<SelectPassionView> {
         height: double.infinity,
         width: double.infinity,
         decoration: const BoxDecoration(
-          color: AppColor.authCreamColor,
+          color: AppColor.whiteColor,
           borderRadius: BorderRadius.only(
             topLeft: Radius.circular(30.0),
           ),
@@ -109,8 +110,8 @@ class _SelectPassionViewState extends State<SelectPassionView> {
                           width: double.infinity,
                           decoration: BoxDecoration(
                             color: isSelected
-                                ? AppColor.oceanColor
-                                : AppColor.authCreamColor,
+                                ? AppColor.primaryColor
+                                : AppColor.whiteColor,
                             borderRadius: BorderRadius.circular(6),
                             border: Border.all(
                               strokeAlign: BorderSide.strokeAlignCenter,

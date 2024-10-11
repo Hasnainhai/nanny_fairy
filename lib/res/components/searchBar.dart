@@ -1,25 +1,30 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:nanny_fairy/Repository/home_ui_repostory.dart';
-import 'package:nanny_fairy/ViewModel/provider_distance_view_model.dart';
-import 'package:nanny_fairy/view/filter/filter_popup.dart';
-import 'package:nanny_fairy/view/home/home_view.dart';
-
+import 'package:nanny_fairy/Repository/provider_distance_repository.dart';
+import 'package:nanny_fairy/ViewModel/search_view_model.dart';
+import 'package:nanny_fairy/res/components/widgets/ui_enums.dart';
 import 'package:provider/provider.dart';
 import 'colors.dart';
 
 class SearchBarProvider extends StatefulWidget {
-  const SearchBarProvider({
-    super.key,
-  });
+  const SearchBarProvider({super.key, required this.onTapFilter});
+  final Function() onTapFilter;
 
   @override
   State<SearchBarProvider> createState() => _SearchBarProviderState();
 }
 
 class _SearchBarProviderState extends State<SearchBarProvider> {
-  String selectedKM = 'All';
-  final List<String> kM = ["All", '2', '4', '8', '12'];
+  String selectedKM = '2';
+  final List<String> kM = [
+    '2',
+    '4',
+    '8',
+    '12',
+  ];
 
   final FocusNode _searchFocusNode = FocusNode();
   final FocusNode _dropdownFocusNode = FocusNode();
@@ -43,22 +48,13 @@ class _SearchBarProviderState extends State<SearchBarProvider> {
   }
 
   void _onSearchChanged() {
-    final viewModel = context.read<ProviderDistanceViewModel>();
-    final searchText = searchController.text;
-
-    if (searchText.isNotEmpty) {
-      viewModel.searchFamiliesByPassion(
-          searchText, double.parse(selectedKM), context);
-    } else if (selectedKM == "All") {
-      viewModel.fetchFamiliesFromFirebaseData();
-    } else {
-      viewModel.distanceFilteredFamilies.clear();
-      viewModel.filterFamiliesByDistance(double.parse(selectedKM), context);
-    }
+    // The logic will be moved to the Consumer inside the build method
   }
 
   @override
   Widget build(BuildContext context) {
+    ProviderDistanceRepository distanceRepository =
+        ProviderDistanceRepository();
     return Row(
       children: [
         GestureDetector(
@@ -69,7 +65,7 @@ class _SearchBarProviderState extends State<SearchBarProvider> {
             height: 50,
             width: 200,
             decoration: BoxDecoration(
-              color: AppColor.creamyColor,
+              color: AppColor.whiteColor,
               borderRadius: BorderRadius.circular(6),
               border: Border.all(
                 color: const Color(0xff1B81BC).withOpacity(0.10),
@@ -94,9 +90,18 @@ class _SearchBarProviderState extends State<SearchBarProvider> {
                     padding: const EdgeInsets.only(top: 2),
                     child: Focus(
                       focusNode: _searchFocusNode,
-                      child: Consumer2<ProviderDistanceViewModel,
-                          HomeUiSwithchRepository>(
+                      child:
+                          Consumer2<SearchViewModel, HomeUiSwithchRepository>(
                         builder: (context, viewModel, uiState, child) {
+                          searchController.addListener(() {
+                            if (searchController.text.isNotEmpty) {
+                              viewModel
+                                  .searchUsersByPassion(searchController.text);
+                              uiState.switchToType(UIType.SearchSection);
+                            } else {
+                              uiState.switchToType(UIType.DefaultSection);
+                            }
+                          });
                           return TextFormField(
                             controller: searchController,
                             decoration: const InputDecoration(
@@ -119,19 +124,12 @@ class _SearchBarProviderState extends State<SearchBarProvider> {
         ),
         const SizedBox(width: 5.0),
         GestureDetector(
-          onTap: () {
-            Navigator.push(
-                context,
-                MaterialPageRoute(
-                    builder: (c) => FilterPopUp(
-                          maxDistance: selectedKM,
-                        )));
-          },
+          onTap: widget.onTapFilter,
           child: Container(
             height: 50,
             width: 56,
             decoration: BoxDecoration(
-              color: AppColor.creamyColor,
+              color: AppColor.whiteColor,
               borderRadius: BorderRadius.circular(6),
               border: Border.all(
                 color: const Color(0xff1B81BC).withOpacity(0.10),
@@ -149,7 +147,7 @@ class _SearchBarProviderState extends State<SearchBarProvider> {
             child: const Center(
               child: Icon(
                 Icons.filter_alt_outlined,
-                color: AppColor.lavenderColor,
+                color: AppColor.primaryColor,
               ),
             ),
           ),
@@ -163,7 +161,7 @@ class _SearchBarProviderState extends State<SearchBarProvider> {
             height: 50,
             width: 56,
             decoration: BoxDecoration(
-              color: AppColor.creamyColor,
+              color: AppColor.whiteColor,
               borderRadius: BorderRadius.circular(6),
               border: Border.all(
                 color: const Color(0xff1B81BC).withOpacity(0.10),
@@ -180,96 +178,90 @@ class _SearchBarProviderState extends State<SearchBarProvider> {
             ),
             child: Center(
               child: Focus(
-                  focusNode: _dropdownFocusNode,
-                  child: Consumer2<HomeUiSwithchRepository,
-                      ProviderDistanceViewModel>(
-                    builder: (context, uiState, distanceRepo, child) {
-                      return DropdownButtonHideUnderline(
-                        child: DropdownButton<String>(
-                          value: providerDistance ?? selectedKM,
-                          icon: const SizedBox.shrink(),
-                          dropdownColor: AppColor.creamyColor,
-                          style: GoogleFonts.getFont(
-                            "Poppins",
-                            textStyle: const TextStyle(
-                              fontSize: 12,
-                              fontWeight: FontWeight.w600,
-                              color: AppColor.lavenderColor,
-                            ),
+                focusNode: _dropdownFocusNode,
+                child: Consumer<HomeUiSwithchRepository>(
+                  builder: (context, uiState, child) {
+                    return DropdownButtonHideUnderline(
+                      child: DropdownButton<String>(
+                        value: selectedKM,
+                        icon: const SizedBox.shrink(),
+                        style: GoogleFonts.getFont(
+                          "Poppins",
+                          textStyle: const TextStyle(
+                            fontSize: 12,
+                            fontWeight: FontWeight.w600,
+                            color: AppColor.primaryColor,
                           ),
-                          onChanged: (String? newValue) async {
-                            if (newValue != null) {
-                              setState(() {
-                                selectedKM = newValue;
-                                providerDistance = newValue;
-                              });
+                        ),
+                        onChanged: (String? newValue) async {
+                          if (newValue != null) {
+                            setState(() {
+                              selectedKM = newValue;
+                            });
+                            try {
+                              // Call the method to filter providers by distance
+                              await distanceRepository.filterFamiliesByDistance(
+                                double.parse(selectedKM),
+                              );
 
-                              try {
-                                if (selectedKM != "All") {
-                                  await distanceRepo.filterFamiliesByDistance(
-                                      providerDistance == null
-                                          ? double.parse(selectedKM)
-                                          : double.parse(providerDistance!),
-                                      context);
-                                } else {
-                                  distanceRepo.fetchFamiliesFromFirebaseData();
-                                }
-                              } catch (e) {
-                                ScaffoldMessenger.of(context).showSnackBar(
-                                  const SnackBar(
-                                      content: Text(
-                                          'Failed to fetch nearby providers.')),
-                                );
-                              }
+                              uiState.switchToType(UIType.DistanceSection);
+                            } catch (e) {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(
+                                  content:
+                                      Text('Failed to fetch nearby providers.'),
+                                ),
+                              );
                             }
-                          },
-                          items:
-                              kM.map<DropdownMenuItem<String>>((String value) {
-                            return DropdownMenuItem<String>(
-                              value: value,
-                              child: Column(
-                                mainAxisSize: MainAxisSize.min,
-                                children: [
-                                  Text(
-                                    value.split(" ")[0],
-                                    style: GoogleFonts.getFont(
-                                      "Poppins",
-                                      textStyle: const TextStyle(
-                                        fontSize: 12,
-                                        fontWeight: FontWeight.w600,
-                                        color: AppColor.blackColor,
-                                      ),
+                          }
+                        },
+                        items: kM.map<DropdownMenuItem<String>>((String value) {
+                          return DropdownMenuItem<String>(
+                            value: value,
+                            child: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                Text(
+                                  value.split(" ")[0],
+                                  style: GoogleFonts.getFont(
+                                    "Poppins",
+                                    textStyle: const TextStyle(
+                                      fontSize: 12,
+                                      fontWeight: FontWeight.w600,
+                                      color: AppColor.blackColor,
                                     ),
                                   ),
-                                  Row(
-                                    mainAxisSize: MainAxisSize.min,
-                                    children: [
-                                      Text(
-                                        "KM",
-                                        style: GoogleFonts.getFont(
-                                          "Poppins",
-                                          textStyle: const TextStyle(
-                                            fontSize: 12,
-                                            fontWeight: FontWeight.w400,
-                                            color: AppColor.blackColor,
-                                          ),
+                                ),
+                                Row(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    Text(
+                                      "KM",
+                                      style: GoogleFonts.getFont(
+                                        "Poppins",
+                                        textStyle: const TextStyle(
+                                          fontSize: 12,
+                                          fontWeight: FontWeight.w400,
+                                          color: AppColor.blackColor,
                                         ),
                                       ),
-                                      const Icon(
-                                        Icons.expand_more_outlined,
-                                        color: AppColor.blackColor,
-                                        size: 16,
-                                      ),
-                                    ],
-                                  ),
-                                ],
-                              ),
-                            );
-                          }).toList(),
-                        ),
-                      );
-                    },
-                  )),
+                                    ),
+                                    const Icon(
+                                      Icons.expand_more_outlined,
+                                      color: AppColor.blackColor,
+                                      size: 16,
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            ),
+                          );
+                        }).toList(),
+                      ),
+                    );
+                  },
+                ),
+              ),
             ),
           ),
         ),

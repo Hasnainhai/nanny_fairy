@@ -20,10 +20,6 @@ class PaymentFamilyView extends StatefulWidget {
   final String familyId;
   final String currentUserProfile;
   final String profile;
-  final String providerRatings;
-  final String providerTotalRatings;
-  final String education;
-  final String horlyRate;
   const PaymentFamilyView({
     super.key,
     required this.userName,
@@ -31,10 +27,6 @@ class PaymentFamilyView extends StatefulWidget {
     required this.familyId,
     required this.currentUserProfile,
     required this.profile,
-    required this.providerRatings,
-    required this.providerTotalRatings,
-    required this.education,
-    required this.horlyRate,
   });
 
   @override
@@ -286,10 +278,6 @@ class _PaymentFamilyViewState extends State<PaymentFamilyView> {
                         isSeen: true,
                         currentUserName: widget.currentUserName,
                         currentUserProfilePic: widget.currentUserProfile,
-                        providerRatings: widget.providerRatings,
-                        providerTotalRatings: widget.providerRatings,
-                        education: widget.education,
-                        horlyRate: widget.horlyRate,
                       ),
                     ),
                   );

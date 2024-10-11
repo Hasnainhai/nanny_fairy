@@ -22,7 +22,6 @@ class CommunityRepoProvider {
     String content,
     String providerName,
     String providerProfile,
-    bool status,
   ) async {
     showDialog(
       context: context,
@@ -62,7 +61,6 @@ class CommunityRepoProvider {
         "userId": userId,
         "providerName": providerName,
         "providerProfile": providerProfile,
-        "status": status,
         "timePost": DateTime.now().toUtc().toIso8601String()
       });
       Navigator.of(context).pop();
@@ -144,7 +142,6 @@ class CommunityRepoProvider {
         List<Map<String, dynamic>> posts = [];
         for (var post in snapshot.children) {
           posts.add({
-            "status": post.child('status').value ?? '',
             "post": post.child('post').value ?? '',
             "title": post.child('title').value ?? '',
             "content": post.child('content').value ?? '',

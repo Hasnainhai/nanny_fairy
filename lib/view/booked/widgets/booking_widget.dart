@@ -35,7 +35,7 @@ class _BookingCartWidgetState extends State<BookingCartWidget> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          backgroundColor: AppColor.creamyColor,
+          backgroundColor: AppColor.whiteColor,
           shape: const RoundedRectangleBorder(),
           content: Column(
             mainAxisSize: MainAxisSize.min,
@@ -78,30 +78,33 @@ class _BookingCartWidgetState extends State<BookingCartWidget> {
     return Padding(
       padding: const EdgeInsets.only(bottom: 16),
       child: Container(
-        height: 103,
+        height: 106,
         width: double.infinity,
         decoration: BoxDecoration(
-          color: AppColor.creamyColor,
+          color: AppColor.whiteColor,
           borderRadius: BorderRadius.circular(10.0),
           border: Border.all(
             strokeAlign: BorderSide.strokeAlignCenter,
-            color: const Color(0xff1B81BC).withOpacity(0.10),
+            color: const Color(0xff1B81BC)
+                .withOpacity(0.10), // Stroke color with 10% opacity
             width: 1,
           ),
           boxShadow: [
             BoxShadow(
-              color: const Color(0xff1B81BC).withOpacity(0.1),
+              color: const Color(0xff1B81BC)
+                  .withOpacity(0.1), // Drop shadow color with 4% opacity
               blurRadius: 2,
               offset: const Offset(1, 2),
               spreadRadius: 1,
             ),
           ],
         ),
-        child: Stack(
-          children: [
-            Padding(
-              padding: const EdgeInsets.all(5.0),
-              child: Row(
+        child: Padding(
+          padding: const EdgeInsets.only(top: 5, bottom: 5, left: 5, right: 5),
+          child: Column(
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   widget.profilePic == null
                       ? Container(
@@ -130,7 +133,6 @@ class _BookingCartWidgetState extends State<BookingCartWidget> {
                   Expanded(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Text(
                           '${widget.name}\nFamily',
@@ -143,9 +145,8 @@ class _BookingCartWidgetState extends State<BookingCartWidget> {
                             ),
                           ),
                         ),
-                        const SizedBox(height: 4),
                         Text(
-                          '⭐${widget.ratings} (${widget.totalRatings} Reviews)',
+                          '⭐${widget.ratings}(${widget.totalRatings} Reviews)',
                           style: GoogleFonts.getFont(
                             "Poppins",
                             textStyle: const TextStyle(
@@ -155,9 +156,11 @@ class _BookingCartWidgetState extends State<BookingCartWidget> {
                             ),
                           ),
                         ),
-                        const SizedBox(height: 8),
+                        const VerticalSpeacing(10),
                         SizedBox(
-                          height: 30, // Adjust the height as needed
+                          height: 30,
+                          width: MediaQuery.of(context).size.width /
+                              2.2, // Adjust the height as needed
                           child: ListView.builder(
                             scrollDirection: Axis.horizontal,
                             itemCount: widget.passion.length,
@@ -166,7 +169,7 @@ class _BookingCartWidgetState extends State<BookingCartWidget> {
                                 padding: const EdgeInsets.only(left: 4),
                                 child: CardButton(
                                   title: widget.passion[index],
-                                  color: AppColor.peachColor,
+                                  color: AppColor.avatarColor,
                                   onTap: () {
                                     // Add your onTap functionality here
                                   },
@@ -178,40 +181,40 @@ class _BookingCartWidgetState extends State<BookingCartWidget> {
                       ],
                     ),
                   ),
-                ],
-              ),
-            ),
-            Positioned(
-              top: 10,
-              right: 10,
-              child: InkWell(
-                onTap: () {
-                  widget.ontapView();
-                },
-                child: Container(
-                  height: 30,
-                  width: 78,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(32),
-                    color: AppColor.lavenderColor,
-                  ),
-                  child: Center(
-                    child: Text(
-                      widget.primaryButtonTxt,
-                      style: GoogleFonts.getFont(
-                        "Poppins",
-                        textStyle: const TextStyle(
-                          fontSize: 9,
-                          fontWeight: FontWeight.w400,
-                          color: AppColor.creamyColor,
+                  InkWell(
+                    onTap: () {
+                      widget.ontapView();
+                    },
+                    child: Container(
+                      height: 30,
+                      width: 78,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(32),
+                        color: AppColor.primaryColor,
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(
+                            vertical: 6, horizontal: 12),
+                        child: Center(
+                          child: Text(
+                            widget.primaryButtonTxt,
+                            style: GoogleFonts.getFont(
+                              "Poppins",
+                              textStyle: const TextStyle(
+                                fontSize: 9,
+                                fontWeight: FontWeight.w400,
+                                color: AppColor.whiteColor,
+                              ),
+                            ),
+                          ),
                         ),
                       ),
                     ),
                   ),
-                ),
+                ],
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

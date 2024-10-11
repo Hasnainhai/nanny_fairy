@@ -23,9 +23,6 @@ class PaymentView extends StatefulWidget {
   final String familyId;
   final String currentUserName;
   final String currentUserProfile;
-  final String ratings;
-  final String totalRatings;
-  final List<String> passions;
 
   const PaymentView({
     super.key,
@@ -34,9 +31,6 @@ class PaymentView extends StatefulWidget {
     required this.familyId,
     required this.currentUserName,
     required this.currentUserProfile,
-    required this.ratings,
-    required this.totalRatings,
-    required this.passions,
   });
 
   @override
@@ -48,7 +42,11 @@ class _PaymentViewState extends State<PaymentView> {
   bool secondButton = false;
 
   bool _isLoading = false;
-  // Payment success popup
+  @override
+
+
+
+// Payment success popup
   void paymentDonePopup() {
     showDialog(
       context: context,
@@ -84,16 +82,13 @@ class _PaymentViewState extends State<PaymentView> {
                     context,
                     MaterialPageRoute(
                       builder: (c) => ChatView(
-                        profilePic: widget.profile,
-                        userName: widget.userName,
-                        familyId: widget.familyId,
-                        isSeen: true,
-                        currentUserName: widget.currentUserName,
-                        currentUserProfile: widget.currentUserProfile,
-                        familyTotalRatings: widget.totalRatings,
-                        familyRatings: widget.ratings,
-                        familyPassion: widget.passions,
-                      ),
+                          profilePic: widget.profile,
+                          userName: widget.userName,
+                          familyId: widget.familyId,
+                          isSeen: true,
+                          currentUserName: widget.currentUserName,
+                          currentUserProfile:
+                              widget.currentUserProfile),
                     ),
                   );
                 },

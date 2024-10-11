@@ -63,14 +63,10 @@ class FamilyChatList extends StatelessWidget {
                   return FamilyChatWidget(
                     senderName: chat['name'],
                     senderProfiel: chat['profilePic'],
-                    providerId: chat['Provider'],
+                    providerId: chat['providerId'],
                     timesend: chat['timeSent'], // Convert back to DateTime
                     text: chat['lastMessage'],
                     isSeen: chat['isSeen'],
-                    providerRating: chat['providerRatings'],
-                    providerTotalRating: chat['providerTotalRatings'],
-                    education: chat['education'],
-                    hourlyRating: chat['horlyRate'],
                   );
                 },
               );

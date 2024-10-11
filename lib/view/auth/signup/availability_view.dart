@@ -50,7 +50,7 @@ class _AvailabilityViewState extends State<AvailabilityView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColor.oceanColor,
+      backgroundColor: AppColor.primaryColor,
       appBar: PreferredSize(
         preferredSize: const Size.square(70),
         child: AppBar(
@@ -59,7 +59,7 @@ class _AvailabilityViewState extends State<AvailabilityView> {
           leading: IconButton(
             icon: const Icon(
               Icons.west,
-              color: AppColor.authCreamColor,
+              color: AppColor.whiteColor,
             ),
             onPressed: () {
               Navigator.pop(context);
@@ -72,7 +72,7 @@ class _AvailabilityViewState extends State<AvailabilityView> {
               textStyle: const TextStyle(
                 fontSize: 20,
                 fontWeight: FontWeight.w400,
-                color: AppColor.authCreamColor,
+                color: AppColor.whiteColor,
               ),
             ),
           ),
@@ -83,7 +83,7 @@ class _AvailabilityViewState extends State<AvailabilityView> {
         height: MediaQuery.of(context).size.height,
         width: double.infinity,
         decoration: const BoxDecoration(
-          color: AppColor.authCreamColor,
+          color: AppColor.whiteColor,
           borderRadius: BorderRadius.only(topLeft: Radius.circular(20)),
         ),
         child: Padding(
@@ -95,16 +95,18 @@ class _AvailabilityViewState extends State<AvailabilityView> {
               children: [
                 Container(
                   decoration: BoxDecoration(
-                    color: AppColor.authCreamColor,
+                    color: AppColor.whiteColor,
                     borderRadius: BorderRadius.circular(12),
                     border: Border.all(
                       strokeAlign: BorderSide.strokeAlignCenter,
-                      color: const Color(0xff1B81BC).withOpacity(0.10),
+                      color: const Color(0xff1B81BC)
+                          .withOpacity(0.10), // Stroke color with 10% opacity
                       width: 1,
                     ),
                     boxShadow: [
                       BoxShadow(
-                        color: const Color(0xff1B81BC).withOpacity(0.1),
+                        color: const Color(0xff1B81BC).withOpacity(
+                            0.1), // Drop shadow color with 4% opacity
                         blurRadius: 2,
                         offset: const Offset(1, 2),
                         spreadRadius: 1,
@@ -117,7 +119,8 @@ class _AvailabilityViewState extends State<AvailabilityView> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        const SizedBox(height: 16),
+                        const SizedBox(
+                            height: 16), // Added spacing from the top
                         Text(
                           'Availability',
                           style: GoogleFonts.getFont(
@@ -237,7 +240,7 @@ class _AvailabilityViewState extends State<AvailabilityView> {
                   height: 216,
                   width: double.infinity,
                   decoration: BoxDecoration(
-                    color: AppColor.authCreamColor,
+                    color: AppColor.whiteColor,
                     borderRadius: BorderRadius.circular(12.0),
                     border: Border.all(
                       strokeAlign: BorderSide.strokeAlignCenter,
@@ -370,7 +373,6 @@ class _AvailabilityViewState extends State<AvailabilityView> {
     return GestureDetector(
       onTap: () async {
         TimeOfDay? selectedTime = await showTimePicker(
-          barrierColor: AppColor.authCreamColor,
           context: context,
           initialTime: TimeOfDay.now(),
         );
@@ -384,7 +386,7 @@ class _AvailabilityViewState extends State<AvailabilityView> {
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 5.0, vertical: 3.0),
         decoration: BoxDecoration(
-          color: AppColor.authCreamColor,
+          color: AppColor.whiteColor,
           borderRadius: BorderRadius.circular(8),
           border: Border.all(
             color: AppColor.grayColor.withOpacity(0.5),
@@ -508,7 +510,7 @@ class AvailabilityCheckBox extends StatelessWidget {
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 4),
       decoration: BoxDecoration(
-        color: isAvailable ? AppColor.oceanColor : Colors.transparent,
+        color: isAvailable ? AppColor.primaryColor : Colors.transparent,
         borderRadius: BorderRadius.circular(6),
         border: Border.all(color: AppColor.blackColor, width: 0.5),
       ),

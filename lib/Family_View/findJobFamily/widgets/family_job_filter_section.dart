@@ -134,8 +134,6 @@ class _FamilyJobFilterSectionState extends State<FamilyJobFilterSection> {
                                 degree: user.education,
                                 dayButtons: dayButtons,
                                 timeData: timeData,
-                                ratings: user.averageRating,
-                                totalRatings: user.totalRatings,
                               ),
                             ),
                           );
@@ -146,8 +144,6 @@ class _FamilyJobFilterSectionState extends State<FamilyJobFilterSection> {
                         skill: '',
                         hoursRate: user.hoursrate,
                         dayButtons: dayButtons,
-                        ratings: user.averageRating,
-                        totalRatings: user.totalRatings,
                       );
                     },
                   );
