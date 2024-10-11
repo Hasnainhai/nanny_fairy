@@ -40,6 +40,7 @@ class _ToggleWidgetState extends State<ToggleWidget> {
               color: switchValue
                   ? AppColor.lavenderColor
                   : const Color(0xffECECEC),
+
             ),
             child: Row(
               mainAxisAlignment:
@@ -52,6 +53,7 @@ class _ToggleWidgetState extends State<ToggleWidget> {
                   decoration: const BoxDecoration(
                     shape: BoxShape.circle,
                     color: AppColor.creamyColor,
+
                   ),
                 ),
               ],

@@ -146,7 +146,7 @@ class MyApp extends StatelessWidget {
           onGenerateRoute: Routes.generateRoute,
           debugShowCheckedModeBanner: false,
           theme: ThemeData(
-            scaffoldBackgroundColor: AppColor.whiteColor,
+            scaffoldBackgroundColor: AppColor.creamyColor,
             colorScheme: ColorScheme.fromSeed(
               seedColor: AppColor.primaryColor,
             ),

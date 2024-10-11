@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import '../../../../res/components/colors.dart';
 import 'package:intl/intl.dart';
-
 import '../../../res/components/widgets/vertical_spacing.dart';
 
 class ReviewCard extends StatefulWidget {

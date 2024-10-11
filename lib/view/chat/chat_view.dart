@@ -218,7 +218,7 @@ class _ChatViewState extends State<ChatView> {
         return false;
       },
       child: Scaffold(
-        backgroundColor: AppColor.primaryColor,
+        backgroundColor: AppColor.chatLavenderColor,
         appBar: AppBar(
           toolbarHeight: 100,
           backgroundColor: Colors.transparent,
@@ -261,7 +261,7 @@ class _ChatViewState extends State<ChatView> {
                                 color: Colors.green,
                                 border: Border.all(
                                   width: 2,
-                                  color: AppColor.primaryColor,
+                                  color: AppColor.chatLavenderColor,
                                 ) // Online status indicator color
                                 ),
                           ),

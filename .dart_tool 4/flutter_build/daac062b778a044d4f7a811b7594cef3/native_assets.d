@@ -1,0 +1,1 @@
+ /Users/mac/Documents/Documents\ -\ mac’s\ MacBook\ Air/flutter_projects/nanny_fairy/nanny_fairy/.dart_tool/flutter_build/daac062b778a044d4f7a811b7594cef3/native_assets.yaml: 
