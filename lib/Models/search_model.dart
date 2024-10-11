@@ -12,8 +12,6 @@ class SearchModel {
   final String profile;
   final List<String> passions;
   final IdPics idPics;
-  final int totalRatings;
-  final double averageRating;
 
   SearchModel({
     required this.uid,
@@ -29,20 +27,9 @@ class SearchModel {
     required this.profile,
     required this.passions,
     required this.idPics,
-    required this.totalRatings,
-    required this.averageRating,
   });
 
   factory SearchModel.fromMap(Map<dynamic, dynamic> data, String uid) {
-    Map<dynamic, dynamic> reviews = data['reviews'] ?? {};
-    int totalRatings = reviews.length;
-    double averageRating = totalRatings > 0
-        ? reviews.values
-                .map((review) => review['countRatingStars'] ?? 0.0)
-                .reduce((a, b) => a + b) /
-            totalRatings
-        : 0.0;
-
     return SearchModel(
       uid: uid,
       firstName: data['firstName'] ?? '',
@@ -57,8 +44,6 @@ class SearchModel {
       profile: data['profile'] ?? '',
       passions: List<String>.from(data['FamilyPassions'] ?? []),
       idPics: IdPics.fromMap(data['IdPicsFamily'] ?? {}),
-      totalRatings: totalRatings,
-      averageRating: averageRating,
     );
   }
 }

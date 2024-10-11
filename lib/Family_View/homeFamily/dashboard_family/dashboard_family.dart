@@ -1,11 +1,9 @@
 // ignore_for_file: file_names, use_build_context_synchronously, unnecessary_null_comparison
 
 import 'package:flutter/material.dart';
-import 'package:nanny_fairy/FamilyController/get_family_info_controller.dart';
 import 'package:nanny_fairy/Family_View/bookFamily/book_view_family.dart';
 import 'package:nanny_fairy/Family_View/familyChat/family_chat_list.dart';
 import 'package:nanny_fairy/Family_View/homeFamily/home_view_family.dart';
-import 'package:provider/provider.dart';
 
 import '../../../res/components/colors.dart';
 import '../../communityFamily/community_family.dart';
@@ -35,8 +33,6 @@ class _DashBoardFamilyScreenState extends State<DashBoardFamilyScreen>
     super.initState();
 
     tabController = TabController(length: 5, vsync: this);
-    Provider.of<GetFamilyInfoController>(context, listen: false)
-        .getFamilyInfo();
   }
 
   // popUp
@@ -45,12 +41,12 @@ class _DashBoardFamilyScreenState extends State<DashBoardFamilyScreen>
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          backgroundColor: AppColor.creamyColor,
+          backgroundColor: AppColor.whiteColor,
           shape: const RoundedRectangleBorder(),
           icon: const Icon(
             Icons.no_accounts_outlined,
             size: 80,
-            color: AppColor.lavenderColor,
+            color: AppColor.primaryColor,
           ),
           title: const Text('You don\'t have any account, please'),
           content: Column(
@@ -59,7 +55,7 @@ class _DashBoardFamilyScreenState extends State<DashBoardFamilyScreen>
             children: [
               ElevatedButton(
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: AppColor.lavenderColor,
+                  backgroundColor: AppColor.primaryColor,
                   shape: const RoundedRectangleBorder(),
                 ),
                 onPressed: () {
@@ -67,7 +63,7 @@ class _DashBoardFamilyScreenState extends State<DashBoardFamilyScreen>
                 },
                 child: const Text(
                   'LOGIN',
-                  style: TextStyle(color: AppColor.creamyColor),
+                  style: TextStyle(color: AppColor.whiteColor),
                 ),
               ),
               const SizedBox(height: 12.0), // Vertical spacing
@@ -77,7 +73,7 @@ class _DashBoardFamilyScreenState extends State<DashBoardFamilyScreen>
                   elevation: 0.0,
                   shape: const RoundedRectangleBorder(),
                   side: const BorderSide(
-                    color: AppColor.lavenderColor, // Border color
+                    color: AppColor.primaryColor, // Border color
                     width: 2.0, // Border width
                   ),
                 ),
@@ -86,7 +82,7 @@ class _DashBoardFamilyScreenState extends State<DashBoardFamilyScreen>
                 },
                 child: const Text(
                   'SIGN UP',
-                  style: TextStyle(color: AppColor.lavenderColor),
+                  style: TextStyle(color: AppColor.primaryColor),
                 ),
               ),
             ],
@@ -140,8 +136,8 @@ class _DashBoardFamilyScreenState extends State<DashBoardFamilyScreen>
           ),
         ],
         unselectedItemColor: AppColor.grayColor,
-        selectedItemColor: AppColor.lavenderColor,
-        backgroundColor: AppColor.creamyColor,
+        selectedItemColor: AppColor.primaryColor,
+        backgroundColor: Colors.white,
         type: BottomNavigationBarType.fixed,
         showUnselectedLabels: true,
         currentIndex: selectIndex,

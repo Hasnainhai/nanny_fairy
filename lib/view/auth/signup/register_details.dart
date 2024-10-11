@@ -1,14 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:intl/intl.dart';
 import 'package:nanny_fairy/ViewModel/auth_view_model.dart';
-import 'package:nanny_fairy/ViewModel/place_view_model.dart';
 import 'package:nanny_fairy/res/components/rounded_button.dart';
 import 'package:nanny_fairy/res/components/widgets/custom_text_field.dart';
 import 'package:nanny_fairy/res/components/widgets/vertical_spacing.dart';
 import 'package:nanny_fairy/utils/utils.dart';
-import 'package:nanny_fairy/view/auth/signup/search_Place_screen.dart';
-import 'package:nanny_fairy/view/chat/widgets/predicate_tile.dart';
 import 'package:provider/provider.dart';
 import '../../../res/components/colors.dart';
 import '../../../res/components/widgets/rounded_check_box.dart';
@@ -44,22 +40,6 @@ class _RegisterDetailsState extends State<RegisterDetails> {
     });
   }
 
-  Future<void> selectDate(BuildContext context) async {
-    DateTime? pickedDate = await showDatePicker(
-      context: context,
-      initialDate: DateTime.now(),
-      firstDate: DateTime(1900),
-      lastDate: DateTime.now(),
-    );
-
-    if (pickedDate != null) {
-      String formattedDate = DateFormat('yyyy-MM-dd').format(pickedDate);
-      setState(() {
-        dobController.text = formattedDate;
-      });
-    }
-  }
-
   @override
   void dispose() {
     super.dispose();
@@ -75,10 +55,9 @@ class _RegisterDetailsState extends State<RegisterDetails> {
   @override
   Widget build(BuildContext context) {
     final authViewModel = Provider.of<AuthViewModel>(context);
-    final distanceViewModel =
-        Provider.of<PlaceViewModel>(context, listen: false);
+
     return Scaffold(
-      backgroundColor: AppColor.oceanColor,
+      backgroundColor: AppColor.primaryColor,
       appBar: PreferredSize(
         preferredSize: const Size.square(70),
         child: AppBar(
@@ -87,7 +66,7 @@ class _RegisterDetailsState extends State<RegisterDetails> {
           leading: IconButton(
             icon: const Icon(
               Icons.west,
-              color: AppColor.authCreamColor,
+              color: AppColor.whiteColor,
             ),
             onPressed: () {
               Navigator.pop(context);
@@ -100,7 +79,7 @@ class _RegisterDetailsState extends State<RegisterDetails> {
               textStyle: const TextStyle(
                 fontSize: 20,
                 fontWeight: FontWeight.w400,
-                color: AppColor.authCreamColor,
+                color: AppColor.whiteColor,
               ),
             ),
           ),
@@ -110,7 +89,7 @@ class _RegisterDetailsState extends State<RegisterDetails> {
         height: double.infinity,
         width: double.infinity,
         decoration: const BoxDecoration(
-          color: AppColor.authCreamColor,
+          color: AppColor.whiteColor,
           borderRadius: BorderRadius.only(
             topLeft: Radius.circular(30.0),
           ),
@@ -143,82 +122,17 @@ class _RegisterDetailsState extends State<RegisterDetails> {
                   ],
                 ),
                 const VerticalSpeacing(16),
-                Consumer<PlaceViewModel>(builder: (context, viewModel, child) {
-                  return InkWell(
-                    onTap: () {
-                      viewModel.placePredictedList.clear();
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (c) => const SearchPlacesScreen(),
-                        ),
-                      );
-                    },
-                    child: Container(
-                      height: 50,
-                      margin: const EdgeInsets.symmetric(vertical: 10),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(6),
-                        color: AppColor.authCreamColor,
-                        border: Border.all(
-                          strokeAlign: BorderSide.strokeAlignCenter,
-                          color: const Color(0xff1B81BC).withOpacity(
-                              0.10), // Stroke color with 10% opacity
-                          width: 1,
-                        ),
-                        boxShadow: [
-                          BoxShadow(
-                            color: const Color(0xff1B81BC).withOpacity(
-                                0.1), // Drop shadow color with 4% opacity
-                            blurRadius: 2,
-                            offset: const Offset(1, 2),
-                            spreadRadius: 1,
-                          ),
-                        ],
-                      ),
-                      child: Padding(
-                        padding: const EdgeInsets.all(12.0),
-                        child: Row(
-                          children: [
-                            viewModel.providerAddress == null
-                                ? const Text(
-                                    'Select Your Address',
-                                    style: TextStyle(
-                                      fontSize: 14,
-                                      fontWeight: FontWeight.w500,
-                                      color: Color.fromARGB(
-                                        255,
-                                        95,
-                                        94,
-                                        94,
-                                      ),
-                                    ),
-                                  )
-                                : Text(
-                                    viewModel.providerAddress!,
-                                    style: const TextStyle(
-                                        fontSize: 14,
-                                        fontWeight: FontWeight.w400,
-                                        color: Color.fromARGB(255, 95, 94, 94)),
-                                  ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  );
-                }),
-                // TextFieldCustom(
-                //     controller: addressController,
-                //     prefixIcon: const Icon(Icons.location_on_outlined),
-                //     maxLines: 1,
-                //     hintText: 'Enter Address'),
+                TextFieldCustom(
+                    controller: addressController,
+                    prefixIcon: const Icon(Icons.location_on_outlined),
+                    maxLines: 1,
+                    hintText: 'Enter Address'),
                 const VerticalSpeacing(16),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Expanded(
                         child: TextFieldCustom(
-                            keyboardType: TextInputType.streetAddress,
                             controller: houseNumberController,
                             prefixIcon: const Icon(Icons.home_outlined),
                             maxLines: 1,
@@ -226,7 +140,6 @@ class _RegisterDetailsState extends State<RegisterDetails> {
                     const SizedBox(width: 12),
                     Expanded(
                         child: TextFieldCustom(
-                            keyboardType: TextInputType.phone,
                             controller: postCodeController,
                             prefixIcon: const Icon(Icons.lock_outline),
                             maxLines: 1,
@@ -235,27 +148,16 @@ class _RegisterDetailsState extends State<RegisterDetails> {
                 ),
                 const VerticalSpeacing(16),
                 TextFieldCustom(
-                    keyboardType: TextInputType.phone,
                     controller: phoneController,
                     prefixIcon: const Icon(Icons.phone),
                     maxLines: 1,
                     hintText: 'Enter telephone number'),
                 const VerticalSpeacing(16),
-                GestureDetector(
-                  onTap: () => selectDate(context),
-                  child: AbsorbPointer(
-                    absorbing: true,
-                    child: TextFieldCustom(
-                      controller: dobController,
-                      prefixIcon: InkWell(
-                        onTap: () => selectDate(context),
-                        child: const Icon(Icons.calendar_month_outlined),
-                      ),
-                      maxLines: 1,
-                      hintText: 'Date of birth',
-                    ),
-                  ),
-                ),
+                TextFieldCustom(
+                    controller: dobController,
+                    prefixIcon: const Icon(Icons.calendar_month_outlined),
+                    maxLines: 1,
+                    hintText: 'Date of birth'),
                 const VerticalSpeacing(16),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.start,
@@ -264,7 +166,8 @@ class _RegisterDetailsState extends State<RegisterDetails> {
                     RoundedCheckbox(
                       value: isChecked,
                       onChanged: _handleCheckboxChanged,
-                      activeColor: AppColor.oceanColor,
+                      activeColor: AppColor
+                          .primaryColor, // Change this to your desired color
                     ),
                     const SizedBox(width: 8),
                     Text(
@@ -288,7 +191,7 @@ class _RegisterDetailsState extends State<RegisterDetails> {
                     RoundedCheckbox(
                       value: isChecked2,
                       onChanged: _handleCheckboxChanged2,
-                      activeColor: AppColor.oceanColor,
+                      activeColor: AppColor.primaryColor,
                     ),
                     const SizedBox(width: 8),
                     Text(
@@ -313,7 +216,7 @@ class _RegisterDetailsState extends State<RegisterDetails> {
                         authViewModel.saveDetails(
                             firstName: firstNameController.text,
                             lastName: lastNameController.text,
-                            address: distanceViewModel.providerAddress!,
+                            address: addressController.text,
                             houseNumber: houseNumberController.text,
                             postCode: postCodeController.text,
                             phoneNumber: phoneController.text,

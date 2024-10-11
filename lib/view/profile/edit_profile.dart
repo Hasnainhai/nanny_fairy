@@ -97,7 +97,7 @@ class _EditProfileState extends State<EditProfile> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColor.lavenderColor,
+      backgroundColor: AppColor.primaryColor,
       appBar: PreferredSize(
         preferredSize: const Size.square(70),
         child: AppBar(
@@ -109,7 +109,7 @@ class _EditProfileState extends State<EditProfile> {
               },
               icon: const Icon(
                 Icons.west,
-                color: AppColor.creamyColor,
+                color: AppColor.whiteColor,
               )),
           title: Text(
             'Edit Profile',
@@ -118,7 +118,7 @@ class _EditProfileState extends State<EditProfile> {
               textStyle: const TextStyle(
                 fontSize: 20,
                 fontWeight: FontWeight.w400,
-                color: AppColor.creamyColor,
+                color: AppColor.whiteColor,
               ),
             ),
           ),
@@ -129,7 +129,7 @@ class _EditProfileState extends State<EditProfile> {
         height: MediaQuery.of(context).size.height,
         width: double.infinity,
         decoration: const BoxDecoration(
-          color: AppColor.creamyColor,
+          color: AppColor.whiteColor,
           borderRadius: BorderRadius.only(
             topLeft: Radius.circular(30.0),
           ),

@@ -7,6 +7,7 @@ import 'package:nanny_fairy/Repository/family_home_ui_repository.dart';
 import 'package:nanny_fairy/ViewModel/family_search_view_model.dart';
 
 import 'package:nanny_fairy/res/components/colors.dart';
+import 'package:nanny_fairy/res/components/widgets/family_home_ui_enums.dart';
 import 'package:nanny_fairy/res/components/widgets/family_job_enums.dart';
 import 'package:nanny_fairy/res/components/widgets/shimmer_effect.dart';
 import 'package:nanny_fairy/res/components/widgets/vertical_spacing.dart';
@@ -88,7 +89,7 @@ class _FamilyJobSearchSeactionState extends State<FamilyJobSearchSeaction> {
           }),
           const VerticalSpeacing(16.0),
           SizedBox(
-            height: MediaQuery.of(context).size.height / 1.3,
+            height: MediaQuery.of(context).size.height / 1.6,
             child: Consumer<FamilySearchViewModel>(
               builder: (context, viewModel, child) {
                 if (viewModel.isLoading) {
@@ -211,8 +212,6 @@ class _FamilyJobSearchSeactionState extends State<FamilyJobSearchSeaction> {
                                 degree: user.education,
                                 dayButtons: dayButtons,
                                 timeData: timeData,
-                                ratings: user.averageRating,
-                                totalRatings: user.totalRatings,
                               ),
                             ),
                           );
@@ -223,8 +222,6 @@ class _FamilyJobSearchSeactionState extends State<FamilyJobSearchSeaction> {
                         skill: '',
                         hoursRate: user.hoursrate,
                         dayButtons: dayButtons,
-                        ratings: user.averageRating,
-                        totalRatings: user.totalRatings,
                       );
                     },
                   );

@@ -1,18 +1,20 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:nanny_fairy/FamilyController/get_family_info_controller.dart';
 import 'package:nanny_fairy/Family_View/homeFamily/widgets/family_default_view.dart';
+import 'package:nanny_fairy/Family_View/homeFamily/widgets/family_distance_view.dart';
+import 'package:nanny_fairy/Family_View/homeFamily/widgets/family_filter_view.dart';
+import 'package:nanny_fairy/Family_View/homeFamily/widgets/family_search__view.dart';
+import 'package:nanny_fairy/Repository/family_distance_repository.dart';
 import 'package:nanny_fairy/Repository/family_home_ui_repository.dart';
-import 'package:nanny_fairy/ViewModel/family_distance_view_model.dart';
 import 'package:nanny_fairy/res/components/colors.dart';
 import 'package:nanny_fairy/res/components/widgets/family_search_bar.dart';
 import 'package:nanny_fairy/res/components/widgets/family_home_ui_enums.dart';
 import 'package:nanny_fairy/res/components/widgets/vertical_spacing.dart';
 import 'package:provider/provider.dart';
-import 'package:shimmer/shimmer.dart';
 import '../../utils/routes/routes_name.dart';
-
-String? familyDistance;
 
 class HomeViewFamily extends StatefulWidget {
   const HomeViewFamily({super.key});
@@ -22,43 +24,21 @@ class HomeViewFamily extends StatefulWidget {
 }
 
 class _HomeViewFamilyState extends State<HomeViewFamily> {
-  final bool _hasFetchedProviders = false;
-
   @override
   void initState() {
     super.initState();
-
-    // Adding a 2-second delay before executing the code
-    Future.delayed(const Duration(seconds: 2), () {
-      WidgetsBinding.instance.addPostFrameCallback((_) {
-        if (!_hasFetchedProviders) {
-          // Provider.of<GetFamilyInfoController>(context, listen: false)
-          //     .getFamilyInfo();
-
-          // Provider.of<FamilyDistanceViewModel>(context, listen: false)
-          //     .filterProvidersByDistance(
-          //         familyDistance == null ? 2 : double.parse(familyDistance!),
-          //         context)
-          //     .then((_) {
-          //   if (mounted) {
-          //     setState(() {
-          //       _hasFetchedProviders = true;
-          //     });
-          //   }
-          // }).catchError((e) {
-          //   debugPrint("Error filtering providers: $e");
-          // });
-        }
-      });
+    // Fetch users when the widget initializes
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      Provider.of<GetFamilyInfoController>(context, listen: false)
+          .getFamilyInfo();
     });
   }
 
   @override
   Widget build(BuildContext context) {
     final familyHomeView = Provider.of<GetFamilyInfoController>(context);
-
+    FamilyDistanceRepository distanceRepository = FamilyDistanceRepository();
     return Scaffold(
-      backgroundColor: AppColor.creamyColor,
       resizeToAvoidBottomInset: false,
       body: SingleChildScrollView(
         child: Column(
@@ -70,7 +50,7 @@ class _HomeViewFamilyState extends State<HomeViewFamily> {
                   height: 179,
                   width: double.infinity,
                   decoration: const BoxDecoration(
-                    color: AppColor.lavenderColor,
+                    color: AppColor.primaryColor,
                     borderRadius: BorderRadius.only(
                       bottomLeft: Radius.circular(20),
                       bottomRight: Radius.circular(20),
@@ -80,40 +60,8 @@ class _HomeViewFamilyState extends State<HomeViewFamily> {
                     future: familyHomeView.getFamilyInfo(),
                     builder: (context, snapshot) {
                       if (snapshot.connectionState == ConnectionState.waiting) {
-                        return Center(
-                          child: Shimmer.fromColors(
-                            baseColor: Colors.grey[300]!,
-                            highlightColor: Colors.grey[100]!,
-                            child: ListTile(
-                              leading: const CircleAvatar(
-                                radius: 40,
-                                backgroundImage: const NetworkImage(
-                                    'https://play-lh.googleusercontent.com/jInS55DYPnTZq8GpylyLmK2L2cDmUoahVacfN_Js_TsOkBEoizKmAl5-p8iFeLiNjtE=w526-h296-rw'),
-                              ),
-                              title: Text(
-                                'WellCome',
-                                style: GoogleFonts.getFont(
-                                  "Poppins",
-                                  textStyle: const TextStyle(
-                                    fontSize: 12,
-                                    fontWeight: FontWeight.w500,
-                                    color: AppColor.creamyColor,
-                                  ),
-                                ),
-                              ),
-                              subtitle: Text(
-                                "Name",
-                                style: GoogleFonts.getFont(
-                                  "Poppins",
-                                  textStyle: const TextStyle(
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.w500,
-                                    color: AppColor.creamyColor,
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ),
+                        return const Center(
+                          child: CircularProgressIndicator(),
                         );
                       } else if (snapshot.hasError) {
                         return Center(child: Text('Error: ${snapshot.error}'));
@@ -124,8 +72,7 @@ class _HomeViewFamilyState extends State<HomeViewFamily> {
                           child: ListTile(
                             leading: CircleAvatar(
                               radius: 40,
-                              foregroundImage: NetworkImage(family['profile'] ??
-                                  'https://play-lh.googleusercontent.com/jInS55DYPnTZq8GpylyLmK2L2cDmUoahVacfN_Js_TsOkBEoizKmAl5-p8iFeLiNjtE=w526-h296-rw'),
+                              foregroundImage: NetworkImage(family['profile']),
                               backgroundImage: const NetworkImage(
                                   'https://play-lh.googleusercontent.com/jInS55DYPnTZq8GpylyLmK2L2cDmUoahVacfN_Js_TsOkBEoizKmAl5-p8iFeLiNjtE=w526-h296-rw'),
                             ),
@@ -136,18 +83,18 @@ class _HomeViewFamilyState extends State<HomeViewFamily> {
                                 textStyle: const TextStyle(
                                   fontSize: 12,
                                   fontWeight: FontWeight.w500,
-                                  color: AppColor.creamyColor,
+                                  color: AppColor.whiteColor,
                                 ),
                               ),
                             ),
                             subtitle: Text(
-                              "${family['firstName'] ?? 'Name'} ${family['lastName'] ?? 'Name'}",
+                              "${family['firstName']} ${family['lastName']}",
                               style: GoogleFonts.getFont(
                                 "Poppins",
                                 textStyle: const TextStyle(
                                   fontSize: 14,
                                   fontWeight: FontWeight.w500,
-                                  color: AppColor.creamyColor,
+                                  color: AppColor.whiteColor,
                                 ),
                               ),
                             ),
@@ -173,33 +120,33 @@ class _HomeViewFamilyState extends State<HomeViewFamily> {
               ],
             ),
             const VerticalSpeacing(20.0),
-            Consumer2<FamilyHomeUiRepository, FamilyDistanceViewModel>(
-              builder: (context, uiState, familyDistanceViewModel, _) {
+            Consumer<FamilyHomeUiRepository>(
+              builder: (context, uiState, _) {
                 Widget selectedWidget;
 
                 switch (uiState.selectedType) {
+                  case FamilyHomeUiEnums.SearchSection:
+                    selectedWidget = const FamilySearchView();
+                    break;
                   case FamilyHomeUiEnums.DefaultSection:
                     selectedWidget = const FamilyDefaultView();
                     break;
-
-                  // case FamilyHomeUiEnums.DistanceSection:
-                  //   selectedWidget = const FamilyDistanceFilterView();
-                  //   break;
+                  case FamilyHomeUiEnums.FilterSection:
+                    selectedWidget = const FamilyFilterView();
+                    break;
+                  case FamilyHomeUiEnums.DistanceSection:
+                    selectedWidget = const FamilyDistanceFilterView();
+                    break;
                 }
 
                 return selectedWidget;
               },
             ),
+            // FamilyDefaultView(),
           ],
         ),
       ),
     );
-  }
-
-  @override
-  void dispose() {
-    // Clean up any resources if necessary
-    super.dispose();
   }
 }
 

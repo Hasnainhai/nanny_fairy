@@ -12,14 +12,12 @@ class FamilyFilterController extends ChangeNotifier {
     required double maxRate,
     required List<String> selectedPassions,
     required Map<String, Map<String, bool>> selectedAvailability,
-    required double minRating,
   }) async {
     await _familyFilterRepository.filterProviders(
       minRate: minRate,
       maxRate: maxRate,
       selectedPassions: selectedPassions,
       selectedAvailability: selectedAvailability,
-      minRating: minRate,
     );
     notifyListeners();
   }

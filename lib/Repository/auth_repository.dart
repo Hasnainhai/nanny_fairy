@@ -1,6 +1,7 @@
 // ignore_for_file: use_build_context_synchronously
 
 import 'dart:io';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:nanny_fairy/res/components/common_firebase_storge.dart';
@@ -59,7 +60,6 @@ class AuthRepository {
       );
     }
   }
-
   Future<void> loginAccount({
     required String email,
     required String password,
@@ -88,7 +88,7 @@ class AuthRepository {
       Navigator.pushNamedAndRemoveUntil(
         context,
         RoutesName.dashboard,
-        (route) => false,
+            (route) => false,
       );
     } on FirebaseAuthException catch (e) {
       // Remove the loading indicator
@@ -299,7 +299,6 @@ class AuthRepository {
     BuildContext context,
     File? frontPic,
     File? backImage,
-    String status,
   ) async {
     showDialog(
       context: context,
@@ -315,7 +314,7 @@ class AuthRepository {
       final userId = _firebaseAuth.currentUser!.uid;
       final userRef =
           databaseReference.child('Providers').child(userId).child("IdPics");
-      final userRefData = databaseReference.child('Providers').child(userId);
+
       String frontUrl = "";
       String backUrl = "";
 
@@ -341,12 +340,10 @@ class AuthRepository {
         Navigator.pop(context);
         return;
       }
+
       userRef.set({
         "frontPic": frontUrl,
         "backPic": backUrl,
-      });
-      userRefData.update({
-        "status": 'Unverified',
       });
       Navigator.of(context).pop();
       Utils.toastMessage('Images saved successfully!');
@@ -357,6 +354,7 @@ class AuthRepository {
       );
     } catch (e) {
       Navigator.of(context).pop();
+
       // Handle any errors that occur during save
       debugPrint('Error saving images: $e');
       Utils.flushBarErrorMessage('Failed to save Images', context);

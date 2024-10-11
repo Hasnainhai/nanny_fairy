@@ -2,10 +2,7 @@ import 'dart:async';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
-import 'package:nanny_fairy/ViewModel/family_distance_view_model.dart';
-import 'package:nanny_fairy/ViewModel/provider_distance_view_model.dart';
 import 'package:nanny_fairy/utils/routes/routes_name.dart';
-import 'package:provider/provider.dart';
 import '../../res/components/colors.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -31,59 +28,24 @@ class _SplashScreenState extends State<SplashScreen> {
     if (user != null) {
       final userId = user.uid;
       final isProvider = await checkIfUserIsProvider(userId);
-      final isFamily = await checkIfUserIsFamily(userId);
 
       if (isProvider) {
-        // Check if bio exists in the Providers collection
-        final hasBio = await checkIfBioExists(userId, 'Providers');
-        if (hasBio) {
-          // Navigate to the
-          //Provider Dashboard
-          Provider.of<ProviderDistanceViewModel>(context, listen: false)
-              .fetchFamiliesFromFirebaseData();
-          Navigator.pushNamedAndRemoveUntil(
-            context,
-            RoutesName.dashboard,
-            (Route<dynamic> route) => false,
-          );
-        } else {
-          // Navigate to loginOrSignup if bio is not available
-          Navigator.pushNamedAndRemoveUntil(
-            context,
-            RoutesName.loginOrSignup,
-            (Route<dynamic> route) => false,
-          );
-        }
-      } else if (isFamily) {
-        // Check if bio exists in the Family collection
-        final hasBio = await checkIfBioExists(userId, 'Family');
-        if (hasBio) {
-          Provider.of<FamilyDistanceViewModel>(context, listen: false)
-              .fetchProviderDataFromFiebase();
-          // Navigate to the Family Dashboard
-          Navigator.pushNamedAndRemoveUntil(
-            context,
-            RoutesName.dashboardFamily,
-            (Route<dynamic> route) => false,
-          );
-        } else {
-          // Navigate to loginOrSignup if bio is not available
-          Navigator.pushNamedAndRemoveUntil(
-            context,
-            RoutesName.loginOrSignup,
-            (Route<dynamic> route) => false,
-          );
-        }
-      } else {
-        // If user is neither in Providers nor Family, navigate to loginOrSignup
+        // Navigate to the Provider Dashboard
         Navigator.pushNamedAndRemoveUntil(
           context,
-          RoutesName.loginOrSignup,
+          RoutesName.dashboard,
+          (Route<dynamic> route) => false,
+        );
+      } else {
+        // Navigate to the Family Dashboard
+        Navigator.pushNamedAndRemoveUntil(
+          context,
+          RoutesName.dashboardFamily,
           (Route<dynamic> route) => false,
         );
       }
     } else {
-      // If the user is not logged in, navigate to loginOrSignup after 5 seconds
+      // If the user is new or not logged in, navigate to the Login/Signup view
       Timer(const Duration(seconds: 5), () {
         Navigator.pushNamedAndRemoveUntil(
           context,
@@ -99,28 +61,11 @@ class _SplashScreenState extends State<SplashScreen> {
     return snapshot.snapshot.exists;
   }
 
-  Future<bool> checkIfUserIsFamily(String id) async {
-    final familyRef = FirebaseDatabase.instance.ref().child('Family');
-    final snapshot = await familyRef.orderByChild('uid').equalTo(id).once();
-    return snapshot.snapshot.exists;
-  }
-
-  Future<bool> checkIfBioExists(String id, String collection) async {
-    final collectionRef = FirebaseDatabase.instance.ref().child(collection);
-    final snapshot = await collectionRef.child(id).once();
-
-    if (snapshot.snapshot.exists) {
-      final data = snapshot.snapshot.value as Map<dynamic, dynamic>?;
-      return data != null && data.containsKey('bio');
-    }
-    return false;
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      backgroundColor: AppColor.authCreamColor,
+      backgroundColor: AppColor.whiteColor,
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.all(30),

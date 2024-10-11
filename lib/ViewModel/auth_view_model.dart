@@ -1,4 +1,5 @@
 import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:nanny_fairy/Repository/auth_repository.dart';
 
@@ -27,7 +28,6 @@ class AuthViewModel extends ChangeNotifier {
       _setLoading(false);
     }
   }
-
   Future<void> loginAccount({
     required String email,
     required String password,
@@ -137,11 +137,10 @@ class AuthViewModel extends ChangeNotifier {
     BuildContext context,
     File? frontPic,
     File? backPic,
-    String status,
   ) async {
     _setLoading(true);
     try {
-      await _authRepository.saveIdImages(context, frontPic, backPic, status);
+      await _authRepository.saveIdImages(context, frontPic, backPic);
     } catch (e) {
       debugPrint('Error saving details: ${e.toString()}');
     } finally {

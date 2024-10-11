@@ -34,9 +34,8 @@ class _ProfileViewState extends State<ProfileView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColor.creamyColor,
       appBar: AppBar(
-        backgroundColor: AppColor.lavenderColor,
+        backgroundColor: AppColor.primaryColor,
         elevation: 0.0,
         title: const Text(
           'Profile ',
@@ -44,7 +43,7 @@ class _ProfileViewState extends State<ProfileView> {
             fontFamily: 'CenturyGothic',
             fontSize: 18,
             fontWeight: FontWeight.w400,
-            color: AppColor.creamyColor,
+            color: AppColor.whiteColor,
           ),
         ),
         centerTitle: true,
@@ -63,7 +62,7 @@ class _ProfileViewState extends State<ProfileView> {
               children: [
                 _buildCoverBar(),
                 Container(
-                  padding: const EdgeInsets.only(top: 10, left: 24.0, right: 24.0),
+                  padding: EdgeInsets.only(top: 10, left: 24.0, right: 24.0),
                   child: _buildProfile(context),
                 ),
               ],
@@ -85,7 +84,7 @@ class _ProfileViewState extends State<ProfileView> {
           bottomLeft: Radius.circular(0),
           bottomRight: Radius.circular(0),
         ),
-        color: AppColor.lavenderColor,
+        color: AppColor.primaryColor,
       ),
     );
   }
@@ -113,8 +112,7 @@ class _ProfileViewState extends State<ProfileView> {
                 children: [
                   CircleAvatar(
                     radius: 40,
-                    foregroundImage: NetworkImage(provider['profile'] ??
-                        'https://play-lh.googleusercontent.com/jInS55DYPnTZq8GpylyLmK2L2cDmUoahVacfN_Js_TsOkBEoizKmAl5-p8iFeLiNjtE=w526-h296-rw'),
+                    foregroundImage: NetworkImage(provider['profile']),
                     backgroundImage: const NetworkImage(
                         'https://play-lh.googleusercontent.com/jInS55DYPnTZq8GpylyLmK2L2cDmUoahVacfN_Js_TsOkBEoizKmAl5-p8iFeLiNjtE=w526-h296-rw'),
                   ),
@@ -126,7 +124,7 @@ class _ProfileViewState extends State<ProfileView> {
                       textStyle: const TextStyle(
                         fontSize: 14,
                         fontWeight: FontWeight.w500,
-                        color: AppColor.creamyColor,
+                        color: AppColor.whiteColor,
                       ),
                     ),
                   ),
@@ -146,7 +144,7 @@ class _ProfileViewState extends State<ProfileView> {
       height: MediaQuery.of(context).size.height * 0.6,
       width: MediaQuery.of(context).size.width * 0.9,
       decoration: BoxDecoration(
-        color: AppColor.creamyColor,
+        color: AppColor.whiteColor,
         borderRadius: BorderRadius.circular(10.0),
         border: Border.all(
           strokeAlign: BorderSide.strokeAlignCenter,
@@ -225,7 +223,7 @@ class _ProfileViewState extends State<ProfileView> {
                     // Navigate to the login view and remove all previous routes
                     Navigator.pushNamedAndRemoveUntil(
                       context,
-                      RoutesName.loginOrSignup,
+                      RoutesName.loginView,
                       (Route<dynamic> route) => false,
                     );
                   },

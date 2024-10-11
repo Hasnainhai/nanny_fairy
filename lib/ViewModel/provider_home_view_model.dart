@@ -16,21 +16,9 @@ class ProviderHomeViewModel extends ChangeNotifier {
     } finally {}
   }
 
-  Future<Map<dynamic, dynamic>> getChats() async {
-    try {
-      return await _providerHomeRepository.getChats();
-    } finally {}
-  }
-
   Future<Map<dynamic, dynamic>> getCurrentUser() async {
     try {
       return await _providerHomeRepository.getCurrentUser();
-    } finally {}
-  }
-
-  Future<Map<dynamic, dynamic>> getPosts() async {
-    try {
-      return await _providerHomeRepository.getPosts();
     } finally {}
   }
 

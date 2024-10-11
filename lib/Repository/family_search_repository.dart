@@ -40,7 +40,6 @@ class FamilySearchRepository extends ChangeNotifier {
                         v is bool ? v : false)); // Default to false if not bool
               }
 
-              // Add provider to the list
               fetchedProviders
                   .add(ProviderSearchModel.fromMap(providerData, key));
             } catch (e) {
@@ -52,6 +51,7 @@ class FamilySearchRepository extends ChangeNotifier {
         });
 
         _providers = fetchedProviders;
+        _filteredProviders = List.from(_providers);
       } else {
         debugPrint('No data found');
       }
@@ -63,22 +63,29 @@ class FamilySearchRepository extends ChangeNotifier {
     notifyListeners();
   }
 
+  // Normalize strings for case-insensitive matching
+  String _normalize(String input) {
+    return input.trim().toLowerCase();
+  }
+
   // Search users by passion from the list
   void searchUsersByPassion(String query) {
     if (_providers.isEmpty) {
       debugPrint('No providers available to search');
+      _filteredProviders = [];
     } else {
-      if (query.isEmpty) {
+      final normalizedQuery = _normalize(query);
+
+      if (normalizedQuery.isEmpty) {
         _filteredProviders = List.from(_providers);
       } else {
-        final normalizedQuery = query.trim().toLowerCase();
         _filteredProviders = _providers.where((provider) {
           bool matchFound = provider.passions.any((passion) {
-            final normalizedPassion = passion.trim().toLowerCase();
+            final normalizedPassion = _normalize(passion);
             final isMatch = normalizedPassion.contains(normalizedQuery);
 
             debugPrint(
-                "Checking passion: '$normalizedPassion', Query: '$normalizedQuery', Match: $isMatch");
+                "Checking passion: $normalizedPassion, Query: $normalizedQuery, Match: $isMatch");
             return isMatch;
           });
 
@@ -88,7 +95,7 @@ class FamilySearchRepository extends ChangeNotifier {
       }
 
       debugPrint(
-          "Filtered Providers: ${_filteredProviders.map((provider) => provider.passions).toList()}");
+          "Filtered Providers: ${_filteredProviders.map((user) => user.passions).toList()}");
     }
 
     notifyListeners();

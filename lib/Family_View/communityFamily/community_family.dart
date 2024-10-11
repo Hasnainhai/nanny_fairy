@@ -7,6 +7,7 @@ import 'package:nanny_fairy/Family_View/communityFamily/widgets/community_card_f
 import 'package:nanny_fairy/res/components/widgets/vertical_spacing.dart';
 import 'package:nanny_fairy/utils/routes/routes_name.dart';
 import 'package:provider/provider.dart';
+import '../../FamilyController/family_home_controller.dart';
 import '../../res/components/colors.dart';
 
 class CommunityViewFamily extends StatefulWidget {
@@ -34,9 +35,9 @@ class _CommunityViewFamilyState extends State<CommunityViewFamily> {
     return DefaultTabController(
       length: 2,
       child: Scaffold(
-        backgroundColor: AppColor.creamyColor,
+        backgroundColor: AppColor.secondaryBgColor,
         appBar: AppBar(
-          backgroundColor: AppColor.lavenderColor,
+          backgroundColor: AppColor.primaryColor,
           elevation: 0.0,
           automaticallyImplyLeading: false,
           title: Text(
@@ -46,7 +47,7 @@ class _CommunityViewFamilyState extends State<CommunityViewFamily> {
               textStyle: const TextStyle(
                 fontSize: 18,
                 fontWeight: FontWeight.w400,
-                color: AppColor.creamyColor,
+                color: AppColor.whiteColor,
               ),
             ),
           ),
@@ -62,7 +63,7 @@ class _CommunityViewFamilyState extends State<CommunityViewFamily> {
                   height: 31,
                   width: 97,
                   decoration: BoxDecoration(
-                    color: AppColor.creamyColor,
+                    color: AppColor.whiteColor,
                     borderRadius: BorderRadius.circular(4),
                   ),
                   child: Center(
@@ -73,7 +74,7 @@ class _CommunityViewFamilyState extends State<CommunityViewFamily> {
                         textStyle: const TextStyle(
                           fontSize: 12,
                           fontWeight: FontWeight.w400,
-                          color: AppColor.lavenderColor,
+                          color: AppColor.primaryColor,
                         ),
                       ),
                     ),
@@ -83,9 +84,9 @@ class _CommunityViewFamilyState extends State<CommunityViewFamily> {
             ),
           ],
           bottom: const TabBar(
-            indicatorColor: AppColor.peachColor,
-            labelColor: AppColor.peachColor,
-            unselectedLabelColor: AppColor.creamyColor,
+            indicatorColor: AppColor.avatarColor,
+            labelColor: AppColor.avatarColor,
+            unselectedLabelColor: AppColor.whiteColor,
             tabs: [
               Tab(text: 'Topics'),
               Tab(text: 'My Posts'),
@@ -109,9 +110,7 @@ class _CommunityViewFamilyState extends State<CommunityViewFamily> {
                       const Center(child: Text('No posts found'))
                     else
                       Column(
-                        children: familyCommunityController.posts
-                            .where((post) => post['status'] == true)
-                            .map((post) {
+                        children: familyCommunityController.posts.map((post) {
                           return FutureBuilder<int>(
                             future: familyCommunityController
                                 .fetchTotalComments(post['postId']),
