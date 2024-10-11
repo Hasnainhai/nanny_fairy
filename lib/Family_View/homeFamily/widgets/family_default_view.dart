@@ -122,7 +122,7 @@ class _FamilyDefaultViewState extends State<FamilyDefaultView> {
                     const SizedBox(width: 16),
                     HomeFeatureContainerFamily(
                       txColor: AppColor.creamyColor,
-                      bgColor: const Color(0xffFEAA48),
+                      bgColor: AppColor.peachColor,
                       img: 'images/homeSitter.png',
                       title: 'Animal care',
                       ontap: () {
@@ -152,7 +152,7 @@ class _FamilyDefaultViewState extends State<FamilyDefaultView> {
                     const SizedBox(width: 16),
                     HomeFeatureContainerFamily(
                       txColor: AppColor.creamyColor,
-                      bgColor: const Color(0xffDDC912),
+                      bgColor: AppColor.lavenderColor,
                       img: 'images/cleaning.png',
                       title: 'Music lesson',
                       ontap: () {

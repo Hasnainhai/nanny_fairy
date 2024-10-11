@@ -28,9 +28,9 @@ class _UploadComunityPostFamilyState extends State<UploadComunityPostFamily> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          backgroundColor: AppColor.whiteColor,
+          backgroundColor: AppColor.creamyColor,
           icon: const Icon(Icons.check_circle,
-              color: AppColor.primaryColor, size: 120),
+              color: AppColor.lavenderColor, size: 120),
           title: Text(
             'Congratulation you\nupload your Post',
             style: GoogleFonts.getFont(
@@ -81,7 +81,7 @@ class _UploadComunityPostFamilyState extends State<UploadComunityPostFamily> {
     final communityContrillerFamily =
         Provider.of<FamilyCommunityController>(context);
     return Scaffold(
-      backgroundColor: AppColor.primaryColor,
+      backgroundColor: AppColor.lavenderColor,
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0.0,
@@ -92,7 +92,7 @@ class _UploadComunityPostFamilyState extends State<UploadComunityPostFamily> {
             textStyle: const TextStyle(
               fontSize: 18,
               fontWeight: FontWeight.w400,
-              color: AppColor.whiteColor,
+              color: AppColor.creamyColor,
             ),
           ),
         ),
@@ -103,14 +103,14 @@ class _UploadComunityPostFamilyState extends State<UploadComunityPostFamily> {
             },
             icon: const Icon(
               Icons.west,
-              color: AppColor.whiteColor,
+              color: AppColor.creamyColor,
             )),
       ),
       body: Container(
         height: MediaQuery.of(context).size.height,
         width: double.infinity,
         decoration: BoxDecoration(
-          color: Colors.white,
+          color: AppColor.creamyColor,
           borderRadius: const BorderRadius.only(
             topLeft: Radius.circular(30),
           ),
@@ -148,12 +148,12 @@ class _UploadComunityPostFamilyState extends State<UploadComunityPostFamily> {
                                   pickPost();
                                 },
                                 child: const CircleAvatar(
-                                  backgroundColor: AppColor.primaryColor,
+                                  backgroundColor: AppColor.lavenderColor,
                                   child: Padding(
                                     padding: EdgeInsets.all(8.0),
                                     child: Icon(
                                       Icons.photo_camera,
-                                      color: AppColor.whiteColor,
+                                      color: AppColor.creamyColor,
                                     ),
                                   ),
                                 ),
@@ -177,7 +177,7 @@ class _UploadComunityPostFamilyState extends State<UploadComunityPostFamily> {
                                   pickPost();
                                 },
                                 child: const CircleAvatar(
-                                  backgroundColor: AppColor.primaryColor,
+                                  backgroundColor: AppColor.lavenderColor,
                                   child: Padding(
                                     padding: EdgeInsets.all(8.0),
                                     child: Icon(
