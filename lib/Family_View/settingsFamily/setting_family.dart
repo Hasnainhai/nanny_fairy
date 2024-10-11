@@ -33,9 +33,9 @@ class _SettingsFamilyViewState extends State<SettingsFamilyView> {
     final familyhomeController = Provider.of<FamilyHomeController>(context);
     final getProviderInfo = Provider.of<GetProviderInfoViewModel>(context);
     return Scaffold(
-      backgroundColor: AppColor.secondaryBgColor,
+      backgroundColor: AppColor.creamyColor,
       appBar: AppBar(
-        backgroundColor: AppColor.secondaryBgColor,
+        backgroundColor: AppColor.creamyColor,
         title: Text(
           'Settings',
           style: GoogleFonts.getFont(
@@ -71,13 +71,13 @@ class _SettingsFamilyViewState extends State<SettingsFamilyView> {
                 width: 45,
                 decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(4),
-                    color: AppColor.primaryColor),
+                    color: AppColor.lavenderColor),
                 child: const Center(
                   child: Text(
                     'Edit',
                     style: TextStyle(
                       fontSize: 16,
-                      color: AppColor.whiteColor,
+                      color: AppColor.creamyColor,
                     ),
                   ),
                 ),
@@ -96,17 +96,17 @@ class _SettingsFamilyViewState extends State<SettingsFamilyView> {
               const VerticalSpeacing(16.0),
               Container(
                 decoration: BoxDecoration(
-                  color: AppColor.whiteColor,
+                  color: AppColor.creamyColor,
                   borderRadius: BorderRadius.circular(12),
                   border: Border.all(
                     strokeAlign: BorderSide.strokeAlignCenter,
-                    color: const Color(0xff1B81BC)
+                    color: AppColor.lavenderColor
                         .withOpacity(0.10), // Stroke color with 10% opacity
                     width: 1,
                   ),
                   boxShadow: [
                     BoxShadow(
-                      color: const Color(0xff1B81BC).withOpacity(
+                      color: AppColor.lavenderColor.withOpacity(
                           0.1), // Drop shadow color with 4% opacity
                       blurRadius: 2,
                       offset: const Offset(1, 2),

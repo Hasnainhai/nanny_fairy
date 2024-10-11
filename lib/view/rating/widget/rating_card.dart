@@ -36,7 +36,7 @@ class _ReviewCardState extends State<ReviewCard> {
   @override
   Widget build(BuildContext context) {
     return Card(
-      color: AppColor.whiteColor,
+      color: AppColor.creamyColor.withOpacity(0.9),
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(0.0),
       ),
@@ -75,7 +75,7 @@ class _ReviewCardState extends State<ReviewCard> {
                             initialRating: double.parse(widget.rating),
                             minRating: 1,
                             allowHalfRating: true,
-                            glowColor: Colors.amber,
+                            glowColor: AppColor.peachColor,
                             ignoreGestures: true,
                             itemCount: 5,
                             itemSize: 18,
@@ -83,7 +83,7 @@ class _ReviewCardState extends State<ReviewCard> {
                                 const EdgeInsets.symmetric(horizontal: 0),
                             itemBuilder: (context, _) => const Icon(
                                   Icons.star_rate_rounded,
-                                  color: Colors.amber,
+                                  color: AppColor.peachColor,
                                 ),
                             onRatingUpdate: (rating) {}),
                       ],

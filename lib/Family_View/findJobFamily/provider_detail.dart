@@ -732,7 +732,7 @@ class _ProviderDetailsState extends State<ProviderDetails> {
     return Container(
       margin: const EdgeInsets.only(right: 10), // Space between cards
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: AppColor.creamyColor,
         borderRadius: BorderRadius.circular(20),
         boxShadow: [
           BoxShadow(
@@ -800,7 +800,7 @@ class _ProviderDetailsState extends State<ProviderDetails> {
             const SizedBox(width: 5),
             const Icon(
               Icons.star,
-              color: Colors.amber,
+              color: AppColor.peachColor,
               size: 20,
             ),
             Text(
@@ -808,10 +808,9 @@ class _ProviderDetailsState extends State<ProviderDetails> {
               style: GoogleFonts.getFont(
                 "Poppins",
                 textStyle: const TextStyle(
-                  fontSize: 10,
-                  fontWeight: FontWeight.w400,
-                  color: Colors.orange,
-                ),
+                    fontSize: 10,
+                    fontWeight: FontWeight.w400,
+                    color: AppColor.peachColor),
               ),
             ),
           ],
