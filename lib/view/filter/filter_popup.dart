@@ -1,16 +1,21 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
-import 'package:nanny_fairy/Repository/home_ui_repostory.dart';
-import 'package:nanny_fairy/ViewModel/filter_view_model.dart';
-import 'package:nanny_fairy/res/components/rounded_button.dart';
-import 'package:nanny_fairy/res/components/widgets/ui_enums.dart';
-import 'package:nanny_fairy/utils/utils.dart';
 import 'package:provider/provider.dart';
+
+import 'package:nanny_fairy/ViewModel/provider_distance_view_model.dart';
+import 'package:nanny_fairy/res/components/rounded_button.dart';
+import 'package:nanny_fairy/utils/utils.dart';
+
 import '../../res/components/colors.dart';
 import '../../res/components/widgets/vertical_spacing.dart';
 
 class FilterPopUp extends StatefulWidget {
-  const FilterPopUp({super.key});
+  final String maxDistance;
+  const FilterPopUp({
+    super.key,
+    required this.maxDistance,
+  });
 
   @override
   State<FilterPopUp> createState() => _FilterPopUpState();
@@ -39,6 +44,7 @@ class _FilterPopUpState extends State<FilterPopUp> {
     });
   }
 
+  double totalRating = 2;
   @override
   Widget build(BuildContext context) {
     return Dialog.fullscreen(
@@ -135,7 +141,7 @@ class _FilterPopUpState extends State<FilterPopUp> {
                 ),
                 const VerticalSpeacing(14),
                 RatingBar.builder(
-                  initialRating: 4,
+                  initialRating: 2,
                   minRating: 1,
                   allowHalfRating: true,
                   glowColor: Colors.amber,
@@ -145,20 +151,27 @@ class _FilterPopUpState extends State<FilterPopUp> {
                     Icons.star_rate_rounded,
                     color: Colors.amber,
                   ),
-                  onRatingUpdate: (rating) {},
+                  onRatingUpdate: (rating) {
+                    totalRating = rating;
+                  },
                 ),
                 const VerticalSpeacing(50),
-                Consumer2<FilteredViewModel, HomeUiSwithchRepository>(
-                  builder: (context, filteredViewModel, uiState, child) {
+                Consumer<ProviderDistanceViewModel>(
+                  builder: (context, filteredViewModel, child) {
                     return RoundedButton(
                       title: 'Apply Filters',
                       onpress: () {
                         if (query.isNotEmpty) {
-                          filteredViewModel.filterUsersByPassions(query);
-                          Navigator.pop(context);
+                          filteredViewModel.filteredFamiliesByMultipleQueries(
+                              double.parse(widget.maxDistance),
+                              context,
+                              query,
+                              totalRating);
 
-                          uiState.switchToType(UIType
-                              .FilterSection); // Switch to FilterSection after applying filters
+                          // Navigator.pop(context);
+
+                          // uiState.switchToType(UIType
+                          //     .FilterSection); // Switch to FilterSection after applying filters
                         } else {
                           Utils.flushBarErrorMessage(
                               "Please select the filters", context);

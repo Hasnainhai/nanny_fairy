@@ -38,7 +38,7 @@ class _ToggleWidgetState extends State<ToggleWidget> {
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(100.0),
               color:
-              switchValue ? AppColor.primaryColor : const Color(0xffECECEC),
+              switchValue ? AppColor.lavenderColor : const Color(0xffECECEC),
             ),
             child: Row(
               mainAxisAlignment:
@@ -48,10 +48,10 @@ class _ToggleWidgetState extends State<ToggleWidget> {
                   margin: const EdgeInsets.only(left: 4, right: 4),
                   width: 12.0,
                   height: 12.0,
-                  decoration: const BoxDecoration(
+                  decoration:  BoxDecoration(
 
                     shape: BoxShape.circle,
-                    color: Colors.white,
+                    color: switchValue ? AppColor.creamyColor:AppColor.lavenderColor,
                   ),
                 ),
               ],

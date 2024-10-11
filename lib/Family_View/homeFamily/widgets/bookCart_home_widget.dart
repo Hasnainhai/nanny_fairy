@@ -43,7 +43,7 @@ class _BookingCartWidgetHomeState extends State<BookingCartWidgetHome> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          backgroundColor: AppColor.whiteColor,
+          backgroundColor: AppColor.lavenderColor,
           content: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
@@ -88,17 +88,17 @@ class _BookingCartWidgetHomeState extends State<BookingCartWidgetHome> {
         height: 131,
         width: double.infinity,
         decoration: BoxDecoration(
-          color: AppColor.whiteColor,
+          color: AppColor.creamyColor,
           borderRadius: BorderRadius.circular(10.0),
           border: Border.all(
             strokeAlign: BorderSide.strokeAlignCenter,
-            color: const Color(0xff1B81BC)
+            color: AppColor.lavenderColor
                 .withOpacity(0.10), // Stroke color with 10% opacity
             width: 1,
           ),
           boxShadow: [
             BoxShadow(
-              color: const Color(0xff1B81BC)
+              color: AppColor.lavenderColor
                   .withOpacity(0.1), // Drop shadow color with 4% opacity
               blurRadius: 2,
               offset: const Offset(1, 2),
@@ -111,7 +111,8 @@ class _BookingCartWidgetHomeState extends State<BookingCartWidgetHome> {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 const SizedBox(width: 10),
                 Container(
@@ -235,20 +236,21 @@ class _BookingCartWidgetHomeState extends State<BookingCartWidgetHome> {
                     ),
                   ],
                 ),
+                const SizedBox(width: 20),
                 InkWell(
                   onTap: () {
                     widget.ontapView();
                   },
                   child: Container(
                     height: 30,
-                    width: 78,
+                    width: 68,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(32),
-                      color: AppColor.primaryColor,
+                      color: AppColor.lavenderColor,
                     ),
                     child: Padding(
                       padding: const EdgeInsets.symmetric(
-                          vertical: 8, horizontal: 12),
+                          vertical: 8, horizontal: 8),
                       child: Center(
                         child: Text(
                           widget.primaryButtonTxt,
@@ -257,7 +259,7 @@ class _BookingCartWidgetHomeState extends State<BookingCartWidgetHome> {
                             textStyle: const TextStyle(
                               fontSize: 12,
                               fontWeight: FontWeight.w400,
-                              color: AppColor.whiteColor,
+                              color: AppColor.creamyColor,
                             ),
                           ),
                         ),

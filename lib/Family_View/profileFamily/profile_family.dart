@@ -8,7 +8,6 @@ import 'package:nanny_fairy/utils/routes/routes_name.dart';
 import 'package:provider/provider.dart';
 import '../../res/components/colors.dart';
 import '../../res/components/widgets/vertical_spacing.dart';
-import '../../view/rating/rating.dart';
 
 class ProfileViewFamily extends StatefulWidget {
   const ProfileViewFamily({super.key});
@@ -114,13 +113,14 @@ class _ProfileViewFamilyState extends State<ProfileViewFamily> {
                 children: [
                   CircleAvatar(
                     radius: 40,
-                    foregroundImage: NetworkImage(provider['profile']),
+                    foregroundImage:
+                        NetworkImage(provider['profile'] ?? defaultProfile),
                     backgroundImage: const NetworkImage(
                         'https://play-lh.googleusercontent.com/jInS55DYPnTZq8GpylyLmK2L2cDmUoahVacfN_Js_TsOkBEoizKmAl5-p8iFeLiNjtE=w526-h296-rw'),
                   ),
                   const VerticalSpeacing(16),
                   Text(
-                    "${provider['firstName']} ${provider['lastName']}",
+                    "${provider['firstName'] ?? 'Name'} ${provider['lastName'] ?? 'Name'}",
                     style: GoogleFonts.getFont(
                       "Poppins",
                       textStyle: const TextStyle(
@@ -183,7 +183,8 @@ class _ProfileViewFamilyState extends State<ProfileViewFamily> {
                 const Divider(),
                 ProfileWidgetsFamily(
                   ontap: () {
-                    Navigator.pushNamed(context, RoutesName.notificationsView);
+                    Navigator.pushNamed(
+                        context, RoutesName.familyNotifications);
                   },
                   tColor: const Color(0xff46C5CA),
                   bColor: const Color(0xff6DF5FC),
@@ -225,7 +226,7 @@ class _ProfileViewFamilyState extends State<ProfileViewFamily> {
                     // Navigate to the login view and remove all previous routes
                     Navigator.pushNamedAndRemoveUntil(
                       context,
-                      RoutesName.loginFamily,
+                      RoutesName.loginOrSignup,
                       (Route<dynamic> route) => false,
                     );
                   },

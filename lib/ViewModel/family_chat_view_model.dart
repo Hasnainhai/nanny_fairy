@@ -60,6 +60,10 @@ class FamilyChatController with ChangeNotifier {
     String receiverName,
     String senderProfilePic,
     String receiverProfilePic,
+    String providerRating,
+    String providerTotalRating,
+    String education,
+    String hourlyRate,
   ) async {
     await familyChatRepository.saveDataToContactsSubcollection(
       text,
@@ -69,6 +73,10 @@ class FamilyChatController with ChangeNotifier {
       receiverName,
       senderProfilePic,
       receiverProfilePic,
+      providerRating,
+      providerTotalRating,
+      education,
+      hourlyRate,
     );
     loadChats(); // Reload chats after saving
   }

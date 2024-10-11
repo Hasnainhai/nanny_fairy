@@ -4,9 +4,9 @@ import 'package:nanny_fairy/FamilyController/family_home_controller.dart';
 import 'package:nanny_fairy/Family_View/findJobFamily/provider_detail.dart';
 import 'package:nanny_fairy/Family_View/homeFamily/widgets/bookCart_home_widget.dart';
 import 'package:nanny_fairy/Repository/family_home_ui_repository.dart';
+import 'package:nanny_fairy/ViewModel/family_distance_view_model.dart';
 import 'package:nanny_fairy/res/components/colors.dart';
 import 'package:nanny_fairy/res/components/widgets/family_home_ui_enums.dart';
-import 'package:nanny_fairy/res/components/widgets/shimmer_effect.dart';
 import 'package:nanny_fairy/res/components/widgets/vertical_spacing.dart';
 import 'package:provider/provider.dart';
 
@@ -17,10 +17,10 @@ class FamilyJobDistanceFilterView extends StatefulWidget {
 
   @override
   State<FamilyJobDistanceFilterView> createState() =>
-      _FamilyDistanceFilterViewState();
+      _FamilyJobDistanceFilterViewState();
 }
 
-class _FamilyDistanceFilterViewState
+class _FamilyJobDistanceFilterViewState
     extends State<FamilyJobDistanceFilterView> {
   Map<String, String> getRatingsAndTotalRatings(Map<dynamic, dynamic> value) {
     String ratings = value != null && value['countRatingStars'] != null
@@ -46,165 +46,151 @@ class _FamilyDistanceFilterViewState
 
   @override
   Widget build(BuildContext context) {
-    final familyhomeController = Provider.of<FamilyHomeController>(context);
-
-    return Column(
-      children: [
-        Padding(
-          padding: const EdgeInsets.only(left: 16.0, right: 16.0),
-          child: Column(
-            children: [
-              Consumer<FamilyHomeUiRepository>(
-                  builder: (context, uiState, child) {
-                return Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      'Distance Filter',
-                      style: GoogleFonts.getFont(
-                        "Poppins",
-                        textStyle: const TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.w600,
-                          color: AppColor.blackColor,
-                        ),
-                      ),
-                    ),
-                    InkWell(
-                      onTap: () {
-                        uiState.switchToJobDefaultSection();
-                      },
-                      child: Text(
-                        'Clear all',
+    return Consumer2<FamilyHomeUiRepository, FamilyDistanceViewModel>(
+      builder: (context, uiState, familyhomeController, child) {
+        return Column(
+          children: [
+            Padding(
+              padding: const EdgeInsets.only(left: 16.0, right: 16.0),
+              child: Column(
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        'Distance Filtered Providers',
                         style: GoogleFonts.getFont(
                           "Poppins",
                           textStyle: const TextStyle(
                             fontSize: 16,
                             fontWeight: FontWeight.w600,
-                            color: AppColor.primaryColor,
+                            color: AppColor.blackColor,
                           ),
                         ),
                       ),
-                    ),
-                  ],
-                );
-              }),
-              const VerticalSpeacing(16.0),
-              SizedBox(
-                height: MediaQuery.of(context).size.height * 1,
-                child: FutureBuilder(
-                  future: familyhomeController.getPopularJobs(),
-                  builder: (context, snapshot) {
-                    if (snapshot.connectionState == ConnectionState.waiting) {
-                      return const ShimmerUi();
-                    } else if (snapshot.hasError) {
-                      return Center(child: Text('Error: ${snapshot.error}'));
-                    } else if (snapshot.data!.isEmpty) {
-                      return const Center(child: Text('No Providers...'));
-                    } else if (snapshot.hasData) {
-                      Map<dynamic, dynamic> bookings =
-                          snapshot.data as Map<dynamic, dynamic>;
-                      List<Widget> bookingWidgets = [];
-
-                      bookings.forEach((key, value) {
-                        if (value['Availability'] is Map) {
-                          Map<String, dynamic> availabilityMap =
-                              Map<String, dynamic>.from(value['Availability']);
-                          Set<String> daysSet = {};
-
-                          availabilityMap.forEach((timeOfDay, daysMap) {
-                            if (daysMap is Map) {
-                              daysMap.forEach((day, isAvailable) {
-                                if (isAvailable && !daysSet.contains(day)) {
-                                  daysSet
-                                      .add(day.substring(0, 1).toUpperCase());
-                                }
-                              });
-                            }
-                          });
-
-                          List<Widget> dayButtons =
-                              daysSet.map((dayAbbreviation) {
-                            return Padding(
-                              padding: const EdgeInsets.all(4.0),
-                              child: DayButtonFamily(day: dayAbbreviation),
-                            );
-                          }).toList();
-                          Map<String, String> ratingsData =
-                              getRatingsAndTotalRatings(value);
-                          Map<dynamic, dynamic> reviews =
-                              value['reviews'] ?? {};
-                          double averageRating =
-                              calculateAverageRating(reviews);
-
-                          bookingWidgets.add(
-                            BookingCartWidgetHome(
-                              primaryButtonColor: AppColor.primaryColor,
-                              primaryButtonTxt: 'View',
-                              ontapView: () {
-                                Map<String, String> timeData =
-                                    (value['Time'] as Map<dynamic, dynamic>)
-                                        .map((key, value) => MapEntry(
-                                            key.toString(), value.toString()));
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (c) => ProviderDetails(
-                                      familyId: value['uid'],
-                                      profile: value['profile'],
-                                      name:
-                                          "${value['firstName']} ${value['lastName']}",
-                                      bio: value['bio'],
-                                      horseRate: value['hoursrate'],
-                                      experience: value['Refernce']
-                                          ['experince'],
-                                      degree: value['education'],
-                                      dayButtons: dayButtons,
-                                      timeData: timeData,
-                                      ratings: averageRating,
-                                      totalRatings: int.parse(
-                                          ratingsData['totalRatings']!),
-                                      // getRatings: reviews,
-                                    ),
-                                  ),
-                                );
-                              },
-                              profile: value['profile'],
-                              name:
-                                  "${value['firstName']} ${value['lastName']}",
-                              degree: value['education'],
-                              skill: '',
-                              hoursRate: value['hoursrate'],
-                              dayButtons: dayButtons,
-                              ratings: averageRating,
-                              totalRatings:
-                                  int.parse(ratingsData['totalRatings']!),
+                      InkWell(
+                        onTap: () {
+                          uiState.switchToJobDefaultSection();
+                        },
+                        child: Text(
+                          'Clear All',
+                          style: GoogleFonts.getFont(
+                            "Poppins",
+                            textStyle: const TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.w600,
+                              color: AppColor.primaryColor,
                             ),
-                          );
-                        } else {
-                          const Center(child: Text('Invalid data format'));
-                        }
-                      });
-
-                      return SingleChildScrollView(
-                        scrollDirection: Axis.vertical,
-                        child: Padding(
-                          padding: const EdgeInsets.only(bottom: 50),
-                          child: Column(
-                            children: bookingWidgets,
                           ),
                         ),
-                      );
-                    } else {
-                      return const Center(child: Text('No Providers...'));
-                    }
-                  },
-                ),
+                      ),
+                    ],
+                  ),
+                  const VerticalSpeacing(16.0),
+                  SizedBox(
+                    height: MediaQuery.of(context).size.height * 1.3,
+                    child: familyhomeController
+                            .distanceFilteredProviders.isEmpty
+                        ? const Center(child: Text('No data available'))
+                        : SingleChildScrollView(
+                            scrollDirection: Axis.vertical,
+                            child: Column(
+                              children: familyhomeController
+                                  .distanceFilteredProviders
+                                  .map((provider) {
+                                try {
+                                  List<String> passions =
+                                      (provider['FamilyPassions']
+                                                  as List<dynamic>?)
+                                              ?.cast<String>() ??
+                                          [];
+                                  Map<String, String> ratingsData =
+                                      getRatingsAndTotalRatings(provider);
+                                  Map<dynamic, dynamic> reviews =
+                                      provider['reviews'] ?? {};
+                                  double averageRating =
+                                      calculateAverageRating(reviews);
+
+                                  return BookingCartWidgetHome(
+                                    primaryButtonTxt: 'View',
+                                    ontapView: () {
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (c) => ProviderDetails(
+                                            familyId: provider['uid'],
+                                            profile: provider['profile'],
+                                            name:
+                                                "${provider['firstName']} ${provider['lastName']}",
+                                            bio: provider['bio'],
+                                            horseRate: provider['hoursrate'],
+                                            experience: provider['Refernce']
+                                                ['experince'],
+                                            degree: provider['education'],
+                                            dayButtons:
+                                                _buildDayButtons(provider),
+                                            timeData: (provider['Time']
+                                                    as Map<dynamic, dynamic>)
+                                                .map((key, value) => MapEntry(
+                                                    key.toString(),
+                                                    value.toString())),
+                                            ratings: averageRating,
+                                            totalRatings: int.parse(
+                                                ratingsData['totalRatings']!),
+                                          ),
+                                        ),
+                                      );
+                                    },
+                                    profile: provider['profile'],
+                                    name:
+                                        "${provider['firstName']} ${provider['lastName']}",
+                                    degree: provider['education'],
+                                    skill: '',
+                                    hoursRate: provider['hoursrate'],
+                                    dayButtons: _buildDayButtons(provider),
+                                    ratings: averageRating,
+                                    totalRatings:
+                                        int.parse(ratingsData['totalRatings']!),
+                                    primaryButtonColor: AppColor.primaryColor,
+                                  );
+                                } catch (e) {
+                                  // Handle potential errors with data mapping
+                                  print('Error processing provider data: $e');
+                                  return const SizedBox(); // Return an empty widget on error
+                                }
+                              }).toList(),
+                            ),
+                          ),
+                  ),
+                ],
               ),
-            ],
-          ),
-        ),
-      ],
+            ),
+          ],
+        );
+      },
     );
+  }
+
+  List<Widget> _buildDayButtons(Map<dynamic, dynamic> provider) {
+    Map<String, dynamic> availabilityMap =
+        Map<String, dynamic>.from(provider['Availability'] ?? {});
+    Set<String> daysSet = {};
+
+    availabilityMap.forEach((timeOfDay, daysMap) {
+      if (daysMap is Map) {
+        daysMap.forEach((day, isAvailable) {
+          if (isAvailable && !daysSet.contains(day)) {
+            daysSet.add(day.substring(0, 1).toUpperCase());
+          }
+        });
+      }
+    });
+
+    return daysSet.map((dayAbbreviation) {
+      return Padding(
+        padding: const EdgeInsets.all(4.0),
+        child: DayButtonFamily(day: dayAbbreviation),
+      );
+    }).toList();
   }
 }

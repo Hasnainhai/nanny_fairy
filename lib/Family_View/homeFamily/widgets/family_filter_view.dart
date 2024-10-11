@@ -60,9 +60,8 @@ class _FamilyFilterViewState extends State<FamilyFilterView> {
               ],
             );
           }),
-          const VerticalSpeacing(16.0),
           SizedBox(
-            height: MediaQuery.of(context).size.height / 1.6,
+            height: MediaQuery.of(context).size.height / 1.3,
             child: Consumer<FamilyFilterController>(
               builder: (context, viewModel, child) {
                 if (viewModel.isLoading) {
@@ -137,6 +136,8 @@ class _FamilyFilterViewState extends State<FamilyFilterView> {
                                 degree: user.education,
                                 dayButtons: dayButtons,
                                 timeData: timeData,
+                                ratings: user.averageRating,
+                                totalRatings: user.totalRatings,
                               ),
                             ),
                           );
@@ -147,6 +148,8 @@ class _FamilyFilterViewState extends State<FamilyFilterView> {
                         skill: '',
                         hoursRate: user.hoursrate,
                         dayButtons: dayButtons,
+                        ratings: user.averageRating,
+                        totalRatings: user.totalRatings,
                       );
                     },
                   );

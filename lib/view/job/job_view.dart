@@ -8,6 +8,7 @@ import 'package:nanny_fairy/view/filter/widgets/job_filter_popup.dart';
 import 'package:nanny_fairy/view/job/widgets/job_default_section.dart';
 import 'package:nanny_fairy/view/job/widgets/job_filter_section.dart';
 import 'package:nanny_fairy/view/job/widgets/job_search_section.dart';
+import 'package:nanny_fairy/view/job/widgets/provider_job_distance_section.dart';
 import 'package:provider/provider.dart';
 import '../../res/components/colors.dart';
 
@@ -87,6 +88,9 @@ class _JobViewState extends State<JobView> {
                     break;
                   case JobUIType.FilterSection:
                     selectedWidget = const JobFilterSection();
+                    break;
+                  case JobUIType.DistanceSection:
+                    selectedWidget = const ProviderJobDistanceSection();
                     break;
                 }
 

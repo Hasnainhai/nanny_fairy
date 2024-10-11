@@ -30,7 +30,7 @@ class _EducationHorlyViewState extends State<EducationHorlyView> {
     final authViewModel = Provider.of<AuthViewModel>(context);
 
     return Scaffold(
-      backgroundColor: AppColor.primaryColor,
+      backgroundColor: AppColor.oceanColor,
       appBar: PreferredSize(
         preferredSize: const Size.square(70),
         child: AppBar(
@@ -39,7 +39,7 @@ class _EducationHorlyViewState extends State<EducationHorlyView> {
           leading: IconButton(
             icon: const Icon(
               Icons.west,
-              color: AppColor.whiteColor,
+              color: AppColor.authCreamColor,
             ),
             onPressed: () {
               Navigator.pop(context);
@@ -52,7 +52,7 @@ class _EducationHorlyViewState extends State<EducationHorlyView> {
               textStyle: const TextStyle(
                 fontSize: 16,
                 fontWeight: FontWeight.w400,
-                color: AppColor.whiteColor,
+                color: AppColor.authCreamColor,
               ),
             ),
           ),
@@ -65,7 +65,7 @@ class _EducationHorlyViewState extends State<EducationHorlyView> {
           height: MediaQuery.of(context).size.height,
           width: double.infinity,
           decoration: const BoxDecoration(
-            color: AppColor.whiteColor,
+            color: AppColor.authCreamColor,
             borderRadius: BorderRadius.only(
               topLeft: Radius.circular(30.0),
             ),
@@ -91,10 +91,10 @@ class _EducationHorlyViewState extends State<EducationHorlyView> {
                   height: 184,
                   width: double.infinity,
                   decoration: BoxDecoration(
-                    color: AppColor.whiteColor,
+                    color: AppColor.authCreamColor,
                     borderRadius: BorderRadius.circular(12.0),
                     border:
-                        Border.all(width: 0.5, color: AppColor.primaryColor),
+                        Border.all(width: 0.5, color: AppColor.oceanColor),
                   ),
                   child: Padding(
                     padding: const EdgeInsets.only(left: 10.0, right: 10),
@@ -118,6 +118,7 @@ class _EducationHorlyViewState extends State<EducationHorlyView> {
                         ),
                         const VerticalSpeacing(16.0),
                         TextFieldCustom(
+
                           controller: educationController,
                           prefixIcon: const Icon(Icons.school_outlined),
                           maxLines: 1,
@@ -144,10 +145,10 @@ class _EducationHorlyViewState extends State<EducationHorlyView> {
                   height: 184,
                   width: double.infinity,
                   decoration: BoxDecoration(
-                    color: AppColor.whiteColor,
+                    color: AppColor.authCreamColor,
                     borderRadius: BorderRadius.circular(12.0),
                     border:
-                        Border.all(width: 0.5, color: AppColor.primaryColor),
+                        Border.all(width: 0.5, color: AppColor.oceanColor),
                   ),
                   child: Padding(
                     padding: const EdgeInsets.only(left: 10.0, right: 10),
@@ -171,6 +172,7 @@ class _EducationHorlyViewState extends State<EducationHorlyView> {
                         ),
                         const VerticalSpeacing(16.0),
                         TextFieldCustom(
+                          keyboardType: TextInputType.phone,
                           controller: hoursRateController,
                           prefixIcon: const Icon(Icons.euro_outlined),
                           maxLines: 1,

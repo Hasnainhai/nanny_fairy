@@ -3,8 +3,6 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:nanny_fairy/res/components/rounded_button.dart';
 import 'package:nanny_fairy/res/components/widgets/vertical_spacing.dart';
 import 'package:nanny_fairy/utils/routes/routes_name.dart';
-import 'package:nanny_fairy/view/auth/signup/select_passion_view.dart';
-import 'package:nanny_fairy/view/auth/signup/select_preference.dart';
 import '../../res/components/colors.dart';
 
 class LoginOrSignupView extends StatelessWidget {
@@ -13,6 +11,7 @@ class LoginOrSignupView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: AppColor.authCreamColor,
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.only(left: 20, right: 20),
@@ -51,7 +50,7 @@ class LoginOrSignupView extends StatelessWidget {
                             textStyle: const TextStyle(
                               fontSize: 24,
                               fontWeight: FontWeight.w600,
-                              color: AppColor.primaryColor,
+                              color: AppColor.oceanColor,
                             ),
                           ),
                         ),

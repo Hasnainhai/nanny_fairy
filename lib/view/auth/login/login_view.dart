@@ -3,6 +3,7 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:nanny_fairy/ViewModel/auth_view_model.dart';
+import 'package:nanny_fairy/ViewModel/provider_distance_view_model.dart';
 import 'package:nanny_fairy/res/components/loading_manager.dart';
 import 'package:nanny_fairy/res/components/rounded_button.dart';
 import 'package:nanny_fairy/res/components/widgets/custom_text_field.dart';
@@ -54,6 +55,8 @@ class _LoginViewState extends State<LoginView> {
           bool isProvider = await checkIfUserIsProvider(currentId);
 
           if (isProvider) {
+            Provider.of<ProviderDistanceViewModel>(context, listen: false)
+                .fetchFamiliesFromFirebaseData();
             // If the user is a provider, perform the login function
             final authController =
                 Provider.of<AuthViewModel>(context, listen: false);
@@ -96,6 +99,7 @@ class _LoginViewState extends State<LoginView> {
   Widget build(BuildContext context) {
     final authController = Provider.of<AuthViewModel>(context);
     return Scaffold(
+      backgroundColor: AppColor.authCreamColor,
       body: LoadingManager(
         isLoading: _isLoading,
         child: SafeArea(
@@ -137,7 +141,7 @@ class _LoginViewState extends State<LoginView> {
                                 textStyle: const TextStyle(
                                   fontSize: 24,
                                   fontWeight: FontWeight.w600,
-                                  color: AppColor.primaryColor,
+                                  color: AppColor.oceanColor,
                                 ),
                               ),
                             ),
@@ -150,6 +154,7 @@ class _LoginViewState extends State<LoginView> {
                       maxLines: 1,
                       hintText: 'hasnainDev@gmail.com'),
                   TextFieldCustom(
+                      obscureText: true,
                       controller: passwordController,
                       maxLines: 1,
                       hintText: '*********'),

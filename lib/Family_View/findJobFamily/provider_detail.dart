@@ -1,6 +1,8 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:nanny_fairy/Family_View/familyChat/family_chat_view.dart';
 import 'package:nanny_fairy/Family_View/payment_family/payment_family.dart';
 import 'package:nanny_fairy/Repository/get_family_info_repo.dart';
 import 'package:nanny_fairy/res/components/rounded_button.dart';
@@ -106,7 +108,7 @@ class _ProviderDetailsState extends State<ProviderDetails> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          backgroundColor: AppColor.whiteColor,
+          backgroundColor: AppColor.creamyColor,
           shape: const RoundedRectangleBorder(
             borderRadius: BorderRadius.only(
               topLeft: Radius.circular(12),
@@ -130,7 +132,7 @@ class _ProviderDetailsState extends State<ProviderDetails> {
                     borderRadius: BorderRadius.circular(
                       12,
                     ),
-                    color: AppColor.primaryColor,
+                    color: AppColor.lavenderColor,
                   ),
                   child: Center(
                     child: Image.asset(
@@ -163,14 +165,20 @@ class _ProviderDetailsState extends State<ProviderDetails> {
                           context,
                           MaterialPageRoute(
                               builder: (context) => PaymentFamilyView(
-                                  userName: widget.name,
-                                  currentUserName:
-                                      getFamilyInfoRepo.familyName.toString(),
-                                  familyId: widget.familyId,
-                                  currentUserProfile: getFamilyInfoRepo
-                                      .familyProfile
-                                      .toString(),
-                                  profile: widget.profile)));
+                                    userName: widget.name,
+                                    currentUserName:
+                                        getFamilyInfoRepo.familyName.toString(),
+                                    familyId: widget.familyId,
+                                    currentUserProfile: getFamilyInfoRepo
+                                        .familyProfile
+                                        .toString(),
+                                    profile: widget.profile,
+                                    providerRatings: widget.ratings.toString(),
+                                    providerTotalRatings:
+                                        widget.totalRatings.toString(),
+                                    education: widget.degree,
+                                    horlyRate: widget.horseRate,
+                                  )));
                       // print(
                       //     'profile:${widget.profile}: userName:${widget.name}:familyId: ${widget.familyId}: currentUserName:${getFamilyInfoRepo.familyName!}:Family profile${getFamilyInfoRepo.familyProfile} ');
                     },
@@ -196,14 +204,14 @@ class _ProviderDetailsState extends State<ProviderDetails> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColor.primaryColor,
+      backgroundColor: AppColor.lavenderColor,
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0.0,
         leading: IconButton(
           icon: const Icon(
             Icons.west,
-            color: AppColor.whiteColor,
+            color: AppColor.creamyColor,
           ),
           onPressed: () {
             Navigator.pop(context);
@@ -216,7 +224,7 @@ class _ProviderDetailsState extends State<ProviderDetails> {
             textStyle: const TextStyle(
               fontSize: 20,
               fontWeight: FontWeight.w400,
-              color: AppColor.whiteColor,
+              color: AppColor.creamyColor,
             ),
           ),
         ),
@@ -230,7 +238,7 @@ class _ProviderDetailsState extends State<ProviderDetails> {
             child: Container(
               height: MediaQuery.of(context).size.height,
               decoration: BoxDecoration(
-                color: Colors.white,
+                color: AppColor.creamyColor,
                 borderRadius: const BorderRadius.only(
                     topLeft: Radius.circular(30),
                     topRight: Radius.circular(30)),
@@ -264,7 +272,7 @@ class _ProviderDetailsState extends State<ProviderDetails> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             const Icon(Icons.star,
-                                color: Colors.amber, size: 20),
+                                color: AppColor.peachColor, size: 20),
                             const SizedBox(width: 4),
                             Text(
                               '${widget.ratings} (${widget.totalRatings} Reviews)',
@@ -407,27 +415,28 @@ class _ProviderDetailsState extends State<ProviderDetails> {
                                     subTitle: 'Experience'),
                                 const SizedBox(width: 16),
                                 Container(
-                                  height: 39,
-                                  width: 43,
                                   decoration: BoxDecoration(
-                                      color: AppColor.avatarColor,
+                                      color: AppColor.peachColor,
                                       borderRadius: BorderRadius.circular(4)),
-                                  child: Column(
-                                    children: [
-                                      const Icon(Icons.school_outlined,
-                                          color: AppColor.whiteColor),
-                                      Text(
-                                        widget.degree,
-                                        style: GoogleFonts.getFont(
-                                          "Poppins",
-                                          textStyle: const TextStyle(
-                                            fontSize: 10,
-                                            fontWeight: FontWeight.w600,
-                                            color: Colors.white,
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(2.0),
+                                    child: Column(
+                                      children: [
+                                        const Icon(Icons.school_outlined,
+                                            color: AppColor.creamyColor),
+                                        Text(
+                                          widget.degree,
+                                          style: GoogleFonts.getFont(
+                                            "Poppins",
+                                            textStyle: const TextStyle(
+                                              fontSize: 10,
+                                              fontWeight: FontWeight.w600,
+                                              color: AppColor.creamyColor,
+                                            ),
                                           ),
                                         ),
-                                      ),
-                                    ],
+                                      ],
+                                    ),
                                   ),
                                 ),
                               ],
@@ -492,10 +501,10 @@ class _ProviderDetailsState extends State<ProviderDetails> {
 
                             if (_isExpanded)
                               Container(
-                                height: 216,
+                                height: MediaQuery.of(context).size.height / 4,
                                 width: double.infinity,
                                 decoration: const BoxDecoration(
-                                  color: AppColor.whiteColor,
+                                  color: AppColor.creamyColor,
                                 ),
                                 child: Padding(
                                   padding: const EdgeInsets.all(10.0),
@@ -525,13 +534,15 @@ class _ProviderDetailsState extends State<ProviderDetails> {
                                               textStyle: const TextStyle(
                                                 fontSize: 12,
                                                 fontWeight: FontWeight.w400,
-                                                color: AppColor.primaryColor,
+                                                color: AppColor.lavenderColor,
                                               ),
                                             ),
                                           ),
                                         ],
                                       ),
-                                      const Divider(),
+                                      const Divider(
+                                        color: AppColor.lavenderColor,
+                                      ),
                                       const VerticalSpeacing(16),
                                       Row(
                                         mainAxisAlignment:
@@ -555,13 +566,15 @@ class _ProviderDetailsState extends State<ProviderDetails> {
                                               textStyle: const TextStyle(
                                                 fontSize: 12,
                                                 fontWeight: FontWeight.w400,
-                                                color: AppColor.primaryColor,
+                                                color: AppColor.lavenderColor,
                                               ),
                                             ),
                                           ),
                                         ],
                                       ),
-                                      const Divider(),
+                                      const Divider(
+                                        color: AppColor.lavenderColor,
+                                      ),
                                       const VerticalSpeacing(16),
                                       Row(
                                         mainAxisAlignment:
@@ -585,7 +598,7 @@ class _ProviderDetailsState extends State<ProviderDetails> {
                                               textStyle: const TextStyle(
                                                 fontSize: 12,
                                                 fontWeight: FontWeight.w400,
-                                                color: AppColor.primaryColor,
+                                                color: AppColor.lavenderColor,
                                               ),
                                             ),
                                           ),
@@ -595,7 +608,9 @@ class _ProviderDetailsState extends State<ProviderDetails> {
                                   ),
                                 ),
                               ),
-                            const Divider(),
+                            const Divider(
+                              color: AppColor.lavenderColor,
+                            ),
                             const VerticalSpeacing(16),
                             //Family rating Portion
                             Row(
@@ -612,17 +627,6 @@ class _ProviderDetailsState extends State<ProviderDetails> {
                                     ),
                                   ),
                                 ),
-                                // Text(
-                                //   'More Review',
-                                //   style: GoogleFonts.getFont(
-                                //     "Poppins",
-                                //     textStyle: const TextStyle(
-                                //       fontSize: 14,
-                                //       fontWeight: FontWeight.w400,
-                                //       color: AppColor.primaryColor,
-                                //     ),
-                                //   ),
-                                // ),
                               ],
                             ),
                             const VerticalSpeacing(16.0),
@@ -630,7 +634,7 @@ class _ProviderDetailsState extends State<ProviderDetails> {
                               height: 90,
                               child: SingleChildScrollView(
                                 scrollDirection: Axis.horizontal,
-                                physics: ScrollPhysics(),
+                                physics: const ScrollPhysics(),
                                 child: Row(
                                   children: reviewCards,
                                 ),
@@ -640,9 +644,39 @@ class _ProviderDetailsState extends State<ProviderDetails> {
                         ),
                         const VerticalSpeacing(26),
                         RoundedButton(
+                            buttonColor: AppColor.lavenderColor,
+                            titleColor: AppColor.creamyColor,
                             title: 'Chat With Provider',
-                            onpress: () {
-                              showSubscribtionDialog(context);
+                            onpress: () async {
+                              var paymentInfo =
+                                  await getCurrentUserPaymentInfo();
+                              if (paymentInfo != null &&
+                                  paymentInfo['status'] == 'completed') {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (c) => FamilyChatView(
+                                            profilePic: widget.profile,
+                                            isSeen: false,
+                                            currentUserName: getFamilyInfoRepo
+                                                .familyName
+                                                .toString(),
+                                            name: widget.name,
+                                            id: widget.familyId,
+                                            currentUserProfilePic:
+                                                getFamilyInfoRepo.familyProfile
+                                                    .toString(),
+                                            providerRatings:
+                                                widget.ratings.toString(),
+                                            providerTotalRatings:
+                                                widget.totalRatings.toString(),
+                                            education: widget.degree,
+                                            horlyRate: widget.horseRate,
+                                          )),
+                                );
+                              } else {
+                                showSubscribtionDialog(context);
+                              }
                             }),
                         const VerticalSpeacing(40),
                       ],
@@ -665,6 +699,32 @@ class _ProviderDetailsState extends State<ProviderDetails> {
         ],
       ),
     );
+  }
+
+  Future<Map<dynamic, dynamic>?> getCurrentUserPaymentInfo() async {
+    try {
+      String currentUserId = FirebaseAuth.instance.currentUser!.uid;
+      DatabaseReference paymentInfoRef = FirebaseDatabase.instance
+          .ref()
+          .child('Family')
+          .child(currentUserId)
+          .child('paymentInfo');
+
+      // Fetch the payment info data from Firebase
+      DatabaseEvent event = await paymentInfoRef.once();
+      DataSnapshot snapshot = event.snapshot;
+
+      if (snapshot.exists) {
+        // Cast snapshot value to a Map
+        return snapshot.value as Map<dynamic, dynamic>?;
+      } else {
+        print("No payment info found for the current user.");
+        return null;
+      }
+    } catch (e) {
+      print("Error fetching payment info: $e");
+      return null;
+    }
   }
 
   Widget buildReviewCard(String familyName, String familyComment,
@@ -770,7 +830,7 @@ class SkillContainerWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-          color: AppColor.avatarColor, borderRadius: BorderRadius.circular(4)),
+          color: AppColor.peachColor, borderRadius: BorderRadius.circular(4)),
       child: Padding(
         padding: const EdgeInsets.all(8.0),
         child: Column(
@@ -782,7 +842,7 @@ class SkillContainerWidget extends StatelessWidget {
                 textStyle: const TextStyle(
                   fontSize: 10,
                   fontWeight: FontWeight.w600,
-                  color: Colors.white,
+                  color: AppColor.creamyColor,
                 ),
               ),
             ),
@@ -793,7 +853,7 @@ class SkillContainerWidget extends StatelessWidget {
                 textStyle: const TextStyle(
                   fontSize: 10,
                   fontWeight: FontWeight.w600,
-                  color: Colors.white,
+                  color: AppColor.creamyColor,
                 ),
               ),
             ),

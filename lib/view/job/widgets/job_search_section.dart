@@ -116,6 +116,9 @@ class _JobSearchViewState extends State<JobSearchSection> {
                                 bio: user.bio,
                                 profile: user.profile,
                                 familyId: user.uid,
+                                ratings: user.averageRating,
+                                totalRatings: user.totalRatings,
+                                passion: passions,
                               ),
                             ),
                           );
@@ -123,6 +126,8 @@ class _JobSearchViewState extends State<JobSearchSection> {
                         name: "${user.firstName} ${user.lastName}",
                         profilePic: user.profile,
                         passion: passions,
+                        ratings: user.averageRating,
+                        totalRatings: user.totalRatings,
                       );
                     },
                   );

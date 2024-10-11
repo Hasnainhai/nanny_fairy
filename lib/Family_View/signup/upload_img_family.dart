@@ -3,9 +3,9 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:nanny_fairy/FamilyController/family_auth_controller.dart';
+import 'package:nanny_fairy/ViewModel/family_distance_view_model.dart';
 import 'package:nanny_fairy/res/components/rounded_button.dart';
 import 'package:nanny_fairy/res/components/widgets/vertical_spacing.dart';
-import 'package:nanny_fairy/utils/routes/routes_name.dart';
 import 'package:provider/provider.dart';
 import '../../../res/components/colors.dart';
 import '../../res/components/widgets/image_picker.dart';
@@ -21,6 +21,7 @@ class UploadImageFamily extends StatefulWidget {
 class _UploadImageFamilyState extends State<UploadImageFamily> {
   TextEditingController bioController = TextEditingController();
   File? profilePic;
+  bool _isWordCountValid = true;
   void pickProfile() async {
     File? img = await pickFrontImg(
       context,
@@ -32,19 +33,26 @@ class _UploadImageFamilyState extends State<UploadImageFamily> {
     );
   }
 
+  int _wordCount(String text) {
+    if (text.trim().isEmpty) {
+      return 0;
+    }
+    return text.trim().split(RegExp(r'\s+')).length;
+  }
+
   @override
   Widget build(BuildContext context) {
     final authViewModel = Provider.of<FamilyAuthController>(context);
 
     return Scaffold(
-      backgroundColor: AppColor.primaryColor,
+      backgroundColor: AppColor.oceanColor,
       body: Stack(
         children: [
           Container(
             height: MediaQuery.of(context).size.height,
             width: double.infinity,
             decoration: const BoxDecoration(
-              color: AppColor.whiteColor,
+              color: AppColor.authCreamColor,
               borderRadius: BorderRadius.only(
                 topLeft: Radius.circular(30.0),
               ),
@@ -73,18 +81,18 @@ class _UploadImageFamilyState extends State<UploadImageFamily> {
                       height: 200,
                       width: double.infinity,
                       decoration: BoxDecoration(
-                        color: AppColor.whiteColor,
+                        color: AppColor.authCreamColor,
                         borderRadius: BorderRadius.circular(12),
                         border: Border.all(
                           strokeAlign: BorderSide.strokeAlignCenter,
-                          color: const Color(0xff1B81BC).withOpacity(
-                              0.10), // Stroke color with 10% opacity
+                          color: !_isWordCountValid
+                              ? Colors.red
+                              : AppColor.authCreamColor,
                           width: 1,
                         ),
                         boxShadow: [
                           BoxShadow(
-                            color: const Color(0xff1B81BC).withOpacity(
-                                0.1), // Drop shadow color with 4% opacity
+                            color: const Color(0xff1B81BC).withOpacity(0.1),
                             blurRadius: 2,
                             offset: const Offset(1, 2),
                             spreadRadius: 1,
@@ -96,9 +104,34 @@ class _UploadImageFamilyState extends State<UploadImageFamily> {
                         child: TextField(
                           maxLines: 10,
                           controller: bioController,
+                          onChanged: (value) {
+                            setState(() {
+                              int wordCount = _wordCount(value);
+                              // Valid if word count is between 50 and 60
+                              _isWordCountValid =
+                                  wordCount >= 20 && wordCount <= 30;
+                            });
+                          },
                           decoration: const InputDecoration(
                             hintText: 'Type...',
                             border: InputBorder.none,
+                          ),
+                        ),
+                      ),
+                    ),
+                    Visibility(
+                      visible: !_isWordCountValid,
+                      child: Padding(
+                        padding: const EdgeInsets.only(top: 8.0, left: 10.0),
+                        child: Text(
+                          'Please enter less than 20 words',
+                          style: GoogleFonts.getFont(
+                            "Poppins",
+                            textStyle: const TextStyle(
+                              fontSize: 12,
+                              fontWeight: FontWeight.w400,
+                              color: Colors.red,
+                            ),
                           ),
                         ),
                       ),
@@ -107,12 +140,19 @@ class _UploadImageFamilyState extends State<UploadImageFamily> {
                     RoundedButton(
                         title: 'Continue',
                         onpress: () {
-                          if (bioController.text.isNotEmpty) {
+                          bool isValid =
+                              _isWordCountValid && profilePic != null;
+                          if (bioController.text.isNotEmpty && isValid) {
+                            Provider.of<FamilyDistanceViewModel>(context,
+                                    listen: false)
+                                .fetchProviderDataFromFiebase();
                             authViewModel.saveProfileAndBio(
                                 context, profilePic, bioController.text);
                           } else {
                             Utils.flushBarErrorMessage(
-                                "Please Enter Image", context);
+                              "Please complete the form correctly.",
+                              context,
+                            );
                           }
                         }),
                   ],
@@ -122,17 +162,17 @@ class _UploadImageFamilyState extends State<UploadImageFamily> {
           ),
           // Top container that acts as AppBar
           Container(
-            color: AppColor.primaryColor,
-            height: 250, // Adjust the height to accommodate the avatar overlap
+            color: AppColor.oceanColor,
+            height: 250,
             child: Column(
               children: [
-                const SizedBox(height: 50), // Adjust to add padding at the top
+                const SizedBox(height: 50),
                 Row(
                   children: [
                     IconButton(
                       icon: const Icon(
                         Icons.west,
-                        color: AppColor.whiteColor,
+                        color: AppColor.authCreamColor,
                       ),
                       onPressed: () {
                         Navigator.pop(context);
@@ -146,7 +186,7 @@ class _UploadImageFamilyState extends State<UploadImageFamily> {
                         textStyle: const TextStyle(
                           fontSize: 20,
                           fontWeight: FontWeight.w400,
-                          color: AppColor.whiteColor,
+                          color: AppColor.authCreamColor,
                         ),
                       ),
                     ),
@@ -158,22 +198,21 @@ class _UploadImageFamilyState extends State<UploadImageFamily> {
           ),
           // Positioned CircleAvatar on top of all
           Positioned(
-            top: 190, // Half of the avatar height to position it correctly
-            left:
-                MediaQuery.of(context).size.width / 2 - 60, // Center the avatar
+            top: 190,
+            left: MediaQuery.of(context).size.width / 2 - 60,
             child: Container(
               height: 120,
               width: 120,
               decoration: BoxDecoration(
                   color: AppColor.avatarColor,
                   borderRadius: BorderRadius.circular(60),
-                  border: Border.all(width: 4, color: AppColor.whiteColor)),
+                  border: Border.all(width: 4, color: AppColor.authCreamColor)),
               child: Center(
                 child: profilePic == null
                     ? Image.asset(
                         'images/profile.png',
                         fit: BoxFit.cover,
-                        color: AppColor.whiteColor,
+                        color: AppColor.authCreamColor,
                       )
                     : Container(
                         height: 120,
@@ -202,7 +241,7 @@ class _UploadImageFamilyState extends State<UploadImageFamily> {
                   width: 32,
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(16),
-                      color: AppColor.primaryColor),
+                      color: AppColor.oceanColor),
                   child: Center(
                     child: IconButton(
                       onPressed: () {
@@ -211,7 +250,7 @@ class _UploadImageFamilyState extends State<UploadImageFamily> {
                       icon: const Icon(
                         Icons.camera_alt_outlined,
                         size: 18,
-                        color: AppColor.whiteColor,
+                        color: AppColor.authCreamColor,
                       ),
                     ),
                   ),
@@ -222,7 +261,7 @@ class _UploadImageFamilyState extends State<UploadImageFamily> {
                   width: 32,
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(16),
-                      color: AppColor.primaryColor),
+                      color: AppColor.oceanColor),
                   child: Center(
                     child: IconButton(
                       onPressed: () {
@@ -231,7 +270,7 @@ class _UploadImageFamilyState extends State<UploadImageFamily> {
                       icon: const Icon(
                         Icons.save_as_outlined,
                         size: 18,
-                        color: AppColor.whiteColor,
+                        color: AppColor.authCreamColor,
                       ),
                     ),
                   ),

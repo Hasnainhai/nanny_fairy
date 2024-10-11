@@ -22,6 +22,7 @@ class CommunityRepoFamily {
     String content,
     String familyProfile,
     String familyName,
+    bool status,
   ) async {
     showDialog(
       context: context,
@@ -61,6 +62,7 @@ class CommunityRepoFamily {
         "userId": userId,
         "familyProfile": familyProfile,
         "familyName": familyName,
+        "status": status,
         "timePost": DateTime.now().toUtc().toIso8601String()
       });
       Navigator.of(context).pop();
