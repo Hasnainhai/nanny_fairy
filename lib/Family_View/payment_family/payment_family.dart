@@ -252,7 +252,7 @@ class _PaymentFamilyViewState extends State<PaymentFamilyView> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          backgroundColor: AppColor.whiteColor,
+          backgroundColor: AppColor.creamyColor,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(12),
           ),
@@ -260,7 +260,7 @@ class _PaymentFamilyViewState extends State<PaymentFamilyView> {
             mainAxisSize: MainAxisSize.min,
             children: [
               const Icon(Icons.check_circle,
-                  color: AppColor.primaryColor, size: 150),
+                  color: AppColor.lavenderColor, size: 150),
               const VerticalSpeacing(16),
               Text(
                 'Payment Done Congratulations You\n are subscribed now',
@@ -276,6 +276,8 @@ class _PaymentFamilyViewState extends State<PaymentFamilyView> {
               ),
               const VerticalSpeacing(30),
               RoundedButton(
+                buttonColor: AppColor.lavenderColor,
+                titleColor: AppColor.creamyColor,
                 title: 'Continue to Chat',
                 onpress: () {
                   debugPrint("this is the providerName:${widget.userName}");
