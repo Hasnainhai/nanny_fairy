@@ -182,7 +182,7 @@ class _UploadComunityPostFamilyState extends State<UploadComunityPostFamily> {
                                     padding: EdgeInsets.all(8.0),
                                     child: Icon(
                                       Icons.photo_camera,
-                                      color: AppColor.whiteColor,
+                                      color: AppColor.creamyColor,
                                     ),
                                   ),
                                 ),
@@ -191,6 +191,7 @@ class _UploadComunityPostFamilyState extends State<UploadComunityPostFamily> {
                           ),
                     const VerticalSpeacing(16.0),
                     TextFieldCustom(
+                        shadowColor: AppColor.lavenderColor,
                         controller: titleController,
                         maxLines: 1,
                         hintText: 'Your title...'),
@@ -198,17 +199,17 @@ class _UploadComunityPostFamilyState extends State<UploadComunityPostFamily> {
                       height: 200,
                       width: double.infinity,
                       decoration: BoxDecoration(
-                        color: AppColor.whiteColor,
+                        color: AppColor.creamyColor,
                         borderRadius: BorderRadius.circular(6),
                         border: Border.all(
                           strokeAlign: BorderSide.strokeAlignCenter,
-                          color: const Color(0xff1B81BC).withOpacity(
+                          color: AppColor.lavenderColor.withOpacity(
                               0.10), // Stroke color with 10% opacity
                           width: 1,
                         ),
                         boxShadow: [
                           BoxShadow(
-                            color: const Color(0xff1B81BC).withOpacity(
+                            color: AppColor.lavenderColor.withOpacity(
                                 0.1), // Drop shadow color with 4% opacity
                             blurRadius: 2,
                             offset: const Offset(1, 2),
@@ -230,6 +231,8 @@ class _UploadComunityPostFamilyState extends State<UploadComunityPostFamily> {
                     ),
                     const VerticalSpeacing(30.0),
                     RoundedButton(
+                      buttonColor: AppColor.lavenderColor,
+                      titleColor: AppColor.whiteColor,
                       title: 'Continue',
                       onpress: () {
                         if (titleController.text.isNotEmpty ||
