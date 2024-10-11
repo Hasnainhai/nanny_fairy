@@ -190,7 +190,7 @@ class _FamilyChatViewState extends State<FamilyChatView> {
               mainAxisSize: MainAxisSize.min,
               children: [
                 const Icon(Icons.verified_outlined,
-                    color: AppColor.primaryColor, size: 100),
+                    color: AppColor.chatLavenderColor, size: 100),
                 const SizedBox(height: 16),
                 Text(
                   'Confirm hiring this provider to start the service and notify them of your choice.',
@@ -261,7 +261,7 @@ class _FamilyChatViewState extends State<FamilyChatView> {
         return false;
       },
       child: Scaffold(
-        backgroundColor: AppColor.primaryColor,
+        backgroundColor: AppColor.chatLavenderColor,
         appBar: AppBar(
           toolbarHeight: 100,
           backgroundColor: Colors.transparent,
@@ -278,7 +278,7 @@ class _FamilyChatViewState extends State<FamilyChatView> {
                     decoration: BoxDecoration(
                       shape: BoxShape.circle,
                       border: Border.all(
-                        color: Colors.blue,
+                        color: AppColor.chatLavenderColor,
                         width: 2,
                       ),
                     ),
@@ -303,7 +303,7 @@ class _FamilyChatViewState extends State<FamilyChatView> {
                               color: Colors.green,
                               border: Border.all(
                                 width: 2,
-                                color: AppColor.primaryColor,
+                                color: AppColor.chatLavenderColor,
                               ), // Online status indicator color
                             ),
                           ),
@@ -356,7 +356,7 @@ class _FamilyChatViewState extends State<FamilyChatView> {
                             _buttonText,
                             style: const TextStyle(
                               fontSize: 10,
-                              color: AppColor.primaryColor,
+                              color: AppColor.chatLavenderColor,
                               fontWeight: FontWeight.w500,
                             ),
                           ),
@@ -380,7 +380,7 @@ class _FamilyChatViewState extends State<FamilyChatView> {
                                 _buttonText,
                                 style: const TextStyle(
                                   fontSize: 10,
-                                  color: AppColor.primaryColor,
+                                  color: AppColor.chatLavenderColor,
                                   fontWeight: FontWeight.w500,
                                 ),
                               ),
@@ -416,7 +416,7 @@ class _FamilyChatViewState extends State<FamilyChatView> {
                                     'Write Review',
                                     style: TextStyle(
                                       fontSize: 10,
-                                      color: AppColor.primaryColor,
+                                      color: AppColor.chatLavenderColor,
                                       fontWeight: FontWeight.w500,
                                     ),
                                   ),
