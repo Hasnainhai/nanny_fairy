@@ -51,6 +51,7 @@ class _PaymentFamilyViewState extends State<PaymentFamilyView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: AppColor.creamyColor,
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0.0,
@@ -113,18 +114,18 @@ class _PaymentFamilyViewState extends State<PaymentFamilyView> {
                             width: 135,
                             decoration: BoxDecoration(
                               color: firstButton
-                                  ? AppColor.primaryColor
-                                  : AppColor.secondaryBgColor,
+                                  ? AppColor.lavenderColor
+                                  : AppColor.creamyColor,
                               borderRadius: BorderRadius.circular(10.0),
                               border: Border.all(
                                 width: 1,
                                 color: firstButton
-                                    ? AppColor.blackColor
+                                    ? AppColor.creamyColor
                                     : Colors.transparent,
                               ),
                               boxShadow: [
                                 BoxShadow(
-                                  color: const Color(0xff1B81BC).withOpacity(
+                                  color: AppColor.lavenderColor.withOpacity(
                                       0.1), // Drop shadow color with 4% opacity
                                   blurRadius: 2,
                                   offset: const Offset(1, 2),
@@ -151,7 +152,7 @@ class _PaymentFamilyViewState extends State<PaymentFamilyView> {
                                       fontSize: 14,
                                       fontWeight: FontWeight.w600,
                                       color: firstButton
-                                          ? AppColor.whiteColor
+                                          ? AppColor.creamyColor
                                           : AppColor.blackColor),
                                 ),
                               ],
@@ -173,8 +174,8 @@ class _PaymentFamilyViewState extends State<PaymentFamilyView> {
                             width: 135,
                             decoration: BoxDecoration(
                               color: secondButton
-                                  ? AppColor.primaryColor
-                                  : AppColor.secondaryBgColor,
+                                  ? AppColor.lavenderColor
+                                  : AppColor.creamyColor,
                               borderRadius: BorderRadius.circular(10.0),
                               border: Border.all(
                                 width: 1,
@@ -184,7 +185,7 @@ class _PaymentFamilyViewState extends State<PaymentFamilyView> {
                               ),
                               boxShadow: [
                                 BoxShadow(
-                                  color: const Color(0xff1B81BC).withOpacity(
+                                  color: AppColor.lavenderColor.withOpacity(
                                       0.1), // Drop shadow color with 4% opacity
                                   blurRadius: 2,
                                   offset: const Offset(1, 2),
@@ -212,7 +213,7 @@ class _PaymentFamilyViewState extends State<PaymentFamilyView> {
                                     fontSize: 14,
                                     fontWeight: FontWeight.w600,
                                     color: secondButton
-                                        ? AppColor.whiteColor
+                                        ? AppColor.creamyColor
                                         : AppColor.blackColor,
                                   ),
                                 ),
@@ -226,6 +227,8 @@ class _PaymentFamilyViewState extends State<PaymentFamilyView> {
                 ),
                 const VerticalSpeacing(46.0),
                 RoundedButton(
+                  buttonColor: AppColor.lavenderColor,
+                  titleColor: AppColor.creamyColor,
                   title: 'Pay',
                   onpress: () {
                     if (firstButton) {

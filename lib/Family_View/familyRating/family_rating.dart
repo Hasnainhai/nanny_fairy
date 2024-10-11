@@ -193,6 +193,8 @@ class _FamilyRatingState extends State<FamilyRating> {
                           ),
                           const VerticalSpeacing(30),
                           RoundedButton(
+                            buttonColor: AppColor.lavenderColor,
+                            titleColor: AppColor.creamyColor,
                             title: 'Submit Review',
                             onpress: () async {
                               await submitReview();
