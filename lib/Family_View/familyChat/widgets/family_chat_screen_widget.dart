@@ -1,13 +1,8 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
-// ignore_for_file: file_names
-
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
 import 'package:nanny_fairy/Repository/family_chat_repository.dart';
 import 'package:nanny_fairy/ViewModel/family_chat_view_model.dart';
-
 import '../../../res/components/colors.dart';
 
 class FamilyChatScreenWidget extends StatefulWidget {
