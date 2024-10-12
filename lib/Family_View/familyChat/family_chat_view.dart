@@ -57,7 +57,7 @@ class _FamilyChatViewState extends State<FamilyChatView> {
   final uUid = const Uuid().v1();
   final familyId = FirebaseAuth.instance.currentUser!.uid;
   bool _isLoading = false;
-  String _buttonText = 'Hiring';
+  String _buttonText = 'Hire';
   bool _isLocked = false;
   Future<void> _initializeButtonText() async {
     try {
@@ -66,7 +66,7 @@ class _FamilyChatViewState extends State<FamilyChatView> {
 
       // Update _buttonText based on the fetched status
       setState(() {
-        _buttonText = status ?? 'Hiring';
+        _buttonText = status ?? 'Hire';
       });
     } catch (e) {
       // Handle errors
@@ -340,7 +340,7 @@ class _FamilyChatViewState extends State<FamilyChatView> {
                   ),
                 ],
               ),
-              _buttonText == "Hiring"
+              _buttonText == "Hire"
                   ? InkWell(
                       onTap: _isLocked
                           ? null
@@ -350,7 +350,10 @@ class _FamilyChatViewState extends State<FamilyChatView> {
                       child: Container(
                         height: 26,
                         width: 82,
-                        color: AppColor.whiteColor,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(6),
+                          color: AppColor.whiteColor,
+                        ),
                         child: Center(
                           child: Text(
                             _buttonText,
@@ -374,7 +377,7 @@ class _FamilyChatViewState extends State<FamilyChatView> {
                           child: Container(
                             height: 26,
                             width: 82,
-                            color: AppColor.whiteColor,
+                            color: AppColor.creamyColor,
                             child: Center(
                               child: Text(
                                 _buttonText,
@@ -427,29 +430,26 @@ class _FamilyChatViewState extends State<FamilyChatView> {
             ],
           ),
         ),
-        body: LoadingManager(
-          isLoading: _isLoading,
-          child: Container(
-            height: double.infinity,
-            width: double.infinity,
-            decoration: const BoxDecoration(
-              color: AppColor.whiteColor,
-              borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(30.0),
-              ),
+        body: Container(
+          height: double.infinity,
+          width: double.infinity,
+          decoration: const BoxDecoration(
+            color: AppColor.whiteColor,
+            borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(30.0),
             ),
-            child: FamilyChatScreenWidget(
-              id: widget.id,
-              isSeen: widget.isSeen,
-              currentUserName: widget.currentUserName,
-              currentUserProfile: widget.currentUserProfilePic,
-              providerName: widget.name,
-              providerProfilePic: widget.profilePic,
-              providerRating: widget.providerRatings,
-              providerTotalRating: widget.providerTotalRatings,
-              education: widget.education,
-              hourlyRate: widget.horlyRate,
-            ),
+          ),
+          child: FamilyChatScreenWidget(
+            id: widget.id,
+            isSeen: widget.isSeen,
+            currentUserName: widget.currentUserName,
+            currentUserProfile: widget.currentUserProfilePic,
+            providerName: widget.name,
+            providerProfilePic: widget.profilePic,
+            providerRating: widget.providerRatings,
+            providerTotalRating: widget.providerTotalRatings,
+            education: widget.education,
+            hourlyRate: widget.horlyRate,
           ),
         ),
       ),
