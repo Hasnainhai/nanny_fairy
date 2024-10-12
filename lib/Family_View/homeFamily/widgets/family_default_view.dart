@@ -269,11 +269,12 @@ class _FamilyDefaultViewState extends State<FamilyDefaultView> {
                                                     timeData: (provider['Time']
                                                             as Map<dynamic,
                                                                 dynamic>)
-                                                        .map((key, value) =>
-                                                            MapEntry(
-                                                                key.toString(),
-                                                                value
-                                                                    .toString())),
+                                                        .map(
+                                                      (key, value) => MapEntry(
+                                                        key.toString(),
+                                                        value.toString(),
+                                                      ),
+                                                    ),
                                                     ratings: averageRating,
                                                     totalRatings: int.parse(
                                                         ratingsData[
