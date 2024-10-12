@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously, deprecated_member_use
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
@@ -59,9 +61,7 @@ class _ChatViewState extends State<ChatView> {
   final GetProviderInfoRepo getProviderInfoRepo = GetProviderInfoRepo();
 
   final uUid = const Uuid().v1();
-  bool _isLoading = false;
 
-  bool _isLocked = false;
   String _buttonText = 'Loading...';
 
   Future<Map<String, String>> getProviderData() async {
@@ -76,7 +76,7 @@ class _ChatViewState extends State<ChatView> {
       final providerOrderData = providerOrderSnapshot.value;
       if (providerOrderData is Map) {
         final status = providerOrderData['status'];
-        print('Status : $status');
+        debugPrint('Status : $status');
         setState(() {
           _buttonText = status;
         });
@@ -93,9 +93,7 @@ class _ChatViewState extends State<ChatView> {
 
   Future<void> acceptFamilyOffer() async {
     try {
-      setState(() {
-        _isLoading = true;
-      });
+      setState(() {});
       DatabaseReference familyOrderRef = FirebaseDatabase.instance
           .ref()
           .child('Family')
@@ -125,16 +123,12 @@ class _ChatViewState extends State<ChatView> {
       await familyOrderRef.update(providerUpdateData);
       await providerOrderRef.update(familyUpdateData);
 
-      setState(() {
-        _isLoading = false;
-      });
+      setState(() {});
       Utils.toastMessage('Order successfully Accept it!');
-      print('Order successfully created!');
+      debugPrint('Order successfully created!');
     } catch (e) {
-      setState(() {
-        _isLoading = false;
-      });
-      print('Error $e');
+      setState(() {});
+      debugPrint('Error $e');
       Utils.flushBarErrorMessage('Error $e', context);
     }
   }
@@ -306,7 +300,10 @@ class _ChatViewState extends State<ChatView> {
                       child: Container(
                         height: 26,
                         width: 82,
-                        color: AppColor.whiteColor,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(6),
+                          color: AppColor.whiteColor,
+                        ),
                         child: Center(
                           child: Text(
                             _buttonText,
@@ -339,7 +336,10 @@ class _ChatViewState extends State<ChatView> {
                           child: Container(
                             height: 26,
                             width: 82,
-                            color: AppColor.whiteColor,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(6),
+                              color: AppColor.whiteColor,
+                            ),
                             child: const Center(
                               child: Text(
                                 'Write Review',
