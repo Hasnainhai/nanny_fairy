@@ -41,6 +41,16 @@ class ChatMessage {
 
 class ChatScreenState extends State<ChatScreenWidget> {
   final TextEditingController _textController = TextEditingController();
+  final ScrollController scrollController = ScrollController();
+  void scrollToBottom() {
+    if (scrollController.hasClients) {
+      scrollController.animateTo(
+        scrollController.position.maxScrollExtent,
+        duration: const Duration(milliseconds: 100),
+        curve: Curves.linearToEaseOut,
+      );
+    }
+  }
 
   Widget _buildMessage(String message, String senderId) {
     var auth = FirebaseAuth.instance;
@@ -74,21 +84,14 @@ class ChatScreenState extends State<ChatScreenWidget> {
   }
 
   @override
+  void dispose() {
+    scrollController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     final chatController = Provider.of<ProvidersChatController>(context);
-    final ScrollController scrollController = ScrollController();
-
-    void scrollToBottom() {
-      if (scrollController.hasClients) {
-        WidgetsBinding.instance.addPostFrameCallback((_) {
-          scrollController.animateTo(
-            scrollController.position.maxScrollExtent,
-            duration: const Duration(milliseconds: 300),
-            curve: Curves.slowMiddle,
-          );
-        });
-      }
-    }
 
     return Column(
       children: <Widget>[
