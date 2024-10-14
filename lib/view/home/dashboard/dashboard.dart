@@ -1,6 +1,5 @@
 // ignore_for_file: file_names, use_build_context_synchronously, unnecessary_null_comparison
 import 'package:flutter/material.dart';
-import 'package:nanny_fairy/ViewModel/provider_distance_view_model.dart';
 import 'package:nanny_fairy/ViewModel/provider_home_view_model.dart';
 import 'package:nanny_fairy/view/booked/booked_view.dart';
 import 'package:nanny_fairy/view/community/community_view.dart';
@@ -35,12 +34,6 @@ class _DashBoardScreenState extends State<DashBoardScreen>
 
     tabController = TabController(length: 5, vsync: this);
     Provider.of<ProviderHomeViewModel>(context, listen: false).getCurrentUser();
-  }
-
-  // Method that should be called when Dashboard is selected
-  void _onDashboardSelected() {
-    // Check if the widget is still mounted
-    WidgetsBinding.instance.addPostFrameCallback((_) {});
   }
 
   @override
@@ -122,7 +115,6 @@ class _DashBoardScreenState extends State<DashBoardScreen>
         ],
       ),
       bottomNavigationBar: BottomNavigationBar(
-
         items: const [
           BottomNavigationBarItem(
             backgroundColor: AppColor.creamyColor,

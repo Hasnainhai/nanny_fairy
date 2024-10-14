@@ -3,7 +3,6 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:nanny_fairy/ViewModel/provider_distance_view_model.dart';
 import 'package:nanny_fairy/ViewModel/provider_home_view_model.dart';
 import 'package:nanny_fairy/res/components/colors.dart';
-import 'package:nanny_fairy/res/components/widgets/shimmer_effect.dart';
 import 'package:nanny_fairy/res/components/widgets/vertical_spacing.dart';
 import 'package:nanny_fairy/view/booked/widgets/booking_widget.dart';
 import 'package:nanny_fairy/view/home/widgets/home_feature_widget.dart';
@@ -160,13 +159,6 @@ class _HomeDefaultViewState extends State<HomeDefaultView> {
                         );
                       }
                     }),
-                // const HomeFeatureContainer(
-                //   txColor: AppColor.blackColor,
-                //   bgColor: AppColor.whiteColor,
-                //   img: 'images/chats.png',
-                //   title: '10',
-                //   subTitle: 'Total Chats',
-                // ),
                 const SizedBox(width: 16),
                 FutureBuilder(
                     future: homeViewModel.getPosts(),
@@ -260,7 +252,7 @@ class _HomeDefaultViewState extends State<HomeDefaultView> {
                   const VerticalSpeacing(16.0),
                   isEmpty == false
                       ? SizedBox(
-                          height: MediaQuery.of(context).size.height / 2.6,
+                          height: MediaQuery.of(context).size.height / 2.7,
                           child: families.isEmpty
                               ? const Text(
                                   "No Families avaliable with in Range")

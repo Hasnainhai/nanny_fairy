@@ -345,7 +345,7 @@ class _ChatViewState extends State<ChatView> {
                                 'Write Review',
                                 style: TextStyle(
                                   fontSize: 10,
-                                  color: AppColor.primaryColor,
+                                  color: AppColor.lavenderColor,
                                   fontWeight: FontWeight.w500,
                                 ),
                               ),

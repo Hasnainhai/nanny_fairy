@@ -84,7 +84,7 @@ class ChatScreenState extends State<ChatScreenWidget> {
           scrollController.animateTo(
             scrollController.position.maxScrollExtent,
             duration: const Duration(milliseconds: 300),
-            curve: Curves.easeOut,
+            curve: Curves.slowMiddle,
           );
         });
       }
@@ -119,11 +119,7 @@ class ChatScreenState extends State<ChatScreenWidget> {
               return chats;
             }),
             builder: (context, snapshot) {
-              if (snapshot.connectionState == ConnectionState.waiting) {
-                return const Center(
-                    child:
-                        CircularProgressIndicator()); // Replace with your loading widget
-              } else if (snapshot.hasError) {
+              if (snapshot.hasError) {
                 return Center(child: Text('Error: ${snapshot.error}'));
               } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
                 return const Center(child: Text('No messages found.'));
