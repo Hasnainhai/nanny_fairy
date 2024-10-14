@@ -45,16 +45,17 @@ class ChatMessage {
 class ChatScreenState extends State<FamilyChatScreenWidget> {
   final List<ChatMessage> _messages = <ChatMessage>[];
   final TextEditingController _textController = TextEditingController();
+  final ScrollController scrollController = ScrollController();
 
-  void _handleSubmitted(String text) {
-    _textController.clear();
-    ChatMessage message = ChatMessage(
-        text: text,
-        isSender: true); // You can modify this to determine sender/receiver.
-    setState(() {
-      _messages.insert(0, message);
-    });
-  }
+  // void _handleSubmitted(String text) {
+  //   _textController.clear();
+  //   ChatMessage message = ChatMessage(
+  //       text: text,
+  //       isSender: true); // You can modify this to determine sender/receiver.
+  //   setState(() {
+  //     _messages.insert(0, message);
+  //   });
+  // }
 
   Widget _buildMessage(String message, String senderId) {
     final chatController = Provider.of<FamilyChatController>(context);
@@ -86,21 +87,24 @@ class ChatScreenState extends State<FamilyChatScreenWidget> {
   }
 
   @override
+  void dispose() {
+    scrollController.dispose();
+    super.dispose();
+  }
+
+  void scrollToBottom() {
+    if (scrollController.hasClients) {
+      scrollController.animateTo(
+        scrollController.position.maxScrollExtent,
+        duration: const Duration(milliseconds: 100),
+        curve: Curves.linearToEaseOut,
+      );
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
     final chatController = Provider.of<FamilyChatController>(context);
-    final ScrollController scrollController = ScrollController();
-
-    void scrollToBottom() {
-      if (scrollController.hasClients) {
-        WidgetsBinding.instance.addPostFrameCallback((_) {
-          scrollController.animateTo(
-            scrollController.position.maxScrollExtent,
-            duration: const Duration(milliseconds: 300),
-            curve: Curves.slowMiddle,
-          );
-        });
-      }
-    }
 
     return Column(
       children: <Widget>[
@@ -137,14 +141,17 @@ class ChatScreenState extends State<FamilyChatScreenWidget> {
                 return const Center(child: Text('No messages found.'));
               } else {
                 final chats = snapshot.data!;
-                WidgetsBinding.instance
-                    .addPostFrameCallback((_) => scrollToBottom());
+
+                // Scroll to bottom only when new data is received
+                WidgetsBinding.instance.addPostFrameCallback((_) {
+                  scrollToBottom();
+                });
+
                 return ListView.builder(
                   controller: scrollController,
                   itemCount: chats.length,
                   itemBuilder: (context, index) {
                     final chat = chats[index];
-
                     return _buildMessage(chat['message'], chat['senderId']);
                   },
                 );
@@ -173,7 +180,6 @@ class ChatScreenState extends State<FamilyChatScreenWidget> {
           Expanded(
             child: TextField(
               controller: _textController,
-              onSubmitted: _handleSubmitted,
               decoration: const InputDecoration(
                   hintText: 'Type a message...',
                   hintStyle: TextStyle(
@@ -187,7 +193,6 @@ class ChatScreenState extends State<FamilyChatScreenWidget> {
               color: AppColor.chatLavenderColor,
             ),
             onPressed: () {
-              debugPrint("This is the reciever name:${widget.providerName}");
               if (_textController.text.isNotEmpty) {
                 familyChatRepository.saveDataToContactsSubcollection(
                     _textController.text,
