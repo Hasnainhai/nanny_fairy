@@ -7,8 +7,6 @@ import 'package:provider/provider.dart';
 
 import 'package:nanny_fairy/Repository/provider_chat_repository.dart';
 import 'package:nanny_fairy/ViewModel/provider_chat_view_model.dart';
-import 'package:nanny_fairy/res/components/widgets/shimmer_effect.dart';
-
 import '../../../res/components/colors.dart';
 
 class ChatScreenWidget extends StatefulWidget {
